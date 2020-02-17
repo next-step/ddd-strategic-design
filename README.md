@@ -69,3 +69,43 @@
 | 손님 | Guest | 테이블에 앉아 메뉴를 고르고 주문을 할 수 있는 주체 | 
 
 ## 모델링
+### Product
+- Product를 추가한다.
+  - Product의 가격은 0 이상이어야 추가할 수 있다.
+- Product 목록을 조회한다.
+  
+### Menu
+- Menu를 추가한다.
+  - Menu의 가격은 0 이상이어야 추가할 수 있다.
+  - Menu는 하나 이상의 Product를 갖는다.
+  - Menu의 가격이 Product들 가격의 합 이하여야 추가할 수 있다.
+  - Menu는 하나의 Menu Group에 속한다.
+- Menu 목록을 조회한다.
+- Menu Group을 추가한다.
+- Menu Group 목록을 조회한다. 
+
+### OrderTable
+- Order를 추가한다.
+  - Table이 Guest로 차있어야 추가할 수 있다.
+  - 1개 이상의 Menu와 수량 정보를 갖고 있어야 한다.
+  - 추가되면 Order는 COOKING 상태가 된다.
+- Order Status를 수정한다.
+  - Order가 COMPLETION 상태일 경우 수정할 수 없다.
+    (즉, Order가 COOKING, MEAL 상태인 경우엔 수정할 수 있다.)
+- Order 목록을 조회한다.
+- Table이 Guest로 채워진다.
+- Table이 비워진다.
+  - COMPLETION된 Order여야 비울 수 있다.
+    (즉, Order가 COOKING, MEAL 상태인 Table은 비울 수 없다.)
+  - Table이 Table Group으로 묶여있지 않아야 비울 수 있다.
+- Table의 Guest 수를 수정한다.
+  - Table이 Guest로 차있어야 수정할 수 있다.
+  - 수정될 Guest의 수가 0 이상이어야 수정할 수 있다.
+- Table 목록을 조회한다.
+- Table Group을 추가한다.
+  - 2개 이상의 Table을 묶어야 추가할 수 있다.
+  - 묶을 Table은 비어있어야 한다.
+  - 묶을 Table은 다른 Table Group에 묶여있지 않아야 한다.
+- Table을 Table Group에서 해지 한다.
+  - COMPELTION인 Order이어야 해지할 수 있다.
+    (즉, Order가 COOKING, MEAL 상태이면 해지할 수 없다.)
