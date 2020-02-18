@@ -69,6 +69,8 @@
 | 주문 테이블 | Order Table | 손님이 앉아서 주문을 하고, 식사를 하는 공간이다. |
 | 주문 테이블 상태 | Order Table Status | 비어 있는 상태, 비어있지 않은 상태가 있다. 상태를 변경할 시에는 주문 테이블 상태 변경 조건을 따른다. |
 | 주문 테이블 그룹 | Order Table Group | 단체 손님을 위해서 주문 테이블을 그룹 설정, 해지 할 수 있다. 이때 주문 테이블 상태 변경 조건을 따른다. |
-| 주문 테이블 상태 변경 조건 | Order Table Status Change Condition | 손님의 식사가 끝나지 않았다면 상태를 변경하거나, 그룹을 설정, 해지 할 수 없다. |
+| 주문 테이블 상태 변경 조건 | Order Table Status Change Condition | 주문 테이블의 주문 상태가 완료라면 주문 테이블의 상태를 변경할 수 있다. |
+| 주문 테이블 그룹 설정 조건 | Order Table Group Set Condition | 주문 테이블의 주문 상태가 완료라면 주문 테이블 그룹을 설정 할 수 있다. |
+| 주문 테이블 그룹 해지 조건 | Order Table Group Unset Condition | 주문 테이블의 주문 상태가 완료라면 주문 테이블 그룹을 해지 할 수 있다. |
 
 ## 모델링
