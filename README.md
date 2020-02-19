@@ -70,21 +70,28 @@
 
 ## 모델링
 ### Product
+- Product는 이름, 가격을 갖는다.
 - Product를 추가한다.
   - Product의 가격은 0 이상이어야 추가할 수 있다.
 - Product 목록을 조회한다.
   
 ### Menu
+- Menu는 이름, 가격을 갖는다.
+  - Menu는 하나 이상의 Product를 갖는다.
+  - Menu는 하나의 Menu Group에 속한다.
 - Menu를 추가한다.
   - Menu의 가격은 0 이상이어야 추가할 수 있다.
-  - Menu는 하나 이상의 Product를 갖는다.
   - Menu의 가격이 Product들 가격의 합 이하여야 추가할 수 있다.
-  - Menu는 하나의 Menu Group에 속한다.
+  - 추가할 Menu Group이 존재하지 않는다면 추가할 수 없다.
 - Menu 목록을 조회한다.
+- Menu Product는 Menu, Product, 수량에 관한 정보를 갖는다.
+- Menu Group은 이름을 갖는다.
 - Menu Group을 추가한다.
 - Menu Group 목록을 조회한다. 
 
 ### OrderTable
+- Order는 Table, Order status, 주문한 시간, 주문 내역에 관한 정보를 갖는다.
+  - 주문 내역에는 Menu와 수량에 대한 정보를 갖고 있다.
 - Order를 추가한다.
   - Table이 Guest로 차있어야 추가할 수 있다.
   - 1개 이상의 Menu와 수량 정보를 갖고 있어야 한다.
@@ -93,6 +100,7 @@
   - Order가 COMPLETION 상태일 경우 수정할 수 없다.
     (즉, Order가 COOKING, MEAL 상태인 경우엔 수정할 수 있다.)
 - Order 목록을 조회한다.
+- Table은 Guest의 수, Table Group 정보, 비어 있는지 여부를 갖는다.
 - Table이 Guest로 채워진다.
 - Table이 비워진다.
   - COMPLETION된 Order여야 비울 수 있다.
@@ -102,6 +110,7 @@
   - Table이 Guest로 차있어야 수정할 수 있다.
   - 수정될 Guest의 수가 0 이상이어야 수정할 수 있다.
 - Table 목록을 조회한다.
+- Table Group은 생성 날짜, 그룹으로 묶은 Table에 대한 정보를 갖는다.
 - Table Group을 추가한다.
   - 2개 이상의 Table을 묶어야 추가할 수 있다.
   - 묶을 Table은 비어있어야 한다.
