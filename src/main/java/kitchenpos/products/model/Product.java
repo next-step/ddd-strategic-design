@@ -1,4 +1,4 @@
-package kitchenpos.model;
+package kitchenpos.products.model;
 
 import java.math.BigDecimal;
 
