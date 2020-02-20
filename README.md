@@ -65,3 +65,4 @@
 | 주문상태 | OrderStatus | 주문상태는 COOKING, MEAL, COMPLETION 으로 구성된다. |
 
 ## 모델링
+![model](https://user-images.githubusercontent.com/28615416/74082848-761ca400-4aa1-11ea-809f-2dcbf016bbd7.png)
