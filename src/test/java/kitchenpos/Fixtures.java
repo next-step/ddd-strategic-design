@@ -1,5 +1,6 @@
 package kitchenpos;
 
+import kitchenpos.menugroups.model.MenuGroup;
 import kitchenpos.model.*;
 import kitchenpos.orders.model.Order;
 import kitchenpos.orders.model.OrderLineItem;
