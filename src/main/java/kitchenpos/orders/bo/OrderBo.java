@@ -2,10 +2,10 @@ package kitchenpos.orders.bo;
 
 import kitchenpos.dao.MenuDao;
 import kitchenpos.orders.dao.OrderDao;
-import kitchenpos.dao.OrderLineItemDao;
+import kitchenpos.orders.dao.OrderLineItemDao;
 import kitchenpos.ordertables.dao.OrderTableDao;
 import kitchenpos.orders.model.Order;
-import kitchenpos.model.OrderLineItem;
+import kitchenpos.orders.model.OrderLineItem;
 import kitchenpos.orders.model.OrderStatus;
 import kitchenpos.ordertables.model.OrderTable;
 import org.springframework.stereotype.Component;

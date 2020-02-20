@@ -1,6 +1,6 @@
-package kitchenpos.dao;
+package kitchenpos.orders.dao;
 
-import kitchenpos.model.OrderLineItem;
+import kitchenpos.orders.model.OrderLineItem;
 
 import java.util.List;
 import java.util.Optional;

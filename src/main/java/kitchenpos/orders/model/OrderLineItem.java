@@ -1,4 +1,4 @@
-package kitchenpos.model;
+package kitchenpos.orders.model;
 
 public class OrderLineItem {
     private Long seq;

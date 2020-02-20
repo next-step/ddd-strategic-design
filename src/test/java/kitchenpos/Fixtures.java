@@ -2,6 +2,7 @@ package kitchenpos;
 
 import kitchenpos.model.*;
 import kitchenpos.orders.model.Order;
+import kitchenpos.orders.model.OrderLineItem;
 import kitchenpos.orders.model.OrderStatus;
 import kitchenpos.ordertablegroups.model.TableGroup;
 import kitchenpos.ordertables.model.OrderTable;
