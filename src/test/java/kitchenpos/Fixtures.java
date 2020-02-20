@@ -1,7 +1,8 @@
 package kitchenpos;
 
 import kitchenpos.menugroups.model.MenuGroup;
-import kitchenpos.model.*;
+import kitchenpos.menus.model.Menu;
+import kitchenpos.menus.model.MenuProduct;
 import kitchenpos.orders.model.Order;
 import kitchenpos.orders.model.OrderLineItem;
 import kitchenpos.orders.model.OrderStatus;
