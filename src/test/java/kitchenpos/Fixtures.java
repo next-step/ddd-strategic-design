@@ -1,6 +1,8 @@
 package kitchenpos;
 
 import kitchenpos.model.*;
+import kitchenpos.orders.model.Order;
+import kitchenpos.orders.model.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
