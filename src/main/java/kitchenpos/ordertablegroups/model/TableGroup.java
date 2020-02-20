@@ -1,6 +1,6 @@
 package kitchenpos.ordertablegroups.model;
 
-import kitchenpos.model.OrderTable;
+import kitchenpos.ordertables.model.OrderTable;
 
 import java.time.LocalDateTime;
 import java.util.List;

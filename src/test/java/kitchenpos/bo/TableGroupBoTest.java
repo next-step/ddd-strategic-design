@@ -1,7 +1,7 @@
 package kitchenpos.bo;
 
 import kitchenpos.orders.dao.OrderDao;
-import kitchenpos.dao.OrderTableDao;
+import kitchenpos.ordertables.dao.OrderTableDao;
 import kitchenpos.ordertablegroups.dao.TableGroupDao;
 import kitchenpos.ordertablegroups.model.TableGroup;
 import kitchenpos.ordertablegroups.bo.TableGroupBo;

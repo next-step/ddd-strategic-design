@@ -4,6 +4,7 @@ import kitchenpos.model.*;
 import kitchenpos.orders.model.Order;
 import kitchenpos.orders.model.OrderStatus;
 import kitchenpos.ordertablegroups.model.TableGroup;
+import kitchenpos.ordertables.model.OrderTable;
 import kitchenpos.products.model.Product;
 
 import java.math.BigDecimal;
