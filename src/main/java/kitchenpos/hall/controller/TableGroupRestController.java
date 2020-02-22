@@ -1,7 +1,7 @@
-package kitchenpos.table.controller;
+package kitchenpos.hall.controller;
 
-import kitchenpos.table.bo.TableGroupBo;
-import kitchenpos.table.model.TableGroup;
+import kitchenpos.hall.bo.TableGroupBo;
+import kitchenpos.hall.model.TableGroup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

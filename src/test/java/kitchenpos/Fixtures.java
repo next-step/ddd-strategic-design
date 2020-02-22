@@ -7,8 +7,8 @@ import kitchenpos.order.model.Order;
 import kitchenpos.order.model.OrderLineItem;
 import kitchenpos.order.model.OrderStatus;
 import kitchenpos.product.model.Product;
-import kitchenpos.table.model.OrderTable;
-import kitchenpos.table.model.TableGroup;
+import kitchenpos.hall.model.OrderTable;
+import kitchenpos.hall.model.TableGroup;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package kitchenpos.order.dao;
 
-import kitchenpos.table.model.OrderTable;
+import kitchenpos.hall.model.OrderTable;
 
 import java.util.List;
 import java.util.Optional;
