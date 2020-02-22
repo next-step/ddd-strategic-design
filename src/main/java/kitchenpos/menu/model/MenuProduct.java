@@ -1,4 +1,4 @@
-package kitchenpos.model;
+package kitchenpos.menu.model;
 
 public class MenuProduct {
     private Long seq;

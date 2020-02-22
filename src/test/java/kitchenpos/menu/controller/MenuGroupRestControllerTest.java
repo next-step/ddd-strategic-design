@@ -1,7 +1,7 @@
-package kitchenpos.controller;
+package kitchenpos.menu.controller;
 
-import kitchenpos.bo.MenuBo;
-import kitchenpos.model.Menu;
+import kitchenpos.menu.bo.MenuGroupBo;
+import kitchenpos.menu.model.MenuGroup;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
 
-import static kitchenpos.Fixtures.twoFriedChickens;
+import static kitchenpos.Fixtures.twoChickens;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,25 +23,24 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(MenuRestController.class)
+@WebMvcTest(MenuGroupRestController.class)
 @Import(HttpEncodingAutoConfiguration.class)
-class MenuRestControllerTest {
+class MenuGroupRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MenuBo menuBo;
+    private MenuGroupBo menuGroupBo;
 
     @Test
     void create() throws Exception {
         // given
-        given(menuBo.create(any(Menu.class))).willReturn(twoFriedChickens());
+        given(menuGroupBo.create(any(MenuGroup.class))).willReturn(twoChickens());
 
         // when
-        final ResultActions resultActions = mockMvc.perform(post("/api/menus")
+        final ResultActions resultActions = mockMvc.perform(post("/api/menu-groups")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"후라이드+후라이드\",\"price\":19000,\"menuGroupId\":1,"
-                        + "\"menuProducts\":[{\"productId\":1,\"quantity\":2}]}")
+                .content("{\"name\":\"두마리메뉴\"}")
         );
 
         // then
@@ -50,21 +49,16 @@ class MenuRestControllerTest {
                 .andExpect(header().exists(HttpHeaders.LOCATION))
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").isString())
-                .andExpect(jsonPath("$.price").isNumber())
-                .andExpect(jsonPath("$.menuGroupId").isNumber())
-                .andExpect(jsonPath("$.menuProducts").isArray())
-                .andExpect(jsonPath("$.menuProducts[0].productId").isNumber())
-                .andExpect(jsonPath("$.menuProducts[0].quantity").isNumber())
         ;
     }
 
     @Test
     void list() throws Exception {
         // given
-        given(menuBo.list()).willReturn(Arrays.asList(twoFriedChickens()));
+        given(menuGroupBo.list()).willReturn(Arrays.asList(twoChickens()));
 
         // when
-        final ResultActions resultActions = mockMvc.perform(get("/api/menus"));
+        final ResultActions resultActions = mockMvc.perform(get("/api/menu-groups"));
 
         // then
         resultActions.andDo(print())
@@ -72,11 +66,6 @@ class MenuRestControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].name").isString())
-                .andExpect(jsonPath("$[0].price").isNumber())
-                .andExpect(jsonPath("$[0].menuGroupId").isNumber())
-                .andExpect(jsonPath("$[0].menuProducts").isArray())
-                .andExpect(jsonPath("$[0].menuProducts[0].productId").isNumber())
-                .andExpect(jsonPath("$[0].menuProducts[0].quantity").isNumber())
         ;
     }
 }
