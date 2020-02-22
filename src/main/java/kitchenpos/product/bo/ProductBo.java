@@ -1,7 +1,7 @@
-package kitchenpos.bo;
+package kitchenpos.product.bo;
 
-import kitchenpos.dao.ProductDao;
-import kitchenpos.model.Product;
+import kitchenpos.product.dao.ProductDao;
+import kitchenpos.product.model.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
