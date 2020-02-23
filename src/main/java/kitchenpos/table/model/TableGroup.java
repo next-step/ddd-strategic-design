@@ -1,4 +1,4 @@
-package kitchenpos.tablegroup.model;
+package kitchenpos.table.model;
 
 import kitchenpos.table.model.OrderTable;
 

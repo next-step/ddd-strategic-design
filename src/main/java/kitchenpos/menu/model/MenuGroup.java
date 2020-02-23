@@ -1,4 +1,4 @@
-package kitchenpos.menugroup.model;
+package kitchenpos.menu.model;
 
 public class MenuGroup {
     private Long id;

@@ -2,9 +2,9 @@ package kitchenpos.bo;
 
 import kitchenpos.order.dao.OrderDao;
 import kitchenpos.table.dao.OrderTableDao;
-import kitchenpos.tablegroup.dao.TableGroupDao;
-import kitchenpos.tablegroup.model.TableGroup;
-import kitchenpos.tablegroup.bo.TableGroupBo;
+import kitchenpos.table.dao.TableGroupDao;
+import kitchenpos.table.model.TableGroup;
+import kitchenpos.table.bo.TableGroupBo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
