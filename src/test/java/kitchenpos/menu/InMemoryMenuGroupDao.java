@@ -1,11 +1,11 @@
 package kitchenpos.menu;
 
-import kitchenpos.menu.dao.MenuGroupDao;
+import kitchenpos.menu.repository.MenuGroupRepository;
 import kitchenpos.menu.model.MenuGroup;
 
 import java.util.*;
 
-public class InMemoryMenuGroupDao implements MenuGroupDao {
+public class InMemoryMenuGroupDao implements MenuGroupRepository {
     private final Map<Long, MenuGroup> entities = new HashMap<>();
 
     @Override

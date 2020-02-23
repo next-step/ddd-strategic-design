@@ -1,10 +1,10 @@
 package kitchenpos.menu;
 
 import kitchenpos.product.InMemoryProductDao;
-import kitchenpos.menu.dao.MenuDao;
-import kitchenpos.menu.dao.MenuGroupDao;
-import kitchenpos.menu.dao.MenuProductDao;
-import kitchenpos.product.dao.ProductDao;
+import kitchenpos.menu.repository.MenuRepository;
+import kitchenpos.menu.repository.MenuGroupRepository;
+import kitchenpos.menu.repository.MenuProductRepository;
+import kitchenpos.product.repository.ProductRepository;
 import kitchenpos.menu.bo.MenuBo;
 import kitchenpos.menu.model.Menu;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,18 +24,18 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MenuBoTest {
-    private final MenuDao menuDao = new InMemoryMenuDao();
-    private final MenuGroupDao menuGroupDao = new InMemoryMenuGroupDao();
-    private final MenuProductDao menuProductDao = new InMemoryMenuProductDao();
-    private final ProductDao productDao = new InMemoryProductDao();
+    private final MenuRepository menuRepository = new InMemoryMenuDao();
+    private final MenuGroupRepository menuGroupRepository = new InMemoryMenuGroupDao();
+    private final MenuProductRepository menuProductRepository = new InMemoryMenuProductDao();
+    private final ProductRepository productRepository = new InMemoryProductDao();
 
     private MenuBo menuBo;
 
     @BeforeEach
     void setUp() {
-        menuBo = new MenuBo(menuDao, menuGroupDao, menuProductDao, productDao);
-        menuGroupDao.save(twoChickens());
-        productDao.save(friedChicken());
+        menuBo = new MenuBo(menuRepository, menuGroupRepository, menuProductRepository, productRepository);
+        menuGroupRepository.save(twoChickens());
+        productRepository.save(friedChicken());
     }
 
     @DisplayName("1 개 이상의 등록된 상품으로 메뉴를 등록할 수 있다.")
@@ -82,7 +82,7 @@ class MenuBoTest {
     @Test
     void list() {
         // given
-        final Menu twoFriedChickens = menuDao.save(twoFriedChickens());
+        final Menu twoFriedChickens = menuRepository.save(twoFriedChickens());
 
         // when
         final List<Menu> actual = menuBo.list();
