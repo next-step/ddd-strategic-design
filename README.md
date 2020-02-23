@@ -66,3 +66,14 @@
 | 손님 | Guest | 주문 테이블에서 메뉴를 주문하는 주최자.  |
 
 ## 모델링
+
+- 상품(Product)은 이름과 가격을 가진다.
+- Menu는 MenuGroup과, MenuProduct, Name, Price를 가진다.
+- MenuGroup은 Menu의 목록을 가진다.
+- 단체 지정은 Table의 목록을 가진다.
+- 단체 해지는 OrderStatusCondition에 따라 변경한다.
+- Order는 OrderInfo를 가진다.
+- OrderInfo는 주문 테이블 (OrderTable), 주문 상태(OrderStauts), 주문시간(OrderedTime), 주문 상품(OrderLineItem) 을 가진다.
+- 주문 테이블은 손님수(NumberOfGuest)와 주문 테이블의 상태(OrderTableStatus)를 가진다.
+- Order은 주문의 상태를 표현하는 OrderStatus를 가진다.
+- OrderStatus는 OrderStatusCondition에 따라 변경한다.
