@@ -1,12 +1,12 @@
 package kitchenpos.order;
 
-import kitchenpos.order.dao.OrderLineItemDao;
+import kitchenpos.order.repository.OrderLineItemRepository;
 import kitchenpos.order.model.OrderLineItem;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryOrderLineItemDao implements OrderLineItemDao {
+public class InMemoryOrderLineItemDao implements OrderLineItemRepository {
     private final Map<Long, OrderLineItem> entities = new HashMap<>();
 
     @Override

@@ -1,6 +1,7 @@
 package kitchenpos.order.dao;
 
 import kitchenpos.order.model.OrderLineItem;
+import kitchenpos.order.repository.OrderLineItemRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JdbcTemplateOrderLineItemDao implements OrderLineItemDao {
+public class JdbcTemplateOrderLineItemDao implements OrderLineItemRepository {
     private static final String TABLE_NAME = "order_line_item";
     private static final String KEY_COLUMN_NAME = "seq";
 

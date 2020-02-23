@@ -1,10 +1,10 @@
 package kitchenpos.order;
 
 import kitchenpos.menu.InMemoryMenuDao;
-import kitchenpos.menu.dao.MenuDao;
-import kitchenpos.order.dao.OrderDao;
-import kitchenpos.order.dao.OrderLineItemDao;
-import kitchenpos.order.dao.OrderTableDao;
+import kitchenpos.menu.repository.MenuRepository;
+import kitchenpos.order.repository.OrderRepository;
+import kitchenpos.order.repository.OrderLineItemRepository;
+import kitchenpos.order.repository.OrderTableRepository;
 import kitchenpos.order.model.Order;
 import kitchenpos.order.model.OrderStatus;
 import kitchenpos.order.bo.OrderBo;
@@ -23,18 +23,18 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class OrderBoTest {
-    private final MenuDao menuDao = new InMemoryMenuDao();
-    private final OrderDao orderDao = new InMemoryOrderDao();
-    private final OrderLineItemDao orderLineItemDao = new InMemoryOrderLineItemDao();
-    private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
+    private final MenuRepository menuRepository = new InMemoryMenuDao();
+    private final OrderRepository orderRepository = new InMemoryOrderDao();
+    private final OrderLineItemRepository orderLineItemRepository = new InMemoryOrderLineItemDao();
+    private final OrderTableRepository orderTableRepository = new InMemoryOrderTableDao();
 
     private OrderBo orderBo;
 
     @BeforeEach
     void setUp() {
-        orderBo = new OrderBo(menuDao, orderDao, orderLineItemDao, orderTableDao);
-        menuDao.save(twoFriedChickens());
-        orderTableDao.save(table1());
+        orderBo = new OrderBo(menuRepository, orderRepository, orderLineItemRepository, orderTableRepository);
+        menuRepository.save(twoFriedChickens());
+        orderTableRepository.save(table1());
     }
 
     @DisplayName("1 개 이상의 등록된 메뉴로 주문을 등록할 수 있다.")
@@ -54,7 +54,7 @@ class OrderBoTest {
     @Test
     void createFromEmptyTable() {
         // given
-        orderTableDao.save(emptyTable1());
+        orderTableRepository.save(emptyTable1());
 
         final Order expected = orderForTable1();
 
@@ -67,7 +67,7 @@ class OrderBoTest {
     @Test
     void list() {
         // given
-        final Order orderForTable1 = orderDao.save(orderForTable1());
+        final Order orderForTable1 = orderRepository.save(orderForTable1());
 
         // when
         final List<Order> actual = orderBo.list();
@@ -81,7 +81,7 @@ class OrderBoTest {
     @EnumSource(value = OrderStatus.class)
     void changeOrderStatus(final OrderStatus orderStatus) {
         // given
-        final Long orderId = orderDao.save(orderForTable1()).getId();
+        final Long orderId = orderRepository.save(orderForTable1()).getId();
 
         final Order expected = new Order();
         expected.setOrderStatus(orderStatus.name());
@@ -104,7 +104,7 @@ class OrderBoTest {
         // given
         final Order orderForTable1 = orderForTable1();
         orderForTable1.setOrderStatus(OrderStatus.COMPLETION.name());
-        final Long orderId = orderDao.save(orderForTable1).getId();
+        final Long orderId = orderRepository.save(orderForTable1).getId();
 
         final Order expected = new Order();
         expected.setOrderStatus(orderStatus.name());

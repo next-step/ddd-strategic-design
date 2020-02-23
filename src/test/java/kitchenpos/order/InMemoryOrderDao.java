@@ -1,11 +1,11 @@
 package kitchenpos.order;
 
-import kitchenpos.order.dao.OrderDao;
+import kitchenpos.order.repository.OrderRepository;
 import kitchenpos.order.model.Order;
 
 import java.util.*;
 
-public class InMemoryOrderDao implements OrderDao {
+public class InMemoryOrderDao implements OrderRepository {
     private final Map<Long, Order> entities = new HashMap<>();
 
     @Override

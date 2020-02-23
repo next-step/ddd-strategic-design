@@ -1,6 +1,7 @@
 package kitchenpos.order.dao;
 
 import kitchenpos.hall.model.OrderTable;
+import kitchenpos.order.repository.OrderTableRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class JdbcTemplateOrderTableDao implements OrderTableDao {
+public class JdbcTemplateOrderTableDao implements OrderTableRepository {
     private static final String TABLE_NAME = "order_table";
     private static final String KEY_COLUMN_NAME = "id";
 
