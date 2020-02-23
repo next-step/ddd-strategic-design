@@ -76,9 +76,9 @@
 
 ## 모델링
 
-- 상품(Product)은 이름과 상품가격(Product Price)을 가진다.
-- 메뉴(Menu)는 메뉴이름 메뉴가격(MenuPrice), 메뉴구성상품(MenuProduct)과 메뉴그룹(MenuGroup)을 가진다.
-- 메뉴그룹(ㅡ두ㅕ)
-- 주문(Orders)은 주문한 주문한 메뉴들(OrderLineItem)과 손님에게 배정한 테이블(AssignedOrderTable)를 가진다.
-- 주문테이블(OrderTable)은 주문정보(OrderInfo)와 고객의수(NumberOfGuest), 주문테이블상태(OrderTableStatus)를 가진다.
-- 단체석(GroupTable)은 단체석으로 지정한 테이블(GroupedOrderTable) 목록을 가진다.
+- 상품(``Product``)은 이름과 상품가격(``Product Price``)을 가진다.
+- 메뉴(``Menu``)는 메뉴이름 메뉴가격(``MenuPrice``), 메뉴구성상품(``MenuProduct``)과 메뉴그룹(``MenuGroup``)을 가진다.
+- 메뉴그룹(``MenuGroup``)은 메뉴(``Menu``)의 목록을 가진다.
+- 주문(``Orders``)은 주문한 주문한 메뉴들(``OrderLineItem``)과 손님에게 배정한 테이블(``AssignedOrderTable``)를 가진다.
+- 주문테이블(``OrderTable``)은 주문정보(``OrderInfo``)와 고객의수(``NumberOfGuest``), 주문테이블상태(``OrderTableStatus``)를 가진다.
+- 단체석(``GroupTable``)은 단체석으로 지정한 테이블(``GroupedOrderTable``) 목록을 가진다.
