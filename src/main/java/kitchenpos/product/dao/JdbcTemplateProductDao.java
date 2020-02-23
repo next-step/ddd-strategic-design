@@ -1,6 +1,7 @@
 package kitchenpos.product.dao;
 
 import kitchenpos.product.model.Product;
+import kitchenpos.product.repository.ProductRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JdbcTemplateProductDao implements ProductDao {
+public class JdbcTemplateProductDao implements ProductRepository {
     private static final String TABLE_NAME = "product";
     private static final String KEY_COLUMN_NAME = "id";
 
