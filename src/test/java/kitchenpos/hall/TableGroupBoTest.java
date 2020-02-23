@@ -2,9 +2,9 @@ package kitchenpos.hall;
 
 import kitchenpos.order.InMemoryOrderDao;
 import kitchenpos.order.InMemoryOrderTableDao;
-import kitchenpos.order.dao.OrderDao;
-import kitchenpos.order.dao.OrderTableDao;
-import kitchenpos.hall.dao.TableGroupDao;
+import kitchenpos.order.repository.OrderRepository;
+import kitchenpos.order.repository.OrderTableRepository;
+import kitchenpos.hall.repository.TableGroupRepository;
 import kitchenpos.hall.model.TableGroup;
 import kitchenpos.hall.bo.TableGroupBo;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class TableGroupBoTest {
-    private final OrderDao orderDao = new InMemoryOrderDao();
-    private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
-    private final TableGroupDao tableGroupDao = new InMemoryTableGroupDao();
+    private final OrderRepository orderRepository = new InMemoryOrderDao();
+    private final OrderTableRepository orderTableRepository = new InMemoryOrderTableDao();
+    private final TableGroupRepository tableGroupRepository = new InMemoryTableGroupDao();
 
     private TableGroupBo tableGroupBo;
 
     @BeforeEach
     void setUp() {
-        tableGroupBo = new TableGroupBo(orderDao, orderTableDao, tableGroupDao);
-        orderTableDao.save(emptyTable1());
-        orderTableDao.save(emptyTable2());
+        tableGroupBo = new TableGroupBo(orderRepository, orderTableRepository, tableGroupRepository);
+        orderTableRepository.save(emptyTable1());
+        orderTableRepository.save(emptyTable2());
     }
 
     @DisplayName("2 개 이상의 빈 테이블을 단체로 지정할 수 있다.")
@@ -51,7 +51,7 @@ class TableGroupBoTest {
     @Test
     void createWithGroupedTable() {
         // given
-        orderTableDao.save(groupedTable1());
+        orderTableRepository.save(groupedTable1());
 
         final TableGroup expected = table1AndTable2();
 
@@ -76,7 +76,7 @@ class TableGroupBoTest {
     void ungroupNotCalculatedTableGroup() {
         // given
         final Long tableGroupId = saveTable1AndTable2().getId();
-        orderDao.save(orderForTable1());
+        orderRepository.save(orderForTable1());
 
         // when
         // then
@@ -84,9 +84,9 @@ class TableGroupBoTest {
     }
 
     private TableGroup saveTable1AndTable2() {
-        final TableGroup tableGroup = tableGroupDao.save(table1AndTable2());
-        orderTableDao.save(groupedTable1());
-        orderTableDao.save(groupedTable2());
+        final TableGroup tableGroup = tableGroupRepository.save(table1AndTable2());
+        orderTableRepository.save(groupedTable1());
+        orderTableRepository.save(groupedTable2());
         return tableGroup;
     }
 }

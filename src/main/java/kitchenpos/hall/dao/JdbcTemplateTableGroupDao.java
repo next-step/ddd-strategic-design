@@ -1,6 +1,7 @@
 package kitchenpos.hall.dao;
 
 import kitchenpos.hall.model.TableGroup;
+import kitchenpos.hall.repository.TableGroupRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JdbcTemplateTableGroupDao implements TableGroupDao {
+public class JdbcTemplateTableGroupDao implements TableGroupRepository {
     private static final String TABLE_NAME = "table_group";
     private static final String KEY_COLUMN_NAME = "id";
 

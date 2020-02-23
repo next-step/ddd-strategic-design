@@ -2,8 +2,8 @@ package kitchenpos.hall;
 
 import kitchenpos.order.InMemoryOrderDao;
 import kitchenpos.order.InMemoryOrderTableDao;
-import kitchenpos.order.dao.OrderDao;
-import kitchenpos.order.dao.OrderTableDao;
+import kitchenpos.order.repository.OrderRepository;
+import kitchenpos.order.repository.OrderTableRepository;
 import kitchenpos.order.model.Order;
 import kitchenpos.order.model.OrderStatus;
 import kitchenpos.hall.model.OrderTable;
@@ -24,14 +24,14 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class TableBoTest {
-    private final OrderDao orderDao = new InMemoryOrderDao();
-    private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
+    private final OrderRepository orderRepository = new InMemoryOrderDao();
+    private final OrderTableRepository orderTableRepository = new InMemoryOrderTableDao();
 
     private TableBo tableBo;
 
     @BeforeEach
     void setUp() {
-        tableBo = new TableBo(orderDao, orderTableDao);
+        tableBo = new TableBo(orderRepository, orderTableRepository);
     }
 
     @DisplayName("테이블을 등록할 수 있다.")
@@ -56,7 +56,7 @@ class TableBoTest {
     @Test
     void list() {
         // given
-        final OrderTable table1 = orderTableDao.save(table1());
+        final OrderTable table1 = orderTableRepository.save(table1());
 
         // when
         final List<OrderTable> actual = tableBo.list();
@@ -70,7 +70,7 @@ class TableBoTest {
     @ValueSource(booleans = {true, false})
     void changeEmpty(final boolean empty) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -91,7 +91,7 @@ class TableBoTest {
     @ValueSource(booleans = {true, false})
     void changeEmptyOfGroupedTable(final boolean empty) {
         // given
-        final Long orderTableId = orderTableDao.save(groupedTable1()).getId();
+        final Long orderTableId = orderTableRepository.save(groupedTable1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -108,11 +108,11 @@ class TableBoTest {
     @CsvSource(value = {"true,COOKING", "false,COOKING", "true,MEAL", "false,MEAL"})
     void changeEmpty(final boolean empty, final OrderStatus orderStatus) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final Order orderForTable1 = orderForTable1();
         orderForTable1.setOrderStatus(orderStatus.name());
-        orderDao.save(orderForTable1);
+        orderRepository.save(orderForTable1);
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -129,7 +129,7 @@ class TableBoTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void changeNumberOfGuests(final int numberOfGuests) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(numberOfGuests);
@@ -149,7 +149,7 @@ class TableBoTest {
     @Test
     void changeNumberOfGuests() {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(-1);
@@ -166,7 +166,7 @@ class TableBoTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void changeNumberOfGuestsInEmptyTable(final int numberOfGuests) {
         // given
-        final Long orderTableId = orderTableDao.save(emptyTable1()).getId();
+        final Long orderTableId = orderTableRepository.save(emptyTable1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(numberOfGuests);

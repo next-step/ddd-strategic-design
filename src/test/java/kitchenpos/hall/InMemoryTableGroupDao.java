@@ -1,11 +1,11 @@
 package kitchenpos.hall;
 
-import kitchenpos.hall.dao.TableGroupDao;
+import kitchenpos.hall.repository.TableGroupRepository;
 import kitchenpos.hall.model.TableGroup;
 
 import java.util.*;
 
-public class InMemoryTableGroupDao implements TableGroupDao {
+public class InMemoryTableGroupDao implements TableGroupRepository {
     private final Map<Long, TableGroup> entities = new HashMap<>();
 
     @Override

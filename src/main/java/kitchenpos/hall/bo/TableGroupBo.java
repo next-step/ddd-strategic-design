@@ -1,8 +1,8 @@
 package kitchenpos.hall.bo;
 
-import kitchenpos.order.dao.OrderDao;
-import kitchenpos.order.dao.OrderTableDao;
-import kitchenpos.hall.dao.TableGroupDao;
+import kitchenpos.order.repository.OrderRepository;
+import kitchenpos.order.repository.OrderTableRepository;
+import kitchenpos.hall.repository.TableGroupRepository;
 import kitchenpos.order.model.OrderStatus;
 import kitchenpos.hall.model.OrderTable;
 import kitchenpos.hall.model.TableGroup;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class TableGroupBo {
-    private final OrderDao orderDao;
-    private final OrderTableDao orderTableDao;
-    private final TableGroupDao tableGroupDao;
+    private final OrderRepository orderRepository;
+    private final OrderTableRepository orderTableRepository;
+    private final TableGroupRepository tableGroupRepository;
 
-    public TableGroupBo(final OrderDao orderDao, final OrderTableDao orderTableDao, final TableGroupDao tableGroupDao) {
-        this.orderDao = orderDao;
-        this.orderTableDao = orderTableDao;
-        this.tableGroupDao = tableGroupDao;
+    public TableGroupBo(final OrderRepository orderRepository, final OrderTableRepository orderTableRepository, final TableGroupRepository tableGroupRepository) {
+        this.orderRepository = orderRepository;
+        this.orderTableRepository = orderTableRepository;
+        this.tableGroupRepository = tableGroupRepository;
     }
 
     @Transactional
@@ -40,7 +40,7 @@ public class TableGroupBo {
                 .map(OrderTable::getId)
                 .collect(Collectors.toList());
 
-        final List<OrderTable> savedOrderTables = orderTableDao.findAllByIdIn(orderTableIds);
+        final List<OrderTable> savedOrderTables = orderTableRepository.findAllByIdIn(orderTableIds);
 
         if (orderTables.size() != savedOrderTables.size()) {
             throw new IllegalArgumentException();
@@ -54,13 +54,13 @@ public class TableGroupBo {
 
         tableGroup.setCreatedDate(LocalDateTime.now());
 
-        final TableGroup savedTableGroup = tableGroupDao.save(tableGroup);
+        final TableGroup savedTableGroup = tableGroupRepository.save(tableGroup);
 
         final Long tableGroupId = savedTableGroup.getId();
         for (final OrderTable savedOrderTable : savedOrderTables) {
             savedOrderTable.setTableGroupId(tableGroupId);
             savedOrderTable.setEmpty(false);
-            orderTableDao.save(savedOrderTable);
+            orderTableRepository.save(savedOrderTable);
         }
         savedTableGroup.setOrderTables(savedOrderTables);
 
@@ -69,20 +69,20 @@ public class TableGroupBo {
 
     @Transactional
     public void ungroup(final Long tableGroupId) {
-        final List<OrderTable> orderTables = orderTableDao.findAllByTableGroupId(tableGroupId);
+        final List<OrderTable> orderTables = orderTableRepository.findAllByTableGroupId(tableGroupId);
 
         final List<Long> orderTableIds = orderTables.stream()
                 .map(OrderTable::getId)
                 .collect(Collectors.toList());
 
-        if (orderDao.existsByOrderTableIdInAndOrderStatusIn(
+        if (orderRepository.existsByOrderTableIdInAndOrderStatusIn(
                 orderTableIds, Arrays.asList(OrderStatus.COOKING.name(), OrderStatus.MEAL.name()))) {
             throw new IllegalArgumentException();
         }
 
         for (final OrderTable orderTable : orderTables) {
             orderTable.setTableGroupId(null);
-            orderTableDao.save(orderTable);
+            orderTableRepository.save(orderTable);
         }
     }
 }
