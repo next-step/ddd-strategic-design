@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.MenuGroupBo;
-import kitchenpos.model.MenuGroup;
+import kitchenpos.menugroup.bo.MenuGroupBo;
+import kitchenpos.menugroup.controller.MenuGroupRestController;
+import kitchenpos.menugroup.model.MenuGroup;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
