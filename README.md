@@ -56,14 +56,91 @@
 | --- | --- | --- |
 |상품| product |제공 가능한 음식의 유형|
 |메뉴| menu | **상품**의 묶음으로 주문할 대상을 지칭하는 최소 단위|
+|가격| price | 대상의 원화 가치를 나타내는 1 이상의 자연수|
 |메뉴그룹| menu group |**메뉴**를 분류하는 유형|
-|손님| guest |**주문**을 시작하는 주체로 개인이나 단체|
-|주문| order |손님의 주문 내역으로 테이블 정보, 주문의 상태, 주문 시간, 주문된 메뉴 정보를 포함한다.|
-|주문메뉴| order item |**주문**에서 선택한 **메뉴**와 그 수량|
+|손님| guest  |**주문**을 시작하는 주체로 개인이나 단체|
+|손님인원| guest Number |**손님**의 인원수로 1 이상의 자연수|
+|단체지정| group order table |2개 이상의 **주문테이블**을 하나의 **손님**이 차지하는 것을 의미한다. 주문은 하나로 간주한다.|
 |주문테이블| order table |손님의 주문이 이루어지는 곳을 뜻한다. 손님의 수와 비어있는지 여부를 알 수 있다.|
-|테이블배정| assign order table |비어있는 **주문테이블**을 **손님**에게 할당하는 행위|
+|주문| order |손님의 주문 내역으로 테이블 정보, 주문의 상태, 주문 시간, 주문된 메뉴 정보를 포함한다.|
+|주문항목| order item |**주문**에서 선택한 **메뉴**와 그 수량|
 |주문조리상태| order status cooking |**주문음식**을 만들고 있는 주문 거래 상태|
 |주문식사상태| order status meal |**손님**이 **주문음식**을 소비하고 있는 주문 거래 상태|
 |주문계산완료상태| order status completion |**손님**이 **주문계산**으로 산출된 금액을 지불하여 주문 거래가 완성된 상태|
 
+## 비즈니스 흐름을 먼저 분석한 후에 객체 모델을 한다.
+* 비즈니스 업무는 크게 두 단계로 나누어 진다.
+    * 영업준비: 
+        * 신 메뉴가 나왔다.
+        * 메뉴가 중단되었다.
+        * 가격이 변경되었다. 
+        * 테이블이 배치되었다.
+         
+    * 주문판매: 
+        * 손님이 테이블에 앉았다.
+        * 주문을 받았다.
+        * 주문한 메뉴가 만들어 졌다.
+        * 주문한 메뉴 가격의 지불액을 받았다.
+        * 손님이 테이블을 비웠다.
+
+* 메뉴와 테이블은 어떤 단계에서 말하는지에 따라 의미가 차이가 있다.
+    * 영업준비의 메뉴는 판매할 수 있는 음식의 묶음을 잘 구성하려는 것이고, 주문판매의 메뉴는 손님에게 무엇을 제공하고 지불액을 계산하는 목적이 크다.
+    * 영업준비의 테이블은 공간적 위치를 지정하는 것이고, 주문판매의 테이블은 주문하는 주체(손님)를 식별하는 의미가 크다. 
+
 ## 모델링
+* Product
+    * 이름과 Price을 정하여 Product를 생성한다.
+    * Product의 이름으로 서로 구분한다.
+    * Product를 가진 Menu가 없어야 삭제된다.
+    * 존재하는 Product들 목록을 제공한다.
+    * Product를 가진 Menu가 없거나 모두 판매 중지된 Menu 일 때만 Product Price가 변경된다.
+
+* MenuGroup
+    * 이름을 정하여 MenuGroup을 생성한다.
+    * MenuGroup의 이름으로 서로 구분한다.
+    * MenuGroup에 속한 Menu가 없어야 삭제된다.
+    * 존재하는 MenuGroup들 목록을 제공한다.
+
+* Menu
+    * 한 종류, 한 개 이상의 Product 묶음과 MenuGroup을 지정하고, 이름을 정하여 Menu를 생성한다.
+        * Menu Price는 Product 묶음의 Price 보다 작거나 같아야 한다.
+        * Menu는 반드시 한 종류의 MenuGroup에 속해야 한다.
+    * Menu의 현재 MenuGroup을 다른 MenuGroup으로 지정하여 변경한다.
+    * 주문받은 사실이 없는 Menu는 삭제될 수 있다.
+    * 주문받은 사실이 있는 Menu는 판매중지 표시할 수 있다.
+    * 존재하는 Menu들 목록을 제공한다.
+        * MenuGroup, Product, Price를 조건으로 목록을 제공한다.
+
+* OrderTable
+    * 번호를 정하여 OrderTable을 생성한다.
+    * 존재하는 OrderTable들 목록을 제공한다.
+    * GuestNumber 크기를 가진 Guest가 방문하면, Guest가 없는 OrderTable에 지정한다. 
+    * Guest가 없는 OrderTable에 GuestNumber를 변경할 수 없다. 
+    * Guest가 있는 OrderTable에서 Guest를 지정해제 할 수 있다.
+        * 단, GroupOrderTable에 지정된 OrderTable들은 Guest를 지정해제 할 수 없다.
+        * 또, Order가 있는 OrderTable들은 Guest를 지정해제 할 수 없다.
+    * Guest가 있는 OrderTable은 Menu들 선택하여 Order를 가질 수 있다.
+
+* Guest
+    * GuestNumber를 반드시 가진다.
+
+* GroupOrderTable
+    * Guest가 없는 OrderTable을 2개 이상 묶어서 GroupOrderTable을 생성하여 지정한다. 
+    * GroupOrderTable은 생성될 때 유일성을 보장받는다. 
+        즉, 서로 다른 시점에 묶었던 GroupOrderTable에 속한 OrderTable들이 모두 같아도 GroupOrderTable은 서로 다른 것이다.
+    * GroupOrderTable에 묶인 모든 OrderTable에서 해제하고 삭제한다. 
+        * 단, 속한 OrderTable들의 Order 상태가 식사중 또는 조리중이 있다면 해재할 수 없다.
+
+* Order
+    * Order는 OrderTable, Order status, 주문한 시간, OrderItem들에 관한 정보를 갖는다.
+    * 한개 이상의 OrderItem을 생성하고 OrderTable을 지정하여 Order를 생성한다.
+        * 단, Guest가 없는 OrderTable은 Order를 생성할 수 없다.
+        * Order의 처음 상태는 조리중이다.
+    * 존재하는 Order들 목록을 제공한다.
+    * Order 상태를 변경할 수 있다.
+        * 단, Order 상태가 계산완료인 경우에는 변경할 수 없다.
+    
+* OrderItem
+    * 판매상태의 Menu와 그 수량을 정하여 OrderItem을 생성하여 Order에 지정된다.
+    * OrderItem을 삭제할 수 있다.
+    * OrderItme의 수량을 변경할 수 있다.
