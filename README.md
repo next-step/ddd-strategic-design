@@ -62,10 +62,11 @@
 |메뉴그룹|MenuGroup|메뉴를 분류해놓은 그룹이다.|
 |주문|Orders|고객이 요청한 주문을 의미한다.|
 |주문한메뉴|OrderedMenu|손님이 주문한 메뉴로, 한가지 이상의 메뉴를 중복없이 주문한다.|
-|배정한테이블|AssignedOrderTable|손님에게 배정한 좌석으로, 좌석이 비어있어야만 배정 할 수 있다.|
+|배정한 주문 테이블|AssignedOrderTable|손님에게 배정한 좌석으로, 좌석이 비어있어야만 배정 할 수 있다.|
 |주문테이블|OrderTable|고객이 앉은 테이블의 정보를 나타낸다. 단체석으로 지정된 경우 단체석 번호가 적혀있다.|
 |주문정보|OrderInfo|주문번호, 주문한 메뉴, 주문한 시간이 적혀있다.|
 |주문한 메뉴 목록|OrderedMenu|고객이 주문한 메뉴, 같은 메뉴를 중복해서 주문 할 수 없다.|
+|주문메뉴상태|OrderedMenuStatus|주문한 메뉴의 상태를 나타낸다, 조리중(COOKING), 조리완료(COOKING_COMPLETE)으로 표시한다.|
 |고객의 수|Number of Guest|주문테이블에 앉은 고객으로, 고객의 수가 변할 수 있다.|
 |주문테이블 상태|OrderTableStatus|고객이 주문한 상품의 상태를 나타낸다. 조리중(COOKING), 식사중(MEAL), 식사완료(COMPLITION)으로 표시한다.|
 |조리중|Cooking|고객이 상품을 주문한 직후부터 상품이 고객에게 전달되기 전까지를 의미한다.|
@@ -78,7 +79,10 @@
 
 - 상품(``Product``)은 이름과 상품가격(``Product Price``)을 가진다.
 - 메뉴(``Menu``)는 메뉴이름 메뉴가격(``MenuPrice``), 메뉴구성상품(``MenuProduct``)과 메뉴그룹(``MenuGroup``)을 가진다.
+- 메뉴(``Menu``)를 메뉴그룹(``MenuGroup``)에 추가한다.
 - 메뉴그룹(``MenuGroup``)은 메뉴(``Menu``)의 목록을 가진다.
-- 주문(``Orders``)은 주문한 주문한 메뉴들(``OrderLineItem``)과 손님에게 배정한 테이블(``AssignedOrderTable``)를 가진다.
+- 주문(``Orders``)은 주문한 메뉴들(``OrderLineItem``)과 손님에게 배정한 주문 테이블(``AssignedOrderTable``)를 가진다.
 - 주문테이블(``OrderTable``)은 주문정보(``OrderInfo``)와 고객의수(``NumberOfGuest``), 주문테이블상태(``OrderTableStatus``)를 가진다.
 - 단체석(``GroupTable``)은 단체석으로 지정한 테이블(``GroupedOrderTable``) 목록을 가진다.
+- 주문한 메뉴(``OrderedMenu``)는 주문메뉴상태(``OrderedMenuStatus``)를 가진다.
+- 주문한 메뉴(``OrderedMenu``)는 주문메뉴상태(``OrderedMenuStatus``)로 주문테이블상태(OrderTableStatus)를 변경 할 수 있다.
