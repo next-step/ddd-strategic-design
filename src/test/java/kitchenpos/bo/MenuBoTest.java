@@ -1,10 +1,11 @@
 package kitchenpos.bo;
 
-import kitchenpos.dao.MenuDao;
-import kitchenpos.dao.MenuGroupDao;
-import kitchenpos.dao.MenuProductDao;
-import kitchenpos.dao.ProductDao;
-import kitchenpos.model.Menu;
+import kitchenpos.menus.domain.MenuDao;
+import kitchenpos.menugroups.domain.MenuGroupDao;
+import kitchenpos.menus.domain.MenuProductDao;
+import kitchenpos.menus.application.MenuBo;
+import kitchenpos.products.domain.ProductDao;
+import kitchenpos.menus.domain.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
