@@ -59,7 +59,7 @@
 |가격| price | 대상의 원화 가치를 나타내는 1 이상의 자연수|
 |메뉴그룹| menu group |**메뉴**를 분류하는 유형|
 |손님| guest  |**주문**을 시작하는 주체로 개인이나 단체|
-|손님인원| guest Number |**손닙**의 인원수로 1 이상의 자연수|
+|손님인원| guest Number |**손님**의 인원수로 1 이상의 자연수|
 |단체지정| group order table |2개 이상의 **주문테이블**을 하나의 **손님**이 차지하는 것을 의미한다. 주문은 하나로 간주한다.|
 |주문테이블| order table |손님의 주문이 이루어지는 곳을 뜻한다. 손님의 수와 비어있는지 여부를 알 수 있다.|
 |주문| order |손님의 주문 내역으로 테이블 정보, 주문의 상태, 주문 시간, 주문된 메뉴 정보를 포함한다.|
@@ -102,9 +102,9 @@
     * 존재하는 MenuGroup들 목록을 제공한다.
 
 * Menu
-    * 한 종류, 한 개 이상의 Product 묶음에 이름을 정하여 Menu를 생성한다.
-        * 반드시 Menu는 한 종류의 MenuGroup에 속해야 한다.
-    * Menu Price는 Product 묶음의 Price 보다 작거나 같아야 한다.
+    * 한 종류, 한 개 이상의 Product 묶음과 MenuGroup을 지정하고, 이름을 정하여 Menu를 생성한다.
+        * Menu Price는 Product 묶음의 Price 보다 작거나 같아야 한다.
+        * Menu는 반드시 한 종류의 MenuGroup에 속해야 한다.
     * Menu의 현재 MenuGroup을 다른 MenuGroup으로 지정하여 변경한다.
     * 주문받은 사실이 없는 Menu는 삭제될 수 있다.
     * 주문받은 사실이 있는 Menu는 판매중지 표시할 수 있다.
@@ -132,6 +132,7 @@
         * 단, 속한 OrderTable들의 Order 상태가 식사중 또는 조리중이 있다면 해재할 수 없다.
 
 * Order
+    * Order는 OrderTable, Order status, 주문한 시간, OrderItem들에 관한 정보를 갖는다.
     * 한개 이상의 OrderItem을 생성하고 OrderTable을 지정하여 Order를 생성한다.
         * 단, Guest가 없는 OrderTable은 Order를 생성할 수 없다.
         * Order의 처음 상태는 조리중이다.
@@ -143,5 +144,3 @@
     * 판매상태의 Menu와 그 수량을 정하여 OrderItem을 생성하여 Order에 지정된다.
     * OrderItem을 삭제할 수 있다.
     * OrderItme의 수량을 변경할 수 있다.
-
-
