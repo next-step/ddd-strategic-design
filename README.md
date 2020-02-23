@@ -61,8 +61,21 @@
 | 테이블 | Table | 오프라인 매장에서 운영중인 테이블을 나타낸다. 테이블의 인원수와 빈 자리인지 여부를 나타 낸다. | 
 | 단체 지정 | TableGroup | 2개 이상의 빈 테이블을 묶는 것을 나타낸다. | 
 | 주문 | Order | 상품으로 등록된 메뉴에서 주문을 나타낸다. 주문 상태 값이 존재한다. |
+| 주문테이블 | OrderTable | 주문 테이블에 대한 인원수, 비어있음, 단체지정과 같은 정보를 담고있다.  |
 | 주문 아이템 | OrderLineItem | 주문에 따른 아이템 정보를 나타낸다. |
 | 주문상태 | OrderStatus | 주문상태는 COOKING, MEAL, COMPLETION 으로 구성된다. |
 
 ## 모델링
+- Product는 매장에서 판매하는 음식을 나타낸다.
+- MenuProduct는 Menu와 Product의 관계와 수량에 대한 정보를 나타낸다.
+- Menu는 여러개의 MenuProduct들로 구성된다. 
+- MenuGroup은 Menu들을 묶을 수 있다.
+- Table은 매장내의 테이블을 의미한다.
+- TableGroup은 단체 손님을 묶기 위해서 사용된다.
+- Order는 Menu를 통해서 주문 정보를 나타낸다.
+- OrderTable은 Order와 Table에 대한 정보를 담고 있다. 
+- OrderLineItem은 Order와 Menu사이의 관계를 나타낸다.
+- OrderLineItem은 수량과 순차에 대한 정보를 나타낸다.
+- OrderStatus는 `요리중`, `식사중`, `식사완료` 와 같이 구성된다.
+
 ![model](https://user-images.githubusercontent.com/28615416/74082848-761ca400-4aa1-11ea-809f-2dcbf016bbd7.png)
