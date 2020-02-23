@@ -1,8 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.ordertablegroups.application.TableGroupBo;
-import kitchenpos.ordertablegroups.domain.TableGroup;
-import kitchenpos.ordertablegroups.ui.TableGroupRestController;
+import kitchenpos.ordertablegroups.application.OrderTableGroupBo;
+import kitchenpos.ordertablegroups.domain.OrderTableGroup;
+import kitchenpos.ordertablegroups.ui.OrderTableGroupRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -23,19 +23,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(TableGroupRestController.class)
+@WebMvcTest(OrderTableGroupRestController.class)
 @Import(HttpEncodingAutoConfiguration.class)
-class TableGroupRestControllerTest {
+class OrderTableGroupRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private TableGroupBo tableGroupBo;
+    private OrderTableGroupBo orderTableGroupBo;
 
     @Test
     void create() throws Exception {
         // given
-        given(tableGroupBo.create(any(TableGroup.class))).willReturn(table1AndTable2());
+        given(orderTableGroupBo.create(any(OrderTableGroup.class))).willReturn(table1AndTable2());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/table-groups")

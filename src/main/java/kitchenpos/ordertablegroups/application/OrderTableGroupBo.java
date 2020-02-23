@@ -1,11 +1,11 @@
 package kitchenpos.ordertablegroups.application;
 
 import kitchenpos.orders.domain.OrderDao;
-import kitchenpos.ordertables.domain.OrderTableDao;
-import kitchenpos.ordertablegroups.domain.TableGroupDao;
-import kitchenpos.orders.domain.OrderStatus;
 import kitchenpos.ordertables.domain.OrderTable;
-import kitchenpos.ordertablegroups.domain.TableGroup;
+import kitchenpos.ordertables.domain.OrderTableDao;
+import kitchenpos.ordertablegroups.domain.OrderTableGroupDao;
+import kitchenpos.orders.domain.OrderStatus;
+import kitchenpos.ordertablegroups.domain.OrderTableGroup;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -17,20 +17,20 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class TableGroupBo {
+public class OrderTableGroupBo {
     private final OrderDao orderDao;
     private final OrderTableDao orderTableDao;
-    private final TableGroupDao tableGroupDao;
+    private final OrderTableGroupDao orderTableGroupDao;
 
-    public TableGroupBo(final OrderDao orderDao, final OrderTableDao orderTableDao, final TableGroupDao tableGroupDao) {
+    public OrderTableGroupBo(final OrderDao orderDao, final OrderTableDao orderTableDao, final OrderTableGroupDao orderTableGroupDao) {
         this.orderDao = orderDao;
         this.orderTableDao = orderTableDao;
-        this.tableGroupDao = tableGroupDao;
+        this.orderTableGroupDao = orderTableGroupDao;
     }
 
     @Transactional
-    public TableGroup create(final TableGroup tableGroup) {
-        final List<OrderTable> orderTables = tableGroup.getOrderTables();
+    public OrderTableGroup create(final OrderTableGroup orderTableGroup) {
+        final List<OrderTable> orderTables = orderTableGroup.getOrderTables();
 
         if (CollectionUtils.isEmpty(orderTables) || orderTables.size() < 2) {
             throw new IllegalArgumentException();
@@ -52,19 +52,19 @@ public class TableGroupBo {
             }
         }
 
-        tableGroup.setCreatedDate(LocalDateTime.now());
+        orderTableGroup.setCreatedDate(LocalDateTime.now());
 
-        final TableGroup savedTableGroup = tableGroupDao.save(tableGroup);
+        final OrderTableGroup savedOrderTableGroup = orderTableGroupDao.save(orderTableGroup);
 
-        final Long tableGroupId = savedTableGroup.getId();
+        final Long tableGroupId = savedOrderTableGroup.getId();
         for (final OrderTable savedOrderTable : savedOrderTables) {
             savedOrderTable.setTableGroupId(tableGroupId);
             savedOrderTable.setEmpty(false);
             orderTableDao.save(savedOrderTable);
         }
-        savedTableGroup.setOrderTables(savedOrderTables);
+        savedOrderTableGroup.setOrderTables(savedOrderTables);
 
-        return savedTableGroup;
+        return savedOrderTableGroup;
     }
 
     @Transactional

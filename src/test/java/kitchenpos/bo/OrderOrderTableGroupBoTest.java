@@ -2,9 +2,9 @@ package kitchenpos.bo;
 
 import kitchenpos.orders.domain.OrderDao;
 import kitchenpos.ordertables.domain.OrderTableDao;
-import kitchenpos.ordertablegroups.domain.TableGroupDao;
-import kitchenpos.ordertablegroups.domain.TableGroup;
-import kitchenpos.ordertablegroups.application.TableGroupBo;
+import kitchenpos.ordertablegroups.domain.OrderTableGroupDao;
+import kitchenpos.ordertablegroups.domain.OrderTableGroup;
+import kitchenpos.ordertablegroups.application.OrderTableGroupBo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,16 +14,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class TableGroupBoTest {
+class OrderOrderTableGroupBoTest {
     private final OrderDao orderDao = new InMemoryOrderDao();
     private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
-    private final TableGroupDao tableGroupDao = new InMemoryTableGroupDao();
+    private final OrderTableGroupDao orderTableGroupDao = new InMemoryOrderTableGroupDao();
 
-    private TableGroupBo tableGroupBo;
+    private OrderTableGroupBo orderTableGroupBo;
 
     @BeforeEach
     void setUp() {
-        tableGroupBo = new TableGroupBo(orderDao, orderTableDao, tableGroupDao);
+        orderTableGroupBo = new OrderTableGroupBo(orderDao, orderTableDao, orderTableGroupDao);
         orderTableDao.save(emptyTable1());
         orderTableDao.save(emptyTable2());
     }
@@ -32,10 +32,10 @@ class TableGroupBoTest {
     @Test
     void create() {
         // given
-        final TableGroup expected = table1AndTable2();
+        final OrderTableGroup expected = table1AndTable2();
 
         // when
-        final TableGroup actual = tableGroupBo.create(expected);
+        final OrderTableGroup actual = orderTableGroupBo.create(expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -51,11 +51,11 @@ class TableGroupBoTest {
         // given
         orderTableDao.save(groupedTable1());
 
-        final TableGroup expected = table1AndTable2();
+        final OrderTableGroup expected = table1AndTable2();
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupBo.create(expected));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> orderTableGroupBo.create(expected));
     }
 
     @DisplayName("단체 지정을 해지할 수 있다.")
@@ -66,7 +66,7 @@ class TableGroupBoTest {
 
         // when
         // then
-        tableGroupBo.ungroup(tableGroupId);
+        orderTableGroupBo.ungroup(tableGroupId);
     }
 
     @DisplayName("단체 지정된 테이블의 주문 상태가 조리 또는 식사인 경우 단체 지정을 해지할 수 없다.")
@@ -78,13 +78,13 @@ class TableGroupBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupBo.ungroup(tableGroupId));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> orderTableGroupBo.ungroup(tableGroupId));
     }
 
-    private TableGroup saveTable1AndTable2() {
-        final TableGroup tableGroup = tableGroupDao.save(table1AndTable2());
+    private OrderTableGroup saveTable1AndTable2() {
+        final OrderTableGroup orderTableGroup = orderTableGroupDao.save(table1AndTable2());
         orderTableDao.save(groupedTable1());
         orderTableDao.save(groupedTable2());
-        return tableGroup;
+        return orderTableGroup;
     }
 }

@@ -1,23 +1,23 @@
 package kitchenpos.ordertablegroups.ui;
 
-import kitchenpos.ordertablegroups.application.TableGroupBo;
-import kitchenpos.ordertablegroups.domain.TableGroup;
+import kitchenpos.ordertablegroups.application.OrderTableGroupBo;
+import kitchenpos.ordertablegroups.domain.OrderTableGroup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
 @RestController
-public class TableGroupRestController {
-    private final TableGroupBo tableGroupBo;
+public class OrderTableGroupRestController {
+    private final OrderTableGroupBo orderTableGroupBo;
 
-    public TableGroupRestController(final TableGroupBo tableGroupBo) {
-        this.tableGroupBo = tableGroupBo;
+    public OrderTableGroupRestController(final OrderTableGroupBo orderTableGroupBo) {
+        this.orderTableGroupBo = orderTableGroupBo;
     }
 
     @PostMapping("/api/table-groups")
-    public ResponseEntity<TableGroup> create(@RequestBody final TableGroup tableGroup) {
-        final TableGroup created = tableGroupBo.create(tableGroup);
+    public ResponseEntity<OrderTableGroup> create(@RequestBody final OrderTableGroup orderTableGroup) {
+        final OrderTableGroup created = orderTableGroupBo.create(orderTableGroup);
         final URI uri = URI.create("/api/table-groups/" + created.getId());
         return ResponseEntity.created(uri)
                 .body(created)
@@ -26,7 +26,7 @@ public class TableGroupRestController {
 
     @DeleteMapping("/api/table-groups/{tableGroupId}")
     public ResponseEntity<Void> ungroup(@PathVariable final Long tableGroupId) {
-        tableGroupBo.ungroup(tableGroupId);
+        orderTableGroupBo.ungroup(tableGroupId);
         return ResponseEntity.noContent()
                 .build()
                 ;

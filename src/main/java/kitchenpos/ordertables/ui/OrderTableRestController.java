@@ -1,6 +1,6 @@
 package kitchenpos.ordertables.ui;
 
-import kitchenpos.ordertables.application.TableBo;
+import kitchenpos.ordertables.application.OrderTableBo;
 import kitchenpos.ordertables.domain.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,16 +9,16 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-public class TableRestController {
-    private final TableBo tableBo;
+public class OrderTableRestController {
+    private final OrderTableBo orderTableBo;
 
-    public TableRestController(final TableBo tableBo) {
-        this.tableBo = tableBo;
+    public OrderTableRestController(final OrderTableBo orderTableBo) {
+        this.orderTableBo = orderTableBo;
     }
 
     @PostMapping("/api/tables")
     public ResponseEntity<OrderTable> create(@RequestBody final OrderTable orderTable) {
-        final OrderTable created = tableBo.create(orderTable);
+        final OrderTable created = orderTableBo.create(orderTable);
         final URI uri = URI.create("/api/tables/" + created.getId());
         return ResponseEntity.created(uri)
                 .body(created)
@@ -28,7 +28,7 @@ public class TableRestController {
     @GetMapping("/api/tables")
     public ResponseEntity<List<OrderTable>> list() {
         return ResponseEntity.ok()
-                .body(tableBo.list())
+                .body(orderTableBo.list())
                 ;
     }
 
@@ -38,7 +38,7 @@ public class TableRestController {
             @RequestBody final OrderTable orderTable
     ) {
         return ResponseEntity.ok()
-                .body(tableBo.changeEmpty(orderTableId, orderTable))
+                .body(orderTableBo.changeEmpty(orderTableId, orderTable))
                 ;
     }
 
@@ -48,7 +48,7 @@ public class TableRestController {
             @RequestBody final OrderTable orderTable
     ) {
         return ResponseEntity.ok()
-                .body(tableBo.changeNumberOfGuests(orderTableId, orderTable))
+                .body(orderTableBo.changeNumberOfGuests(orderTableId, orderTable))
                 ;
     }
 }

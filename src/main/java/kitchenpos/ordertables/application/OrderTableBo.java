@@ -1,9 +1,9 @@
 package kitchenpos.ordertables.application;
 
 import kitchenpos.orders.domain.OrderDao;
+import kitchenpos.ordertables.domain.OrderTable;
 import kitchenpos.ordertables.domain.OrderTableDao;
 import kitchenpos.orders.domain.OrderStatus;
-import kitchenpos.ordertables.domain.OrderTable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class TableBo {
+public class OrderTableBo {
     private final OrderDao orderDao;
     private final OrderTableDao orderTableDao;
 
-    public TableBo(final OrderDao orderDao, final OrderTableDao orderTableDao) {
+    public OrderTableBo(final OrderDao orderDao, final OrderTableDao orderTableDao) {
         this.orderDao = orderDao;
         this.orderTableDao = orderTableDao;
     }

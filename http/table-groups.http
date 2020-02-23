@@ -3,7 +3,7 @@ POST {{host}}/api/table-groups
 Content-Type: application/json
 
 {
-  "orderTables": [
+  "orderTable": [
     {
       "id": 1
     },

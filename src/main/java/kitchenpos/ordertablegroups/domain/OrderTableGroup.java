@@ -5,7 +5,7 @@ import kitchenpos.ordertables.domain.OrderTable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class TableGroup {
+public class OrderTableGroup {
     private Long id;
     private LocalDateTime createdDate;
     private List<OrderTable> orderTables;

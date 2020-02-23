@@ -6,7 +6,7 @@ import kitchenpos.menus.domain.MenuProduct;
 import kitchenpos.orders.domain.Order;
 import kitchenpos.orders.domain.OrderLineItem;
 import kitchenpos.orders.domain.OrderStatus;
-import kitchenpos.ordertablegroups.domain.TableGroup;
+import kitchenpos.ordertablegroups.domain.OrderTableGroup;
 import kitchenpos.ordertables.domain.OrderTable;
 import kitchenpos.products.domain.Product;
 
@@ -109,12 +109,12 @@ public class Fixtures {
         return orderTable;
     }
 
-    public static TableGroup table1AndTable2() {
-        final TableGroup tableGroup = new TableGroup();
-        tableGroup.setId(TABLE1_AND_TABLE2_ID);
-        tableGroup.setCreatedDate(LocalDateTime.of(2020, 1, 1, 12, 0));
-        tableGroup.setOrderTables(Arrays.asList(groupedTable1(), groupedTable2()));
-        return tableGroup;
+    public static OrderTableGroup table1AndTable2() {
+        final OrderTableGroup orderTableGroup = new OrderTableGroup();
+        orderTableGroup.setId(TABLE1_AND_TABLE2_ID);
+        orderTableGroup.setCreatedDate(LocalDateTime.of(2020, 1, 1, 12, 0));
+        orderTableGroup.setOrderTables(Arrays.asList(groupedTable1(), groupedTable2()));
+        return orderTableGroup;
     }
 
     private static MenuProduct menuProduct() {
