@@ -1,8 +1,7 @@
 package kitchenpos.controller;
 
-import kitchenpos.menu.MenuBo;
-import kitchenpos.menu.MenuRestController;
-import kitchenpos.menu.model.Menu;
+import kitchenpos.service.MenuBo;
+import kitchenpos.domain.menu.model.Menu;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;

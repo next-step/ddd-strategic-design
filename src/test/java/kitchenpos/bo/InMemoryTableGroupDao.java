@@ -1,7 +1,7 @@
 package kitchenpos.bo;
 
-import kitchenpos.tablegroup.dao.TableGroupDao;
-import kitchenpos.tablegroup.model.TableGroup;
+import kitchenpos.domain.tablegroup.repository.TableGroupDao;
+import kitchenpos.domain.tablegroup.model.TableGroup;
 
 import java.util.*;
 

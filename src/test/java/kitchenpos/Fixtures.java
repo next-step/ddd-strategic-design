@@ -1,14 +1,14 @@
 package kitchenpos;
 
-import kitchenpos.menu.model.MenuProduct;
-import kitchenpos.menu.model.Menu;
-import kitchenpos.menu.model.MenuGroup;
-import kitchenpos.order.model.Order;
-import kitchenpos.order.model.OrderLineItem;
-import kitchenpos.order.model.OrderStatus;
-import kitchenpos.product.model.Product;
-import kitchenpos.table.model.OrderTable;
-import kitchenpos.tablegroup.model.TableGroup;
+import kitchenpos.domain.menu.model.MenuProduct;
+import kitchenpos.domain.menu.model.Menu;
+import kitchenpos.domain.menuGroup.model.MenuGroup;
+import kitchenpos.domain.order.model.Order;
+import kitchenpos.domain.order.model.OrderLineItem;
+import kitchenpos.domain.order.model.OrderStatus;
+import kitchenpos.domain.product.model.Product;
+import kitchenpos.domain.table.model.OrderTable;
+import kitchenpos.domain.tablegroup.model.TableGroup;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
