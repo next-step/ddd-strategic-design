@@ -55,6 +55,7 @@
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 상품 | Product | 식당에서 판매하는 음식이고, 이름과 가격을 갖고 있다 |
+| 상품 가격 | Product Price | 상품의 가격이고, 0 원 이상이다. |
 | 메뉴 | Menu | 식당에서 판매하는 단위이고, 메뉴 구성 상품, 이름, 가격을 갖고 있다. |
 | 메뉴 구성 상품 | Menu Product | 메뉴를 구성하는 상품이고, 수량을 갖는다. |
 | 메뉴 가격 정책 | Menu Price Rule | 모든 메뉴 구성 상품들의 가격의 총합보다 메뉴의 가격은 저렴해야 한다. |
@@ -78,3 +79,67 @@
 | 손님 테이블 단체 지정 - 해지 정책 | Guest Table Group Termination Rule | 조리, 식사 상태의 주문이 있는 손님 테이블은 단체 지정을 해지 할 수 없다. |
 
 ## 모델링
+### 상품 (Product)  
+> 요구사항  
+  >> 상품 (Product)을 등록할 수 있다.  
+  >> 상품 (Product)의 목록을 조회할 수 있다.  
+
+* **상품 (Product)** 은 이름과 **상품 가격 (Product Price)** 을 갖는다.
+
+### 메뉴 그룹 (Menu Category)
+> 요구사항  
+  >> 메뉴 그룹 (Menu Category)을 등록할 수 있다.  
+  >> 메뉴 그룹 (Menu Category)의 목록을 조회할 수 있다.  
+  
+* **메뉴 그룹(Menu Category)** 은 이름을 갖는다.  
+* **메뉴 그룹(Menu Category)** 에서 신규 **메뉴 (Menu)** 를 생성한다.  
+
+### 메뉴 (Menu)  
+> 요구사항  
+  >> 1 개 이상의 등록된 상품으로 메뉴 (Menu)를 등록할 수 있다.  
+  >> 메뉴 (Menu)의 목록을 조회할 수 있다.  
+
+* **메뉴 (Menu)** 는 복수 개의 **메뉴 구성 상품 (Menu Product)** , 이름, 가격을 갖는다.  
+* **메뉴 (Menu)** 가 갖는 **메뉴 가격 정책 (Menu Price Rule)** 을 따라   
+  **메뉴 구성 상품 (Menu Product)** 과 가격을 갖는다.  
+* **메뉴 (Menu)** 가 갖는 **메뉴 상품 정책 (Menu Product Rule)** 을 따라   
+  **메뉴 구성 상품 (Menu Product)** 을 갖는다.  
+* **메뉴 (Menu)** 가 갖는 **메뉴 수량 정책 (Menu Quantity Rule)** 을 따라   
+  **메뉴 구성 상품 (Menu Product)** 을 갖는다.  
+
+### 손님 테이블 (Guest Table)
+> 요구사항    
+  >> 테이블 (Guest Table)을 등록할 수 있다.  
+  >> 테이블 (Guest Table)의 목록을 조회할 수 있다.  
+  >> 빈 테이블 (Guest Table) 설정 또는 해지할 수 있다.  
+  >> 방문한 손님 수 (Guest Table Occupied Guest)를 입력할 수 있다.  
+
+* **손님 테이블 (Guest Table)** 은 착석한 손님의 숫자와 **손님 테이블 상태 (Guest Table Status)** 를 갖는다.  
+* **손님 테이블 (Guest Table)** 은 **손님 테이블 상태 정책 (Guest Table Status Rule)** 에 따라    
+  **손님 테이블 상태 (Guest Table Status)** 를 바꿀 수 있다.  
+* **손님 테이블 (Guest Table)** 에서 **주문 손님 테이블 정책 (Order Guest Table Rule)** 을 따라  
+  신규 **주문 (Order)** 을 생성한다.  
+
+### 주문 (Order)
+> 요구사항  
+  >> 1 개 이상의 등록된 메뉴 (Menu)로 주문 (Order)을 등록할 수 있다.  
+  >> 주문(Order)의 목록을 조회할 수 있다.  
+  >> 주문 상태 (Order Status)를 변경할 수 있다.  
+  
+* **주문 (Order)** 은 **주문 상태 (Order Status)**, 주문 일자, **주문 메뉴 (Ordered Menu)** 을 갖는다.  
+* **주문 상태 (Order Status)** 가 **최종 주문 상태 (Final Order Status)** 일 경우, 변경 할 수 없다.  
+* **주문 (Order)** 은 **주문 메뉴 정책 (Order Menu Rule)** 을 따라  
+  **주문 메뉴 (Ordered Menu)** 을 갖는다.  
+
+### 손님 테이블 단체 지정 (Guest Table Group)
+> 요구사항  
+  >> 2 개 이상의 빈 테이블 (Guest Table)을 단체로 지정 (Guest Table Group)할 수 있다.  
+  >> 단체 지정 (Guest Table Group)을 해지할 수 있다.  
+  
+* **손님 테이블 단체 지정 (Guest Table Group)** 은 단체 지정 일자, 복수 개의 **손님 테이블 (Guest Order)** 을 갖는다.  
+* **손님 테이블 단체 지정 (Guest Table Group)** 은 **손님 테이블 단체 지정 - 테이블 상태 정책 (Guest Table Group Status Rule)** 을 따라  
+  **손님 테이블 (Guest Order)** 을 단체 지정할 수 있다.  
+* **손님 테이블 단체 지정 (Guest Table Group)** 은 **손님 테이블 단체 지정 - 중복 방지 정책 (Guest Table Group Deduplication Rule)** 을 따라  
+  **손님 테이블 (Guest Order)** 을 단체 지정할 수 있다.  
+* **손님 테이블 단체 지정 (Guest Table Group)** 은 **손님 테이블 단체 지정 - 해지 정책 (Guest Table Group Termination Rule)** 을 따라  
+  기존에 단체 지정된 **손님 테이블 (Guest Order)** 을 해지 할 수 있다.  
