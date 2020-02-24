@@ -1,12 +1,20 @@
 package kitchenpos;
 
-import kitchenpos.model.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import kitchenpos.menus.menu.domain.Menu;
+import kitchenpos.menus.menu.domain.MenuProduct;
+import kitchenpos.menus.menugroup.domain.MenuGroup;
+import kitchenpos.orders.order.domain.Order;
+import kitchenpos.orders.order.domain.OrderLineItem;
+import kitchenpos.orders.order.domain.OrderStatus;
+import kitchenpos.orders.ordertable.domain.OrderTable;
+import kitchenpos.orders.tablegroup.domain.TableGroup;
+import kitchenpos.products.product.domain.Product;
 
 public class Fixtures {
+
     public static final Long TWO_FRIED_CHICKENS_ID = 1L;
     public static final Long TWO_CHICKENS_ID = 1L;
     public static final Long FRIED_CHICKEN_ID = 1L;
