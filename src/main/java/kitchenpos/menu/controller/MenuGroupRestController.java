@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.MenuGroupBo;
+import kitchenpos.menu.bo.MenuGroupBo;
 import kitchenpos.model.MenuGroup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
