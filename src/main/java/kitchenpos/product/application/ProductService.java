@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class ProductBo {
+public class ProductService {
     private final ProductDao productDao;
 
-    public ProductBo(final ProductDao productDao) {
+    public ProductService(final ProductDao productDao) {
         this.productDao = productDao;
     }
 

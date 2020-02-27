@@ -19,13 +19,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class OrderBo {
+public class OrderService {
     private final MenuDao menuDao;
     private final OrderDao orderDao;
     private final OrderLineItemDao orderLineItemDao;
     private final OrderTableDao orderTableDao;
 
-    public OrderBo(
+    public OrderService(
             final MenuDao menuDao,
             final OrderDao orderDao,
             final OrderLineItemDao orderLineItemDao,

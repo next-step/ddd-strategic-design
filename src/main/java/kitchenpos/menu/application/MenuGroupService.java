@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class MenuGroupBo {
+public class MenuGroupService {
     private final MenuGroupDao menuGroupDao;
 
-    public MenuGroupBo(final MenuGroupDao menuGroupDao) {
+    public MenuGroupService(final MenuGroupDao menuGroupDao) {
         this.menuGroupDao = menuGroupDao;
     }
 

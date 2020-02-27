@@ -6,7 +6,7 @@ import kitchenpos.order.domain.OrderLineItemDao;
 import kitchenpos.table.domain.OrderTableDao;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.application.OrderBo;
+import kitchenpos.order.application.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,17 +21,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class OrderBoTest {
+class OrderServiceTest {
     private final MenuDao menuDao = new InMemoryMenuDao();
     private final OrderDao orderDao = new InMemoryOrderDao();
     private final OrderLineItemDao orderLineItemDao = new InMemoryOrderLineItemDao();
     private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
 
-    private OrderBo orderBo;
+    private OrderService orderService;
 
     @BeforeEach
     void setUp() {
-        orderBo = new OrderBo(menuDao, orderDao, orderLineItemDao, orderTableDao);
+        orderService = new OrderService(menuDao, orderDao, orderLineItemDao, orderTableDao);
         menuDao.save(twoFriedChickens());
         orderTableDao.save(table1());
     }
@@ -43,7 +43,7 @@ class OrderBoTest {
         final Order expected = orderForTable1();
 
         // when
-        final Order actual = orderBo.create(expected);
+        final Order actual = orderService.create(expected);
 
         // then
         assertOrder(expected, actual);
@@ -59,7 +59,7 @@ class OrderBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> orderBo.create(expected));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> orderService.create(expected));
     }
 
     @DisplayName("주문의 목록을 조회할 수 있다.")
@@ -69,7 +69,7 @@ class OrderBoTest {
         final Order orderForTable1 = orderDao.save(orderForTable1());
 
         // when
-        final List<Order> actual = orderBo.list();
+        final List<Order> actual = orderService.list();
 
         // then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(Arrays.asList(orderForTable1));
@@ -86,7 +86,7 @@ class OrderBoTest {
         expected.setOrderStatus(orderStatus.name());
 
         // when
-        final Order actual = orderBo.changeOrderStatus(orderId, expected);
+        final Order actual = orderService.changeOrderStatus(orderId, expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -111,7 +111,7 @@ class OrderBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> orderBo.changeOrderStatus(orderId, expected))
+                .isThrownBy(() -> orderService.changeOrderStatus(orderId, expected))
         ;
     }
 

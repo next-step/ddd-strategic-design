@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class TableBo {
+public class TableService {
     private final OrderDao orderDao;
     private final OrderTableDao orderTableDao;
 
-    public TableBo(final OrderDao orderDao, final OrderTableDao orderTableDao) {
+    public TableService(final OrderDao orderDao, final OrderTableDao orderTableDao) {
         this.orderDao = orderDao;
         this.orderTableDao = orderTableDao;
     }

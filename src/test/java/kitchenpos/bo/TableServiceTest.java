@@ -5,7 +5,7 @@ import kitchenpos.table.domain.OrderTableDao;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.table.domain.OrderTable;
-import kitchenpos.table.application.TableBo;
+import kitchenpos.table.application.TableService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,15 +21,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class TableBoTest {
+class TableServiceTest {
     private final OrderDao orderDao = new InMemoryOrderDao();
     private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
 
-    private TableBo tableBo;
+    private TableService tableService;
 
     @BeforeEach
     void setUp() {
-        tableBo = new TableBo(orderDao, orderTableDao);
+        tableService = new TableService(orderDao, orderTableDao);
     }
 
     @DisplayName("테이블을 등록할 수 있다.")
@@ -39,7 +39,7 @@ class TableBoTest {
         final OrderTable expected = table1();
 
         // when
-        final OrderTable actual = tableBo.create(expected);
+        final OrderTable actual = tableService.create(expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -57,7 +57,7 @@ class TableBoTest {
         final OrderTable table1 = orderTableDao.save(table1());
 
         // when
-        final List<OrderTable> actual = tableBo.list();
+        final List<OrderTable> actual = tableService.list();
 
         // then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(Arrays.asList(table1));
@@ -74,7 +74,7 @@ class TableBoTest {
         expected.setEmpty(empty);
 
         // when
-        final OrderTable actual = tableBo.changeEmpty(orderTableId, expected);
+        final OrderTable actual = tableService.changeEmpty(orderTableId, expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -97,7 +97,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeEmpty(orderTableId, expected))
+                .isThrownBy(() -> tableService.changeEmpty(orderTableId, expected))
         ;
     }
 
@@ -118,7 +118,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeEmpty(orderTableId, expected))
+                .isThrownBy(() -> tableService.changeEmpty(orderTableId, expected))
         ;
     }
 
@@ -133,7 +133,7 @@ class TableBoTest {
         expected.setNumberOfGuests(numberOfGuests);
 
         // when
-        final OrderTable actual = tableBo.changeNumberOfGuests(orderTableId, expected);
+        final OrderTable actual = tableService.changeNumberOfGuests(orderTableId, expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -155,7 +155,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeNumberOfGuests(orderTableId, expected))
+                .isThrownBy(() -> tableService.changeNumberOfGuests(orderTableId, expected))
         ;
     }
 
@@ -172,7 +172,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeNumberOfGuests(orderTableId, expected))
+                .isThrownBy(() -> tableService.changeNumberOfGuests(orderTableId, expected))
         ;
     }
 

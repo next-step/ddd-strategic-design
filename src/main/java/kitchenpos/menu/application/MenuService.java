@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class MenuBo {
+public class MenuService {
     private final MenuDao menuDao;
     private final MenuGroupDao menuGroupDao;
     private final MenuProductDao menuProductDao;
     private final ProductDao productDao;
 
-    public MenuBo(
+    public MenuService(
             final MenuDao menuDao,
             final MenuGroupDao menuGroupDao,
             final MenuProductDao menuProductDao,

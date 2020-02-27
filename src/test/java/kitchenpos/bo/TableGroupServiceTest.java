@@ -4,7 +4,7 @@ import kitchenpos.order.domain.OrderDao;
 import kitchenpos.table.domain.OrderTableDao;
 import kitchenpos.table.domain.TableGroupDao;
 import kitchenpos.table.domain.TableGroup;
-import kitchenpos.table.application.TableGroupBo;
+import kitchenpos.table.application.TableGroupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,16 +14,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class TableGroupBoTest {
+class TableGroupServiceTest {
     private final OrderDao orderDao = new InMemoryOrderDao();
     private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
     private final TableGroupDao tableGroupDao = new InMemoryTableGroupDao();
 
-    private TableGroupBo tableGroupBo;
+    private TableGroupService tableGroupService;
 
     @BeforeEach
     void setUp() {
-        tableGroupBo = new TableGroupBo(orderDao, orderTableDao, tableGroupDao);
+        tableGroupService = new TableGroupService(orderDao, orderTableDao, tableGroupDao);
         orderTableDao.save(emptyTable1());
         orderTableDao.save(emptyTable2());
     }
@@ -35,7 +35,7 @@ class TableGroupBoTest {
         final TableGroup expected = table1AndTable2();
 
         // when
-        final TableGroup actual = tableGroupBo.create(expected);
+        final TableGroup actual = tableGroupService.create(expected);
 
         // then
         assertThat(actual).isNotNull();
@@ -55,7 +55,7 @@ class TableGroupBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupBo.create(expected));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupService.create(expected));
     }
 
     @DisplayName("단체 지정을 해지할 수 있다.")
@@ -66,7 +66,7 @@ class TableGroupBoTest {
 
         // when
         // then
-        tableGroupBo.ungroup(tableGroupId);
+        tableGroupService.ungroup(tableGroupId);
     }
 
     @DisplayName("단체 지정된 테이블의 주문 상태가 조리 또는 식사인 경우 단체 지정을 해지할 수 없다.")
@@ -78,7 +78,7 @@ class TableGroupBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupBo.ungroup(tableGroupId));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> tableGroupService.ungroup(tableGroupId));
     }
 
     private TableGroup saveTable1AndTable2() {

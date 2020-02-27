@@ -1,7 +1,7 @@
 package kitchenpos.controller;
 
 import kitchenpos.table.api.TableGroupRestController;
-import kitchenpos.table.application.TableGroupBo;
+import kitchenpos.table.application.TableGroupService;
 import kitchenpos.table.domain.TableGroup;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ class TableGroupRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TableGroupBo tableGroupBo;
+    private TableGroupService tableGroupService;
 
     @Test
     void create() throws Exception {
         // given
-        given(tableGroupBo.create(any(TableGroup.class))).willReturn(table1AndTable2());
+        given(tableGroupService.create(any(TableGroup.class))).willReturn(table1AndTable2());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/table-groups")

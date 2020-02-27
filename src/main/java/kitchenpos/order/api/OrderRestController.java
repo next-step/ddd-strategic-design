@@ -1,6 +1,6 @@
 package kitchenpos.order.api;
 
-import kitchenpos.order.application.OrderBo;
+import kitchenpos.order.application.OrderService;
 import kitchenpos.order.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +10,15 @@ import java.util.List;
 
 @RestController
 public class OrderRestController {
-    private final OrderBo orderBo;
+    private final OrderService orderService;
 
-    public OrderRestController(final OrderBo orderBo) {
-        this.orderBo = orderBo;
+    public OrderRestController(final OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @PostMapping("/api/orders")
     public ResponseEntity<Order> create(@RequestBody final Order order) {
-        final Order created = orderBo.create(order);
+        final Order created = orderService.create(order);
         final URI uri = URI.create("/api/orders/" + created.getId());
         return ResponseEntity.created(uri)
                 .body(created)
@@ -28,7 +28,7 @@ public class OrderRestController {
     @GetMapping("/api/orders")
     public ResponseEntity<List<Order>> list() {
         return ResponseEntity.ok()
-                .body(orderBo.list())
+                .body(orderService.list())
                 ;
     }
 
@@ -37,6 +37,6 @@ public class OrderRestController {
             @PathVariable final Long orderId,
             @RequestBody final Order order
     ) {
-        return ResponseEntity.ok(orderBo.changeOrderStatus(orderId, order));
+        return ResponseEntity.ok(orderService.changeOrderStatus(orderId, order));
     }
 }

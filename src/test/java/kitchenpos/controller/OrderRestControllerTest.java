@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.order.application.OrderBo;
+import kitchenpos.order.application.OrderService;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.api.OrderRestController;
 import org.junit.jupiter.api.Test;
@@ -32,12 +32,12 @@ class OrderRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private OrderBo orderBo;
+    private OrderService orderService;
 
     @Test
     void create() throws Exception {
         // given
-        given(orderBo.create(any(Order.class))).willReturn(orderForTable1());
+        given(orderService.create(any(Order.class))).willReturn(orderForTable1());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/orders")
@@ -62,7 +62,7 @@ class OrderRestControllerTest {
     @Test
     void list() throws Exception {
         // given
-        given(orderBo.list()).willReturn(Arrays.asList(orderForTable1()));
+        given(orderService.list()).willReturn(Arrays.asList(orderForTable1()));
 
         // when
         final ResultActions resultActions = mockMvc.perform(get("/api/orders"));
@@ -84,7 +84,7 @@ class OrderRestControllerTest {
     @Test
     void changeOrderStatus() throws Exception {
         // given
-        given(orderBo.changeOrderStatus(eq(ORDER_FOR_TABLE1_ID), any(Order.class))).willReturn(orderForTable1());
+        given(orderService.changeOrderStatus(eq(ORDER_FOR_TABLE1_ID), any(Order.class))).willReturn(orderForTable1());
 
         // when
         final ResultActions resultActions = mockMvc.perform(
