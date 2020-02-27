@@ -58,6 +58,8 @@
 | 상품 | Product | 판매되는 음식을 뜻한다. |
 | 메뉴 상품 | Menu Product | 메뉴에 담기는 상품과 갯수를 뜻한다. |
 | 메뉴 | Menu | 메뉴이름과 상품의 가격과 수량이 포함되어 주문이 만들어진다. |
+| 가격 | Price | 상품을 구매하기 위한 지급되는 현금가치|
+| 수량 | Quantity | 상품의 갯수|
 | 메뉴 그룹 | Menu Group | 메뉴의 상위 카테고리를 뜻한다. |
 | 손님 | Guest | 상품을 주문하고, 식사를 하는 사람 |
 | 테이블 | Table | 손님이 주문을 한 뒤, 식사를 하게되는 곳 |
@@ -73,3 +75,32 @@
 
 
 ## 모델링
+
+### 상품
+- `Proudct`는 상품명과 가격을 가진다.
+- `Proudct`의 가격은 0원 이상이다.
+
+### 메뉴
+- `Menu`는 이름과 가격과 수량이 포함되어 있다.
+- `Menu`는 1개 이상 등록된 `Menu Product`를 가진다.
+- `Menu`는 `Menu Group`에 속한다.
+- `Menu`의 가격은 0원 이상이다.
+- `Menu`의 메뉴에 등록된 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
+
+### 주문
+- `Order`는 메뉴가 1개이상 있어야 등록할 수 있다.
+- `Order`는 `Empty Table`에서 등록할 수 없다.
+- `Order`가 발생하면 `Cooking`으로 상태가 바뀐다.
+- `Order`의 `Completion`상태는 변경할 수 없다.
+
+### 테이블
+- `Table`은 메뉴가 1개이상 있어야 등록할 수 있다.
+- `Table`는 `Empty Table`로 등록하거나 해지할 수 있다.
+- `Table`이 `Table Group`에 등록되면 `Empty Table`로 변경하거나 해지할 수 없다. 
+- `Table`의 `Guest` 수를 변경하기 위해서는 `Guest`가 1명이상 존재해야한다.
+- `Table`이 `Empty Table`에서는 `Guest` 수를 변경할 수 없다. 
+
+### 단체석
+- `Table Group`은 2명 이상 `Guest`가 이용한다.
+- `Table Group`는 `Empty Table`에는 등록할 수 없다.
+- `Table Group`의 `Order`가 `Cooking`, `Meal`인 상태는 변경할 수 없다. 
