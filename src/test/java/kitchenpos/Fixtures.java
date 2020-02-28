@@ -3,15 +3,15 @@ package kitchenpos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import kitchenpos.menus.menu.domain.Menu;
-import kitchenpos.menus.menu.domain.MenuProduct;
-import kitchenpos.menus.menugroup.domain.MenuGroup;
-import kitchenpos.orders.order.domain.Order;
-import kitchenpos.orders.order.domain.OrderLineItem;
-import kitchenpos.orders.order.domain.OrderStatus;
-import kitchenpos.orders.ordertable.domain.OrderTable;
-import kitchenpos.orders.tablegroup.domain.TableGroup;
-import kitchenpos.products.product.domain.Product;
+import kitchenpos.menus.domain.entity.Menu;
+import kitchenpos.menus.domain.entity.MenuProduct;
+import kitchenpos.menus.domain.entity.MenuGroup;
+import kitchenpos.products.domain.entity.Product;
+import kitchenpos.orders.domain.entity.Order;
+import kitchenpos.orders.domain.entity.OrderLineItem;
+import kitchenpos.orders.domain.entity.OrderStatus;
+import kitchenpos.orders.domain.entity.OrderTable;
+import kitchenpos.orders.domain.entity.TableGroup;
 
 public class Fixtures {
 
