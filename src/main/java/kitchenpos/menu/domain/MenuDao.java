@@ -1,11 +1,11 @@
-package kitchenpos.dao;
+package kitchenpos.menu.domain;
 
-import kitchenpos.model.Menu;
+import kitchenpos.menu.domain.Menu;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface MenuDao {
+public interface MenuRepository {
     Menu save(Menu entity);
 
     Optional<Menu> findById(Long id);
