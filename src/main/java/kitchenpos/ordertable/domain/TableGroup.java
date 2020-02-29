@@ -1,4 +1,4 @@
-package kitchenpos.ordertable.model;
+package kitchenpos.ordertable.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;

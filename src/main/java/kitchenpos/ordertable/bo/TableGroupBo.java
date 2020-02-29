@@ -1,7 +1,11 @@
-package kitchenpos.ordertable.domain;
+package kitchenpos.ordertable.bo;
 
 import kitchenpos.order.domain.OrderDao;
 import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.ordertable.domain.OrderTableDao;
+import kitchenpos.ordertable.domain.TableGroup;
+import kitchenpos.ordertable.domain.TableGroupDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
