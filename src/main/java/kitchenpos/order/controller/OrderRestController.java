@@ -2,6 +2,8 @@ package kitchenpos.order.controller;
 
 import kitchenpos.order.bo.OrderBo;
 import kitchenpos.order.domain.Order;
+import kitchenpos.ordertable.bo.TableBo;
+import kitchenpos.ordertable.domain.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,4 +41,23 @@ public class OrderRestController {
     ) {
         return ResponseEntity.ok(orderBo.changeOrderStatus(orderId, order));
     }
+
+    @PutMapping("/api/tables/{orderTableId}/empty")
+    public ResponseEntity<OrderTable> changeEmpty(
+            @PathVariable final Long orderTableId,
+            @RequestBody final OrderTable orderTable
+    ) {
+        return ResponseEntity.ok()
+                .body(orderBo.changeEmpty(orderTableId, orderTable))
+                ;
+    }
+
+    @DeleteMapping("/api/table-groups/{tableGroupId}")
+    public ResponseEntity<Void> ungroup(@PathVariable final Long tableGroupId) {
+        orderBo.ungroup(tableGroupId);
+        return ResponseEntity.noContent()
+                .build()
+                ;
+    }
+
 }

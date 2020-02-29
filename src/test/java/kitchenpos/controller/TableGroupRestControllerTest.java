@@ -54,17 +54,4 @@ class TableGroupRestControllerTest {
         ;
     }
 
-    @Test
-    void ungroup() throws Exception {
-        // given
-        // when
-        final ResultActions resultActions = mockMvc.perform(
-                delete("/api/table-groups/{tableGroupId}", TABLE1_AND_TABLE2_ID)
-        );
-
-        // then
-        resultActions.andDo(print())
-                .andExpect(status().isNoContent())
-        ;
-    }
 }

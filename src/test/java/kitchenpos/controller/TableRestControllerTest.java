@@ -74,27 +74,6 @@ class TableRestControllerTest {
         ;
     }
 
-    @Test
-    void changeEmpty() throws Exception {
-        // given
-        given(tableBo.changeEmpty(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
-
-        // when
-        final ResultActions resultActions = mockMvc.perform(
-                put("/api/tables/{orderTableId}/empty", TABLE1_ID)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"empty\":false}")
-        );
-
-        // then
-        resultActions.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.tableGroupId").hasJsonPath())
-                .andExpect(jsonPath("$.numberOfGuests").isNumber())
-                .andExpect(jsonPath("$.empty").isBoolean())
-        ;
-    }
 
     @Test
     void changeNumberOfGuests() throws Exception {

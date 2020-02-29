@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -107,4 +108,43 @@ public class OrderBo {
 
         return savedOrder;
     }
+
+    @Transactional
+    public OrderTable changeEmpty(final Long orderTableId, final OrderTable orderTable) {
+        final OrderTable savedOrderTable = orderTableDao.findById(orderTableId)
+                .orElseThrow(IllegalArgumentException::new);
+
+        if (Objects.nonNull(savedOrderTable.getTableGroupId())) {
+            throw new IllegalArgumentException();
+        }
+
+        if (orderDao.existsByOrderTableIdAndOrderStatusIn(
+                orderTableId, Arrays.asList(OrderStatus.COOKING.name(), OrderStatus.MEAL.name()))) {
+            throw new IllegalArgumentException();
+        }
+
+        savedOrderTable.setEmpty(orderTable.isEmpty());
+
+        return orderTableDao.save(savedOrderTable);
+    }
+
+    @Transactional
+    public void ungroup(final Long tableGroupId) {
+        final List<OrderTable> orderTables = orderTableDao.findAllByTableGroupId(tableGroupId);
+
+        final List<Long> orderTableIds = orderTables.stream()
+                .map(OrderTable::getId)
+                .collect(Collectors.toList());
+
+        if (orderDao.existsByOrderTableIdInAndOrderStatusIn(
+                orderTableIds, Arrays.asList(OrderStatus.COOKING.name(), OrderStatus.MEAL.name()))) {
+            throw new IllegalArgumentException();
+        }
+
+        for (final OrderTable orderTable : orderTables) {
+            orderTable.setTableGroupId(null);
+            orderTableDao.save(orderTable);
+        }
+    }
+
 }

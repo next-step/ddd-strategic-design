@@ -3,7 +3,7 @@ package kitchenpos.ordertable.domain;
 public class OrderTable {
     private Long id;
     private Long tableGroupId;
-    private int numberOfGuests;
+    private Guest guest;
     private boolean empty;
 
     public Long getId() {
@@ -23,13 +23,12 @@ public class OrderTable {
     }
 
     public int getNumberOfGuests() {
-        return numberOfGuests;
+        return guest.getNumberOfGuests();
     }
 
     public void setNumberOfGuests(final int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
+        this.guest = new Guest(numberOfGuests);
     }
-
     public boolean isEmpty() {
         return empty;
     }
