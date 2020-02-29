@@ -1,7 +1,5 @@
 package kitchenpos.menu.domain;
 
-import kitchenpos.menu.domain.Menu;
-
 import java.util.List;
 import java.util.Optional;
 
