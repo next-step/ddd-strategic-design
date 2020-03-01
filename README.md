@@ -31,7 +31,6 @@
         - [ ] 이미 주문상태가 완료인 경우에는 변경할 수 없다.
 - 테이블
     - [ ] 새로운 테이블을 생성할 수 있다.
-    - [ ] 테이블 정보를 수정할 수 있다. (테이블그룹, 게스트 수, 공석여부)
     - [ ] 전체 테이블 리스트를 조회할 수 있다.
     - [ ] 테이블의 공석여부를 변경할 수 있다.
         - [ ] 해당 테이블이 테이블그룹에 포함된 경우 변경할 수 없다.
@@ -53,7 +52,7 @@
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 사장님 | Owner | 식당에서 POS 프로그램을 사용하는 사용자이다. |
+| 사용자 | User | 식당에서 POS 프로그램을 사용하는 점주/점원이다. |
 | 제품 | Product | 식당에서 조리하는 음식을 의미한다. 이름과 가격을 가진다. |
 | 제품 추가 정책 | Product Addition Policy | 제품 가격은 0원 이상이다. |
 | 메뉴 | Menu | 제품의 집합으로, 고객들에게 판매되는 단위이다. 메뉴는 하나 이상의 제품으로 구성되며, 이름과 가격을 가진다. |
@@ -80,3 +79,56 @@
 | 단체테이블 지정해제 정책 | Table Ungrouping Policy | 단체테이블에 포함된 테이블들에서 발생한 모든 주문들의 주문상태가 완료인 경우에만 지정 해제할 수 있다. |
 
 ## 모델링
+
+### Product
+- `Product`는 제품명인 `name`과 제품 가격인 `price`를 가진다.
+- `Product`를 추가할 수 있다.
+    - `name`, `price`를 입력한다.
+    - `Product Addition Policy`를 만족해야한다.
+- `Product` 목록을 조회할 수 있다.
+
+### Menu
+- `Menu`는 메뉴명인 `name`, 메뉴 가격인 `price`, 메뉴가 속할 메뉴그룹인 `Menu Group`, 메뉴에 포함된 메뉴 제품 리스트인 `Menu Products`를 가진다.
+- `Menu`를 추가할 수 있다.
+    - `name`, `price`, `Menu Group`, `Menu Products`을 입력한다.
+    - `Menu Addition Policy`을 만족해야한다.
+- `Menu` 목록을 조회할 수 있다.
+
+### Menu Group
+- `Menu Group`은 메뉴그룹명인 `name`을 가진다.
+- `Menu Group`을 생성할 수 있다.
+    - `name`을 입력한다.
+- `Menu Group` 목록을 조회할 수 있다.
+
+### Order
+- `Order`는 주문이 발생한 테이블인 `Table`, 주문 상태인 `Order Status`, 주문 시간인 `Ordered Time`, 주문 메뉴 리스트인 `Order Lines`를 가진다.
+- `Order`를 생성할 수 있다.
+    - `Table`, `Order Lines`를 입력한다.
+    - `Ordering Policy`를 만족해야한다.
+- `Order Status`는 조리 중을 의미하는 `COOKING`, 식사 중을 의미하는 `EATING`, 완료를 의미하는 `COMPLETION` 상태를 표현할 수 있다.
+- `Order` 목록을 조회할 수 있다.
+    - `Order Lines`도 조회한다.
+- `Order`의 `Order Status`를 변경할 수 있다.
+    - 변경하려는 `Order`와 새로운 `Order Status`를 입력한다.
+    - `Order Status Change Policy`를 만족해야한다.
+    
+### Table
+- `Table`은 단체테이블에 속한 경우의 단체테이블인 `Table Group`, 착석한 고객 수인 `Number Of Guests`, 테이블의 공석 여부인 `Empty`를 가진다.
+- `Table`을 생성할 수 있다.
+    - `Number Of Guests`, `Empty`를 입력한다.
+- `Table` 목록을 조회할 수 있다.
+- `Table`의 `Empty`를 변경할 수 있다.
+    - 변경하려는 `Table`과 새로운 `Empty`값을 입력한다.
+    - `Table Empty State Change Policy`를 만족해야한다.
+- `Table`의 `Number Of Guests`를 변경할 수 있다.
+    - 변경하려는 `Table`과 새로운 `Number Of Guests`값을 입력한다.
+    - `Table Guest Change Policy`를 만족해야한다.
+    
+### Table Group
+- `Table Group`은 단체테이블 지정시각인 `Created Date`, 단체테이블 내 테이블 리스트인 `Tables`를 가진다.
+- `Table Group`을 지정할 수 있다.
+    - 단체테이블을 지정할 테이블들인 `Tables`를 입력한다.
+    - `Table Grouping Policy`를 만족해야한다.
+- `Table Group`을 지정 해제할 수 있다.
+    - 지정 해제할 `Table Group`을 입력한다.
+    - `Table Ungrouping Policy`을 만족해야한다.
