@@ -99,7 +99,7 @@
 
 #### Order
 
-* 사용자는 고객이 order 를 하면 order 를 등를록한다.
+* 사용자는 고객이 order 를 하면 order 를 등록한다.
   * 사용자는 order 를 등록할 때 Order-table-id, Order-line-item 를 입력한다.
   * Menu 는  1개 이상 선택해야 한다.
   * 고객이 착석한 Order-table-id 를 선택해야 한다.
