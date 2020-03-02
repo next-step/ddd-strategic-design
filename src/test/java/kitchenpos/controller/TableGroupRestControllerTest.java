@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.TableGroupBo;
-import kitchenpos.model.TableGroup;
+import kitchenpos.ordertable.bo.TableGroupBo;
+import kitchenpos.ordertable.domain.TableGroup;
+import kitchenpos.ordertable.controller.TableGroupRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -53,17 +54,4 @@ class TableGroupRestControllerTest {
         ;
     }
 
-    @Test
-    void ungroup() throws Exception {
-        // given
-        // when
-        final ResultActions resultActions = mockMvc.perform(
-                delete("/api/table-groups/{tableGroupId}", TABLE1_AND_TABLE2_ID)
-        );
-
-        // then
-        resultActions.andDo(print())
-                .andExpect(status().isNoContent())
-        ;
-    }
 }

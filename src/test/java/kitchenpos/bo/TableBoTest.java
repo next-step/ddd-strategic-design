@@ -1,10 +1,14 @@
 package kitchenpos.bo;
 
-import kitchenpos.dao.OrderDao;
-import kitchenpos.dao.OrderTableDao;
-import kitchenpos.model.Order;
-import kitchenpos.model.OrderStatus;
-import kitchenpos.model.OrderTable;
+import kitchenpos.menu.domain.MenuDao;
+import kitchenpos.order.bo.OrderBo;
+import kitchenpos.order.domain.OrderDao;
+import kitchenpos.order.domain.OrderLineItemDao;
+import kitchenpos.ordertable.domain.OrderTableDao;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.ordertable.bo.TableBo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,14 +25,20 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class TableBoTest {
+    private final MenuDao menuDao = new InMemoryMenuDao();
     private final OrderDao orderDao = new InMemoryOrderDao();
+    private final OrderLineItemDao orderLineItemDao = new InMemoryOrderLineItemDao();
     private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
 
+    private OrderBo orderBo;
     private TableBo tableBo;
 
     @BeforeEach
     void setUp() {
-        tableBo = new TableBo(orderDao, orderTableDao);
+        tableBo = new TableBo(orderTableDao);
+        orderBo = new OrderBo(menuDao, orderDao, orderLineItemDao, orderTableDao);
+        menuDao.save(twoFriedChickens());
+        orderTableDao.save(table1());
     }
 
     @DisplayName("테이블을 등록할 수 있다.")
@@ -62,26 +72,6 @@ class TableBoTest {
         assertThat(actual).containsExactlyInAnyOrderElementsOf(Arrays.asList(table1));
     }
 
-    @DisplayName("빈 테이블 설정 또는 해지할 수 있다.")
-    @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    void changeEmpty(final boolean empty) {
-        // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
-
-        final OrderTable expected = new OrderTable();
-        expected.setEmpty(empty);
-
-        // when
-        final OrderTable actual = tableBo.changeEmpty(orderTableId, expected);
-
-        // then
-        assertThat(actual).isNotNull();
-        assertAll(
-                () -> assertThat(actual.getId()).isEqualTo(orderTableId),
-                () -> assertThat(actual.isEmpty()).isEqualTo(expected.isEmpty())
-        );
-    }
 
     @DisplayName("단체 지정된 테이블은 빈 테이블 설정 또는 해지할 수 없다.")
     @ParameterizedTest
@@ -96,7 +86,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeEmpty(orderTableId, expected))
+                .isThrownBy(() -> orderBo.changeEmpty(orderTableId, expected))
         ;
     }
 
@@ -117,7 +107,7 @@ class TableBoTest {
         // when
         // then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tableBo.changeEmpty(orderTableId, expected))
+                .isThrownBy(() -> orderBo.changeEmpty(orderTableId, expected))
         ;
     }
 

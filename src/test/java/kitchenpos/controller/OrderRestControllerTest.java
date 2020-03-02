@@ -1,7 +1,9 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.OrderBo;
-import kitchenpos.model.Order;
+import kitchenpos.order.bo.OrderBo;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.controller.OrderRestController;
+import kitchenpos.ordertable.domain.OrderTable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -15,8 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
 
-import static kitchenpos.Fixtures.ORDER_FOR_TABLE1_ID;
-import static kitchenpos.Fixtures.orderForTable1;
+import static kitchenpos.Fixtures.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -104,4 +105,41 @@ class OrderRestControllerTest {
                 .andExpect(jsonPath("$.orderLineItems[0].quantity").isNumber())
         ;
     }
+
+    @Test
+    void changeEmpty() throws Exception {
+        // given
+        given(orderBo.changeEmpty(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                put("/api/tables/{orderTableId}/empty", TABLE1_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"empty\":false}")
+        );
+
+        // then
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.tableGroupId").hasJsonPath())
+                .andExpect(jsonPath("$.numberOfGuests").isNumber())
+                .andExpect(jsonPath("$.empty").isBoolean())
+        ;
+    }
+
+    @Test
+    void ungroup() throws Exception {
+        // given
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                delete("/api/table-groups/{tableGroupId}", TABLE1_AND_TABLE2_ID)
+        );
+
+        // then
+        resultActions.andDo(print())
+                .andExpect(status().isNoContent())
+        ;
+    }
+
 }
