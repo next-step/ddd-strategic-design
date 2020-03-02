@@ -1,12 +1,12 @@
 package kitchenpos.bo;
 
-import kitchenpos.application.OrderBo;
-import kitchenpos.domain.menu.dao.MenuDao;
-import kitchenpos.domain.order.dao.OrderDao;
-import kitchenpos.domain.order.dao.OrderLineItemDao;
-import kitchenpos.domain.order.dao.OrderTableDao;
-import kitchenpos.domain.order.model.Order;
-import kitchenpos.domain.order.model.OrderStatus;
+import kitchenpos.domain.order.bo.OrderBo;
+import kitchenpos.domain.menu.domain.dao.MenuDao;
+import kitchenpos.domain.order.domain.dao.OrderDao;
+import kitchenpos.domain.order.domain.dao.OrderLineItemDao;
+import kitchenpos.domain.order.domain.dao.OrderTableDao;
+import kitchenpos.domain.order.domain.model.Order;
+import kitchenpos.domain.order.domain.model.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
