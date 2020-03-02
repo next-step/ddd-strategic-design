@@ -1,7 +1,7 @@
 package kitchenpos.controller.ordertable;
 
 import kitchenpos.bo.ordertable.OrderBo;
-import kitchenpos.model.ordertable.Order;
+import kitchenpos.domain.ordertable.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

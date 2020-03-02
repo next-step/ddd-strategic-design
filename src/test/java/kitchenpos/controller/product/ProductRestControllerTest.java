@@ -1,8 +1,7 @@
 package kitchenpos.controller.product;
 
 import kitchenpos.bo.product.ProductBo;
-import kitchenpos.controller.product.ProductRestController;
-import kitchenpos.model.product.Product;
+import kitchenpos.domain.product.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;

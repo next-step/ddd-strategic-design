@@ -1,13 +1,13 @@
 package kitchenpos.bo.ordertable;
 
-import kitchenpos.dao.menu.MenuDao;
-import kitchenpos.dao.ordertable.OrderDao;
-import kitchenpos.dao.ordertable.OrderLineItemDao;
-import kitchenpos.dao.ordertable.OrderTableDao;
-import kitchenpos.model.ordertable.Order;
-import kitchenpos.model.ordertable.OrderLineItem;
-import kitchenpos.model.ordertable.OrderStatus;
-import kitchenpos.model.ordertable.OrderTable;
+import kitchenpos.domain.menu.MenuDao;
+import kitchenpos.domain.ordertable.OrderDao;
+import kitchenpos.domain.ordertable.OrderLineItemDao;
+import kitchenpos.domain.ordertable.OrderTableDao;
+import kitchenpos.domain.ordertable.Order;
+import kitchenpos.domain.ordertable.OrderLineItem;
+import kitchenpos.domain.ordertable.OrderStatus;
+import kitchenpos.domain.ordertable.OrderTable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;

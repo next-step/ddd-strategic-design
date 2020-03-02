@@ -1,7 +1,7 @@
 package kitchenpos.bo.ordertable;
 
-import kitchenpos.dao.ordertable.OrderTableDao;
-import kitchenpos.model.ordertable.OrderTable;
+import kitchenpos.domain.ordertable.OrderTableDao;
+import kitchenpos.domain.ordertable.OrderTable;
 
 import java.util.*;
 import java.util.stream.Collectors;

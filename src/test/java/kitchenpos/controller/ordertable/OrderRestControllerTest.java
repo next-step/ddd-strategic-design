@@ -1,8 +1,7 @@
 package kitchenpos.controller.ordertable;
 
 import kitchenpos.bo.ordertable.OrderBo;
-import kitchenpos.controller.ordertable.OrderRestController;
-import kitchenpos.model.ordertable.Order;
+import kitchenpos.domain.ordertable.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;

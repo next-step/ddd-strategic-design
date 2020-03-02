@@ -1,7 +1,7 @@
 package kitchenpos.bo.menu;
 
-import kitchenpos.dao.menu.MenuProductDao;
-import kitchenpos.model.menu.MenuProduct;
+import kitchenpos.domain.menu.MenuProductDao;
+import kitchenpos.domain.menu.MenuProduct;
 
 import java.util.*;
 import java.util.stream.Collectors;
