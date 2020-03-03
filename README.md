@@ -68,3 +68,22 @@
 | 방문한 손님 수 | number of guests | 테이블에 앉을 수 있는 손님 수 |
 
 ## 모델링
+
+Product 에서 상품 가격이 0원 이상인 상품을 생성한다.
+Product 에서 상품을 조회한다.
+
+MenuGroup 은 Menu 로 정보를 제공한다.
+Menu 는 MenuGroup 의 정보를 받는다(가져온다[Down Stream]).
+Menu 는 상품의 정보를 표현하기 위해 MenuProduct 들을 가진다.
+Menu 의 가격은 가지고 있는 MenuProduct 의 Product 가격의 합보다 작은 값을 가진다.
+MenuProduct 는 Product 의 정보를 받는다.
+
+OrderTable 은 자리의 유무를 가진다.
+OrderTable 은 TableGroup 의 정보를 받는다.
+TableGroup 은 여러개의 테이블을 알 수 있도록 OrderTable 들을 가진다.
+
+Order 는 손님이 앉을 수 있는 OrderTable 정보를 받는다.
+Order 는 현재 주문 상태를 구별할 수 있는 OrderStatus 를 가진다.
+Order 는 주문한 상품 정보를 알기위해 OrderLineItem 들을 가진다.
+OrderLineItem 은 Menu 의 정보를 받는다.
+OrderLineItem 은 Order 의 정보를 받는다.
