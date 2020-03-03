@@ -58,11 +58,55 @@
 | 메뉴 | Menu | 이름과 금액을 가지며, 손님이 주문할수 단위이다.  |
 | 메뉴 그룹 | MenuGroup | 이름을 가지며, 메뉴의 묶음이다. |
 | 메뉴 상품 | MenuProduct | 메뉴의 상품과 수량 정보를 가지고 있다. |
-| 주문 테이블 | OrderTable | 손님이 주문하는 테이블이며, 손님수와 비어있는지 여부를 확인할 수 있다.|
+| 주문 테이블 | OrderTable | 손님이 주문하는 테이블이며, NumberOfGuest 와 테이블의 Empty를 확인할 수 있다.|
+| 테이블 공석 | Empty | 테이블 공성 상태 |
+| 테이블 공석 정책 | Table Empty Policy | 단체 지정된 테이블은 공석 설정이 불가하다. 주문 상태가 COOKING or MEAL 상태 일 경우 설정 변경이 불가하다.|
 | 단체 지정 | TableGroup | 2개 이상의 테이블을 묶어 단체 지정할수 있다.  |
 | 주문 | Order | 손님이 주문한 정보로 주문 테이블, 주문상태, 주문시간 그리고 주문 상품을 알수 있다. |
 | 주문 상품 | OrderLineItem | 손님이 주문한 상품 정보이며, 메뉴와 수량을 알수있다. |
 | 주문 상태 | OrderStatus | 주문의 상태이며, 주문이 완료 되면 COOKING 상태,  식사 중 상태(MEAL), 계산 완료 상태(COMPLETION) 를 가진다. |
 | 손님 | Guest | 주문 테이블에서 메뉴를 주문하는 주최자.  |
+| 손님 수 | NumberOfGuest | 주문 테이블에 있는 손님들의 수|
 
 ## 모델링
+### Product
+- 상품(Product)은 이름과 가격을 가진다.
+- 상품(Product)을 추가한다.
+    - 상품 가격은 0원 이상이다.
+- 상품(Product) 목록을 조회한다.
+
+### Menu
+- Menu는 메뉴가 속하는 MenuGroup과, 메뉴의 제품 목록인 MenuProducts, Name, Price를 가진다.
+- Menu를 추가한다.
+    - Price 는 0원 이상이다.
+    - MenuProducts 상품금액의 합이 Price 보다 크거나 같다.
+- Menu 목록을 조회한다.
+
+### MenuGroup
+- 이름을 가진다.
+- MenuGroup을 추가한다.
+- MenuGroup 목록을 조회한다.
+    
+### Order
+- Order는 주문 테이블 (OrderTable), 주문 상태(OrderStauts), 주문시간, 주문 상품(OrderLineItem) 을 가진다.
+- Order 를 생성한다.
+    - OrderLineItem 1개 이상이다.
+- Order 목록을 조회한다.
+- Order는 OrderStatus를 변경한다.
+    - 주문 상태가 계산 완료 상태(COMPLETION) 일땐 변경 불가하다.
+
+### Table
+- OrderTable은 손님수(NumberOfGuest)와 Empty를 가진다.
+- OrderTable을 생성한다.
+
+- OrderTable 목록을 조회한다.
+- OrderTable의 Empty 설정을 변경 한다.
+    - Table Empty Policy를 만족할때 변경할 수 있다.
+- OrderTable의 NumberOfGuest를 변경한다.
+
+### TableGroup
+- 단체 지정(TableGroup)은 여러개의 OrderTable을 가지는 것이다.
+    - OrderTable의 수는 2개 이상이다.
+
+- 단체 지정을 해지한다.
+    - OrderTable의 OrderStatus가 COOKING 또는 MEAL 상태이면 해지할수 없다.
