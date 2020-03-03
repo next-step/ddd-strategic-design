@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.MenuBo;
-import kitchenpos.model.Menu;
+import kitchenpos.menu.application.MenuService;
+import kitchenpos.menu.api.MenuRestController;
+import kitchenpos.menu.domain.Menu;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -30,12 +31,12 @@ class MenuRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MenuBo menuBo;
+    private MenuService menuService;
 
     @Test
     void create() throws Exception {
         // given
-        given(menuBo.create(any(Menu.class))).willReturn(twoFriedChickens());
+        given(menuService.create(any(Menu.class))).willReturn(twoFriedChickens());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/menus")
@@ -61,7 +62,7 @@ class MenuRestControllerTest {
     @Test
     void list() throws Exception {
         // given
-        given(menuBo.list()).willReturn(Arrays.asList(twoFriedChickens()));
+        given(menuService.list()).willReturn(Arrays.asList(twoFriedChickens()));
 
         // when
         final ResultActions resultActions = mockMvc.perform(get("/api/menus"));

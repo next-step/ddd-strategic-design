@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.TableBo;
-import kitchenpos.model.OrderTable;
+import kitchenpos.table.application.TableService;
+import kitchenpos.table.domain.OrderTable;
+import kitchenpos.table.api.TableRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
@@ -30,12 +31,12 @@ class TableRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TableBo tableBo;
+    private TableService tableService;
 
     @Test
     void create() throws Exception {
         // given
-        given(tableBo.create(any(OrderTable.class))).willReturn(emptyTable1());
+        given(tableService.create(any(OrderTable.class))).willReturn(emptyTable1());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/tables")
@@ -57,7 +58,7 @@ class TableRestControllerTest {
     @Test
     void list() throws Exception {
         // given
-        given(tableBo.list()).willReturn(Arrays.asList(groupedTable1(), groupedTable2()));
+        given(tableService.list()).willReturn(Arrays.asList(groupedTable1(), groupedTable2()));
 
         // when
         final ResultActions resultActions = mockMvc.perform(get("/api/tables"));
@@ -76,7 +77,7 @@ class TableRestControllerTest {
     @Test
     void changeEmpty() throws Exception {
         // given
-        given(tableBo.changeEmpty(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
+        given(tableService.changeEmpty(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
 
         // when
         final ResultActions resultActions = mockMvc.perform(
@@ -98,7 +99,7 @@ class TableRestControllerTest {
     @Test
     void changeNumberOfGuests() throws Exception {
         // given
-        given(tableBo.changeNumberOfGuests(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
+        given(tableService.changeNumberOfGuests(eq(TABLE1_ID), any(OrderTable.class))).willReturn(table1());
 
         // when
         final ResultActions resultActions = mockMvc.perform(
