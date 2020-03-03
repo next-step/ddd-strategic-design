@@ -58,6 +58,7 @@
 | 메뉴 그룹 | Menu Group | 여러 메뉴들을 구분짓는 범주를 의미한다. 하나의 메뉴 그룹에는 복수의 메뉴가 존재할 수 있다. |
 | 메뉴 | Menu | 주문의 대상이 되는 요소를 의미한다. 메뉴는 복수의 상품으로 구성될 수 있고, 상품 가격과는 별개로 메뉴의 가격을 가지고 있다. |
 | 테이블 | Order Table | 주문 등록을 요청하는 주체. 빈 테이블 여부, 방문한 손님 수, 단체 지정 정보로 구성되어 있다. |
+| 단체 | Table Group | 두개 이상의 테이블을 묶을 수 있다. |
 | 주문 | Order | 빈 테이블이 방문한 손님들로 채워진 이후 등록될 수 있는 요소를 의미. 주문 상태, 복수의 메뉴, 테이블 정보를 가진다 |
 | 주문 상태 | Order Status | 주문이 등록되고부터 일련의 절차를 수행할 때마다 가지게 되는 상태를 의미한다. '조리', '식사', '계산 완료' 상태로 표기할 수 있다. |
 | '조리' 상태 | Order Status 'Cooking' | 주문이 등록된 직후의 상태를 의미 |
@@ -66,3 +67,50 @@
 | 방문한 손님 수 | Number Of Guest | 테이블에 착석한 손님의 수를 의미 |
 
 ## 모델링
+
+### Product
+* 사용자는 Product 를 등록한다.
+    * Product 는 price 정보를 필수로 가지며, price 는 0원 이상이 입력되어야 한다.
+* 사용자는 Product 의 목록을 조회한다.
+    * Product 목록의 각 요소는 name 과 price 를 포함한다.
+
+### Menu Group
+* 사용자는 MenuGroup 을 등록한다.
+    * MenuGroup 등록 시, name 이 입력되어야 한다.
+* 사용자는 MenuGroup 의 목록을 조회한다.
+    * MenuGroup 의 각 요소는 name 을 포함한다.
+
+### Menu
+* 사용자는 Menu 를 등록한다.
+    * Menu 를 등록할 때는 적어도 1개 이상의 Product 가 포함되어야 한다.
+    * Menu 는 price 정보를 필수로 가지며, price 는 0원 이상이 입력되어야 한다.
+    * Menu 의 price 는 Menu 를 구성하는 모든 Product 의 price 를 합한 것보다 높지 않게 입력되어야 한다.
+    * Menu 를 등록할 때, MenuGroup 이 함께 선택되어야 한다.
+* 사용자는 Menu 목록을 조회한다.
+    * Menu 목록의 각 요소는 name, price, MenuGroup 의 ID 정보를 포함한다.
+    * Menu 목록의 각 요소는 Menu 를 구성하는 Product 의 ID와 개수(quantity) 정보를 포함한다.
+
+### Table Group
+* 사용자는 TableGroup 을 등록한다.
+    * TableGroup은 2개 이상의 empty 상태의 OrderTable이 포함되어야 한다.
+        * 다른 TableGroup에 포함된 OrderTable을 지정할 수 없어야 한다.
+        * OrderTable에서 주문한 Order의 OrderStatus가 COMPLETION 인 경우에만 TableGroup으로 지정할 수 있다.
+* 사용자는 TableGroup 을 해지한다.
+
+### Table 
+* 사용자는 OrderTable 을 등록한다.
+* 사용자는 OrderTable 의 목록을 조회한다.
+    * OrderTable 목록의 각 요소는 empty 여부, number of guest, table group ID 정보를 가진다.
+* 사용자는 OrderTable 의 상태를 변경한다.
+    * OrderTable 의 empty 여부를 변경할 수 있다.
+    * OrderTable 의 number of guest 를 변경할 수 있다.
+        * number of guest 는 0 명 이상 입력되어야 한다.
+    * OrderTable 이 empty 상태인 경우 number of guest 는 입력할 수 없다.
+
+### Order
+* 사용자는 Order 를 등록한다.
+    * 1개 이상의 Menu, empty 상태가 아닌 OrderTable 의 정보가 포함된다.
+* 사용자는 Order 목록을 조회한다.
+* 사용자는 Order 의 OrderStatus 를 변경한다.
+    * OrderStatus 의 종류는 COOKING, MEAL, COMPLETION 으로 구분된다.
+    * OrderStatus 가 COMPLETION 인 경우는 OrderStatus 를 변경할 수 없어야 한다.
