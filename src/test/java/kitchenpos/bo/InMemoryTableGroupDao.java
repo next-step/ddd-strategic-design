@@ -1,7 +1,7 @@
 package kitchenpos.bo;
 
-import kitchenpos.orderTable.dao.TableGroupDao;
-import kitchenpos.orderTable.model.TableGroup;
+import kitchenpos.order.domain.dao.TableGroupDao;
+import kitchenpos.order.domain.TableGroup;
 
 import java.util.*;
 
