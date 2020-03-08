@@ -1,7 +1,7 @@
 package kitchenpos.product.service;
 
-import kitchenpos.product.dao.InMemoryProductDao;
-import kitchenpos.product.domain.ProductDao;
+import kitchenpos.product.repository.InMemoryProductRepository;
+import kitchenpos.product.domain.ProductRepository;
 import kitchenpos.product.domain.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ProductServiceTest {
-    private final ProductDao productDao = new InMemoryProductDao();
+    private final ProductRepository productRepository = new InMemoryProductRepository();
 
     private ProductService productService;
 
     @BeforeEach
     void setUp() {
-        productService = new ProductService(productDao);
+        productService = new ProductService(productRepository);
     }
 
     @DisplayName("상품을 등록할 수 있다.")
@@ -61,8 +61,8 @@ class ProductServiceTest {
     @Test
     void list() {
         // given
-        final Product friedChicken = productDao.save(friedChicken());
-        final Product seasonedChicken = productDao.save(seasonedChicken());
+        final Product friedChicken = productRepository.save(friedChicken());
+        final Product seasonedChicken = productRepository.save(seasonedChicken());
 
         // when
         final List<Product> actual = productService.list();

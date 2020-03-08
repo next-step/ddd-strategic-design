@@ -1,11 +1,11 @@
 package kitchenpos.orderTable.service;
 
-import kitchenpos.order.dao.InMemoryOrderDao;
-import kitchenpos.order.domain.OrderDao;
-import kitchenpos.orderTable.dao.InMemoryOrderTableDao;
-import kitchenpos.orderTable.dao.InMemoryTableGroupDao;
-import kitchenpos.orderTable.domain.OrderTableDao;
-import kitchenpos.orderTable.domain.TableGroupDao;
+import kitchenpos.order.repository.InMemoryOrderRepository;
+import kitchenpos.order.domain.OrderRepository;
+import kitchenpos.orderTable.repository.InMemoryOrderTableRepository;
+import kitchenpos.orderTable.repository.InMemoryTableGroupRepository;
+import kitchenpos.orderTable.domain.OrderTableRepository;
+import kitchenpos.orderTable.domain.TableGroupRepository;
 import kitchenpos.orderTable.domain.model.TableGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class TableGroupServiceTest {
-    private final OrderDao orderDao = new InMemoryOrderDao();
-    private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
-    private final TableGroupDao tableGroupDao = new InMemoryTableGroupDao();
+    private final OrderRepository orderRepository = new InMemoryOrderRepository();
+    private final OrderTableRepository orderTableRepository = new InMemoryOrderTableRepository();
+    private final TableGroupRepository tableGroupRepository = new InMemoryTableGroupRepository();
 
     private TableGroupService tableGroupService;
 
     @BeforeEach
     void setUp() {
-        tableGroupService = new TableGroupService(orderDao, orderTableDao, tableGroupDao);
-        orderTableDao.save(emptyTable1());
-        orderTableDao.save(emptyTable2());
+        tableGroupService = new TableGroupService(orderRepository, orderTableRepository, tableGroupRepository);
+        orderTableRepository.save(emptyTable1());
+        orderTableRepository.save(emptyTable2());
     }
 
     @DisplayName("2 개 이상의 빈 테이블을 단체로 지정할 수 있다.")
@@ -51,7 +51,7 @@ class TableGroupServiceTest {
     @Test
     void createWithGroupedTable() {
         // given
-        orderTableDao.save(groupedTable1());
+        orderTableRepository.save(groupedTable1());
 
         final TableGroup expected = table1AndTable2();
 
@@ -76,7 +76,7 @@ class TableGroupServiceTest {
     void ungroupNotCalculatedTableGroup() {
         // given
         final Long tableGroupId = saveTable1AndTable2().getId();
-        orderDao.save(orderForTable1());
+        orderRepository.save(orderForTable1());
 
         // when
         // then
@@ -84,9 +84,9 @@ class TableGroupServiceTest {
     }
 
     private TableGroup saveTable1AndTable2() {
-        final TableGroup tableGroup = tableGroupDao.save(table1AndTable2());
-        orderTableDao.save(groupedTable1());
-        orderTableDao.save(groupedTable2());
+        final TableGroup tableGroup = tableGroupRepository.save(table1AndTable2());
+        orderTableRepository.save(groupedTable1());
+        orderTableRepository.save(groupedTable2());
         return tableGroup;
     }
 }

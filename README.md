@@ -123,25 +123,25 @@
     ├── Application.java
     ├── menu
     │   ├── controller
-    │   ├── dao
+    │   ├── repository
     │   ├── domain
     │   │   └── model
     │   └── service
     ├── order
     │   ├── controller
-    │   ├── dao
+    │   ├── repository
     │   ├── domain
     │   │   └── model
     │   └── service
     ├── orderTable
     │   ├── controller
-    │   ├── dao
+    │   ├── repository
     │   ├── domain
     │   │   └── model
     │   └── service
     └── product
         ├── controller
-        ├── dao
+        ├── repository
         ├── domain
         │   └── model
         └── service

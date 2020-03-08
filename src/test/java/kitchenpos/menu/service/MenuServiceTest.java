@@ -1,12 +1,12 @@
 package kitchenpos.menu.service;
 
-import kitchenpos.menu.dao.*;
+import kitchenpos.menu.repository.*;
 import kitchenpos.menu.domain.model.Menu;
-import kitchenpos.menu.domain.MenuDao;
-import kitchenpos.menu.domain.MenuGroupDao;
-import kitchenpos.menu.domain.MenuProductDao;
-import kitchenpos.product.dao.InMemoryProductDao;
-import kitchenpos.product.domain.ProductDao;
+import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.domain.MenuGroupRepository;
+import kitchenpos.menu.domain.MenuProductRepository;
+import kitchenpos.product.repository.InMemoryProductRepository;
+import kitchenpos.product.domain.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,18 +24,18 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MenuServiceTest {
-    private final MenuDao menuDao = new InMemoryMenuDao();
-    private final MenuGroupDao menuGroupDao = new InMemoryMenuGroupDao();
-    private final MenuProductDao menuProductDao = new InMemoryMenuProductDao();
-    private final ProductDao productDao = new InMemoryProductDao();
+    private final MenuRepository menuRepository = new InMemoryMenuRepository();
+    private final MenuGroupRepository menuGroupRepository = new InMemoryMenuGroupRepository();
+    private final MenuProductRepository menuProductRepository = new InMemoryMenuProductRepository();
+    private final ProductRepository productRepository = new InMemoryProductRepository();
 
     private MenuService menuService;
 
     @BeforeEach
     void setUp() {
-        menuService = new MenuService(menuDao, menuGroupDao, menuProductDao, productDao);
-        menuGroupDao.save(twoChickens());
-        productDao.save(friedChicken());
+        menuService = new MenuService(menuRepository, menuGroupRepository, menuProductRepository, productRepository);
+        menuGroupRepository.save(twoChickens());
+        productRepository.save(friedChicken());
     }
 
     @DisplayName("1 개 이상의 등록된 상품으로 메뉴를 등록할 수 있다.")
@@ -82,7 +82,7 @@ class MenuServiceTest {
     @Test
     void list() {
         // given
-        final Menu twoFriedChickens = menuDao.save(twoFriedChickens());
+        final Menu twoFriedChickens = menuRepository.save(twoFriedChickens());
 
         // when
         final List<Menu> actual = menuService.list();

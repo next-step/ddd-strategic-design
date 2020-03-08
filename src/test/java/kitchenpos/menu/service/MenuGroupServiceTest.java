@@ -1,7 +1,7 @@
 package kitchenpos.menu.service;
 
-import kitchenpos.menu.dao.InMemoryMenuGroupDao;
-import kitchenpos.menu.domain.MenuGroupDao;
+import kitchenpos.menu.repository.InMemoryMenuGroupRepository;
+import kitchenpos.menu.domain.MenuGroupRepository;
 import kitchenpos.menu.domain.model.MenuGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MenuGroupServiceTest {
-    private final MenuGroupDao menuGroupDao = new InMemoryMenuGroupDao();
+    private final MenuGroupRepository menuGroupRepository = new InMemoryMenuGroupRepository();
 
     private MenuGroupService menuGroupService;
 
     @BeforeEach
     void setUp() {
-        menuGroupService = new MenuGroupService(menuGroupDao);
+        menuGroupService = new MenuGroupService(menuGroupRepository);
     }
 
     @DisplayName("메뉴 그룹을 등록할 수 있다.")
@@ -41,7 +41,7 @@ class MenuGroupServiceTest {
     @Test
     void list() {
         // given
-        final MenuGroup twoChickens = menuGroupDao.save(twoChickens());
+        final MenuGroup twoChickens = menuGroupRepository.save(twoChickens());
 
         // when
         final List<MenuGroup> actual = menuGroupService.list();

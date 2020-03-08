@@ -1,11 +1,11 @@
 package kitchenpos.orderTable.service;
 
-import kitchenpos.order.dao.InMemoryOrderDao;
-import kitchenpos.order.domain.OrderDao;
+import kitchenpos.order.repository.InMemoryOrderRepository;
+import kitchenpos.order.domain.OrderRepository;
 import kitchenpos.order.domain.model.Order;
 import kitchenpos.order.domain.model.OrderStatus;
-import kitchenpos.orderTable.dao.InMemoryOrderTableDao;
-import kitchenpos.orderTable.domain.OrderTableDao;
+import kitchenpos.orderTable.repository.InMemoryOrderTableRepository;
+import kitchenpos.orderTable.domain.OrderTableRepository;
 import kitchenpos.orderTable.domain.model.OrderTable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,14 +23,14 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class OrderOrderTableServiceTest {
-    private final OrderDao orderDao = new InMemoryOrderDao();
-    private final OrderTableDao orderTableDao = new InMemoryOrderTableDao();
+    private final OrderRepository orderRepository = new InMemoryOrderRepository();
+    private final OrderTableRepository orderTableRepository = new InMemoryOrderTableRepository();
 
     private OrderTableService orderTableService;
 
     @BeforeEach
     void setUp() {
-        orderTableService = new OrderTableService(orderDao, orderTableDao);
+        orderTableService = new OrderTableService(orderRepository, orderTableRepository);
     }
 
     @DisplayName("테이블을 등록할 수 있다.")
@@ -55,7 +55,7 @@ class OrderOrderTableServiceTest {
     @Test
     void list() {
         // given
-        final OrderTable table1 = orderTableDao.save(table1());
+        final OrderTable table1 = orderTableRepository.save(table1());
 
         // when
         final List<OrderTable> actual = orderTableService.list();
@@ -69,7 +69,7 @@ class OrderOrderTableServiceTest {
     @ValueSource(booleans = {true, false})
     void changeEmpty(final boolean empty) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -90,7 +90,7 @@ class OrderOrderTableServiceTest {
     @ValueSource(booleans = {true, false})
     void changeEmptyOfGroupedTable(final boolean empty) {
         // given
-        final Long orderTableId = orderTableDao.save(groupedTable1()).getId();
+        final Long orderTableId = orderTableRepository.save(groupedTable1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -107,11 +107,11 @@ class OrderOrderTableServiceTest {
     @CsvSource(value = {"true,COOKING", "false,COOKING", "true,MEAL", "false,MEAL"})
     void changeEmpty(final boolean empty, final OrderStatus orderStatus) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final Order orderForTable1 = orderForTable1();
         orderForTable1.setOrderStatus(orderStatus.name());
-        orderDao.save(orderForTable1);
+        orderRepository.save(orderForTable1);
 
         final OrderTable expected = new OrderTable();
         expected.setEmpty(empty);
@@ -128,7 +128,7 @@ class OrderOrderTableServiceTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void changeNumberOfGuests(final int numberOfGuests) {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(numberOfGuests);
@@ -148,7 +148,7 @@ class OrderOrderTableServiceTest {
     @Test
     void changeNumberOfGuests() {
         // given
-        final Long orderTableId = orderTableDao.save(table1()).getId();
+        final Long orderTableId = orderTableRepository.save(table1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(-1);
@@ -165,7 +165,7 @@ class OrderOrderTableServiceTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void changeNumberOfGuestsInEmptyTable(final int numberOfGuests) {
         // given
-        final Long orderTableId = orderTableDao.save(emptyTable1()).getId();
+        final Long orderTableId = orderTableRepository.save(emptyTable1()).getId();
 
         final OrderTable expected = new OrderTable();
         expected.setNumberOfGuests(numberOfGuests);
