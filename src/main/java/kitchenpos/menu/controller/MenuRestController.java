@@ -1,15 +1,14 @@
 package kitchenpos.menu.controller;
 
-import kitchenpos.menu.bo.MenuBo;
-import kitchenpos.menu.model.Menu;
+import java.net.URI;
+import java.util.List;
+import kitchenpos.menu.application.MenuBo;
+import kitchenpos.menu.domain.Menu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
 public class MenuRestController {
