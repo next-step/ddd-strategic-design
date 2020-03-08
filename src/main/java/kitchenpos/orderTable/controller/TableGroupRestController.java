@@ -1,6 +1,6 @@
 package kitchenpos.orderTable.controller;
 
-import kitchenpos.orderTable.model.TableGroup;
+import kitchenpos.orderTable.domain.model.TableGroup;
 import kitchenpos.orderTable.service.TableGroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

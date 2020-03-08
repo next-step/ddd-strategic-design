@@ -1,6 +1,6 @@
 package kitchenpos.order.controller;
 
-import kitchenpos.order.model.Order;
+import kitchenpos.order.domain.model.Order;
 import kitchenpos.order.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

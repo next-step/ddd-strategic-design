@@ -1,9 +1,9 @@
-package kitchenpos.order.model;
+package kitchenpos.menu.domain.model;
 
-public class OrderLineItem {
+public class MenuProduct {
     private Long seq;
-    private Long orderId;
     private Long menuId;
+    private Long productId;
     private long quantity;
 
     public Long getSeq() {
@@ -14,20 +14,20 @@ public class OrderLineItem {
         this.seq = seq;
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(final Long orderId) {
-        this.orderId = orderId;
-    }
-
     public Long getMenuId() {
         return menuId;
     }
 
     public void setMenuId(final Long menuId) {
         this.menuId = menuId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(final Long productId) {
+        this.productId = productId;
     }
 
     public long getQuantity() {

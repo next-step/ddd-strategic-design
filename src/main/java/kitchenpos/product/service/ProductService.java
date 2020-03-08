@@ -1,7 +1,7 @@
 package kitchenpos.product.service;
 
-import kitchenpos.product.dao.ProductDao;
-import kitchenpos.product.model.Product;
+import kitchenpos.product.domain.ProductDao;
+import kitchenpos.product.domain.model.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

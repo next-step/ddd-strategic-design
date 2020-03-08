@@ -1,6 +1,6 @@
-package kitchenpos.orderTable.dao;
+package kitchenpos.orderTable.domain;
 
-import kitchenpos.orderTable.model.OrderTable;
+import kitchenpos.orderTable.domain.model.OrderTable;
 
 import java.util.List;
 import java.util.Optional;

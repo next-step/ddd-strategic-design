@@ -124,20 +124,24 @@
     ├── menu
     │   ├── controller
     │   ├── dao
-    │   ├── model
+    │   ├── domain
+    │   │   └── model
     │   └── service
     ├── order
     │   ├── controller
     │   ├── dao
-    │   ├── model
+    │   ├── domain
+    │   │   └── model
     │   └── service
     ├── orderTable
     │   ├── controller
     │   ├── dao
-    │   ├── model
+    │   ├── domain
+    │   │   └── model
     │   └── service
     └── product
         ├── controller
         ├── dao
-        ├── model
+        ├── domain
+        │   └── model
         └── service
