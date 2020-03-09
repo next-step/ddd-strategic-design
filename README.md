@@ -122,26 +122,32 @@
 └── kitchenpos
     ├── Application.java
     ├── menu
-    │   ├── controller
-    │   ├── repository
     │   ├── domain
-    │   │   └── model
-    │   └── service
+    │   │   ├── model
+    │   │   ├── repository
+    │   │   ├── service
+    │   │   └── controller
+    │   └── application
+    │       ├── model
+    │       └── repository
     ├── order
-    │   ├── controller
-    │   ├── repository
     │   ├── domain
-    │   │   └── model
-    │   └── service
+    │   │   ├── model
+    │   │   ├── repository
+    │   │   ├── service
+    │   │   └── controller
+    │   └── application
+    │       ├── model
+    │       └── repository
     ├── orderTable
-    │   ├── controller
-    │   ├── repository
-    │   ├── domain
-    │   │   └── model
-    │   └── service
+    │   └── domain
+    │       ├── model
+    │       ├── repository
+    │       ├── service
+    │       └── controller
     └── product
-        ├── controller
-        ├── repository
-        ├── domain
-        │   └── model
-        └── service
+        └── domain
+            ├── model
+            ├── repository
+            ├── service
+            └── controller

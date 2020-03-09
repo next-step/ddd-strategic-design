@@ -1,5 +1,7 @@
 package kitchenpos.order.domain.model;
 
+import kitchenpos.order.application.model.OrderLineItem;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
