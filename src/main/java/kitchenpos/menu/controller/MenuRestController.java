@@ -2,7 +2,7 @@ package kitchenpos.menu.controller;
 
 import java.net.URI;
 import java.util.List;
-import kitchenpos.menu.application.MenuBo;
+import kitchenpos.menu.domain.MenuBo;
 import kitchenpos.menu.domain.Menu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

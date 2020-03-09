@@ -2,7 +2,7 @@ package kitchenpos.table.controller;
 
 import java.net.URI;
 import java.util.List;
-import kitchenpos.table.application.TableBo;
+import kitchenpos.table.domain.TableBo;
 import kitchenpos.table.domain.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

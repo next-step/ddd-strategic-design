@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.product.application.ProductBo;
+import kitchenpos.product.domain.ProductBo;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.controller.ProductRestController;
 import org.junit.jupiter.api.Test;

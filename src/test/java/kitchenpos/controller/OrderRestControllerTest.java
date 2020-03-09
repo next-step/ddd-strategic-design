@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.order.application.OrderBo;
+import kitchenpos.order.domain.OrderBo;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.controller.OrderRestController;
 import org.junit.jupiter.api.Test;

@@ -3,7 +3,7 @@ package kitchenpos.bo;
 import kitchenpos.menu.domain.MenuDao;
 import kitchenpos.menu.domain.MenuGroupDao;
 import kitchenpos.menu.domain.MenuProductDao;
-import kitchenpos.menu.application.MenuBo;
+import kitchenpos.menu.domain.MenuBo;
 import kitchenpos.product.domain.ProductDao;
 import kitchenpos.menu.domain.Menu;
 import org.junit.jupiter.api.BeforeEach;

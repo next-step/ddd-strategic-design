@@ -2,7 +2,7 @@ package kitchenpos.order.controller;
 
 import java.net.URI;
 import java.util.List;
-import kitchenpos.order.application.OrderBo;
+import kitchenpos.order.domain.OrderBo;
 import kitchenpos.order.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

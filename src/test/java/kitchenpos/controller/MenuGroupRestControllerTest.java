@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.menu.application.MenuGroupBo;
+import kitchenpos.menu.domain.MenuGroupBo;
 import kitchenpos.menu.controller.MenuGroupRestController;
 import kitchenpos.menu.domain.MenuGroup;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package kitchenpos.order.application;
+package kitchenpos.order.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,12 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import kitchenpos.menu.domain.MenuDao;
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderDao;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderLineItemDao;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.table.application.OrderTableDao;
+import kitchenpos.table.domain.OrderTableDao;
 import kitchenpos.table.domain.OrderTable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

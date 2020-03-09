@@ -1,4 +1,4 @@
-package kitchenpos.table.application;
+package kitchenpos.table.domain;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import kitchenpos.order.domain.OrderDao;
 import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.table.domain.OrderTable;
-import kitchenpos.table.domain.TableGroup;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
