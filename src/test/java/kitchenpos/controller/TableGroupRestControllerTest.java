@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.TableGroupBo;
-import kitchenpos.model.TableGroup;
+import kitchenpos.table.domain.TableGroupBo;
+import kitchenpos.table.domain.TableGroup;
+import kitchenpos.table.controller.TableGroupRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
