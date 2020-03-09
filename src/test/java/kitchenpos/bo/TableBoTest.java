@@ -1,8 +1,8 @@
 package kitchenpos.bo;
 
 import kitchenpos.order.application.TableBo;
-import kitchenpos.order.domain.dao.OrderDao;
-import kitchenpos.order.domain.dao.OrderTableDao;
+import kitchenpos.order.domain.repository.OrderDao;
+import kitchenpos.order.domain.repository.OrderTableDao;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderTable;

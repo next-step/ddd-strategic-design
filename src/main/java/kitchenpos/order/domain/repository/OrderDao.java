@@ -1,4 +1,4 @@
-package kitchenpos.order.domain.dao;
+package kitchenpos.order.domain.repository;
 
 import kitchenpos.order.domain.Order;
 
