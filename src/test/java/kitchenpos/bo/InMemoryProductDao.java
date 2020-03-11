@@ -1,6 +1,6 @@
 package kitchenpos.bo;
 
-import kitchenpos.product.dao.ProductDao;
+import kitchenpos.product.model.ProductDao;
 import kitchenpos.model.Product;
 
 import java.util.*;
