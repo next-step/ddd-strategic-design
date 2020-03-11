@@ -1,7 +1,8 @@
 package kitchenpos.orderTable.domain.controller;
 
 import kitchenpos.orderTable.domain.model.TableGroup;
-import kitchenpos.orderTable.domain.service.TableGroupService;
+import kitchenpos.orderTable.ui.controller.TableGroupRestController;
+import kitchenpos.orderTable.application.service.TableGroupService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;

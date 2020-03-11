@@ -1,7 +1,6 @@
 package kitchenpos.order.domain.repository;
 
-import kitchenpos.order.application.model.OrderLineItem;
-import kitchenpos.order.application.model.OrderLineItemRepository;
+import kitchenpos.order.domain.model.OrderLineItem;
 
 import java.util.*;
 import java.util.stream.Collectors;

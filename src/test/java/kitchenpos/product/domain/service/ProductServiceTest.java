@@ -1,8 +1,9 @@
 package kitchenpos.product.domain.service;
 
+import kitchenpos.product.domain.ProductService;
 import kitchenpos.product.domain.repository.InMemoryProductRepository;
-import kitchenpos.product.domain.model.ProductRepository;
-import kitchenpos.product.domain.model.Product;
+import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.domain.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

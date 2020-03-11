@@ -1,7 +1,6 @@
 package kitchenpos.order.domain.repository;
 
 import kitchenpos.order.domain.model.Order;
-import kitchenpos.order.domain.model.OrderRepository;
 
 import java.util.*;
 

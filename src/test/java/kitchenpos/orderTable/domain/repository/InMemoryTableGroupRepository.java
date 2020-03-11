@@ -1,6 +1,5 @@
 package kitchenpos.orderTable.domain.repository;
 
-import kitchenpos.orderTable.domain.TableGroupRepository;
 import kitchenpos.orderTable.domain.model.TableGroup;
 
 import java.util.*;

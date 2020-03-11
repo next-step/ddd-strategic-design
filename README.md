@@ -122,32 +122,56 @@
 └── kitchenpos
     ├── Application.java
     ├── menu
+    │   ├── application
+    │   │   └── service
     │   ├── domain
     │   │   ├── model
     │   │   ├── repository
-    │   │   ├── service
-    │   │   └── controller
-    │   └── application
-    │       ├── model
-    │       └── repository
+    │   │   └── service
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
+    │       └── controller
     ├── order
+    │   ├── application
+    │   │   └── service
+    │   ├── domain
+    │   │   ├── data
+    │   │   ├── model
+    │   │   └── repository
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
+    │       └── controller
+    ├── orderTable
+    │   ├── application
+    │   │   └── service
     │   ├── domain
     │   │   ├── model
-    │   │   ├── repository
-    │   │   ├── service
-    │   │   └── controller
-    │   └── application
-    │       ├── model
-    │       └── repository
-    ├── orderTable
-    │   └── domain
-    │       ├── model
-    │       ├── repository
-    │       ├── service
+    │   │   └── repository
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
     │       └── controller
     └── product
-        └── domain
-            ├── model
-            ├── repository
-            ├── service
+        ├── domain
+        ├── infra
+        │   └── database
+        └── ui
             └── controller
+
+### 각 aggregate 별 영역 구분
+1. application 영역
+    - 다른 aggregate와의 교류가 있는 영역
+2. domain 영역
+    - aggregate 만의 독자적인 영역 
+    - 동일한 lifecycle을 갖는 영역
+3. infra 영역
+    - 외부 서비스와 연결되는 영역
+    - database, external event ..
+4. ui 영역
+    - 실제 사용자와 접속하는 영역
+    - controller ..
+- application 영역이 커 지면, root aggregate 로 분리 할 수 있는 지 확인한다.
+- repository의 실제 선언부는 infra 영역에 위치하지만  
+  interface의 경우 domain 영역에 위치한다. 
