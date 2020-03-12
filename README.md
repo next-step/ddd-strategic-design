@@ -71,14 +71,7 @@
 
 ## 모델링
 
-### 상품
-- 상품은 이름을 갖는다.
-- 상품은 가격을 갖는다.
-    - 상품의 가격은 0원 이상이다.
-- 상품을 추가했다.
-- 어떤 상품이 있는지 확인했다.
-
-### 메뉴
+### 메뉴 ( menu )
 - 메뉴 그룹을 추가했다.
 - 메뉴 그룹은 이름을 갖는다.
 - 메뉴 그룹에는 메뉴가 속해있다.
@@ -93,7 +86,16 @@
 - 메뉴를 기존의 메뉴그룹에 추가했다. 
 - 어떤 메뉴를 만들었는지 확인했다.
 
-### 테이블
+### 주문 ( order )
+- 주문은 테이블 번호를 갖는다.
+- 주문은 주문의 상태를 갖는다.
+- 테이블에 앉은 손님이 주문을 했다.
+    - 손님이 1개 이상의 메뉴와 각 메뉴의 개수로 주문을 했다.
+    - 손님이 주문을 해서 주문이 요리중 상태로 변경되었다.
+        - 계산이 완료되지 않은 주문의 상태가 변경되었다.
+- 어떤 주문이 들어왔는지 확인했다.
+
+### 테이블 ( orderTable )
 - 테이블을 추가했다.
 
 - 2개 이상의 빈 테이블을 합쳐 단체석을 만들었다.
@@ -108,13 +110,68 @@
 
 - 어떤 단체석을 만들었는지 확인했다.
 
-### 주문
-- 주문은 테이블 번호를 갖는다.
-- 주문은 주문의 상태를 갖는다.
-- 테이블에 앉은 손님이 주문을 했다.
-    - 손님이 1개 이상의 메뉴와 각 메뉴의 개수로 주문을 했다.
-    - 손님이 주문을 해서 주문이 요리중 상태로 변경되었다.
-        - 계산이 완료되지 않은 주문의 상태가 변경되었다.
-- 어떤 주문이 들어왔는지 확인했다.
+### 상품 ( product )
+- 상품은 이름을 갖는다.
+- 상품은 가격을 갖는다.
+    - 상품의 가격은 0원 이상이다.
+- 상품을 추가했다.
+- 어떤 상품이 있는지 확인했다.
 
- 
+
+## domain structure
+└── kitchenpos
+    ├── Application.java
+    ├── menu
+    │   ├── application
+    │   │   └── service
+    │   ├── domain
+    │   │   ├── model
+    │   │   ├── repository
+    │   │   └── service
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
+    │       └── controller
+    ├── order
+    │   ├── application
+    │   │   └── service
+    │   ├── domain
+    │   │   ├── data
+    │   │   ├── model
+    │   │   └── repository
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
+    │       └── controller
+    ├── orderTable
+    │   ├── application
+    │   │   └── service
+    │   ├── domain
+    │   │   ├── model
+    │   │   └── repository
+    │   ├── infra
+    │   │   └── database
+    │   └── ui
+    │       └── controller
+    └── product
+        ├── domain
+        ├── infra
+        │   └── database
+        └── ui
+            └── controller
+
+### 각 aggregate 별 영역 구분
+1. application 영역
+    - 다른 aggregate와의 교류가 있는 영역
+2. domain 영역
+    - aggregate 만의 독자적인 영역 
+    - 동일한 lifecycle을 갖는 영역
+3. infra 영역
+    - 외부 서비스와 연결되는 영역
+    - database, external event ..
+4. ui 영역
+    - 실제 사용자와 접속하는 영역
+    - controller ..
+- application 영역이 커 지면, root aggregate 로 분리 할 수 있는 지 확인한다.
+- repository의 실제 선언부는 infra 영역에 위치하지만  
+  interface의 경우 domain 영역에 위치한다. 
