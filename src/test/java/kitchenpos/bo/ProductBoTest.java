@@ -1,6 +1,6 @@
 package kitchenpos.bo;
 
-import kitchenpos.product.service.ProductBo;
+import kitchenpos.product.application.ProductBo;
 import kitchenpos.product.model.ProductDao;
 import kitchenpos.product.model.Product;
 import org.junit.jupiter.api.BeforeEach;

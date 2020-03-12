@@ -1,6 +1,6 @@
 package kitchenpos.controller;
 
-import kitchenpos.table.service.TableBo;
+import kitchenpos.table.application.TableBo;
 import kitchenpos.table.model.OrderTable;
 import kitchenpos.table.web.TableRestController;
 import org.junit.jupiter.api.Test;

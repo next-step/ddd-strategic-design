@@ -1,6 +1,6 @@
 package kitchenpos.bo;
 
-import kitchenpos.menu.service.MenuBo;
+import kitchenpos.menu.application.MenuBo;
 import kitchenpos.menu.model.MenuDao;
 import kitchenpos.menuGroup.model.MenuGroupDao;
 import kitchenpos.menu.model.MenuProductDao;

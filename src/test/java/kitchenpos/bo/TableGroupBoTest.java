@@ -2,7 +2,7 @@ package kitchenpos.bo;
 
 import kitchenpos.order.model.OrderDao;
 import kitchenpos.table.model.OrderTableDao;
-import kitchenpos.tableGroup.service.TableGroupBo;
+import kitchenpos.tableGroup.application.TableGroupBo;
 import kitchenpos.tableGroup.model.TableGroupDao;
 import kitchenpos.tableGroup.model.TableGroup;
 import org.junit.jupiter.api.BeforeEach;

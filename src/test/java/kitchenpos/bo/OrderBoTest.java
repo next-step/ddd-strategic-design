@@ -1,7 +1,7 @@
 package kitchenpos.bo;
 
 import kitchenpos.menu.model.MenuDao;
-import kitchenpos.order.service.OrderBo;
+import kitchenpos.order.application.OrderBo;
 import kitchenpos.table.model.OrderTableDao;
 import kitchenpos.order.model.OrderDao;
 import kitchenpos.order.model.OrderLineItemDao;

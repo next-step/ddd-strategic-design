@@ -1,6 +1,6 @@
 package kitchenpos.table.web;
 
-import kitchenpos.table.service.TableBo;
+import kitchenpos.table.application.TableBo;
 import kitchenpos.table.model.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

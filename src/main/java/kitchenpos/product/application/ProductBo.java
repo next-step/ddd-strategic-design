@@ -1,4 +1,4 @@
-package kitchenpos.product.service;
+package kitchenpos.product.application;
 
 import kitchenpos.product.model.ProductDao;
 import kitchenpos.product.model.Product;

@@ -1,4 +1,4 @@
-package kitchenpos.order.service;
+package kitchenpos.order.application;
 
 import kitchenpos.menu.model.MenuDao;
 import kitchenpos.table.model.OrderTableDao;
