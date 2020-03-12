@@ -1,4 +1,4 @@
-package kitchenpos.table.model;
+package kitchenpos.table.domain;
 
 public class OrderTable {
     private Long id;

@@ -1,6 +1,4 @@
-package kitchenpos.tableGroup.model;
-
-import kitchenpos.tableGroup.model.TableGroup;
+package kitchenpos.tableGroup.domain;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package kitchenpos.controller;
 
 import kitchenpos.tableGroup.application.TableGroupBo;
-import kitchenpos.tableGroup.model.TableGroup;
+import kitchenpos.tableGroup.domain.TableGroup;
 import kitchenpos.tableGroup.web.TableGroupRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

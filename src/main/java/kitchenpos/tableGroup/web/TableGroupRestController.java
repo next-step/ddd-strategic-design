@@ -1,7 +1,7 @@
 package kitchenpos.tableGroup.web;
 
 import kitchenpos.tableGroup.application.TableGroupBo;
-import kitchenpos.tableGroup.model.TableGroup;
+import kitchenpos.tableGroup.domain.TableGroup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,12 +1,12 @@
 package kitchenpos.menu.application;
 
-import kitchenpos.menu.model.MenuDao;
-import kitchenpos.menuGroup.model.MenuGroupDao;
-import kitchenpos.menu.model.MenuProductDao;
-import kitchenpos.menu.model.MenuProduct;
-import kitchenpos.product.model.ProductDao;
-import kitchenpos.menu.model.Menu;
-import kitchenpos.product.model.Product;
+import kitchenpos.menu.domain.MenuDao;
+import kitchenpos.menuGroup.domain.MenuGroupDao;
+import kitchenpos.menu.domain.MenuProductDao;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.product.domain.ProductDao;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.product.domain.Product;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
