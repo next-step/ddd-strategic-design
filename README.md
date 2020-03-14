@@ -80,15 +80,12 @@
 
 ```Order``` 는 ```OrderTable``` 에 포함된다.
 ```Order``` 는 ```OrderLineItem``` 들을 가진다.
-```Order``` 는 주문 번호, 주문 상태를 가진다. 
-```Order``` 는 ```Table Group```에 포함될 수 있다.
-  
-OrderTables 는 OrderTable 을 만든다.
-OrderTables 은 OrderTable 자리의 유무를 가진다.
-OrderTables 은 TableGroup 의 정보를 받는다.
-
-TableGroups 는 OrderTables 의 OrderTable 을 수정할 수 있다.
-TableGroup 은 여러개의 테이블의 정보를 알 수 있도록 OrderTables 가진다.
+```Order``` 는 주문 번호, 주문 상태를 가진다.  
+```OrderTable``` 는 테이블넘버, 손님 수, 테이블 상태를 가진다.
+```Order```의 ```OrderStatus``` 값이 COMPLETION 아니면 ```OrderTable``` 의 테이블 상태를 변경할 수 없다.
+```OrderTable``` 은 ```Table Group```에 포함될 수 있다.
+```TableGroup``` 은 ```OrderTable```들을 가진다.
+```TableGroup``` 은 테이블 상태가 빈 ```OrderTable``` 이 최소 두 개 이상 이다. 
 
 OrderLineItems 는 주문을 구별할 수 있는 OrderLineItem 을 만든다.
 OrderLineItems 은 Menu 의 정보를 받는다.
