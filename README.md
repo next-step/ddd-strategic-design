@@ -65,11 +65,11 @@
 | 주문 상태 식사 | MEAL | 테이블에 앉아 메뉴에 대한 고객의 상태 , 식사 |
 | 주문 상태 완료 | COMPLETION | 테이블에 앉아 메뉴에 대한 고객의 상태 , 완료 |
 | 단체 지정 | table group | 고객 수가 많아 2 개 이상의 주문 테이블에 앉을 수 있을 때 단체 지정이라고 한다. |
+| 방문한 손님 수 | number of guests | 테이블에 앉을 수 있는 손님 수 |
 
 ## 모델링
 
-Products 에서 판매할 Product 를 만든다.  
-Products 에서 Product 를 조회한다.  
+```Product``` 는 이름과 가격을 가진다.   
 
 MenuGroups 를 통해 MenuGroup 을 만든다.
 MenuGroups 은 Menu 로 정보를 제공한다.
