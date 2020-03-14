@@ -86,7 +86,5 @@
 ```OrderTable``` 은 ```Table Group```에 포함될 수 있다.
 ```TableGroup``` 은 ```OrderTable```들을 가진다.
 ```TableGroup``` 은 테이블 상태가 빈 ```OrderTable``` 이 최소 두 개 이상 이다. 
-
-OrderLineItems 는 주문을 구별할 수 있는 OrderLineItem 을 만든다.
-OrderLineItems 은 Menu 의 정보를 받는다.
-OrderLineItems 은 Order 의 정보를 받는다.
+```OrderLineItem``` 은 주문한 시점의 메뉴인 ```OrderMenu``` 를 가진다.
+```OrderMenu``` 는 메뉴이름, 가격을 가진다.
