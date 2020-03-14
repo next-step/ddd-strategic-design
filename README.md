@@ -70,21 +70,21 @@
 
 ## 모델링
 
-```Product``` 는 이름과 가격을 가진다.
+```Product``` 는 이름과 가격을 가진다.  
 
-```Menu``` 는 이름, 가격을 가진다.
-```Menu``` 는 ```MenuProduct``` 들을 가진다.
-```Menu``` 는 ```MenuGroup``` 에 포함될 수 있다.    
+```Menu``` 는 이름, 가격을 가진다.  
+```Menu``` 는 ```MenuProduct``` 들을 가진다.  
+```Menu``` 는 ```MenuGroup``` 에 포함될 수 있다.      
 ```MenuProduct``` 는 이름, 수량, 가격을 가진다.  
-```MenuGroup``` 은 번호, 이름을 가진다.
+```MenuGroup``` 은 번호, 이름을 가진다.  
 
-```Order``` 는 ```OrderTable``` 에 포함된다.
-```Order``` 는 ```OrderLineItem``` 들을 가진다.
+```Order``` 는 ```OrderTable``` 에 포함된다.  
+```Order``` 는 ```OrderLineItem``` 들을 가진다.  
 ```Order``` 는 주문 번호, 주문 상태를 가진다.  
-```OrderTable``` 는 테이블넘버, 손님 수, 테이블 상태를 가진다.
-```Order```의 ```OrderStatus``` 값이 COMPLETION 아니면 ```OrderTable``` 의 테이블 상태를 변경할 수 없다.
-```OrderTable``` 은 ```Table Group```에 포함될 수 있다.
-```TableGroup``` 은 ```OrderTable```들을 가진다.
-```TableGroup``` 은 테이블 상태가 빈 ```OrderTable``` 이 최소 두 개 이상 이다. 
-```OrderLineItem``` 은 주문한 시점의 메뉴인 ```OrderMenu``` 를 가진다.
-```OrderMenu``` 는 메뉴이름, 가격을 가진다.
+```OrderTable``` 는 테이블넘버, 손님 수, 테이블 상태를 가진다.  
+```Order```의 ```OrderStatus``` 값이 COMPLETION 아니면 ```OrderTable``` 의 테이블 상태를 변경할 수 없다.  
+```OrderTable``` 은 ```Table Group```에 포함될 수 있다.  
+```TableGroup``` 은 ```OrderTable```들을 가진다.  
+```TableGroup``` 은 테이블 상태가 빈 ```OrderTable``` 이 최소 두 개 이상 이다.   
+```OrderLineItem``` 은 주문한 시점의 메뉴인 ```OrderMenu``` 를 가진다.  
+```OrderMenu``` 는 메뉴이름, 가격을 가진다.  
