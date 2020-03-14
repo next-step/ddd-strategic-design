@@ -69,19 +69,13 @@
 
 ## 모델링
 
-```Product``` 는 이름과 가격을 가진다.   
+```Product``` 는 이름과 가격을 가진다.
 
-MenuGroups 를 통해 MenuGroup 을 만든다.
-MenuGroups 은 Menu 로 정보를 제공한다.
-
-MenuProducts 는 MenuProduct 를 만든다.
-MenuProducts 는 Product 의 정보를 제공한다.
-MenuProducts 의 Price 는 MenuProduct 의 Product 가격의 합보다 작은 값을 가진다.
-
-Menus 는 Menu 를 만든다.
-Menus 는 MenuGroup 의 정보를 받는다(가져온다[Down Stream]).
-Menus 는 상품의 정보를 표현하기 위해 MenuProducts 들을 가진다.
-Menu 의 가격은 MenuProducts 의 가격보다 작은 값을 가진다.
+```Menu``` 는 이름, 가격을 가진다.
+```Menu``` 는 ```MenuProduct``` 들을 가진다.
+```Menu``` 는 ```MenuGroup``` 에 포함될 수 있다.    
+```MenuProduct``` 는 이름, 수량, 가격을 가진다.  
+```MenuGroup``` 은 번호, 이름을 가진다.
 
 OrderTables 는 OrderTable 을 만든다.
 OrderTables 은 OrderTable 자리의 유무를 가진다.
