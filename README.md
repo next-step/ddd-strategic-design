@@ -71,53 +71,25 @@
 
 ## 모델링
 
-### Product
+### 상품
 
-* 사용자가 Product 을 등록한다.
-  * 사용자는 Product 을 등록할 때 Product name, price 를 입력한다.
-  * 사용자는 price 를 0원 이상으로 입력해야 한다.
-* 사용자가 Product list 를 조회한다.
+* `Product`은 번호와 이름, 가격을 가진다.
 
-### Menu
+### 메뉴
 
-#### Menu-group
+* `MenuGroup`은 번호와 이름을 가진다.
+* `Menu`는 번호와 이름, 가격, `MenuProducts`를 가진다.
+* `MenuProducts`의 금액의 합은 `Menu`의 가격보다 크거나 같다.
+* `Menu`는 특정 `MenuGroup`에 속한다.
 
-* 사용자가 Menu-group 을 등록한다.
-  * 사용자는 Menu-group 을 등록할 때 Menu-group 의 name 을 입력한다.
-* 사용자가 Menu-group 을 조회한다.
+### 매장 주문
 
-#### Menu
-
-* 사용자가 Menu 를 등록한다.
-  * 사용자는 Menu 를 등록할 때 Menu 의 이름, 가격, Menu-group, Menu 에 포함될 Product 들을 입력한다.
-  * 사용자는 Menu 의 price 를 Menu-product 들 price 의 합보다 같거나 작게 입력해야 한다.
-  * 사용자는 Menu 의 price 를 0원 이상으로 입력해야 한다.
-  * 사용자는 Menu-group 을 반드시 설정해야 한다.
-* 사용자가 Menu 를 조회한다.
-
-### Order-table
-
-#### Order
-
-* 사용자는 고객이 order 를 하면 order 를 등록한다.
-  * 사용자는 order 를 등록할 때 Order-table-id, Order-line-item 를 입력한다.
-  * Menu 는  1개 이상 선택해야 한다.
-  * 고객이 착석한 Order-table-id 를 선택해야 한다.
-  * order 를 등록하면 등록된 Menu 가 COOKING 된다.
-* 사용자가 order-status 를 변경한다.
-  * 사용자는 COOKING 이 끝난 Menu 가 고객에게 제공되면 order-status 를 MEAL 으로 변경한다. 
-  * 사용자는 고객이 식사를 끝내고 결제를 하면 order-status 를 COMPLETE 로 변경한다.
-  * 계산이 완료된 order-status 는 변경할 수 없다.
-* 사용자가 order-list 를 조회한다.
-
-#### Single-table
-
-* 사용자가 Single-table 을 등록한다.
-* 사용자가 Single-table list 를 조회한다.
-
-#### Table-group
-
-* 사용자는 단체고객이 order 를 하면 Table-group 을 등록한다.
-  * Table-group 을 등록할 때 이미 등록된 Single-table 을 중복등록할 수 없다.
-* 사용자는 Table-group 의 고객이 식사를 끝내고 결제를 하면 Table-group 을 해제한다.
-  * Table-group 에 등록된 order 의 Menu 가 COOKING 이거나 MEAL 일때 Table-group 을 해제할 수 없다. 
+* `OrderTable`은 번호와 방문한 손님 수를 가진다.
+* `OrderTable`에 `Order`를 등록할 수 있다.
+* 2 개 이상의 `EmptyTable`로 `TableGroup`을 생성할 수 있다.
+* `TableGroup`은 생성 시간을 가진다.
+* `TableGroup`에 속한 `EmptyTable`은 주문할 수 있게 된다.
+* `TableGroup`에 속하더라도 개별 `OrderTable`에 `Order`를 등록한다.
+* `TableGroup`에 속한 `OrderTable`의 모든 `Order`가 계산되면 `TableGroup`을 해지할 수 있다.
+* `Order`는 번호와 주문 상태, 주문 시간, `OrderLineItems`를 가진다.
+* `Order`가 취소되거나 변경되더라도 기존 `Order`는 수정되지 않는다.
