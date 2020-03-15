@@ -1,4 +1,4 @@
-package kitchenpos.order.entity;
+package kitchenpos.order.domain;
 
 public class OrderLineItem {
     private Long seq;

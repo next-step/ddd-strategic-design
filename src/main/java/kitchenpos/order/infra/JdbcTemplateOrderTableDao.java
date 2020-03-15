@@ -1,6 +1,7 @@
-package kitchenpos.order.model;
+package kitchenpos.order.infra;
 
-import kitchenpos.order.entity.OrderTable;
+import kitchenpos.order.domain.OrderTable;
+import kitchenpos.order.domain.OrderTableDao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

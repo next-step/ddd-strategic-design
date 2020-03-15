@@ -1,6 +1,6 @@
-package kitchenpos.order.model;
+package kitchenpos.order.domain;
 
-import kitchenpos.order.entity.OrderLineItem;
+import kitchenpos.order.domain.OrderLineItem;
 
 import java.util.List;
 import java.util.Optional;

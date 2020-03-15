@@ -1,4 +1,4 @@
-package kitchenpos.menu.entity;
+package kitchenpos.menu.domain;
 
 public class MenuProduct {
     private Long seq;

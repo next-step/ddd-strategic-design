@@ -1,6 +1,7 @@
-package kitchenpos.menu.model;
+package kitchenpos.menu.dao;
 
-import kitchenpos.menu.entity.MenuProduct;
+import kitchenpos.menu.domain.MenuGroup;
+import kitchenpos.menu.domain.MenuGroupDao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,14 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JdbcTemplateMenuProductDao implements MenuProductDao {
-    private static final String TABLE_NAME = "menu_product";
-    private static final String KEY_COLUMN_NAME = "seq";
+public class JdbcTemplateMenuGroupDao implements MenuGroupDao {
+    private static final String TABLE_NAME = "menu_group";
+    private static final String KEY_COLUMN_NAME = "id";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public JdbcTemplateMenuProductDao(final DataSource dataSource) {
+    public JdbcTemplateMenuGroupDao(final DataSource dataSource) {
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         jdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName(TABLE_NAME)
@@ -32,14 +33,14 @@ public class JdbcTemplateMenuProductDao implements MenuProductDao {
     }
 
     @Override
-    public MenuProduct save(final MenuProduct entity) {
+    public MenuGroup save(final MenuGroup entity) {
         final SqlParameterSource parameters = new BeanPropertySqlParameterSource(entity);
         final Number key = jdbcInsert.executeAndReturnKey(parameters);
         return select(key.longValue());
     }
 
     @Override
-    public Optional<MenuProduct> findById(final Long id) {
+    public Optional<MenuGroup> findById(final Long id) {
         try {
             return Optional.of(select(id));
         } catch (final EmptyResultDataAccessException e) {
@@ -48,32 +49,30 @@ public class JdbcTemplateMenuProductDao implements MenuProductDao {
     }
 
     @Override
-    public List<MenuProduct> findAll() {
-        final String sql = "SELECT seq, menu_id, product_id, quantity FROM menu_product";
+    public List<MenuGroup> findAll() {
+        final String sql = "SELECT id, name FROM menu_group";
         return jdbcTemplate.query(sql, (resultSet, rowNumber) -> toEntity(resultSet));
     }
 
     @Override
-    public List<MenuProduct> findAllByMenuId(final Long menuId) {
-        final String sql = "SELECT seq, menu_id, product_id, quantity FROM menu_product WHERE menu_id = (:menuId)";
+    public boolean existsById(final Long id) {
+        final String sql = "SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END FROM menu_group WHERE id = (:id)";
         final SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("menuId", menuId);
-        return jdbcTemplate.query(sql, parameters, (resultSet, rowNumber) -> toEntity(resultSet));
+                .addValue("id", id);
+        return jdbcTemplate.queryForObject(sql, parameters, Boolean.class);
     }
 
-    private MenuProduct select(final Long id) {
-        final String sql = "SELECT seq, menu_id, product_id, quantity FROM menu_product WHERE seq = (:seq)";
+    private MenuGroup select(final Long id) {
+        final String sql = "SELECT id, name FROM menu_group WHERE id = (:id)";
         final SqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("seq", id);
+                .addValue("id", id);
         return jdbcTemplate.queryForObject(sql, parameters, (resultSet, rowNumber) -> toEntity(resultSet));
     }
 
-    private MenuProduct toEntity(final ResultSet resultSet) throws SQLException {
-        final MenuProduct entity = new MenuProduct();
-        entity.setSeq(resultSet.getLong(KEY_COLUMN_NAME));
-        entity.setMenuId(resultSet.getLong("menu_id"));
-        entity.setProductId(resultSet.getLong("product_id"));
-        entity.setQuantity(resultSet.getLong("quantity"));
+    private MenuGroup toEntity(final ResultSet resultSet) throws SQLException {
+        final MenuGroup entity = new MenuGroup();
+        entity.setId(resultSet.getLong("id"));
+        entity.setName(resultSet.getString("name"));
         return entity;
     }
 }

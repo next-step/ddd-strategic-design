@@ -1,7 +1,7 @@
 package kitchenpos.menu.controller;
 
 import kitchenpos.menu.service.MenuBo;
-import kitchenpos.menu.entity.Menu;
+import kitchenpos.menu.domain.Menu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
