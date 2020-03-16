@@ -1,7 +1,8 @@
 package kitchenpos.controller;
 
-import kitchenpos.bo.OrderBo;
-import kitchenpos.model.Order;
+import kitchenpos.hallorder.application.OrderBo;
+import kitchenpos.hallorder.presentation.OrderRestController;
+import kitchenpos.hallorder.domain.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
