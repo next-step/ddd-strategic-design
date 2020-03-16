@@ -1,6 +1,5 @@
-package kitchenpos.dao;
+package kitchenpos.menu.domain;
 
-import kitchenpos.model.Menu;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

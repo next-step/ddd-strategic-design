@@ -1,6 +1,4 @@
-package kitchenpos.dao;
-
-import kitchenpos.model.MenuProduct;
+package kitchenpos.menu.domain;
 
 import java.util.List;
 import java.util.Optional;
