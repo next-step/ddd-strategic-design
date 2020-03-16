@@ -1,6 +1,6 @@
-package kitchenpos.dao;
+package kitchenpos.order.domain;
 
-import kitchenpos.model.TableGroup;
+import kitchenpos.order.domain.TableGroup;
 
 import java.util.List;
 import java.util.Optional;
