@@ -1,7 +1,7 @@
 package kitchenpos.bo;
 
-import kitchenpos.dao.OrderDao;
-import kitchenpos.model.Order;
+import kitchenpos.hallorder.infra.OrderDao;
+import kitchenpos.hallorder.domain.Order;
 
 import java.util.*;
 
