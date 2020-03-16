@@ -9,7 +9,7 @@
     * 상품의 가격은 0 원 이상이어야 한다.
 * 상품의 목록을 조회할 수 있다.
 
-### 메뉴 그룹 (카테고)
+### 메뉴 그룹 (카테고리)
 
 * 메뉴 그룹을 등록할 수 있다.
 * 메뉴 그룹의 목록을 조회할 수 있다.
@@ -55,36 +55,38 @@
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 상품  | product | 매장에서 판매 취급을 하는 상품 |
-| 메뉴 | menu | 1개 이상의 상품으로 고객에게 노출되는 상품들 |
-| 메뉴 그룹 | menu group | 고객이 메뉴를 보기 쉽게 특징으로 구분지어 놓은 카테고리 |
+| 메뉴 | menu | 매장에서 주문할 수 있는 상품의 묶음 |
+| 메뉴 상품 | menu product | 1개 이상의 상품으로 고객에게 노출되는 상품들 |
+| 메뉴 그룹 | menu group | 고객이 메뉴를 보기 쉽게 특징으로 구분지어 놓은 카테고리 | 
 | 주문 테이블 | order table | 메뉴를 시킬 수 있는 자리, 자리에 앉아서 메뉴를 시킬 수 있다. |
 | 빈 주문 테이블 | order table empty | 고객이 없는 테이블, 고객을 받아 들일 수 있는 자리 |
-| 주문 | order | 메뉴를 시킬 수가 있다. |
+| 주문 | order | 메뉴를 선택 후 테이블에 앉아 메뉴 음식의 상태를 고려할 수 있는 것 |
 | 주문 상태 | order status | 메뉴를 시켜 고객이 가질 수 있는 상태 (요리중, 식사, 완료) |
 | 주문 상태 요리 | COOKING | 테이블에 앉아 메뉴에 대한 고객의 상태 , 요리중 |
 | 주문 상태 식사 | MEAL | 테이블에 앉아 메뉴에 대한 고객의 상태 , 식사 |
 | 주문 상태 완료 | COMPLETION | 테이블에 앉아 메뉴에 대한 고객의 상태 , 완료 |
 | 주문 확인 메뉴 | order line item | 주문한 메뉴 |
+| 주문 메뉴 | order menu | 주문한 시점의 메뉴 상품 정보 |
 | 단체 지정 | table group | 고객 수가 많아 2 개 이상의 주문 테이블에 앉을 수 있을 때 단체 지정이라고 한다. |
 | 방문한 손님 수 | number of guests | 테이블에 앉을 수 있는 손님 수 |
 
 ## 모델링
 
-```Product``` 는 이름과 가격을 가진다.  
+`Product` 는 이름과 가격을 가진다.  
 
-```Menu``` 는 이름, 가격을 가진다.  
-```Menu``` 는 ```MenuProduct``` 들을 가진다.  
-```Menu``` 는 ```MenuGroup``` 에 포함될 수 있다.      
-```MenuProduct``` 는 이름, 수량, 가격을 가진다.  
-```MenuGroup``` 은 번호, 이름을 가진다.  
-
-```Order``` 는 ```OrderTable``` 에 포함된다.  
-```Order``` 는 ```OrderLineItem``` 들을 가진다.  
-```Order``` 는 주문 번호, 주문 상태를 가진다.  
-```OrderTable``` 는 테이블넘버, 손님 수, 테이블 상태를 가진다.  
-```Order```의 ```OrderStatus``` 값이 COMPLETION 아니면 ```OrderTable``` 의 테이블 상태를 변경할 수 없다.  
-```OrderTable``` 은 ```Table Group```에 포함될 수 있다.  
-```TableGroup``` 은 ```OrderTable```들을 가진다.  
-```TableGroup``` 은 테이블 상태가 빈 ```OrderTable``` 이 최소 두 개 이상 이다.   
-```OrderLineItem``` 은 주문한 시점의 메뉴인 ```OrderMenu``` 를 가진다.  
-```OrderMenu``` 는 메뉴이름, 가격을 가진다.  
+`Menu` 는 이름, 가격을 가진다.  
+`Menu` 는 `MenuProduct` 들을 가진다.  
+`Menu` 는 `MenuGroup` 에 포함될 수 있다.      
+`MenuProduct` 는 이름, 수량, 가격을 가진다.  
+`MenuGroup` 은 번호, 이름을 가진다.  
+ 
+`Order` 는 `OrderTable` 에 포함된다.  
+`Order` 는 `OrderLineItem` 들을 가진다.  
+`Order` 는 주문 번호, 주문 상태를 가진다.  
+`OrderTable` 는 테이블넘버, 손님 수, 테이블 상태를 가진다.  
+`Order`의 `OrderStatus` 값이 COMPLETION 아니면 `OrderTable` 의 테이블 상태를 변경할 수 없다.  
+`OrderTable` 은 `Table Group`에 포함될 수 있다.  
+`TableGroup` 은 `OrderTable`들을 가진다.  
+`TableGroup` 은 테이블 상태가 빈 `OrderTable` 이 최소 두 개 이상 이다.   
+`OrderLineItem` 은 주문한 시점의 메뉴인 `OrderMenu` 를 가진다.  
+`OrderMenu` 는 메뉴이름, 가격을 가진다.  
