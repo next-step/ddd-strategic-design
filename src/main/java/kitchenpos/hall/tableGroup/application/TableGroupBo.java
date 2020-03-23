@@ -1,11 +1,11 @@
 package kitchenpos.hall.tableGroup.application;
 
 import kitchenpos.hall.order.domain.OrderDao;
-import kitchenpos.hall.table.domain.OrderTableDao;
-import kitchenpos.hall.tableGroup.domain.TableGroupDao;
 import kitchenpos.hall.order.domain.OrderStatus;
 import kitchenpos.hall.table.domain.OrderTable;
+import kitchenpos.hall.table.domain.OrderTableDao;
 import kitchenpos.hall.tableGroup.domain.TableGroup;
+import kitchenpos.hall.tableGroup.domain.TableGroupDao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
