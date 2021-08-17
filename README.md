@@ -115,7 +115,7 @@
 | 메뉴 상품 | MenuProduct | 메뉴에 속한 상품이며, 수량이 0개 이상이고 메뉴 가격의 합이 메뉴의 가격보다 크거나 같아야 한다. |
 | 메뉴 가격 | MenuPrice | 메뉴의 값이다. 0원 이상이다. |
 | 메뉴 이름 | MenuName | 메뉴의 이름이다. 비속어가 포함될 수 없다. |
-| 메뉴 등록 | Register | 메뉴를 등록한다. |
+| 메뉴 등록 | register | 메뉴를 등록한다. |
 | 메뉴 가격 변경 | changePrice | 메뉴의 가격을 변경한다. |
 | 메뉴 노출 | display | 메뉴를 노출한다. 메뉴의 가격이 메뉴 상품의 수량 * 가격 보다 작거나 같아야 한다. |
 | 메뉴 숨김 | hide | 메뉴를 숨긴다. |
@@ -198,8 +198,9 @@
 
 ### 주문
 
+- `Order` 은 `OrderStatus` 를 갖는다.
 - `Order` 을 `register` 할 수 있다. `register` 되면 `OrderStatus` 가 `WAITING` 이 된다.
-- `OrderType` 은 `DELIVERY`, `TAKEOUT`, `EAT_IN` 총 3가지 이다.
+- `Order` 는 `OrderType` 을 갖는데, `DELIVERY`, `TAKEOUT`, `EAT_IN` 가 있다.
 - `OrderType` 가 `DELIVERY` 이면, `DeliveryAddress` 가 있어야 `Order` 을 `register` 할 수 있다.
 - `OrderType` 가 `EAT_IN` 이면, 그 `OrderTable` 이 비어있지 않아야 `Order` 을 `register` 할 수 있다.
 - 한 번의 `Order` 에 여러 개의 `OrderLineItem` 를 담을 수 있다.
