@@ -127,7 +127,7 @@
 | 고객 인원 | Guests | 테이블에 앉는 고객 인원이다. |  
 | 자리 안내 | Sit | 고객이 테이블을 배정받고 앉았다. |  
 | 테이블 정리 | Clear | 고객이 떠난 테이블을 정리한다. | 
-| 인원 변경 | Change Guests | 테이블의 고객 인원을 변경한다. 고객이 있는 테이블만 변경이 가능하다. |
+| 인원 변경 | Cha********nge Guests | 테이블의 고객 인원을 변경한다. 고객이 있는 테이블만 변경이 가능하다. |
 
 ### 주문
 | 한글명 | 영문명 | 설명 |
@@ -152,3 +152,26 @@
 
 
 ## 모델링
+`MenuGroup`은 메뉴 그룹 정보(이름)을 가진다.
+`MenuGroupService`에서 `MenuGroup`를 만들고 관리한다.
+ 
+`Product`는 상품 정보(이름과 가격)을 가진다.
+`ProductService`에서 `Product`를 만들고 관리한다.
+`ProductService`는 `PurgomalumClient`를 가진다.
+`PurgomalumClient`는 다양한 비속어를 확인한다.
+ 
+`Menu`는 고객에게 보여줄 메뉴 정보(이름과 가격, 공개여부, `MenuGroup`, `menuProducts`)를 가진다.
+`MenuService`는 `Menu`를 만들고 관리하며 `PurgomalumClient`를 이용해 잘못된 이름을 거른다.
+
+`OrderTable`은 매장 테이블에 관련된 정보(이름, 손님 수, 빈자리 여부)를 가진다. 
+`OrderTableService`에서 매장에 사용되는 `OrderTable`를 만들고 관리한다. 
+`OrderTableService`는 매장 손님 안내에 사용된다.  
+
+`Order`는 주문 정보(`OrderType`, `OrderStatus`, `OrderLineItem`, `OrderTable`, 주문 시각, 배송지)를 가진다.
+`OrderType`는 주문 유형 `DELIVERY`, `TAKEOUT`, `EAT_IN` 로 구분한다.
+`OrderStatus`는 주문 상태 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED` 로 구분한다.
+`OrderLineItem`은 주문 메뉴 정보(`Menu`, 수량, 금액)를 가진다.
+`OrderService`은 `Order`를 만들고 관리한다.
+`OrderService`은 `KitchenridersClient`를 가진다.
+  
+`KitchenridersClient`는 배달 기사에게 배송 요청을 한다.
