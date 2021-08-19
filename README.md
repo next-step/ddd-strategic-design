@@ -115,9 +115,10 @@
 | 메뉴 상품 | MenuProduct | 메뉴에 속한 상품이며, 수량이 0개 이상이고 메뉴 가격의 합이 메뉴의 가격보다 크거나 같아야 한다. |
 | 메뉴 가격 | MenuPrice | 메뉴의 값이다. 0원 이상이다. |
 | 메뉴 이름 | MenuName | 메뉴의 이름이다. 비속어가 포함될 수 없다. |
+| 메뉴 전시 여부 | displayed | 메뉴 전시 상태다. |
 | 메뉴 등록 | register | 메뉴를 등록한다. |
 | 메뉴 가격 변경 | changePrice | 메뉴의 가격을 변경한다. |
-| 메뉴 노출 | display | 메뉴를 노출한다. 메뉴의 가격이 메뉴 상품의 수량 * 가격 보다 작거나 같아야 한다. |
+| 메뉴 전시 | display | 메뉴를 전시한다. 메뉴의 가격이 메뉴 상품의 수량 * 가격 보다 작거나 같아야 한다. |
 | 메뉴 숨김 | hide | 메뉴를 숨긴다. |
 
 ### 주문 테이블
@@ -127,9 +128,10 @@
 | 주문 테이블 | OrderTable | 매장식사 주문일 경우, 손님들이 식사를 하고 가는 테이블이다. |
 | 주문 테이블 이름 | OrderTableName | 주문 테이블의 이름이다. |
 | 방문 손님 수 | NumberOfGuests | 주문 테이블을 방문한 손님 수이다. 0명 이상이다. |
+| 비어 있음 여부 | empty | 주문 테이블의 비어 있음 여부다. |
 | 주문 테이블 등록 | register | 주문 테이블을 등록한다. |
-| 주문 테이블 찬 테이블로 설정 | fill | 주문 테이블을 찬 테이블로 설정한다. |
-| 주문 테이블 빈 테이블로 설정 | clear | 주문 테이블을 빈 테이블로 설정한다. 완료되지 않은 주문이 있으면 불가능하다. |
+| 주문 테이블 채우기 | fill | 주문 테이블을 채운다. |
+| 주문 테이블 정리 | clear | 주문 테이블을 정리한다. 완료되지 않은 주문이 있으면 불가능하다. |
 | 주문 테이블 방문 손님 수 변경 | changeNumberOfGuests | 주문 테이블을 방문한 손님 수를 변경한다. 빈 테이블은 불가능하다. |
 
 ### 주문
@@ -176,44 +178,51 @@
 
 - `Menu` 를 `register` 할 수 있다.
 - `Menu` 는 여러 개의 `MenuProduct` 로 구성된다.
-- `Menu` 는 어떤 `MenuGroup` 에 속한다.
-- `Menu` 는 `MenuName`, `MenuPrice` 을 가진다.
+- `Menu` 는 특정한 `MenuGroup` 에 속한다.
+- `Menu` 는 `MenuName`, `MenuPrice`, `displayed` 을 가진다.
 - `MenuName` 은 비속어이거나 빈 값일 수 없다.
 - `MenuPrice` 은 0원 이상이다.
+- `displayed` 는 `Menu`의 전시 여부를 나타낸다.
 - 각 `MenuProduct` 의 수량은 0개 이상이다.
 - 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같아야 한다.
 - `Menu` 의 `MenuPrice` 을 `change` 할 수 있다.
-- 아래의 경우에 `Menu` 를 `display` 할 수 있다.
-    - 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같은 경우
-- `Menu` 를 `hide` 할 수 있다.
+- 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같은 경우
+    - `Menu` 를 `display` 할 수 있다.
+    - `display` 하면 `displayed` 가 `true` 가 된다.
+- `Menu` 를 `hide` 할 수 있다
+    - `hide` 하면 `displayed` 가 `false` 가 된다.
 
 ### 주문 테이블
 
 - `OrderTable` 을 `register` 할 수 있다.
-- `OrderTable` 는 `OrderTableName`, `NumberOfGuests` 을 가진다.
+- `OrderTable` 는 `OrderTableName`, `NumberOfGuests`, `empty` 을 가진다.
 - `NumberOfGuests` 는 0명 이상이다.
+- `empty` 는 `OrderTable` 의 비어 있음 여부이다.
 - `OrderTable` 을 `fill` 할 수 있다.
-- `OrderTable` 에 `OrderStatus` 가 `COMPLETED` 이 아닌 `Order` 이 없다면, `OrderTable` 을 `clear` 할 수 있다.
-- `OrderTable` 이 비어있지 않은 경우, `OrderTable` 의 `NumberOfGuests` 를 `change` 할 수 있다.
+- `OrderTable` 에 `OrderStatus` 가 `COMPLETED` 이 아닌 `Order` 이 없다면
+    - `OrderTable` 을 `clear` 할 수 있다.
+- `OrderTable` 의 `empty` 하지 않으면
+    - `OrderTable` 의 `NumberOfGuests` 를 `change` 할 수 있다.
 
 ### 주문
 
 - `Order` 은 `OrderStatus` 를 갖는다.
-- `Order` 을 `register` 할 수 있다. `register` 되면 `OrderStatus` 가 `WAITING` 이 된다.
+- `Order` 을 `register` 할 수 있다.
+    - `register` 하면 `OrderStatus` 가 `WAITING` 이 된다.
 - `Order` 는 `OrderType` 을 갖는데, `DELIVERY`, `TAKEOUT`, `EAT_IN` 가 있다.
 - `OrderType` 가 `DELIVERY` 이면, `DeliveryAddress` 가 있어야 `Order` 을 `register` 할 수 있다.
-- `OrderType` 가 `EAT_IN` 이면, 그 `OrderTable` 이 비어있지 않아야 `Order` 을 `register` 할 수 있다.
+- `OrderType` 가 `EAT_IN` 이면, 그 `OrderTable` 이 `empty` 하지 않아야 `Order` 을 `register` 할 수 있다.
 - 한 번의 `Order` 에 여러 개의 `OrderLineItem` 를 담을 수 있다.
     - `OrderType` 이 `DELIVERY`, `TAKEOUT` 일 경우, 수량은 0개 이상이어야 한다.
 - `OrderStatus` 가 `WAITING` 인 경우, `Order` 를 `accept` 할 수 있다.
     - `OrderType` 가 `DELIVERY` 이면 배달 대행사를 호출한다.
-    - `accept` 되면 `OrderStatus` 가 `ACCEPTED` 이 된다.
+    - `accept` 하면 `OrderStatus` 가 `ACCEPTED` 이 된다.
 - `OrderStatus` 가 `ACCEPTED` 인 경우, `Order` 를 `serve` 할 수 있다.
-    - `serve` 되면 `OrderStatus` 가 `SERVED` 이 된다.
+    - `serve` 하면 `OrderStatus` 가 `SERVED` 이 된다.
 - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `SERVED` 인 경우, `Order` 를 `startDelivery` 할 수 있다.
-    - `startDelivery` 되면 `OrderStatus` 가 `DELIVERING` 이 된다.
+    - `startDelivery` 하면 `OrderStatus` 가 `DELIVERING` 이 된다.
 - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERING` 인 경우, `Order` 를 `completeDelivery` 할 수 있다.
-    - `completeDelivery` 되면 `OrderStatus` 가 `DELIVERED` 이 된다.
-- 아래의 경우에 `Order` 를 `complete` 할 수 있다. `complete` 되면 `OrderStatus` 가 `COMPLETED` 이 된다.
+    - `completeDelivery` 하면 `OrderStatus` 가 `DELIVERED` 이 된다.
+- 아래의 경우에 `Order` 를 `complete` 할 수 있다. `complete` 하면 `OrderStatus` 가 `COMPLETED` 이 된다.
     - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERED` 인 경우
     - `OrderType` 가 `TAKEOUT` 또는 `EAT_IN` 이고 `OrderStatus` 가 `SERVED` 인 경우  
