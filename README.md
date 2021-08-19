@@ -148,3 +148,54 @@
 | 주문 처리 완료 | Completed  | 주문 처리가 완료된 상태                                      |
 
 ## 모델링
+### 상품
+* `Product`(상품)는 `이름`과 `가격`을 필수로 가진다.
+* `Product`는 `isValidPrice()`로 유효한 가격("0원 이상")인지 알려준다.
+* `ProductService`에서 다음 기능을 제공한다.
+    * `Product`을 등록한다.
+        * `Product`의 `isValidPrice()`로 등록하려는 가격이 유효한지 확인한다.
+        * `PurgomalumClient`를 통해 이름에 비속어가 포함되어 있는지 확인한다.
+    * `Product` 가격을 변경한다.
+        * `Product`의 `isValidPrice()`로 등록하려는 가격이 유효한지 확인한다.
+        * 가격 변경 시, `Menu`의 `price`가 `totalPriceOfProducts`보다 커지면 메뉴를 숨긴다.
+    * `Product` 목록을 조회한다.
+
+### 메뉴 그룹
+* `MenuGroup`은 `이름`을 필수로 가진다.
+* `MenuGroupService`에서 다음 기능을 제공한다.
+    * `create()` : `MenuGroup`을 등록한다.
+        * `PurgomalumClient`를 통해 이름에 비속어가 포함되어 있는지 확인한다.
+    * `findAll()` : `MenuGroup` 목록을 조회한다.
+
+### 메뉴
+* `Menu`는 메뉴 이름(`name`), 가격(`price`), 메뉴가 속한 메뉴 그룹(`MenuGroup`), 메뉴 노출 여부(`displayed`), 메뉴에 속한 상품 목록(`List<MenuProduct>`)을 가진다. 
+* `Menu`의 `getTotalPriceOfProducts`를 통해 메뉴에 속한 상품 금액의 총합을 알 수 있다.
+* `Menu`는 `isValidPrice()`로 유효한 가격("0원 이상, 메뉴에 포함된 상품들의 가격과 갯수를 곱한 총액보다 작거나 같아야 한다.")인지 알려준다.
+    * `getTotalPriceOfProducts`로 알아온 상품 금액의 총합보다 메뉴 가격이 높다면 `false`를 반환한다.
+* `Menu`는 `display()`로 메뉴를 노출 시킨다.
+    * `isValidPrice()`가 `false`면 `IllegalStateException` 처리한다.
+* `Menu`는 `changePrice()`로 메뉴 가격을 변경한다.
+    * `isValidPrice()`가 `false`면 `IllegalArgumentException` 처리한다.
+* `Menu`는 `create()`로 메뉴를 생성한다.
+    * `Menu`의 모든 필드 정보를 파라미터로 받고, `isValidPrice()`로 값이 유효한지 확인한다. `false`면 `IllegalArgumentException` 처리한다.
+* `MenuService`에서 다음 기능을 제공한다.
+    * `create()` : `Menu`를 등록한다.
+        * `PurgomalumClient`를 통해 이름에 비속어가 포함되어 있는지 확인한다.
+        * 메뉴가 속하려는 `MenuGroup`을 `MenuGroupRepository`에서 조회한다. 없으면 `NoSuchElementException` 처리한다.
+        * 메뉴에 담을 상품(`MenuProduct`) 목록이 비어있으면 `IllegalArgumentException` 처리한다.
+        * `MenuProduct`의 `Product` 정보를 `ProductRepository`에서 조회한다. 없으면 `NoSuchElementException` 처리한다.
+        * `Menu`의 `create()`에 파라미터로 필요한 정보를 넘기고 `Menu`를 등록한다.
+    * `changePrice()` : `Menu`의 `price`를 변경한다.
+        * 변경하려는 금액이 `Null`이거나 `0`보다 작으면 `IllegalArgumentException` 처리한다.
+        * `Menu`의 `isValidPrice()`로 변경하려는 가격이 유효한지 확인한다.
+        * `MenuRepository`에서 존재하는 메뉴인지 확인한다. 없으면 `NoSuchElementException` 처리한다.
+    * `display()` : `Menu`를 노출시킨다.
+        * `MenuRepository`에서 존재하는 메뉴인지 확인한다.
+    * `hide()` : `Menu`를 숨긴다.
+        * `MenuRepository`에서 존재하는 메뉴인지 확인한다.
+    * `findAll()` : `Menu` 목록을 조회한다.
+
+### 주문 테이블
+
+### 주문
+
