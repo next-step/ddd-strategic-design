@@ -100,6 +100,7 @@
 | 가격 | Price | 상품 혹은 메뉴의 가격. 메뉴의 가격은 수량에 따른 상품 가격의 총합 보다 작아야 한다. |
 | 이름 | Name | 손님들에게 보여지는 명칭 |
 | 비속어 | Profanity | 이름을 지을때 필터링해야하는 단어 |
+| 비속어 필터 웹 서비스 | PurgoMalum Client | 비속어를 필터링해주는 외부 클라이언트 |
 | 메뉴 노출 | Display | 메뉴가 손님에게 노출되고, 주문이 가능한 상태 |
 | 메뉴 숨김 | Hide | 메뉴가 손님에게 숨겨지고, 주문이 불가능한 상태 |
 | 수량 | Quantity | 메뉴 혹은 상품의 갯수 |
@@ -158,8 +159,9 @@
 
 - 상품을 등록할 수 있다.
     - `product` 의 `price` 는 0원 이상이어야 한다.
-    - `product` 의 `name` 은 비속어(`profanity`)가 포함될 수 없다.
     - `product` 의 `name` 은 비워 둘 수 없다.
+    - `product` 의 `name` 은 비속어(`profanity`)가 포함될 수 없다.
+        - `PurgoMalum Client` 가 비속어를 필터링 한다.
 - 상품의 가격을 변경할 수 있다.
     - 변경되는 `product` 의 `price` 는 0원 이상이어야 한다.
     - 변경 후 메뉴에 속한 상품(`menu product`) 금액의 합보다 메뉴(`menu`)의 가격이 크면 메뉴가 숨겨진다(`hide`).
@@ -174,8 +176,9 @@
 #### 기능/조건
 
 - 메뉴 그룹을 등록할 수 있다.
-    - `menu group`의 `name` 은 비속어(`profanity`)가 포함될 수 없다.
     - `menu group`의 `name` 은 비워 둘 수 없다.
+    - `menu group`의 `name` 은 비속어(`profanity`)가 포함될 수 없다.
+        - `PurgoMalum Client` 가 비속어를 필터링 한다.
 - 메뉴 그룹의 목록을 조회할 수 있다.
 
 ### 메뉴(Menu) Context
@@ -200,8 +203,9 @@
     - 메뉴의 `price` 는 0원 이상이어야 한다.
     - `menu product` 금액의 총합은 메뉴의 `price` 보다 크거나 같아야 한다.
     - 메뉴는 특정 `menu group` 에 속해야 한다.
-    - 메뉴의 `name` 에는 `profanity` 가 포함될 수 없다.
     - 메뉴의 `name` 은 비워둘 수 없다.
+    - 메뉴의 `name` 에는 `profanity` 가 포함될 수 없다.
+        - `PurgoMalum Client` 가 비속어를 필터링 한다.
 - 메뉴의 가격을 변경할 수 있다.
     - 변경 후 메뉴의 `price` 는 0원 이상이어야 한다.
     - 변경 후 `menu product` 금액의 총합은 메뉴의 `price` 보다 크거나 같아야 한다.
@@ -223,8 +227,10 @@
 - 주문 테이블을 등록할 수 있다.
     - 주문 테이블의 `name` 은 비워 둘 수 없다.
     - 주문 테이블의 `name` 은 `profanity` 가 포함될 수 없다.
+        - `PurgoMalum Client` 가 비속어를 필터링 한다.
 - 빈 테이블을 해지할 수 있다.
 - 빈 테이블로 설정할 수 있다.
+    - 주문 테이블의 `order status` 가 `COMPLETED` 가 아니라면 설정할 수 없다.
 - 방문한 손님 수를 변경할 수 있다.
     - `number of guests` 는 0 이상이어야 한다.
     - `empty` 테이블은 `number of guests` 를 변경할 수 없으며, 항상 값이 0이다.
@@ -273,6 +279,7 @@
     - `ACCEPTED` 상태의 주문만 서빙할 수 있다.
 - 주문의 배달을 시작할 수 있다.
     - `DELIVERY` 타입이고, `SERVED` 상태의 주문만 배달할 수 있다.
+    - 배달 대행사(`kitchen riders`)가 주문의 배달을 수행한다.
 - 주문의 배달을 완료할 수 있다.
     - `DELIVERING` 상태의 주문만 배달 완료할 수 있다.
 - 주문을 완료할 수 있다.
