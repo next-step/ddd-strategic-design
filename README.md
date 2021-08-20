@@ -152,26 +152,154 @@
 
 
 ## 모델링
-`MenuGroup`은 메뉴 그룹 정보(이름)을 가진다.
-`MenuGroupService`에서 `MenuGroup`를 만들고 관리한다.
- 
-`Product`는 상품 정보(이름과 가격)을 가진다.
-`ProductService`에서 `Product`를 만들고 관리한다.
-`ProductService`는 `PurgomalumClient`를 가진다.
-`PurgomalumClient`는 다양한 비속어를 확인한다.
- 
-`Menu`는 고객에게 보여줄 메뉴 정보(이름과 가격, 공개여부, `MenuGroup`, `menuProducts`)를 가진다.
-`MenuService`는 `Menu`를 만들고 관리하며 `PurgomalumClient`를 이용해 잘못된 이름을 거른다.
 
-`OrderTable`은 매장 테이블에 관련된 정보(이름, 손님 수, 빈자리 여부)를 가진다. 
-`OrderTableService`에서 매장에 사용되는 `OrderTable`를 만들고 관리한다. 
-`OrderTableService`는 매장 손님 안내에 사용된다.  
-
-`Order`는 주문 정보(`OrderType`, `OrderStatus`, `OrderLineItem`, `OrderTable`, 주문 시각, 배송지)를 가진다.
-`OrderType`는 주문 유형 `DELIVERY`, `TAKEOUT`, `EAT_IN` 로 구분한다.
-`OrderStatus`는 주문 상태 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED` 로 구분한다.
-`OrderLineItem`은 주문 메뉴 정보(`Menu`, 수량, 금액)를 가진다.
-`OrderService`은 `Order`를 만들고 관리한다.
-`OrderService`은 `KitchenridersClient`를 가진다.
+### 메뉴그룹
+- `MenuGroup`은 메뉴그룹 정보을 가진다.
+  - 이름 : 메뉴그룹 이름이다. 
   
-`KitchenridersClient`는 배달 기사에게 배송 요청을 한다.
+- `MenuGroupService`는 `MenuGroup` 관련된 작업을 한다.  
+  - `MenuGroup`을 만든다.
+    - 그룹명은 반드시 입력해야한다.
+    
+  - `MenuGroup` 내역을 조회한다.
+
+### 상품
+- `Product`는 상품 정보를 가진다.
+  - 이름 : 상품 이름이다.
+  - 가격 : 상품 가격이다.
+  
+- `ProductService`는 `Product` 관련된 작업을 한다. 
+  - `Product`를 만든다. 
+    - 상품 가격은 0원 이상 입력한다.   
+    - 상품명은 `PurgomalumClient`를 통해 비속어를 필터링한다.
+    
+  - 상품 가격을 변경할 수 있다.
+    - 상품 가격은 0원 이상 입력한다.
+    - 해당 상품이 포함된 메뉴들을 가져와서 메뉴의 가격이 상품들보다 비쌀 경우 비공개한다.    
+    
+  - `Product` 내역을 조회한다. 
+ 
+### 메뉴
+- `Menu`는 메뉴 정보를 가진다.
+  - 이름 : 메뉴 이름이다.
+  - 금액 : 메뉴 가격이다. 0원 이상 입력해야하고, 메뉴에 속한 상품들의 가격보다 높게 입력이 안된다. 
+  - 공개여부 : 고객에게 공개/비공개로 판매를 제어한다. 
+  - `MenuGroup` : 메뉴가 속하게 되는 메뉴그룹이다.
+  - `menuGroupId` : 메뉴 등록 시, 메뉴그룹을 지정해준다. 
+  - `menuProducts` : 메뉴에 판매될 상품들이다. 
+  
+- `MenuService`는 `Menu` 관련된 작업을 한다.   
+  - `Menu`를 만든다. 
+    - 메뉴 가격은 0원 이상 입력해야한다.
+    - `menuGroupId`를 통해 `MenuGroup`를 찾아 매핑한다.  
+    - `menuProducts`의 `Product`를 찾아 확인한다.
+      - 상품 수량은 0개 이상이다. 
+    - 메뉴 가격이 `menuProducts`의 가격보다 높으면 안된다.
+    - 메뉴 이름은 `PurgomalumClient`를 통해 비속어를 필터링한다.
+  
+  - `Menu` 가격을 변경한다.
+    - 메뉴 가격은 0원 이상 입력해야한다.
+    - 메뉴 가격이 `menuProducts`의 가격보다 높으면 안된다.
+
+  - `Menu`를 공개한다.
+    - 공개하려는 메뉴의 가격이 `menuProducts`의 가격보다 높으면 안된다.
+
+  - `Menu`를 비공개한다.
+    
+  - `Menu` 내역을 조회한다. 
+  
+
+### 주문테이블
+- `OrderTable`은 매장 테이블 정보를 가진다. 
+  - 이름 : 테이블 명칭이다.
+  - 손님 수 : 해당 테이블에 앉은 손님 수다.
+  - 빈자리 여부 : 빈 테이블 여부다. 
+  
+- `OrderTableService`는 `OrderTable` 관련 작업을 한다.
+  - `OrderTable`를 만든다.
+    - 테이블 이름을 입력한다.
+    - 테이블 인원 수는 기본 0명이다
+    - 빈자리로 시작한다. 
+    
+  - `OrderTable`에 손님을 안내한다.
+    
+  - `OrderTable`의 손님 수를 변경한다.
+    - 0명 이상 입력한다.
+    - 빈 테이블은 변경 불가다.
+  
+  - `OrderTable`를 정리한다.
+
+  - `OrderTable` 내역을 조회한다.
+  
+
+### 주문
+- `Order`는 주문 정보를 가진다.
+  - `OrderType` : 주문 유형을 표현한다.
+  - `OrderStatus` : 주문 상태를 표현한다.
+  - `OrderLineItem` : 주문 메뉴들이다. 
+  - `OrderTable` : 매장내 식사일 경우 주문을 요청한 테이블이다.
+  - 주문 시각 : 주문이 들어온 시각이다.
+  - 배송지 : `OrderType.DELIVERY` 경우 배송 받을 주소다.  
+  - `orderTableId` : `OrderType.EAT_IN` 경우 주문 테이블 정보다. 
+  
+- `OrderType`는 주문 유형이다.
+  - `DELIVERY` : 배달 주문이다. 
+  - `TAKEOUT` : 포장 주문이다. 
+  - `EAT_IN` : 매장내 식사다.
+
+- `OrderStatus`는 주문 상태다. 
+  - `WAITING` : 주문 대기다.
+  - `ACCEPTED` : 주문 접수다.
+  - `SERVED` : 주문 전달이다.
+  - `DELIVERING` : 배송 중이다. 
+  - `DELIVERED` : 배송 완료다.
+  - `COMPLETED` : 주문 완료다. 
+
+- `OrderLineItem`은 주문 메뉴 정보를 가진다.
+  - `Menu` : 주문 들어온 메뉴다.
+  - 수량 : 해당 메뉴 수량이다.
+  - 금액 : 메뉴 금액이다.
+  
+- `OrderService`은 `Order` 관련된 작업을 한다. 
+  - `Order`를 만든다.
+    - `OrderType`으로 주문 유형을 구분한다.
+      - `OrderType.DELIVERY` 경우 배송지가 있는지 확인한다.
+      - `OrderType.EAT_IN` 경우 주문 테이블 정보를 확인한다.
+    - `OrderStatus`는 기본적으로 `OrderStatus.WAITING`이다.
+    - `OrderLineItem` 정보를 확인한다.
+      - 하나 이상 있어야 한다.
+      - `OrderType.EAT_IN`가 아닐 경우 수량은 0개 이상이여야 한다. 
+      - 주문 메뉴가 공개된 상태인지 확인한다.
+      - `OrderLineItem` 가격과 메뉴의 가격을 비교하여 확인한다. 
+    - 주문 시각은 LocalDateTime.now()로 가져온다.
+  
+  - 주문 접수한다.
+    - `OrderStatus.WAITING` 상태만 `OrderStatus.ACCEPTED` 변경이 가능하다.
+    - `OrderType.DELIVERY` 경우 주문 금액 합계를 구하고 `KitchenridersClient`에게 주문 정보를 주고 라이더를 호출한다. 
+
+  - 주문 전달한다.
+    - `OrderStatus.ACCEPTED` 상태만 `OrderStatus.SERVED` 변경이 가능하다.
+
+  - 배송 시작한다.
+    - `OrderType.DELIVERY` 상태만 가능하다.
+    - `OrderStatus.SERVED` 상태만 `OrderStatus.DELIVERING` 변경이 가능하다.
+    
+  - 배송 완료한다.
+    - `OrderType.DELIVERY` 상태만 가능하다.
+    - `OrderStatus.DELIVERING` 상태만 `OrderStatus.COMPLETED` 변경이 가능하다.
+  
+  - 주문 완료는 `OrderType`에 따라 다르게 진행한다.
+    - `OrderType.DELIVERY` 는 `OrderStatus.COMPLETED` 경우 `OrderStatus.COMPLETED` 변경이 가능하다.
+    
+    - `OrderType.TAKEOUT` 는 `OrderStatus.SERVED` 경우 `OrderStatus.COMPLETED` 변경이 가능하다.
+    
+    - `OrderType.EAT_IN` 는 `OrderStatus.SERVED` 경우 `OrderStatus.COMPLETED` 변경이 가능하다.
+      - 주문이 들어온 `OrderTable` 를 초기화 한다. 
+  
+  - `Order` 내역을 조회한다.
+   
+### 범용 보조
+`PurgomalumClient`는 비속어를 필터링한다.
+
+### 외부
+`KitchenridersClient`는 배달 기사를 호출한다. 
