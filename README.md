@@ -186,8 +186,8 @@
 - 각 `MenuProduct` 의 수량은 0개 이상이다.
 - 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같아야 한다.
 - `Menu` 의 `MenuPrice` 을 `change` 할 수 있다.
-- 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같은 경우
-    - `Menu` 를 `display` 할 수 있다.
+- `Menu` 를 `display` 할 수 있다.
+    - 모든 (`MenuProduct` 의 수량 * `Product` 의 `ProductPrice`) 합이 `Menu` 의 `MenuPrice` 보다 크거나 같아야 한다.
     - `display` 하면 `displayed` 가 `true` 가 된다.
 - `Menu` 를 `hide` 할 수 있다
     - `hide` 하면 `displayed` 가 `false` 가 된다.
@@ -199,8 +199,8 @@
 - `NumberOfGuests` 는 0명 이상이다.
 - `empty` 는 `OrderTable` 의 비어 있음 여부이다.
 - `OrderTable` 을 `fill` 할 수 있다.
-- `OrderTable` 에 `OrderStatus` 가 `COMPLETED` 이 아닌 `Order` 이 없다면
-    - `OrderTable` 을 `clear` 할 수 있다.
+- `OrderTable` 을 `clear` 할 수 있다.
+    - `OrderTable` 에 `OrderStatus` 가 `COMPLETED` 이 아닌 `Order` 이 없어야 한다.
 - `OrderTable` 의 `empty` 하지 않으면
     - `OrderTable` 의 `NumberOfGuests` 를 `change` 할 수 있다.
 
@@ -209,20 +209,25 @@
 - `Order` 은 `OrderStatus` 를 갖는다.
 - `Order` 을 `register` 할 수 있다.
     - `register` 하면 `OrderStatus` 가 `WAITING` 이 된다.
+    - `OrderType` 가 `DELIVERY` 이면, `DeliveryAddress` 가 있어야 한다.
+    - `OrderType` 가 `EAT_IN` 이면, 그 `OrderTable` 이 `empty` 하지 않아야 한다.
 - `Order` 는 `OrderType` 을 갖는데, `DELIVERY`, `TAKEOUT`, `EAT_IN` 가 있다.
-- `OrderType` 가 `DELIVERY` 이면, `DeliveryAddress` 가 있어야 `Order` 을 `register` 할 수 있다.
-- `OrderType` 가 `EAT_IN` 이면, 그 `OrderTable` 이 `empty` 하지 않아야 `Order` 을 `register` 할 수 있다.
 - 한 번의 `Order` 에 여러 개의 `OrderLineItem` 를 담을 수 있다.
     - `OrderType` 이 `DELIVERY`, `TAKEOUT` 일 경우, 수량은 0개 이상이어야 한다.
-- `OrderStatus` 가 `WAITING` 인 경우, `Order` 를 `accept` 할 수 있다.
+- `Order` 를 `accept` 할 수 있다.
+    - `OrderStatus` 가 `WAITING` 이어야 한다.
     - `OrderType` 가 `DELIVERY` 이면 배달 대행사를 호출한다.
     - `accept` 하면 `OrderStatus` 가 `ACCEPTED` 이 된다.
-- `OrderStatus` 가 `ACCEPTED` 인 경우, `Order` 를 `serve` 할 수 있다.
+- `Order` 를 `serve` 할 수 있다.
+    - `OrderStatus` 가 `ACCEPTED` 이어야 한다.
     - `serve` 하면 `OrderStatus` 가 `SERVED` 이 된다.
-- `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `SERVED` 인 경우, `Order` 를 `startDelivery` 할 수 있다.
+- `Order` 를 `startDelivery` 할 수 있다.
+    - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `SERVED` 이어야 한다.
     - `startDelivery` 하면 `OrderStatus` 가 `DELIVERING` 이 된다.
-- `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERING` 인 경우, `Order` 를 `completeDelivery` 할 수 있다.
+- `Order` 를 `completeDelivery` 할 수 있다.
+    - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERING` 이어야 한다.
     - `completeDelivery` 하면 `OrderStatus` 가 `DELIVERED` 이 된다.
-- 아래의 경우에 `Order` 를 `complete` 할 수 있다. `complete` 하면 `OrderStatus` 가 `COMPLETED` 이 된다.
-    - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERED` 인 경우
-    - `OrderType` 가 `TAKEOUT` 또는 `EAT_IN` 이고 `OrderStatus` 가 `SERVED` 인 경우  
+- `Order` 를 `complete` 할 수 있다.
+    - `OrderType` 가 `DELIVERY` 이고 `OrderStatus` 가 `DELIVERED` 인 경우이거나,
+    - `OrderType` 가 `TAKEOUT` 또는 `EAT_IN` 이고 `OrderStatus` 가 `SERVED` 인 경우여야 한다.
+    - `complete` 하면 `OrderStatus` 가 `COMPLETED` 이 된다.
