@@ -20,6 +20,7 @@
 - 메뉴 그룹을 등록할 수 있다.
 - 메뉴 그룹의 이름이 올바르지 않으면 등록할 수 없다.
     - 메뉴 그룹의 이름은 비워 둘 수 없다.
+    - 메뉴 그룹의 이름에는 비속어가 포함될 수 없다. 
 - 메뉴 그룹의 목록을 조회할 수 있다.
 
 ### 메뉴
@@ -152,3 +153,184 @@
 
 
 ## 모델링
+
+### 메뉴그룹(`MenuGroup`)
+- 메뉴그룹(`MenuGroup`)은 메뉴그룹 정보을 가진다.
+  - 외부에 노출되는 메뉴 그룹명(Name)을 가진다.
+  
+- `MenuGroupService`는 메뉴그룹(`MenuGroup`) 관련된 작업을 한다.  
+  - 새로운 메뉴그룹(`MenuGroup`)을 등록한다.
+    - 메뉴 그룹명(Name)은 올바르지 않으면 등록할 수 없다.
+      - 메뉴 그룹명(Name)은 빈 값이 올 수 없다.
+      - 메뉴 그룹명(Name)은 비속어검증기(`PurgomalumClient`)를 통해 비속어를 필터링한다.
+    
+  - 사용자에게 메뉴그룹(`MenuGroup`) 내역을 제공한다.
+
+### 상품(`Product`)
+- 상품(`Product`)는 상품 정보를 가진다.
+  - 외부에 노출되는 상품 명(Name)을 가진다.
+  - 상품의 판매 금액(Price)을 가진다. 
+  
+- `ProductService`는 상품(`Product`) 관련된 작업을 한다. 
+  - 새로운 상품(`Product`)를 등록한다.
+    - 상품 가격(Price)이 잘못 입력되면 등록할 수 없다.
+      - 상품 가격(Price)은 0원 이상 입력한다.   
+    - 상품명(Name)이 잘못 입력되면 등록할 수 없다.
+      - 상품명(Name)은 빈 값이 올 수 없다.
+      - 상품명(Name)은 비속어검증기(`PurgomalumClient`)를 통해 비속어를 필터링한다.
+    
+  - 상품 가격(Price)을 변경할 수 있다.
+    - 상품 가격(Price)이 잘못 입력되면 변경할 수 없다.
+      - 상품 가격(Price)은 0원 이상 입력한다. 
+    - 해당 상품이 포함된 메뉴(`Menu`) 내역을 가져와서 메뉴의 가격이 상품들(`menuProducts`) 총합보다 비쌀 경우 메뉴를 비공개(Display)한다.    
+    
+  - 사용자에게 상품(`Product`) 내역을 제공한다. 
+ 
+### 메뉴(`Menu`)
+- 메뉴(`Menu`)는 메뉴 정보를 가진다.
+  - 외부에 노출되는 메뉴명(Name)을 가진다.
+  - 판매 금액(Price)을 가진다.
+  - 고객에게 판매될지 안될지 공개여부(Display)를 가진다.  
+  - 메뉴가 속한 메뉴그룹(`MenuGroup`)을 가진다. 
+  - 새로운 메뉴 등록 시, 메뉴그룹(`MenuGroup`)을 찾기위한 메뉴그룹 아이디(menuGroupId)를 가진다.  
+  - 메뉴를 통해 제공되는 상품 내역(`MenuProduct`)을 가진다.  
+  
+- 메뉴 상품(`MenuProduct`)은 메뉴 상품 정보를 가진다.
+  - 메뉴에 속한 상품(`Product`)을 가진다.
+  - 고객에게 얼마나 제공되는지 메뉴 상품 수량(Quantity)를 가진다.   
+  - 새로운 메뉴 상품 등록 시, 상품(`Product`)을 찾기위한 상품 아이디(productId)를 가진다.
+  
+- `MenuService`는 메뉴(`Menu`) 관련된 작업을 한다.   
+  - 새로운 메뉴(`Menu`)를 등록한다. 
+    - 메뉴 가격(Price)이 잘못 입력되면 등록할 수 없다.
+      - 메뉴 가격(Price)은 0원 이상 입력해야한다.
+      - 메뉴 가격(Price)은 메뉴 상품(`MenuProduct`) 가격의 총합을 넘을 수 없다.
+    - 메뉴그룹 아이디(menuGroupId)이 잘못 입력되면 등록할 수 없다.
+      - 메뉴그룹 아이디(menuGroupId)은 등록된 메뉴그룹(`MenuGroup`)의 아이디여야한다. 
+    - 메뉴 상품(`MenuProduct`)이 잘못 입력되면 등록할 수 없다.
+      - 상품 수량(Quantity)은 0개 이상 입력해야 한다.
+      - 상품 아이디(productId)은 등록된 상품(`Product`)의 아이디여야한다.
+    - 메뉴명(Name)은 잘못 입력되면 등록할 수 없다.
+      - 메뉴명(Name)은 빈 값이 올 수 없다.
+      - 메뉴명(Name)은 비속어검증기(`PurgomalumClient`)를 통해 비속어를 필터링한다.
+   
+  - 메뉴 가격(Price)을 변경한다.
+    - 메뉴 가격(Price)이 잘못 입력되면 등록할 수 없다.
+      - 메뉴 가격(Price)은 0원 이상 입력해야한다.
+      - 메뉴 가격(Price)은 메뉴 상품(`MenuProduct`) 가격의 총합을 넘을 수 없다.
+
+  - 메뉴를 판매하기 위해 공개(Display)한다.
+    - 메뉴 가격(Price)이 잘못 되어있으면 공개할 수 없다. 
+      - 메뉴 가격(Price)은 메뉴 상품(`MenuProduct`) 가격의 총합을 넘을 수 없다. 메뉴 가격(Price)부터 변경해야한다. 
+
+  - 메뉴를 판매 안하기 위해 비공개(Display)한다.
+    
+  - 사용자에게 메뉴(`Menu`) 내역을 제공한다. 
+  
+
+### 주문 테이블(`OrderTable`)
+- 주문 테이블(`OrderTable`)은 매장 테이블 정보를 가진다. 
+  - 주문 테이블 이름(Name)을 가진다.
+  - 주문 테이블에 앉은 손님 수(numberOfGuests)를 가진다.
+  - 주문 테이블이 사용중인지 확인하는 빈(empty) 상태를 가진다. 
+  
+- `OrderTableService`는 주문 테이블(`OrderTable`) 관련 작업을 한다.
+  - 새로운 주문 테이블(`OrderTable`)를 등록한다.
+    - 테이블 이름(Name)은 잘못 입력되면 등록할 수 없다.
+      - 테이블 이름(Name)은 빈 값이 올 수 없다.
+    - 새로운 주문 테이블의 손님 수(numberOfGuests)는 기본 0명이다 
+    - 새로운 주문 테이블의 빈(empty) 상태는 기본이 비어있다. 
+    
+  - 테이블을 사용중으로 변경한다.
+    - 빈(empty) 상태를 사용중으로 변경한다.
+ 
+  - 테이블을 정리한다. 
+    - 주문 테이블 정보가 잘못되면 변경할 수 없다.
+      - 주문 테이블의 주문 완료(COMPLETED)가 아니면 변경할 수 없다. 
+
+  - 손님 수(numberOfGuests)를 변경한다.
+    - 손님 수(numberOfGuests)가 잘못 입력되면 변경할 수 없다.
+      - 손님 수(numberOfGuests)는 0명 이상 입력해야한다.
+    - 테이블의 빈(empty) 상태가 이상하면 변경할 수 없다. 
+      - 테이블의 빈(empty) 상태는 비어있지 않아야한다.
+
+  - 사용자에게 주문 테이블(`OrderTable`) 내역을 제공한다. 
+  
+
+### 주문(`Order`)
+- 주문(`Order`)은 주문 정보를 가진다.
+  - 고객이 선택한 주문 유형(`OrderType`)을 가진다.
+  - 고객이 확인할 수 있는 주문 상태(`OrderStatus`)를 가진다. 
+  - 고객이 주문한 주문 메뉴(`OrderLineItem`)를 가진다. 
+  - 주문이 들어온 주문 시각(orderDateTime)을 가진다.
+  - 주문이 배송(`DELIVERY`)일 경우 경우 배송 받을 주소(deliveryAddress)를 가진다..  
+  - 주문이 매장내 식사(`EAT_IN`)일 경우 주문이 들어온 주문 테이블(`OrderTable`)을 가진다.
+  - 주문이 매장내 식사(`EAT_IN`)일 경우 주문 테이블(`OrderTable`)을 찾기 위한 주문 테이블 아이디(orderTableId)을 가진다.  
+  
+- 주문 유형(`OrderType`)은 주문 유형 정보를 가진다.
+  - 배달 주문(`DELIVERY`)을 표현한다.
+  - 포장 주문(`TAKEOUT`)을 표현한다.
+  - 매장내 식사(`EAT_IN`)를 표현한다.
+
+- 주문 상태(`OrderStatus`)는 주문 상태 정보를 가진다. 
+  - 주문 대기(`WAITING`)를 표현한다.
+  - 주문 접수(`ACCEPTED`)를 표현한다.
+  - 주문 전달(`SERVED`)를 표현한다. 
+  - 주문 배송 중(`DELIVERING`)를 표현한다. 
+  - 주문 배송 완료(`DELIVERED`)를 표현한다.
+  - 주문 완료(`COMPLETED`)를 표현한다. 
+
+- 주문 메뉴(`OrderLineItem`)은 주문 메뉴 정보를 가진다.
+  - 주문 받은 메뉴(`Menu`)를 가진다.
+  - 주문 수량(Quantity)를 가진다.
+  - 주문 금액(Price)를 가진다.
+   
+- `OrderService`은 주문(`Order`) 관련된 작업을 한다. 
+  - 새로운 주문(`Order`)을 등록한다.
+    - 주문 유형(`OrderType`)이 잘못 입력되면 등록할 수 없다.
+      - 주문 유형(`OrderType`)은 빈 값이 올 수 없다. 
+    - 매장내 식사(`EAT_IN`)일 경우 주문 테이블(`OrderTable`) 정보가 잘못되면 입력할 수 없다.
+      - 주문 테이블 아이디(orderTableId)은 등록된 주문 테이블(`OrderTable`)의 아이디여야한다.
+      - 주문 테이블(`OrderTable`)을 찾지 못하면 등록할 수 없다. 
+      - 주문 테이블(`OrderTable`)이 비어있으면 등록할 수 없다. 
+    - 배송 주문(`DELIVERY`)일 경우 배송지가 잘못 입력되면 등록할 수 없다.
+      - 배송지(deliveryAddress)는 빈 값이 올 수 없다.
+    - 주문 상태(`OrderStatus`)는 기본적으로 대기(WAITING)다.
+    - 주문 메뉴(`OrderLineItem`)가 잘못 입력되면 등록할 수 없다.
+      - 주문 메뉴(`OrderLineItem`)는 한개 이상 있어야 한다.
+      - 매장내 식사(`EAT_IN`)가 아닐 경우 수량(Quantity)은 0개 이상이여야 한다. 
+      - 주문 메뉴(`OrderLineItem`)가 판매중인 상태(Display)인지 확인한다.
+      - 주문 메뉴(`OrderLineItem`) 가격(Price)과 메뉴(`Menu`)의 가격(Price)은 동일해야한다.   
+    - 주문 시각(orderDateTime)은 현재 시각으로 등록한다. 
+  
+  - 주문을 접수(`ACCEPTED`)한다. 
+    - 대기(`WAITING`) 상태만 변경할 수 있다.
+    - 배달 유형(`DELIVERY`)은 라이더(`KitchenridersClient`)를 호출한다.
+      - 주문의 총 금액(Price)을 구하여 전달한다.
+      - 배송지(deliveryAddress)를 전달한다.
+
+  - 주문을 전달(`SERVED`)한다.
+    - 접수(`ACCEPTED`) 상태만 변경할 수 있다.
+ 
+  - 배달 주문(`DELIVERY`)을 배송(`DELIVERING`)한다.
+    - 배달 주문(`DELIVERY`)만 변경 할 수 있다.
+    - 전달(`SERVED`) 상태만 변경 할 수 있다.
+
+  - 배달 주문(`DELIVERY`)을 배송 완료(`DELIVERED`)한다.
+    - 배달 주문(`DELIVERY`)만 변경 할 수 있다.
+    - 배송 중(`DELIVERING`) 상태만 변경 할 수 있다.
+ 
+  - 주문을 완료(`COMPLETED`)한다.
+    - 주문 유형(`OrderType`)에 따라 다르게 진행한다. 
+      - 배송 주문(`DELIVERY`)은 배송 완료(`COMPLETED`)일 경우에 변경이 가능하다.
+      - 포장 주문(`TAKEOUT`)은 전달(`SERVED`)일 경우에 변경이 가능하다.
+      - 매장내 식사(`EAT_IN`)는 전달(`SERVED`)일 경우에 변경이 가능하다.
+        - 주문 테이블(`OrderTable`)이 비어있지 않아야한다.  
+  
+  - 사용자에게 주문(`Order`) 내역을 제공한다.
+   
+### 범용 보조
+비속어검증기(`PurgomalumClient`)는 비속어를 필터링한다.
+
+### 외부
+라이더(`KitchenridersClient`)는 배달 기사를 호출한다. 
