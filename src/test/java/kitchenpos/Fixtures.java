@@ -1,6 +1,13 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.order.domain.OrderType;
+import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.product.domain.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +18,7 @@ import java.util.UUID;
 public class Fixtures {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
 
-    public static Menu menu() {
+    private static Menu menu() {
         return menu(19_000L, true, menuProduct());
     }
 
@@ -89,7 +96,7 @@ public class Fixtures {
         return order;
     }
 
-    public static OrderLineItem orderLineItem() {
+    private static OrderLineItem orderLineItem() {
         final OrderLineItem orderLineItem = new OrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenu(menu());
@@ -109,7 +116,7 @@ public class Fixtures {
         return orderTable;
     }
 
-    public static Product product() {
+    private static Product product() {
         return product("후라이드", 16_000L);
     }
 
