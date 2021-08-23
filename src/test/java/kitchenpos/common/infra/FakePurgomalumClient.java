@@ -1,4 +1,4 @@
-package kitchenpos.infra;
+package kitchenpos.common.infra;
 
 import java.util.Arrays;
 import java.util.List;
