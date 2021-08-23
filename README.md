@@ -127,3 +127,104 @@
 
 
 ## 모델링
+
+### 메뉴
+
+1. `Menu Group` 을  생성한다.
+    - `Menu Group` 생성시 `Menu Group Name` 은 반드시 지정 되어야 한다.
+
+2. `Menu Group` 을 조회 한다.
+    - 모든 `Menu Group` 을 조회 할 수 있다.
+    - 특정 `Menu Group` 을 조회 할 수 있다.
+
+3. `Menu` 를 생성한다.
+    - `Menu` 생성 시 `Menu Name` 이 지정 되어야 한다. `Menu Name` 은 비속어 존재 유무 체크를 통해 
+    비속어가 존재 하지 않음을 보장해야 한다.
+    - `Menu` 생성시 `Menu Price` 가 명시 되어야 한다. `Menu Price` 는  `Menu Product` 의 `Product Price` 의 합보다 클 수 없다.
+    - `Menu` 생성 시 반드시 `Menu Group` 이 지정 되어야 한다.
+
+4. `Menu Price` 를 변경 한다.
+    - `Menu Price` 변경 시 요청된 `Menu Price` 는 반드시 0 보다 커야 한다.
+    - 요청된 `Menu Price` 는 `Menu Product` 의 `Product Price` 의 합보다 클 수 없다.
+
+5. `Menu` 의 `Display`를 노출로 변경 한다.
+    - 해당 메뉴의 `Menu Price` 가 `Menu Product` 의 `Product Price` 의 합보다 크다면 노출로 변경 할 수 없다.
+
+6. `Menu` 를 조회 한다.
+    - 특정 `Menu` 를 조회 한다.
+    - 모든 `Menu` 를 조회 한다.
+
+### 주문
+
+1. `Order` 를 조회 한다.
+    - 특정 `Order` 를 조회 한다.
+    - 모든 `Order` 를 조회 한다.
+
+2. `Order` 를 등록 한다.
+    - `Order` 등록시 `Order Type` 이 지정 되어야 한다. `Order Type` 은 `Delivery`, `Takeout`, `Eat In` 중 하나이다
+    - `Order` 등록시 `Order Line Item` 이 반드시 지정 되어야 한다. `Order Line Item` 에 포함 된 `Menu` 의 `Display` 는 노출된 상태여야 한다. `Order Line Item` 에 포함된 `Menu` 의 `Menu Price` 는 실제 `Menu` 의 `Menu Price` 와 같아야 한다.
+    - `Order` 등록시 `Order Type`이 `Delivery` 인 경우 `Delivery Address` 가 지정 되어야 한다.
+    - `Order` 등록시 `Order Type`이 `Eat in` 인 경우 `Order Table Number` 가 지정 되어야 하며 해당 `Order Table` 의 `Used`는 이용 하고 있지 않은 상태이어야 한다.
+    - `Order` 등록이 완료 되면 `Order Status`는 `Waiting`이 된다.
+    - `Order` 등록이 요청된 시간이 해당 `Order`의 `Order Date Time` 이다.
+
+3. `Order` 를 수락 한다.
+    - 해당 `Order`의 `Order Status`는 `Waiting` 상태 이어야 한다.
+    - 해당 `Order`의 `Order Type`이 `Delivery` 일 경우 `Order Price` 와 `Delivery Address` 로 `Request Delivery` 를 해야 한다.
+    - `Order` 의 `Order Status` 를 `Accepted` 로 변경 한다.
+
+4. `Order` 를 제공 한다.
+    - 해당 `Order` 의 `Order Status` 는 `Accepted` 이어야 한다.
+    - `Order` 의 `Order Status` 를 `Served` 로 변경 한다.
+
+5. `Order` 배달을 시작 한다.
+    - 해당 `Order` 의 `Order Type` 은 반드시 `Delivery` 이어야 한다.
+    - 해당 `Order` 의 `Order Status` 는 반드시 `Served` 이어야 한다.
+    - `Order` 의 `Order Status` 를 `Delivering` 으로 변경 한다.
+
+6. `Order` 배달을 완료 한다.
+    - 해당 `Order` 의 `Order Type` 은 반드시 `Delivery` 이어야 한다.
+    - 해당 `Order` 의 `Order Status` 는 반드시 `Delivering` 이어야 한다.
+    - `Order` 의 `Order Status` 를 `Delivered` 로 변경 한다.
+
+7. `Order` 를 완료 처리 한다.
+    - 해당 `Order` 의 `Order Type` 이 `Delivery` 인 경우 `Order Status` 는 `Delivered` 이어야 한다.
+    - 해당 `Order` 의 `Order Type` 이 `Takeout` 이거나 `Eat in` 인 경우 `Order Status` 는 `Served` 이어야 한다.
+    - 해당 `Order` 의 `Order Type` 이 `Eat In` 인 경우 해당 `Order Table` 의 `Number Of Guest` 는 `0` 그리고 `Used` 는 이용 하지 않음 처리 되어야 한다.
+
+### 제품
+
+1. `Product` 를 등록 한다.
+    - `Product` 등록 시 `Product Name` , `Product Price` 는 반드시 지정 되어야 한다.
+    - `Product Name` 은 비속어 존재 유무 체크를 통해 비속어가 존재 하지 않음을 보장해야 한다.
+    - `Product Price` 는 반드시 `0` 보다 커야 한다.
+
+2. `Product` 의 `Product Price` 를 변경 한다.
+    - 변경 요청 된 `Product Price` 값은 `0`보다 커야 한다.
+    - 변경 요청 된 `Product` 는  이미 구성되어 있는  `Menu` 의 `Menu Price`  영향을 미치므로 `Product Price` 가 변경 될 때 변경 된 값을 기준 으로 해당 `Menu` 의 `Menu Price` 는 `0` 보다 커야하며, `0`보다 작다면 해당 `Menu` 의 `Display` 는 숨김처리 되어야 한다.
+
+3. `Product` 를 조회 한다.
+    - 특정 `Product` 를 조회 한다.
+    - 모든 `Product` 를 조회 한다.
+
+### 주문 테이블
+
+1. `Order Table` 을 등록 한다.
+    - 등록 시 `Order Table Name` 이 반드시 지정 되어야 한다.
+    - 등록 완료 시 `Number Of Guests` 는 `0` , `Used` 는 이용 하고 있지 않음 으로 설정 된다.
+
+2. `Order Table` 를 이용하고 있음으로 변경 한다.
+    - `Order Table` 의 `Used` 를 이용함으로 변경 한다.
+
+3. `Order Table` 을 이용하고 있지 않음으로 변경 한다.
+    - 요청된 `Order Table` 에 해당 되는 `Order` 의 `Order Status` 는 `Completed` 이어야 한다.
+    - `Order Table` 의 `Number of Guests` 를 `0` 으로 변경한다.
+    - `Order Table` 의 `Used` 를 이용하고 있지 않음으로 변경 한다.
+
+4. `Order Table` 의 이용자 수를 변경 한다.
+    - 변경 요청 된 `Number Of Guests` 의 값은 `0` 보다 커야 한다.
+    - 해당 `Order Table` 의 `Used` 는 이용하고 있는 상태 이어야 한다.
+    - 해당 `Order Table` 의 `Number Of Guests` 의 값을 변경 한다.
+
+5. `Order Table` 을 조회 한다.
+    - 모든 `Order Table` 을 조회 한다.
