@@ -1,4 +1,4 @@
-package kitchenpos.menu.domain;
+package kitchenpos.menu.respository;
 
 import kitchenpos.menu.domain.Menu;
 

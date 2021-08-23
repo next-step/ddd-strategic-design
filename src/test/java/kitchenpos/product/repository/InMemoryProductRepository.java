@@ -1,7 +1,7 @@
-package kitchenpos.product.domain;
+package kitchenpos.product.repository;
 
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.respository.ProductRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
