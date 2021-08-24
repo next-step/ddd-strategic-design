@@ -288,3 +288,16 @@
     - `order table` 의 모든 매장 주문이 완료되면 `empty` 테이블로 설정한다.
     - `COMPLETED` 상태가 아닌 매장 주문이 있는 주문 테이블은 `empty` 테이블로 설정할 수 없다.
 - 주문 목록을 조회할 수 있다.
+
+## 패키지 설명
+
+* domain : domain layer 
+    - aggreagte, repository, domain service 와 같이 도메인에서 처리하는 클래스들을이 위치하는 패키지
+* application : application laeyr 
+    - 응용 서비스(application service)를 모아두는 패키지 
+* ui : presentation layer 
+    - controller와 같이 외부 client의 요청을 받는 클래스를 모아두는 패키지 
+* infra : infrastructure layer 
+    - 이메일, 메시지 알림등과 같은 외부 서비스와 관련된 클래스를 모아두는 패키지
+* dto
+    - request, response, layer 간 데이터 이동을 위한 클래스를 정의하는 패키지
