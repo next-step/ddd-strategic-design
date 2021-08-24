@@ -1,4 +1,4 @@
-package kitchenpos.menu.infra.repository;
+package kitchenpos.menu.domain;
 
 import java.util.List;
 import java.util.UUID;
