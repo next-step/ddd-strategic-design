@@ -1,6 +1,5 @@
-package kitchenpos.product.respository;
+package kitchenpos.product.domain;
 
-import kitchenpos.product.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

@@ -1,7 +1,7 @@
-package kitchenpos.menu.repository;
+package kitchenpos.menu.domain;
 
 import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.respository.MenuRepository;
+import kitchenpos.menu.domain.MenuRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
