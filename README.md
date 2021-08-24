@@ -161,7 +161,145 @@
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 비속어 | Profanity | 비속어 |
-| 배달기사 | Kitchen Riders | 배달기사 |
+| 비속어 | Profanity | 필터링 해야하는 단어 |
+| 배달기사 | Kitchen Riders | 배달을 대행해주는 라이더 |
 
 ## 모델링
+
+### 상품(Product)
+
+#### 속성
+
+- `name`을 가진다.
+- `price`를 가진다.
+
+#### 기능/조건
+
+- 상품을 등록할 수 있다(`create`).
+  - `price`는 0원 이상이어야 한다.
+  - `name`은 비워 둘 수 없다.
+  - `name`은 `PurgoMalumClient`를 통해 비속어(`profanity`)를 필터링 한다.
+- 상품의 가격을 변경할 수 있다(`changePrice`).
+  - 변경되는 `price`는 0원 이상이어야 한다.
+  - 변경 후 메뉴에 속한 상품(`menuProduct`)금액의 합보다 메뉴(`menu`)의 가격이 크면 메뉴가 숨겨진다(`hide`).
+- 상품의 목록을 조회할 수 있다.(`findAll`)
+
+### 메뉴 그룹(MenuGroup)
+
+#### 속성
+
+- `name`을 가진다.
+
+#### 기능/조건
+
+- 메뉴 그룹을 등록할 수 있다(`create`).
+  - `name`은 비워 둘 수 없다.
+  - `name`은 `PurgoMalumClient`를 통해 비속어(`profanity`)를 필터링 한다.
+- 메뉴 그룹의 목록을 조회할 수 있다(`findAll`).
+
+### 메뉴(Menu)
+
+#### 속성
+
+- `name`을 가진다.
+- `price`를 가진다.
+- 자신이 속한 `menuGroup`을 가진다.
+- 자신이 속한 메뉴 그룹을 식별하기 위한 `menuGroupId`를 가진다.
+- 자신의 노출 여부를 나타내는 `displayed`를 가진다.
+- 자신에게 속한 상품들인 `menuProducts`를 가진다.
+  - `menuProduct`는 `product`를 가진다.
+  - `menuProduct`는 상품을 식별하기 위한 `productId`를 가진다.
+  - `menuProduct`는 상품의 갯수(`quantity`)를 가진다.
+
+#### 기능/조건
+
+- 메뉴를 등록할 수 있다(`create`).
+  - 메뉴를 등록하려면 등록된 `product`가 1개 이상이어야 한다.
+  - `menuProduct`의 `quantity`는 0 이상이어야 한다.
+  - 메뉴의 `price`는 0원 이상이어야 한다.
+  - `menuProduct`금액의 총합은 메뉴의 `price`보다 크거나 같아야 한다.
+  - 메뉴는 특정 `menuGroup`에 속해야 한다.
+  - 메뉴의 `name`은 비워둘 수 없다.
+  - 메뉴의 `name`은 `PurgoMalumClient`를 통해 비속어(`profanity`)를 필터링 한다.
+- 메뉴의 가격을 변경할 수 있다(`changePrice`).
+  - 변경 후 메뉴의 `price`는 0원 이상이어야 한다.
+  - 변경 후 `menuProduct`금액의 총합은 메뉴의 `price`보다 크거나 같아야 한다.
+- 메뉴를 노출할 수 있다(`display`).
+  - 메뉴의 `price`가 `menuProduct`금액의 총합 보다 높을 경우 노출할 수 없다.
+- 메뉴를 숨길 수 있다(`hide`).
+- 메뉴의 목록을 조회할 수 있다(`findAll`).
+
+### 주문 테이블(OrderTable)
+
+#### 속성
+
+- `name`을 가진다.
+- `numberOfGuests`를 가진다.
+- 주문 테이블은 테이블이 비워져있는지를 나타내는 상태인 `empty`를 가진다.
+
+#### 기능/조건
+
+- 주문 테이블을 등록할 수 있다(`create`).
+  - `name`은 비워 둘 수 없다.
+  - `name`은 `profanity`가 포함될 수 없다.
+    - `PurgoMalumClient`가 비속어를 필터링 한다.
+- 빈 테이블을 해지할 수 있다(`sit`).
+- 빈 테이블로 설정할 수 있다(`clear`).
+  - 주문 테이블의 `orderStatus`가 `COMPLETED`가 아니라면 설정할 수 없다.
+- 방문한 손님 수를 변경할 수 있다(`changeNumberOfGuests`).
+  - `numberOfGuests`는 0 이상이어야 한다.
+  - `empty`상태의 주문 테이블은 `numberOfGuests`를 변경할 수 없다.
+- 주문 테이블의 목록을 조회할 수 있다(`findAll`).
+
+### 주문(Order)
+
+#### 속성
+
+- 주문은 어떤 주문인지 타입을 나타내는 `orderType`을 가진다.
+  - 배달 주문은 `DELIVERY`타입이다.
+  - 포장 주문은 `TAKEOUT`타입이다.
+  - 매장 주문은 `EAT_IN`타입이다.
+- 주문은 현재 상태를 나타내는 `orderStatus`를 가진다.
+  - 주문이 대기 중이라면 `WAITING`상태이다.
+  - 주문이 승인되었다면 `ACCEPTED`상태이다.
+  - 주문이 서빙되었다면 `SERVED`상태이다.
+  - 주문이 배달 중이라면 `DELIVERING`상태이다.
+  - 주문이 배달되었다면 `DELIVERED`상태이다.
+  - 주문이 완료되었다면 `COMPLETED`상태이다.
+- 주문은 주문 일시를 나타내는 `orderDateTime`을 가진다.
+- 배달 주문은 배달할 주소를 나타내는 `deliveryAddress`를 가질 수 있다.
+- 주문은 주문 항목들(`orderLineItems`) 를 가진다.
+  - `orderLineItem`은 주문한 `menu`를 가진다.
+  - `orderLineItem`은 주문한 메뉴를 식별하기 위한 `menuId`를 가진다.
+  - `orderLineItem`은 주문 항목 수량(`quantity`) 를 가진다.
+  - `orderLineItem`은 주문의 `price`를 가진다.
+
+#### 기능/조건
+
+- 주문을 등록할 수 있다(`create`).
+  - 1개 이상의 등록된 `menu`로 주문을 등록할 수 있다.
+  - `menu`가 없는 주문은 등록할 수 없다.
+  - `orderType`이 올바르지 않으면 등록할 수 없다.
+  - `orderStatus`가 올바르지 않으면 등록할 수 없다.
+  - `EAT_IN`타입의 주문은 `orderLineItem`의 `quantity`가 0 미만일 수 있다.
+  - `EAT_IN`을 제외한 타입의 주문은 `orderLineItem`의 `quantity`가 0 이상이어야 한다.
+  - `deliveryAddress`가 비워져 있다면, `DELIVERY`주문을 등록할 수 없다.
+  - `empty`테이블에는 `EAT_IN`타입의 주문을 등록할 수 없다.
+  - 숨겨진 메뉴는 주문할 수 없다.
+  - 주문한 메뉴의 `price`와 `orderLineItem`의 `price`는 일치해야한다.
+- 주문을 승인할 수 있다(`accept`).
+  - `WAITING`상태의 주문만 접수 할 수 있다.
+  - `DELIVERY`타입의 주문을 접수하면, 배달기사(`kitchenRiders`) 를 호출한다.
+- 주문을 서빙할 수 있다(`serve`).
+  - `ACCEPTED`상태의 주문만 서빙할 수 있다.
+- 주문의 배달을 시작할 수 있다(`startDelivery`).
+  - `DELIVERY`타입이고, `SERVED`상태의 주문만 배달할 수 있다.
+  - 배달기사(`kitchenRiders`)가 주문의 배달을 수행한다.
+- 주문의 배달을 완료할 수 있다(`completeDelivery`).
+  - `DELIVERING`상태의 주문만 배달 완료할 수 있다.
+- 주문을 완료할 수 있다(`complete`).
+  - `DELIVERY`타입의 주문일 경우, `DELIVERED`상태의 주문만 완료할 수 있다.
+  - `TAKEOUT`혹은 `EAT_IN`타입 주문일 경우, `SERVED`상태의 주문만 완료할 수 있다.
+  - `orderTable`의 모든 매장 주문이 완료되면 `empty`테이블로 설정한다.
+  - `COMPLETED`상태가 아닌 매장 주문이 있는 주문 테이블은 `empty`테이블로 설정할 수 없다.
+- 주문 목록을 조회할 수 있다(`findAll`).
