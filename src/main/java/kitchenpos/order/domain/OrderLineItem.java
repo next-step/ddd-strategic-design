@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.menu.Menu;
 
 @Table(name = "order_line_item")
 @Entity
