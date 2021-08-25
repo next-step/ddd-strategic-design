@@ -1,13 +1,12 @@
-package kitchenpos.application;
-
-import kitchenpos.domain.MenuGroup;
-import kitchenpos.domain.MenuGroupRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package kitchenpos.menugroup.application;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import kitchenpos.menugroup.domain.MenuGroup;
+import kitchenpos.menugroup.domain.MenuGroupRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MenuGroupService {
