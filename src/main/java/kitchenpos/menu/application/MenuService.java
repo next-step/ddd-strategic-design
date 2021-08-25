@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import kitchenpos.menugroup.domain.MenuGroup;
 import kitchenpos.menugroup.domain.MenuGroupRepository;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.common.infra.PurgomalumClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.domain.MenuRepository;
