@@ -1,15 +1,18 @@
-package kitchenpos.application;
-
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package kitchenpos.product.application;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
+import kitchenpos.domain.Menu;
+import kitchenpos.domain.MenuProduct;
+import kitchenpos.domain.MenuRepository;
+import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.ProductRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
