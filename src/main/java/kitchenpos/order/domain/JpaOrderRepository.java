@@ -1,8 +1,7 @@
-package kitchenpos.domain;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+package kitchenpos.order.domain;
 
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaOrderRepository extends OrderRepository, JpaRepository<Order, UUID> {
 }
