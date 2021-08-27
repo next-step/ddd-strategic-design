@@ -1,4 +1,4 @@
-package kitchenpos.common;
+package kitchenpos.common.infra;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
