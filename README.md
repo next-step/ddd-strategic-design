@@ -92,14 +92,14 @@
 ### 상품
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 상품 | Product | 메뉴에 등록되는 상품 |
+| 상품 | Product | 메뉴를 관리하는 기준이 되는 데이터 |
 | 상품 이름 | name | 상품의 이름. 비속어를 포함할 수 없다 |
 | 상품 가격 | price | 상품의 가격. 0원 이상이어야 한다 |
 
 ### 메뉴 그룹
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 메뉴 그룹 | MenuGroup | 메뉴를 분류하는 단위 |
+| 메뉴 그룹 | MenuGroup | 메뉴를 성격에 따라 분류하여 묶어 둔 그룹 |
 | 메뉴 그룹 이름 | name | 메뉴 그룹의 이름 |
 
 ### 메뉴
@@ -110,6 +110,7 @@
 | 메뉴 가격 | price | 메뉴의 가격. 0원 이상이어야 한다 |
 | 메뉴 그룹 | MenuGroup | 메뉴가 속한 메뉴 그룹. 하나의 메뉴 그룹에 속해야 한다 |
 | 메뉴 상품 | MenuProduct | 메뉴에 속한 상품. 수량은 0 이상이어야 한다. 메뉴 상품 금액 * 수량의 합은 메뉴 가격보다 크거나 같아야 한다 |
+| 메뉴 숨 | displayed | 메뉴가 숨겨짐 여부 |
 
 ### 메뉴 상품
 | 한글명 | 영문명 | 설명 |
@@ -163,3 +164,35 @@
 | 주문 완료 | COMPLETED | 모든 주문을 완료  |
 
 ## 모델링
+### 상품 (`Product`)
+- 상품(`Product`)은 식별자, 상품 이름(`name`), 상품 가격(`price`)을 가진다 
+- 상품 이름(`name`)에는 비속어(`profanity`)를 포함할 수 없다
+
+### 메뉴 (`Menu`)
+- 메뉴(`Menu`)는 식별자, 메뉴 이름(`name`), 메뉴 가격(`price`), 메뉴 그룹(`menuGroup`), 노출(`display`), 메뉴 상품(`menuProducts`)을 가진다
+- 메뉴 이름(`name`)에는 비속어(`profanity`)를 포함할 수 없다
+- 메뉴 가격(`price`)은 0원 이상 이어야 한다
+- 메뉴(`Menu`)는 메뉴 그룹(`menuGroup`)에 속한다
+- 메뉴 상품(`menuProducts`) 금액의 합은 메뉴 가격(`price`)보다 크거나 같아야 한다.
+- 메뉴 가격(`price`)이 메뉴 상품(`menuProduct`) 금액의 합보다 클 경우 메뉴를 노출(`display`)할 수 없다.
+
+### 메뉴 그룹 (`MenuGroup`)
+- 메뉴 그룹(`MenuGroup`)은 식별자, 메뉴 그룹 이름(`name`)을 가진다 
+
+### 메뉴 상품 (`MenuProduct`)
+- 메뉴 상품(`MenuProduct`)은 순서(`seq`), 상품(`product`), 수량(`quantity`)을 가진다
+
+### 주문 (`Order`)
+- 주문(`Order`)은 식별자, 주문 타입(`orderType`), 주문 상태(`orderStatus`), 주문 시간(`ordeDateTime`), 주문 항목(`orderLineItems`), 배달 주소(`deliveryAddress`), 주문 테이블(`OrderTable`)을 가진다
+
+### 주문 항목 (`OrderLineItem`)
+- 주문 항목(`OrderLineItem`)은 순서(`seq`), 메뉴(`menu`), 주문 항목 수량(`quantity`), 주문 항목 가격(`price`)을 가진다
+
+### 주문 테이블 (`OrderTable`)
+- 주문 테이블(`OrderTable)은 식별자, 주문 테이블 이름(`name`), 빈 주문 테이블 여부(`emtpy`)을 가진다
+
+### 주문 타입 (`OrderType`)
+- 주문 타입(`OrderType`)은 배달 주문(`DELIVERY`), 포장 주문(`TAKEOUT`), 매장 식사 주문(`EAT_IN`)을 가진다
+
+### 주문 상태 (`OrderStatus`)
+- 주문 상태(`OrderStatus`)는 주문 대기(`WAITING`), 주문 수락(`ACCEPTED`), 주문 서빙(`SERVED`), 배달 중(`DELIVERING`), 배달 완료(`DELIVERED`), 주문 완료(`COMPLETE`)를 가진다
