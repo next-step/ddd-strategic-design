@@ -1,7 +1,13 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.common.infra.PurgomalumClient;
+import kitchenpos.menu.domain.menu.Menu;
+import kitchenpos.menu.domain.menu.MenuProduct;
+import kitchenpos.menu.domain.menu.MenuRepository;
+import kitchenpos.menu.application.MenuService;
+import kitchenpos.menu.domain.menugroup.MenuGroupRepository;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
