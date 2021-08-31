@@ -168,86 +168,86 @@
 
 ### 상품
 
-- `product`를 등록한다.
-  - `product`는 `product name` 과 `product price`를 가진다.
-  - `product price`가 올바르지 않으면 등록 할 수 없다.
-    - `product price`는 0 이상이어야 한다.
-  - `product name`이 올바르지 않으면 등록 할 수 없다.
-    - `product name`은 비속어가 될 수 없다.
-- `product price`를 변경한다.
-  - `product price`가 올바르지 않으면 변경 할 수 없다.
-    - `product price`는 0원 이상이어야 한다.
-    - `product price`가 변경될때 `menu`의 `menu product`들의 `menu product price`합보다 크면 `menu`의 `menu displayed` 값이 `false` 로 변한다. 
-- `product`목록을 조회 한다.
+- `상품(product)`을 등록한다.
+  - `상품(product)`은 `상품명(product name)` 과 `상품가격(product price)`을 가진다.
+  - `상품가격(product price)`이 올바르지 않으면 등록 할 수 없다.
+    - `상품가격(product price)`은 0원 이상이어야 한다.
+  - `상품명(product name)`이 올바르지 않으면 등록 할 수 없다.
+    - `상품명(product name)`은 비속어가 될 수 없다.
+- `상품가격(product price)`을 변경한다.
+  - `상품가격(product price)`이 올바르지 않으면 변경 할 수 없다.
+    - `상품가격(product price)`은 0원 이상이어야 한다.
+    - `상품가격(product price)`이 변경될때 `메뉴(menu)`의 `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합보다 크면 `메뉴(menu)`의 `메뉴공개여부(menu displayed)` 값이 `false` 로 변한다. 
+- `상품(product)`목록을 조회 한다.
 
 ### 메뉴 그룹
 
-- `menu group`을 등록한다.
-  - `menu group`는 `menu group name`을 가진다.
-  - `menu group name`이 올바르지 않으면 등록 할 수 없다.
-    - `menu group name`은 필수이다.
-- `menu group`목록을 조회 한다.
+- `메뉴그룹(menu group)`을 등록한다.
+  - `메뉴그룹(menu group)`는 `메뉴그룹명(menu group name)`을 가진다.
+  - `메뉴그룹명(menu group name)`이 올바르지 않으면 등록 할 수 없다.
+    - `메뉴그룹명(menu group name)`은 필수이다.
+- `메뉴그룹(menu group)`목록을 조회 한다.
 
 ### 메뉴
 
-- `menu`를 등록한다. 
-  - `menu`는 `menu name`, `menu price`와 `menu displayed`를 가진다.
-  - `menu`를 등록하려면 `menu product`가 필요하다.
-    - `menu product`의 `product`가 등록되어있지 않으면 `menu`를 등록 할 수 없다.
-    - `menu product`의 수량은 0 이상이어야 한다.
-  - `menu price`가 올바르지 않으면 등록 할 수 없다.
-    - `menu price`는 0원 이상이어야 한다.
-    - `menu product`들의 `menu product price`합은 `menu price`보다 크거나 같아야 한다.
-- `menu displayed`를 `true`로 변경한다.
-  - `menu price`가 `menu product`들의 `menu product price`합보다 높을경우 값을 변경 할 수 없다.
-- `menu displayed`를 `false`로 변경한다.
-- `menu`목록을 조회 한다.
+- `메뉴(menu)`를 등록한다. 
+  - `메뉴(menu)`는 `메뉴명(menu name)`, `메뉴가격(menu price)`와 `메뉴공개여부(menu displayed)`를 가진다.
+  - `메뉴(menu)`를 등록하려면 `메뉴상품(menu product)`가 필요하다.
+    - `메뉴상품(menu product)`의 `상품(product)`이 등록되어있지 않으면 `메뉴(menu)`를 등록 할 수 없다.
+    - `메뉴상품(menu product)`의 수량은 0 이상이어야 한다.
+  - `메뉴가격(menu price)`가 올바르지 않으면 등록 할 수 없다.
+    - `메뉴가격(menu price)`는 0원 이상이어야 한다.
+    - `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합은 `메뉴가격(menu price)`보다 크거나 같아야 한다.
+- `메뉴공개여부(menu displayed)`를 `true`로 변경한다.
+  - `메뉴가격(menu price)`가 `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합보다 높을경우 값을 변경 할 수 없다.
+- `메뉴공개여부(menu displayed)`를 `false`로 변경한다.
+- `메뉴(menu)`목록을 조회 한다.
 
 ### 주문 테이블
 
-- `order table`를 등록한다.
-  - `order table`은 `order table name`, `order table number of guest`, `order table empty`를 가진다.
-  - `order table name`이 올바르지 않으면 등록 할 수 없다.
-    - `order table name`은 필수다.
-- `order table empty`를 `false`로 변경한다.
-- `order table empty`를 `true`로 변경한다.
-  - 완료되지 않은 `order`가 있는 `order table`은 `order table empty`를 `true`로 변경 할 수 없다.
-- `order table number of guest`를 변경한다.
-  - `order table number of guest`가 올바르지 않으면 변경 할 수 없다.
-    - `order table number of guest`는 0 이상이어야 한다.
-- `order table`목록을 조회 한다.
+- `주문테이블(order table)`을 등록한다.
+  - `주문테이블(order table)`은 `주문테이블명(order table name)`, `주문테이블손님수(order table number of guest)`, `주문테이블착석여부(order table empty)`를 가진다.
+  - `주문테이블명(order table name)`이 올바르지 않으면 등록 할 수 없다.
+    - `주문테이블명(order table name)`은 필수다.
+- `주문테이블착석여부(order table empty)`를 `false`로 변경한다.
+- `주문테이블착석여부(order table empty)`를 `true`로 변경한다.
+  - 완료되지 않은 `주문(order)`이 있는 `주문테이블(order table)`은 `주문테이블착석여부(order table empty)`를 `true`로 변경 할 수 없다.
+- `주문테이블손님수(order table number of guest)`를 변경한다.
+  - `주문테이블손님수(order table number of guest)`가 올바르지 않으면 변경 할 수 없다.
+    - `주문테이블손님수(order table number of guest)`는 0 이상이어야 한다.
+- `주문테이블(order table)`목록을 조회 한다.
 
 ### 주문
 
-- `order`를 등록한다.
-  - `order`는 `order type`, `order status`, `order date time`, `order delivery address`, `order line item`, `order table`를 가진다. 
-  - 1개 이상의 등록된 `menu`로 `order type`이 `DELIVERY`인 `order`를 등록 할 수 있다.
-  - 1개 이상의 등록된 `menu`로 `order type`이 `TAKEOUT`인 `order`를 등록 할 수 있다.
-  - 1개 이상의 등록된 `menu`로 `order type`이 `EAT_IN`인 `order`를 등록 할 수 있다.
-  - `order type`이 올바르지 않으면 등록 할 수 없다.
-    - `order type`은 필수다.
-  - `order line item`이 없으면 `order`를 등록 할 수 없다.
-  - `order type`이 `EAT_IN`인 `order`는 `order line item quantity`가 0 미만일 수 있다.
-  - `order type`이 `EAT_IN`인 `order`를 제외한 `order type`을 가진 `order`는 `order line item quantity`가 0 미만일 수 있다.
-  - `order type`이 `DELIVERY` 인 경우 `order delivery address`가 올바르지 않으면 등록 할 수 없다.
-    - `order type`이 `DELIVERY` 인 경우 `order delivery address`는 필수이다.
-  - `order type`이 `EAT_IN`인 경우 `order table empty`가 `true`일 수 없다.
-  - `menu displayed`가 `false`인 `menu`를 포함한 `order`는 등록 할 수 없다.
-  - `order line item price`와 `menu price`는 동일해야한다.
-- `order`의 `order status`를 `ACCEPTED`로 변경한다.
-  - `order status`가 `WAITING`인 `order`만 변경 가능하다.
-  - `order type`이 `DELIVERY`인 `order`일 경우 `kitchen riders`에 요청한다.
-- `order`의 `order status`를 `SERVED`로 변경한다.
-  - `order status`가 `ACCEPTED`인 `order`만 변경 가능하다.
-- `order`의 `order status`를 `DELIVERING`로 변경한다.
-  - `order type`이 `DELIVERY`인 `order`만 변경 가능하다.
-  - `order status`가 `SERVED`인 `order`만 변경 가능하다.
-- `order`의 `order status`를 `DELIVERED`로 변경한다.
-  - `order status`가 `DELIVERED`인 `order`만 변경 가능하다.
-- `order`의 `order status`를 `COMPLETED`로 변경한다.
-  - `order type`이 `DELIVERY`인 `order`일 경우 `order status`가 `DELIVERED`일때만 변경 가능하다.
-  - `order type`이 `TAKEOUT` 또는 `EAT_IN`인 `order`일 경우 `order status`가 `SERVED`일때만 변경 가능하다.
-  - `order table empty`를 변경한다.
-    - `order table`의 모든 `order status`가 `COMPLETED`일 경우 `order table empty`를 `true`로 변경한다.
-    - `order table`의 모든 `order status`가 `COMPLETED`가 아닐 경우 `order table empty`를 변경 할 수 없다.
-- `order`를 조회한다.
+- `주문(order)`를 등록한다.
+  - `주문(order)`은 `주문타입(order type)`, `주문상태(order status)`, `주문시간(order date time)`, `배달주소(order delivery address)`, `주문항목(order line item)`, `주문테이블(order table)`를 가진다. 
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`을 등록 할 수 있다.
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `포장주문(TAKEOUT)`인 `주문(order)`을 등록 할 수 있다.
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`을 등록 할 수 있다.
+  - `주문타입(order type)`이 올바르지 않으면 등록 할 수 없다.
+    - `주문타입(order type)`은 필수다.
+  - `주문항목(order line item)`이 없으면 `주문(order)`을 등록 할 수 없다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`은 `주문항목수량(order line item quantity)`가 0 미만일 수 있다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`를 제외한 `주문타입(order type)`을 가진 `주문(order)`는 `주문항목수량(order line item quantity)`가 0 미만일 수 있다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)` 인 경우 `배달주소(order delivery address)`가 올바르지 않으면 등록 할 수 없다.
+    - `주문타입(order type)`이 `배달주문(DELIVERY)` 인 경우 `배달주소(order delivery address)`는 필수이다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 경우 `주문테이블착석여부(order table empty)`가 `true`일 수 없다.
+  - `메뉴공개여부(menu displayed)`가 `false`인 `메뉴(menu)`를 포함한 `주문(order)`는 등록 할 수 없다.
+  - `주문항목가격(order line item price)`와 `메뉴가격(menu price)`는 동일해야한다.
+- `주문(order)`의 `주문상태(order status)`를 `주문수락(ACCEPTED)`로 변경한다.
+  - `주문상태(order status)`가 `주문대기(WAITING)`인 `주문(order)`만 변경 가능하다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`일 경우 `배달대행사(kitchen riders)`에 요청한다.
+- `주문(order)`의 `주문상태(order status)`를 `주문서빙(SERVED)`로 변경한다.
+  - `주문상태(order status)`가 `주문수락(ACCEPTED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `배달중(DELIVERING)`로 변경한다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`만 변경 가능하다.
+  - `주문상태(order status)`가 `주문서빙(SERVED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `배달완료(DELIVERED)`로 변경한다.
+  - `주문상태(order status)`가 `배달완료(DELIVERED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `주문처리완료(COMPLETED)`로 변경한다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`일 경우 `주문상태(order status)`가 `배달완료(DELIVERED)`일때만 변경 가능하다.
+  - `주문타입(order type)`이 `포장주문(TAKEOUT)` 또는 `방문주문(EAT_IN)`인 `주문(order)`일 경우 `주문상태(order status)`가 `주문서빙(SERVED)`일때만 변경 가능하다.
+  - `주문테이블착석여부(order table empty)`를 변경한다.
+    - `주문테이블(order table)`의 모든 `주문상태(order status)`가 `주문처리완료(COMPLETED)`일 경우 `주문테이블착석여부(order table empty)`를 `true`로 변경한다.
+    - `주문테이블(order table)`의 모든 `주문상태(order status)`가 `주문처리완료(COMPLETED)`가 아닐 경우 `주문테이블착석여부(order table empty)`를 변경 할 수 없다.
+- `주문(order)`을 조회한다.
