@@ -92,5 +92,54 @@
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 |  |  |  |
+| 상품 | product | 메뉴로 등록할 수 있는 상품 |
+| 상품명 | product name | 상품의 이름 |
+| 상품 가격 | product price | 상품의 가격 |
+| 상품 등록 | create product | 상품을 등록하는 행위 |
+| 상품 목록 조회 | find all product | 모든 상품 목록을 조회하는 행위 |
+|  |  |  |
+| 메뉴 그룹 | menu group | 메뉴를 분류할수 있는 그룹 |
+| 메뉴 그룹명 | menu group name | 메뉴 그룹 이름 |
+| 메뉴 그룹 등록 | create menu group | 메뉴 그룹을 등록하는 행위 |
+| 메뉴 그룹 목록 조회 | find all menu group | 모든 메뉴 그룹을 조회하는 행위 |
+|  |  |  |
+| 메뉴 | menu | 상품을 조합한 판매 묶음 |
+| 메뉴명 | menu name | 메뉴의 이름 |
+| 메뉴 가격 | menu price | 메뉴의 가격 |
+| 메뉴 등록 | create menu | 메뉴를 등록하는 행위 |
+| 메뉴 목록 조회 | find all menu | 모든 메뉴를 조회하는 행위 |
+| 메뉴 노출 | displayed menu | 판매 가능한 메뉴 |
+| 메뉴 숨김 | hide menu | 판매 불가능한 메뉴 |
+|  |  |  |
+| 메뉴 상품 | menu product | 메뉴에 등록하기위한 상품 정보 |
+| 메뉴 상품 번호 | menu product seq | 메뉴 상품의 고유 번호 |
+| 메뉴 상품 수량 | menu product quantity | 메뉴 상품에 등록된 상품의 수량 |
+|  |  |  |
+| 주문 테이블 | order table | 매장의 주문 가능한 테이블 |
+| 주문 테이블명 | order table name | 주문 테이블의 이름 |
+| 주문 테이블 고객 수 | order table number of guests | 주문 테이블에 자리한 고객 수 |
+| 빈 주문 테이블 | empty order table | 새 고객이 착석 가능한 주문 테이블 |
+|  |  |  |
+| 주문 | order | 고객이 요청한 주문 항목들의 발생 단위 |
+| 주문 종류 | order type | 발생할수 있는 여러 주문 방식 |
+| 매장 주문 | eat in order | 매장의 주문 테이블에서 발생한 주문 |
+| 배달 주문 | delivery order | 배달을 요청한 주문 |
+| 포장 주문 | takeout order | 포장을 요청한 주문 |
+| 주문 상태 | order status | 주문 진행 상태 |
+| 주문 접수 대기 | waiting order | 주문이 발생후 아직 접수가 안 된 상태 |
+| 주문 접수 | accept order | 주문이 주방에 접수된 상태 |
+| 주문 서빙 | serve order | 주문의 조리후 고객에게 서빙되는 상태 |
+| 주문 배달 시작 | start delivery | 배달 주문일 경우 배달이 사작된 상태 |
+| 주문 배달 완료 | complete delivery | 배달 주문일 경우 주문이 고객이 요청한 주소로 배달이 완료된 상태 |
+| 주문 완료 | complete order | 주문이 고객에게 정상적으로 전달된 상태 |
+| 주문 발생 시간 | order date time | 주문이 발생한 시간 |
+| 배달 주문 주소 | order delivery address | 배달 주문일 경우 고객이 요청한 배송지 |
+|  |  |  |
+| 주문 항목 | order line item | 고객이 요청한 메뉴 정보 |
+| 주문 항목 번호 | order line item seq | 주문 항목의 고유 번호 |
+| 주문 항목 수량 | order line item quantity | 주문 항목의 수량 |
+| 주문 항목 가격 | order line item price | 주문 항목의 가격 |
+|  |  |  |
+| 배달 대행사 | delivery agency | 배달원을 보유한 배달 서비스사 |
 
 ## 모델링
