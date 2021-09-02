@@ -95,8 +95,8 @@
 | --- | --- | --- |
 |키친포스|kitchenpos|음식점에서 매장 관리에 사용되는 관리 시스템(현재 프로젝트로 구현된 앱 전체)|
 |상품|Product|메뉴를 구성하는 최소 단위로 음식점에서 만들어지는 음식|
-|상품 이름|Product name|상품의 이름|
-|상품 가격|Product price|상품의 가격|
+|상품 이름|Product name|상품의 이름이며 null 또는 비속어가 포함되면 안된다.|
+|상품 가격|Product price|상품의 가격이며 null 또는 음수가 될 수 없다.|
 |비속어|Profanity|욕설과 같은 비속어|
 |상품 등록|Product create|새로운 상품을 등록|
 |상품 가격 변경|Product changePrice|상품의 가격을 변경|
@@ -165,7 +165,7 @@
 |배달 중인|OrderStatus.DELIVERING|주문이 손님에게 배달중인 상태|
 |배달 완료된|OrderStatus.DELIVERED|배달중이던 주문이 손님에게 전달완료된 상태|
 |완료된|OrderStatus.COMPLETED|주문이 완료된 상태|
-|주문한 메뉴|OrderLineItem|주문을 구성하는 메뉴|
+|주문한 메뉴|OrderLineItem|주문을 구성하는 메뉴이며 주문 유형이 배달 또는 포장인 경우 수량은 1개 이상이어야 하고, 메뉴가 숨김 상태이면 안된다.|
 |배달 주소|deliveryAddress|주문이 배달되어 도착할 손님의 주소|
 |주문 등록|Order create|새로운 주문을 등록|
 |주문 접수|Order accept|주문의 주문 상태를 '접수된' 상태로 변경|
