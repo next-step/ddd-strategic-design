@@ -1,5 +1,7 @@
 # 키친포스
 
+---
+
 ## 요구 사항
 
 ### 상품
@@ -87,6 +89,8 @@
 - 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.
 - 주문 목록을 조회할 수 있다.
 
+---
+
 ## 용어 사전
 
 | 한글명 | 영문명 | 설명 |
@@ -155,4 +159,78 @@
 | 배달 대행사 | delivery agency | 배달원을 보유한 배달 서비스사 |
 | 대행사 호출 | request delivery | 배달주문 라이더 호출 |
 
+---
+
 ## 모델링
+
+### 상품(`Product`)
+- 상품(`Product`)는 이름(`name`)을 가진다.
+    - 이름(`name`)은 필수 입력값이다.
+    - 이름(`name`)은 비속어(`profanity`)를 포함할 수 없다.
+- 상품(`Product`)는 가격(`price`)을 가진다.
+    - 가격(`price`)은 0원 이상이어야 한다.
+- 상품 가격(`price`)을 변경(`changePrice`)할 수 있다.
+    - 상품 가격 변경(`changePrice`)할 때 메뉴(`Menu`)의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다(`hide`).
+- 상품 목록을 조회(`findAllProduct`)할 수 있다.
+
+### 메뉴 그룹(`MenuGroup`)
+- 메뉴 그룹(`MenuGroup`)는 이름(`name`)을 가진다.
+    - 이름(`name`)은 필수 입력값이다.
+- 메뉴 그룹 목록을 조회(`findAllMenuGroup`)할 수 있다.
+
+### 메뉴(`Menu`)
+- 메뉴(`Menu`)는 이름(`name`)을 가진다.
+    - 이름(`name`)은 필수 입력값이다.
+    - 이름(`name`)은 비속어(`profanity`)를 포함할 수 없다.
+- 메뉴(`Menu`)는 가격(`price`)을 가진다.
+    - 가격(`price`)은 0원 이상이어야 한다.
+- 메뉴 가격(`price`)을 변경 할 수 있다.
+    - 가격(`price`)은 메뉴 상품(`MenuProduct`)의 총 가격보다 크면 안된다.
+- 메뉴(`Menu`)는 메뉴 그룹(`MenuGroup`)에 속한다.
+- 메뉴(`Menu`)는 판매 가능한 메뉴 여부를 나타내는 노출(`displayed`)을 가진다.
+    - 메뉴 노출(`displayed`)은 메뉴의 가격(`price`)이 상품의 가격보다 작거나 같아야 한다.
+- 메뉴(`Menu`)는 메뉴 상품(`MenuProduct`)을 이용한 메뉴 상품 목록(`MenuProducts`)을 가진다.
+    - 메뉴 상품 목록(`MenuProducts`)은 필수 입력 사항이며 메뉴 상품(`MenuProduct`)을 하나이상 가져야 한다.
+    - 메뉴 상품 목록(`MenuProducts`)중 하나의 상품(`Product`)는 하나의 메뉴상품(`MenuProduct`)에만 존재해야 한다.
+- 메뉴 목록을 조회(`findAllMenu`)할 수 있다.
+
+### 메뉴 상품(`MenuProduct`)
+- 메뉴 상품(`MenuProduct`)은 순서(`seq`)를 가진다.
+- 메뉴 상품(`MenuProduct`)은 상품(`Product`)를 가진다.
+- 메뉴 상품(`MenuProduct`)은 수량(`quantity`)를 가진다.
+    - 메뉴 상품의 수량(`quantity`)은 0개 이상이어야 한다.
+
+### 주문 테이블(`OrderTable`)
+- 주문 테이블(`OrderTable`)은 이름(`name`)을 가진다.
+    - 이름(`name`)은 필수 입력값이다.
+- 주문 테이블(`OrderTable`)은 방문한 손님 수(`numberOfGuests`)를 가진다.
+    - 방문한 손님 수(`numberOfGuests`)는 0 이상이어야 한다.
+- 주문 테이블(`OrderTable`)은 빈 테이블 여부(`empty`)를 가진다.
+- 빈 주문 테이블(`OrderTable`)은 손님이 앉을(`sit`) 수 있다.
+- 주문 테이블(`OrderTable`)에서 손님이 나갈(`clear`) 수 있다. 
+    - 주문(`Order`)가 완료되지 않으면 나갈 수 없다.
+- 주문 테이블(`OrderTable`)은 손님 수를 변경(`changeNumberOfGuests`)할 수 있다.
+- 주문 테이블 목록을 조회(`findAllOrderTable`)할 수 있다.
+
+### 주문(`Order`)
+- 주문(`Order`)은 매장, 배달, 포장 을 나타내는 주문 종류(`OrderType`)를 가진다.
+- 주문(`Order`)은 주문이 고객에 전달되기까지의 과정을 나타내는 주문 상태(`OrderStatus`)를 가진다.
+    - 주문 상태(`OrderStatus`)에는 대기 -> 확인 -> 서빙 -> 완료 순서로 진행되고, 배달 주문(`DELIVERY`)일 경우 서빙 -> 배달중 -> 배달완료 -> 완료 상태가 추가로 존재한다.
+    - 주문 상태(`OrderStatus`)변경은 각 이전단계 에서만 가능하다.
+- 주문(`Order`)은 주문 항목들(`OrderLineItems`)을 가진다.
+    - 주문 항목들(`OrderLineItems`)은 하나이상의 주문 항목(`OrderLineItem`)을 가져야 한다.
+- 배달 주문(`DELIVERY`)일 경우 배송지(`deliveryAddress`)를 필수로 가져야한다.
+- 매장 주문(`EAT_IN`)일 경우 주문 테이블(`OrderTable`)를 가져야한다.
+- 주문 목록을 조회(`findAllOrder`)할 수 있다.
+
+### 주문 항목(`OrderLineItem`)
+- 주문 항목(`OrderLineItem`)은 메뉴(`Menu`)를 갖는다.
+  - 메뉴(`Menu`)는 필수 입력값 이다.
+- 주문 항목(`OrderLineItem`)은 수량(`quantity`)를 갖는다.
+    - 수량(`quantity`)은 0 이상이어야 한다.
+- 주문 항목(`OrderLineItem`)은 가격(`price`)를 갖는다.
+    - 가격(`price`)은 메뉴(`Menu`)의 가격 * 수량(`quantity`)과 같아야한다.
+
+### 배달 대행사(`DeliveryAgency`)
+- 배달 대행사(`DeliveryAgency`)에는 라이더(`Kitchenrider`)가 있다.
+- 배달 주문(`DELIVERY`)일 경우 주문확인시 라이더를 호출(`requestDelivry`)한다.
