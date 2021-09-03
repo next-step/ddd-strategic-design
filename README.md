@@ -196,8 +196,10 @@
   - `메뉴(menu)`는 특정 `메뉴그룹(menu group)`에 속해야한다.
   - `메뉴명(menu name)`은 비속어를 사용 할 수 없다.
 - `메뉴공개여부(menu displayed)`를 `공개(true)`로 변경한다.
+  - 등록된 `메뉴(menu)`만 `메뉴공개여부(menu displayed)`를 `공개(true)`로 변경 할 수 있다. 
   - `메뉴가격(menu price)`이 `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합보다 높을경우 값을 변경 할 수 없다.
 - `메뉴공개여부(menu displayed)`를 `비공개(false)`로 변경한다.
+  - 등록된 `메뉴(menu)`만 `메뉴공개여부(menu displayed)`를 `비공개(false)`로 변경 할 수 있다.
 - `메뉴(menu)`목록을 조회 한다.
 
 ### 주문 테이블
