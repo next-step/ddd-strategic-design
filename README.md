@@ -89,8 +89,89 @@
 
 ## 용어 사전
 
+### 상품
+
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-|  |  |  |
+|키친포스|kitchenpos|음식점에서 매장 관리에 사용되는 관리 시스템(현재 프로젝트로 구현된 앱 전체)|
+|상품|Product|메뉴를 구성하는 최소 단위로 음식점에서 만들어지는 음식|
+|상품 이름|Product name|상품의 이름이며 null 또는 비속어가 포함되면 안된다.|
+|상품 가격|Product price|상품의 가격이며 null 또는 음수가 될 수 없다.|
+|비속어|Profanity|욕설과 같은 비속어|
+|상품 등록|Product create|새로운 상품을 등록|
+|상품 가격 변경|Product changePrice|상품의 가격을 변경|
+|상품 목록 조회|Product findAll|등록된 상품 전체 목록을 조회|
 
-## 모델링
+<br>
+
+### 메뉴 그룹
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+|메뉴 그룹|MenuGroup|메뉴가 분류될 수 있는 종류|
+|메뉴 그룹 이름|MenuGroup name|메뉴 그룹의 이름|
+|메뉴 그룹 등록|MenuGroup create|새로운 메뉴 그룹을 등록|
+|메뉴 그룹 목록 조회|MenuGroup findAll|등록된 메뉴 그룹 전체 목록을 조회|
+
+
+<br>
+
+### 메뉴
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+|메뉴|Menu|특정 메뉴 그룹에 속하며 하나 이상의 상품들로 구성되는 단위|
+|메뉴 이름|Menu name|메뉴의 이름|
+|메뉴 가격|Menu price|메뉴의 가격|
+|메뉴 노출(숨김) 상태|displayed|메뉴의 노출 또는 숨김에 대한 상태|
+|메뉴에 속한 상품|Menu MenuProduct|메뉴를 구성하는 상품으로 1개 이상의 수량을 갖는다|
+|메뉴 등록|Menu create|새로운 메뉴를 등록|
+|메뉴 가격 변경|Menu changePrice|메뉴의 가격을 변경|
+|메뉴 노출|Menu display|메뉴 노출(숨김) 상태를 노출로 변경|
+|메뉴 숨김|Menu hide|메뉴 노출(숨김) 상태를 숨김으로 변경|
+|메뉴 목록 조회|Menu findAll|등록된 메뉴 전체 목록을 조회|
+
+<br>
+
+### 주문 테이블
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+|주문 테이블|OrderTable|음식점 내 테이블|
+|주문 테이블 이름|OrderTable name|주문 테이블의 이름|
+|주문 테이블 방문한 손님 수|OrderTable name|주문 테이블을 이용하고 있는 손님 수|
+|주문 테이블 빈 테이블|OrderTable empty|주문 테이블이 비었는지 여부에 대한 상태|
+|주문 테이블 등록|OrderTable create|새로운 주문 테이블 등록|
+|주문 테이블 해지|sit|빈 테이블 상태를 비어있지 않은 상태로 변경|
+|주문 테이블 설정|clear|빈 테이블 상태를 비어있는 상태로 변경|
+|주문 테이블 방문한 손님 수 변경|OrderTable changeNumberOfGuests|주문 테이블의 방문한 손님 수를 변경|
+|주문 테이블 목록 조회|OrderTable findAll|주문 테이블 전체 목록을 조회|
+
+<br>
+
+### 주문
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+|주문|Order|음식점에서 손님이 1개 이상의 등록된 메뉴를 요청하는 행위|
+|주문 유형|OrderType|주문의 유형으로 배달 주문, 포장 주문, 매장주문이 있다|
+|배달 주문|OrderType.DELIVERY|배달을 통해 전달되는 주문|
+|포장 주문|OrderType.TAKEOUT|손님이 포장해서 가져가는 주문|
+|매중 주문|OrderType.EAT_IN|손님이 음식점의 주문 테이블에서 먹고가는 주문|
+|주문 상태|OrderStatus|주문의 상태로 접수 대기, 접수된, 서빙된, 배달 중인, 배달 완료된, 완료된 상태가 있다.|
+|접수 대기|OrderStatus.WAITING|최초로 주문이 등록되고 접수가 되기 전 상태|
+|접수된|OrderStatus.ACCEPTED|주문이 접수된 상태|
+|서빙된|OrderStatus.SERVED|주문이 손님에게 서빙된 상태|
+|배달 중인|OrderStatus.DELIVERING|주문이 손님에게 배달중인 상태|
+|배달 완료된|OrderStatus.DELIVERED|배달중이던 주문이 손님에게 전달완료된 상태|
+|완료된|OrderStatus.COMPLETED|주문이 완료된 상태|
+|주문한 메뉴|OrderLineItem|주문을 구성하는 메뉴이며 주문 유형이 배달 또는 포장인 경우 수량은 1개 이상이어야 하고, 메뉴가 숨김 상태이면 안된다.|
+|배달 주소|deliveryAddress|주문이 배달되어 도착할 손님의 주소|
+|주문 등록|Order create|새로운 주문을 등록|
+|주문 접수|Order accept|주문의 주문 상태를 '접수된' 상태로 변경|
+|주문 서빙|Order serve|주문의 주문 상태를 '서빙된' 상태로 변경|
+|주문 배달시작|Order startDelivery|주문의 주문 상태를 '배달 중인' 상태로 변경|
+|주문 배달완료|Order completeDelivery|주문의 주문 상태를 '배달 완료된' 상태로 변경|
+|주문 완료|Order complete|주문의 주문 상태를 '완료된' 상태로 변경|
+|주문 목록 조회|Order findAll|주문 전체 목록을 조회|
+|배달 대행사|kitchenriders|주문 배달시작시 음식점에서 배달을 요청하는 곳|
