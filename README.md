@@ -167,9 +167,11 @@
 ## 모델링
 
 ### 상품
+속성
+- `상품(product)`은 `상품명(product name)` 과 `상품가격(product price)`을 가진다.
 
+기능
 - `상품(product)`을 등록한다.
-  - `상품(product)`은 `상품명(product name)` 과 `상품가격(product price)`을 가진다.
   - `상품가격(product price)`은 0원 이상이어야 한다.
   - `상품명(product name)`은 비속어를 사용 할 수 없다.
 - `상품가격(product price)`을 변경한다.
@@ -178,16 +180,20 @@
 - `상품(product)`목록을 조회 한다.
 
 ### 메뉴 그룹
+속성
+- `메뉴그룹(menu group)`는 `메뉴그룹명(menu group name)`을 가진다.
 
+기능
 - `메뉴그룹(menu group)`을 등록한다.
-  - `메뉴그룹(menu group)`는 `메뉴그룹명(menu group name)`을 가진다.
   - `메뉴그룹명(menu group name)`은 필수이다.
 - `메뉴그룹(menu group)`목록을 조회 한다.
 
 ### 메뉴
+속성
+- `메뉴(menu)`는 `메뉴명(menu name)`, `메뉴가격(menu price)`와 `메뉴공개여부(menu displayed)`를 가진다.
 
+기능
 - `메뉴(menu)`를 등록한다. 
-  - `메뉴(menu)`는 `메뉴명(menu name)`, `메뉴가격(menu price)`와 `메뉴공개여부(menu displayed)`를 가진다.
   - `메뉴(menu)`를 등록하려면 `메뉴상품(menu product)`이 필요하다.
     - `메뉴상품(menu product)`의 `상품(product)`이 등록되어있지 않으면 `메뉴(menu)`를 등록 할 수 없다.
     - `메뉴상품(menu product)`의 수량은 0 이상이어야 한다.
@@ -203,9 +209,11 @@
 - `메뉴(menu)`목록을 조회 한다.
 
 ### 주문 테이블
+속성
+- `주문테이블(order table)`은 `주문테이블명(order table name)`, `주문테이블손님수(order table number of guest)`, `주문테이블비워짐여부(order table empty)`를 가진다.
 
+기능
 - `주문테이블(order table)`을 등록한다.
-  - `주문테이블(order table)`은 `주문테이블명(order table name)`, `주문테이블손님수(order table number of guest)`, `주문테이블비워짐여부(order table empty)`를 가진다.
   - `주문테이블(order table)`은 `주문테이블명(order table name)`은 필수로 가진다.
 - `주문테이블비워짐여부(order table empty)`를 `비워지지 않음(false)` 상태로 변경한다.
 - `주문테이블비워짐여부(order table empty)`를 `비워짐(true)` 상태로 변경한다.
@@ -215,9 +223,11 @@
 - `주문테이블(order table)`목록을 조회 한다.
 
 ### 주문
+속성
+- `주문(order)`은 `주문타입(order type)`, `주문상태(order status)`, `주문시간(order date time)`, `배달주소(order delivery address)`, `주문항목(order line item)`, `주문테이블(order table)`을 가진다.
 
+기능
 - `주문(order)`를 등록한다.
-  - `주문(order)`은 `주문타입(order type)`, `주문상태(order status)`, `주문시간(order date time)`, `배달주소(order delivery address)`, `주문항목(order line item)`, `주문테이블(order table)`을 가진다. 
   - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`을 등록 할 수 있다.
   - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `포장주문(TAKEOUT)`인 `주문(order)`을 등록 할 수 있다.
   - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`을 등록 할 수 있다.
