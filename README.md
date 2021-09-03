@@ -108,13 +108,14 @@
 | 메뉴 | menu | 주문시 고객이 선택하는 항목을 뜻한다. |
 | 메뉴 명 | menu name | 메뉴 명을 뜻하며 비속어가 포함 될 수 없다. |
 | 메뉴 가격 | menu price | 메뉴 가격을 뜻하며 가격은 0 이상이다. |
-| 메뉴 공개 여부 | menu displayed | 메뉴 공개/비공개 여부를 뜻한다. 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우에만 공개 가능하다. |
+| 메뉴 공개 여부 | menu displayed | 메뉴 공개(true)/비공개(false) 여부를 뜻한다. 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우에만 공개 가능하다. |
 
 ### 메뉴 상품
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 메뉴 상품 | menu product | 메뉴에 구성에 필요한 상품을 뜻한다. |
 | 메뉴 상품 수량| menu product quantity | 메뉴 구성에 들어가는 상품 수량을 뜻한다. |
+| 메뉴 상품 가격 | menu product price | 메뉴 상품 가격 x 수량 값을 듯한다. |
 
 ### 주문 테이블
 | 한글명 | 영문명 | 설명 |
@@ -122,7 +123,7 @@
 | 주문 테이블 | order table | 가게에 배치된 테이블을 뜻한다. |
 | 주문 테이블 명 | order table name | 주문 테이블 명을 부르는 명칭을 뜻한다. |
 | 주문 테이블 손님 수 | order table number of guest | 주문 테이블에 착석한 손님 수를 뜻한다. |
-| 주문 테이블 착석 여부 | order table empty | 주문 테이블에 손님이 착석했는지 여부를 뜻한다.  |
+| 주문 테이블 비워짐 여부 | order table empty | 주문 테이블이 비워짐(true)/비워지지않음(false) 여부를 뜻한다.  |
 
 ### 주문
 | 한글명 | 영문명 | 설명 |
@@ -130,7 +131,7 @@
 | 주문 | orders | 고객이 요청하는 주문을 뜻한다. |
 | 주문 타입 | order type | 주문 타입을 뜻한다. (배달주문, 포장주문, 매장내식사주문) |
 | 주문 상태 | order status | 주문 상태를 뜻한다. (주문 대기, 주문 수락, 주문 서빙, 배달중, 배달 완료, 주문완료)|
-| 주문 시간 | order date time | 주문이 접수된 시간을 듯한다. |
+| 주문 시간 | order date time | 주문이 접수된 시간을 듯한다. |7
 | 배달 주소 | order delivery address | 배송 주문의 배송지를 뜻한다. |
 
 ### 주문 > 주문 타입
@@ -164,3 +165,94 @@
 | 주문 항목 가격 | order line item price | 주문 항목 가격을 뜻하며 상품 가격 x 상품수량 이다. |
 
 ## 모델링
+
+### 상품
+속성
+- `상품(product)`은 `상품명(product name)` 과 `상품가격(product price)`을 가진다.
+
+기능
+- `상품(product)`을 등록한다.
+  - `상품가격(product price)`은 0원 이상이어야 한다.
+  - `상품명(product name)`은 비속어를 사용 할 수 없다.
+- `상품가격(product price)`을 변경한다.
+  - `상품가격(product price)`은 0원 이상이어야 한다.
+  - `상품가격(product price)`이 변경될때 `메뉴(menu)`의 `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합보다 크면 `메뉴(menu)`의 `메뉴공개여부(menu displayed)` 값이 `비공개(false)` 로 변한다. 
+- `상품(product)`목록을 조회 한다.
+
+### 메뉴 그룹
+속성
+- `메뉴그룹(menu group)`는 `메뉴그룹명(menu group name)`을 가진다.
+
+기능
+- `메뉴그룹(menu group)`을 등록한다.
+  - `메뉴그룹명(menu group name)`은 필수이다.
+- `메뉴그룹(menu group)`목록을 조회 한다.
+
+### 메뉴
+속성
+- `메뉴(menu)`는 `메뉴명(menu name)`, `메뉴가격(menu price)`와 `메뉴공개여부(menu displayed)`를 가진다.
+
+기능
+- `메뉴(menu)`를 등록한다. 
+  - `메뉴(menu)`를 등록하려면 `메뉴상품(menu product)`이 필요하다.
+    - `메뉴상품(menu product)`의 `상품(product)`이 등록되어있지 않으면 `메뉴(menu)`를 등록 할 수 없다.
+    - `메뉴상품(menu product)`의 수량은 0 이상이어야 한다.
+  - `메뉴가격(menu price)`는 0원 이상이어야 한다.
+  - `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합은 `메뉴가격(menu price)`보다 크거나 같아야 한다.
+  - `메뉴(menu)`는 특정 `메뉴그룹(menu group)`에 속해야한다.
+  - `메뉴명(menu name)`은 비속어를 사용 할 수 없다.
+- `메뉴공개여부(menu displayed)`를 `공개(true)`로 변경한다.
+  - 등록된 `메뉴(menu)`만 `메뉴공개여부(menu displayed)`를 `공개(true)`로 변경 할 수 있다. 
+  - `메뉴가격(menu price)`이 `메뉴상품(menu product)`들의 `메뉴상품가격(menu product price)`합보다 높을경우 값을 변경 할 수 없다.
+- `메뉴공개여부(menu displayed)`를 `비공개(false)`로 변경한다.
+  - 등록된 `메뉴(menu)`만 `메뉴공개여부(menu displayed)`를 `비공개(false)`로 변경 할 수 있다.
+- `메뉴(menu)`목록을 조회 한다.
+
+### 주문 테이블
+속성
+- `주문테이블(order table)`은 `주문테이블명(order table name)`, `주문테이블손님수(order table number of guest)`, `주문테이블비워짐여부(order table empty)`를 가진다.
+
+기능
+- `주문테이블(order table)`을 등록한다.
+  - `주문테이블(order table)`은 `주문테이블명(order table name)`은 필수로 가진다.
+- `주문테이블비워짐여부(order table empty)`를 `비워지지 않음(false)` 상태로 변경한다.
+- `주문테이블비워짐여부(order table empty)`를 `비워짐(true)` 상태로 변경한다.
+  - 완료되지 않은 `주문(order)`이 있는 `주문테이블(order table)`은 `주문테이블비워짐여부(order table empty)`를 `비워짐(true)`상태로 변경 할 수 없다.
+- `주문테이블손님수(order table number of guest)`를 변경한다.
+  - `주문테이블손님수(order table number of guest)`는 0 이상이어야 한다.
+- `주문테이블(order table)`목록을 조회 한다.
+
+### 주문
+속성
+- `주문(order)`은 `주문타입(order type)`, `주문상태(order status)`, `주문시간(order date time)`, `배달주소(order delivery address)`, `주문항목(order line item)`, `주문테이블(order table)`을 가진다.
+
+기능
+- `주문(order)`를 등록한다.
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`을 등록 할 수 있다.
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `포장주문(TAKEOUT)`인 `주문(order)`을 등록 할 수 있다.
+  - 1개 이상의 등록된 `메뉴(menu)`로 `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`을 등록 할 수 있다.
+  - `주문(order)`은 `주문타입(order type)`을 필수로 가진다.
+  - `주문항목(order line item)`이 없으면 `주문(order)`을 등록 할 수 없다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`은 `주문항목수량(order line item quantity)`이 0 미만일 수 있다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 `주문(order)`를 제외한 `주문타입(order type)`을 가진 `주문(order)`는 `주문항목수량(order line item quantity)`이 0 미만일 수 있다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)` 인 경우 `배달주소(order delivery address)`는 필수로 필요하다.
+  - `주문타입(order type)`이 `방문주문(EAT_IN)`인 경우 `주문테이블비워짐여부(order table empty)`가 `비워짐(true)`상태일 수 없다.
+  - `메뉴공개여부(menu displayed)`가 `비공개(false)`인 `메뉴(menu)`를 포함한 `주문(order)`은 등록 할 수 없다.
+  - `주문항목가격(order line item price)`와 `메뉴가격(menu price)`은 동일해야한다.
+- `주문(order)`의 `주문상태(order status)`를 `주문수락(ACCEPTED)`로 변경한다.
+  - `주문상태(order status)`가 `주문대기(WAITING)`인 `주문(order)`만 변경 가능하다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`일 경우 `배달대행사(kitchen riders)`에 요청한다.
+- `주문(order)`의 `주문상태(order status)`를 `주문서빙(SERVED)`로 변경한다.
+  - `주문상태(order status)`가 `주문수락(ACCEPTED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `배달중(DELIVERING)`로 변경한다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`만 변경 가능하다.
+  - `주문상태(order status)`가 `주문서빙(SERVED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `배달완료(DELIVERED)`로 변경한다.
+  - `주문상태(order status)`가 `배달완료(DELIVERED)`인 `주문(order)`만 변경 가능하다.
+- `주문(order)`의 `주문상태(order status)`를 `주문처리완료(COMPLETED)`로 변경한다.
+  - `주문타입(order type)`이 `배달주문(DELIVERY)`인 `주문(order)`일 경우 `주문상태(order status)`가 `배달완료(DELIVERED)`일때만 변경 가능하다.
+  - `주문타입(order type)`이 `포장주문(TAKEOUT)` 또는 `방문주문(EAT_IN)`인 `주문(order)`일 경우 `주문상태(order status)`가 `주문서빙(SERVED)`일때만 변경 가능하다.
+  - `주문테이블비워짐여부(order table empty)`를 변경한다.
+    - `주문테이블(order table)`의 모든 `주문상태(order status)`가 `주문처리완료(COMPLETED)`일 경우 `주문테이블비워짐여부(order table empty)`를 `비워짐(true)` 상태로 변경한다.
+    - `주문테이블(order table)`의 모든 `주문상태(order status)`가 `주문처리완료(COMPLETED)`가 아닐 경우 `주문테이블비워짐여부(order table empty)`를 변경 할 수 없다.
+- `주문(order)`을 조회한다.
