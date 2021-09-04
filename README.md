@@ -134,3 +134,23 @@
 
 
 ## 모델링
+- 상품
+  - ProductService 에서 Product를 생성한다..
+  - Product는 Product Name과 Product Price를 가지고 있다.
+  - Product 생성시 Product Price는 0원 이상이어야 한다.
+  - Product 생성시 Product Name에 Profanity를 포함할 수 없다.
+  - Product Price를 변경할 수 있다.
+  - Product Price 변경시 해당 Product를 포함한 MenuProduct의 가격도 변경된다.
+  - Product Price가 변경될때 Menu Price가 Menu Product Price Sum 보다 크면 Menu가 hide 된다.
+
+- 메뉴그룹
+  - MenuGroupService 에서 MenuGroup를 생성한다.
+  - MenuGroup 등록시 MenuGroup Name 이 필요하다.
+
+- 메뉴
+  - MenuService 에서 Menu를 생성한다.
+  - Menu등록시 미리 등록된 Product가 필요하다.
+  - Menu는 메뉴에 속한 상품에 대한 정보인 MenuProduct를 가진다.
+  - MenuProduct의 수량은 0보다 커야한다.
+  - MenuPrice는 0원 이상이어야 한다.
+  - MenuProduct Price Sum은 Menu Price보다 크거나 같아야 한다.
