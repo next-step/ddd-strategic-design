@@ -1,10 +1,12 @@
 package kitchenpos.application;
 
-import kitchenpos.menu.Menu;
+import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.infra.MenuRepository;
-import kitchenpos.domain.Product;
-import kitchenpos.domain.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.menu.infra.PurgomalumClient;
+import kitchenpos.product.application.Impl.ProductServiceImpl;
+import kitchenpos.product.application.ProductService;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.infra.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +34,7 @@ class ProductServiceTest {
         productRepository = new InMemoryProductRepository();
         menuRepository = new InMemoryMenuRepository();
         purgomalumClient = new FakePurgomalumClient();
-        productService = new ProductService(productRepository, menuRepository, purgomalumClient);
+        productService = new ProductServiceImpl(productRepository, menuRepository, purgomalumClient);
     }
 
     @DisplayName("상품을 등록할 수 있다.")
@@ -42,9 +44,9 @@ class ProductServiceTest {
         final Product actual = productService.create(expected);
         assertThat(actual).isNotNull();
         assertAll(
-            () -> assertThat(actual.getId()).isNotNull(),
-            () -> assertThat(actual.getName()).isEqualTo(expected.getName()),
-            () -> assertThat(actual.getPrice()).isEqualTo(expected.getPrice())
+                () -> assertThat(actual.getId()).isNotNull(),
+                () -> assertThat(actual.getName()).isEqualTo(expected.getName()),
+                () -> assertThat(actual.getPrice()).isEqualTo(expected.getPrice())
         );
     }
 
@@ -55,7 +57,7 @@ class ProductServiceTest {
     void create(final BigDecimal price) {
         final Product expected = createProductRequest("후라이드", price);
         assertThatThrownBy(() -> productService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("상품의 이름이 올바르지 않으면 등록할 수 없다.")
@@ -65,7 +67,7 @@ class ProductServiceTest {
     void create(final String name) {
         final Product expected = createProductRequest(name, 16_000L);
         assertThatThrownBy(() -> productService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("상품의 가격을 변경할 수 있다.")
@@ -85,7 +87,7 @@ class ProductServiceTest {
         final UUID productId = productRepository.save(product("후라이드", 16_000L)).getId();
         final Product expected = changePriceRequest(price);
         assertThatThrownBy(() -> productService.changePrice(productId, expected))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("상품의 가격이 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다.")

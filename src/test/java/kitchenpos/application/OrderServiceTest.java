@@ -1,7 +1,15 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
 import kitchenpos.menu.infra.MenuRepository;
+import kitchenpos.order.application.Impl.OrderServiceImpl;
+import kitchenpos.order.application.OrderService;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.order.domain.OrderType;
+import kitchenpos.order.infra.OrderRepository;
+import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.ordertable.infra.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +38,7 @@ class OrderServiceTest {
         menuRepository = new InMemoryMenuRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
         kitchenridersClient = new FakeKitchenridersClient();
-        orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
+        orderService = new OrderServiceImpl(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.")

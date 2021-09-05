@@ -1,9 +1,11 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
+import kitchenpos.order.infra.OrderRepository;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.ordertable.application.Impl.OrderTableServiceImpl;
+import kitchenpos.ordertable.application.OrderTableService;
+import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.ordertable.infra.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,7 @@ class OrderTableServiceTest {
     void setUp() {
         orderTableRepository = new InMemoryOrderTableRepository();
         orderRepository = new InMemoryOrderRepository();
-        orderTableService = new OrderTableService(orderTableRepository, orderRepository);
+        orderTableService = new OrderTableServiceImpl(orderTableRepository, orderRepository);
     }
 
     @DisplayName("주문 테이블을 등록할 수 있다.")

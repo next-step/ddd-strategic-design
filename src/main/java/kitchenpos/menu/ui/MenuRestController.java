@@ -1,6 +1,6 @@
 package kitchenpos.menu.ui;
 
-import kitchenpos.menu.Menu;
+import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.application.MenuService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
