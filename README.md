@@ -112,7 +112,7 @@
 | 빈 테이블 | Empty Table | 사용하는 손님이 없는 손님을 받을수 있는 테이블 |
 | 빈 테이블을 해지 | Clear | 방문한 손님이 테이블을 사용하여 테이블의 상태를 변경한다. |
 | 빈 테이블로 설정 | Empty | 방문한 손님의 테이블 사용이 끝나고 다른 손님이 사용할수 있도록 상태를 변경한다. |
-| 방문한 손님 수 | NumberOfTable | 하나의 주문 테이블에 앉은 손님의 수 |
+| 방문한 손님 수 | NumberOfGuests | 하나의 주문 테이블에 앉은 손님의 수 |
 | 완료되지 않은 주문이 있는 주문 테이블 | Not Order Complete Order Table | 해당 테이블의 주문이 완료상태가 아닌 주문테이블 |
 | 주문 | Order | 매장/배달/포장 주문으로 구분할 수 있고 주문유형, 주문항목등의 정보를 가지고 있다. |
 | 주문을 등록 | Order Create | 새로운 주문을 생성한다. |
@@ -137,20 +137,86 @@
 - 상품
   - ProductService 에서 Product를 생성한다..
   - Product는 Product Name과 Product Price를 가지고 있다.
-  - Product 생성시 Product Price는 0원 이상이어야 한다.
-  - Product 생성시 Product Name에 Profanity를 포함할 수 없다.
-  - Product Price를 변경할 수 있다.
-  - Product Price 변경시 해당 Product를 포함한 MenuProduct의 가격도 변경된다.
-  - Product Price가 변경될때 Menu Price가 Menu Product Price Sum 보다 크면 Menu가 hide 된다.
+  - Product를 생성한다.
+    - Product 생성시 Product Price는 0원 이상이어야 한다.
+    - Product 생성시 Product Name에 Profanity를 포함할 수 없다.
+  - Product Price를 변경한다.
+    - Product Price 변경시 해당 Product를 포함한 MenuProduct의 가격도 변경된다.
+    - Product Price가 변경될때 Menu Price가 MenuProduct Price Sum 보다 크면 Menu가 hide 된다.
 
 - 메뉴그룹
   - MenuGroupService 에서 MenuGroup를 생성한다.
-  - MenuGroup 등록시 MenuGroup Name 이 필요하다.
+  - MenuGroup을 생성한다.
+    - MenuGroup 생성시 MenuGroup Name 이 필요하다.
 
 - 메뉴
   - MenuService 에서 Menu를 생성한다.
   - Menu등록시 미리 등록된 Product가 필요하다.
-  - Menu는 메뉴에 속한 상품에 대한 정보인 MenuProduct를 가진다.
-  - MenuProduct의 수량은 0보다 커야한다.
-  - MenuPrice는 0원 이상이어야 한다.
-  - MenuProduct Price Sum은 Menu Price보다 크거나 같아야 한다.
+  - Menu를 생성한다.
+    - Menu는 메뉴에 속한 상품에 대한 정보인 MenuProduct를 가진다.
+    - MenuProduct의 수량은 0보다 커야한다.
+    - MenuPrice는 0원 이상이어야 한다.
+    - MenuProduct Price Sum은 Menu Price보다 크거나 같아야 한다.
+    - Menu는 MenuGroup정보를 포함한다.
+  - Menu Price를 변경한다.
+    - Menu Price는 0원 이상이어야 한다.
+    - MenuProduct Price Sum은 Menu Price보다 크거나 같아야 한다.
+  - Menu를 Display한다.
+    - Menu Price가 MenuProduct Price Sum보다 크다면 Hide 한다.
+  - Menu를 Hide 한다.
+
+- 주문 테이블
+  - OrderTableService 에서 OrderTable을 생성한다.
+  - OrderTable을 생성한다.
+    - OrderTable 은 Name을 가져야 한다.
+  - OrderTable을 Clear 한다.
+  - OrderTable을 Empty 한다.
+    - OrderTable의 정보를 가지고 있는 Order의 상태가 Complete가 아니면 Empty할 수 없다.
+  - NumberOfGuests를 변경한다.
+    - NumberOfGuests는 0 이상이어야 한다.
+    - OrderTable의 상태가 Empty상태가 아니어야 한다.
+
+- 주문
+  - OrderService에서 Order를 생성한다.
+  - Order를 생성한다.
+    - Order는 OrderType을 가진다.
+    - Order는 OrderStatus를 가진다.
+    - OrderType은 IN_EAT, DELIVERY, TAKEOUT 중 하나여야 한다.
+    - Order는 Menu정보를 포함하고 있는 OrderLineItem 정보를 가진다.
+    - OrderLineItem에 포함된 Menu가 존재해야 한다.
+    - OrderLineItem에 포함된 Menu는 Display 상태여야 한다.
+    - OrderLineItem의 Price는 (해당 Menu의 Menu Price) * (OrderLineItem의 수량)과 같아야 한다.
+    - OrderType이 IN_EAT인 Order를 생성한다.
+      - OrderType이 IN_EAT일때 OrderLineItem의 수량은 0미만일수 있다.
+      - OrderTable 정보를 가진다.
+      - OrderTable의 상태는 Clear여야 한다.
+    - OrderType이 DELIVERY인 Order를 생성한다.
+      - OrderLineItem의 수량은 0 이상이어야 한다.
+      - DeliveryAddress 값이 존재해야 한다.
+    - OrderType이 TAKEOUT인 Order를 생성한다.
+      - OrderLineItem의 수량은 0 이상이어야 한다.
+  - EAT IN ORDER
+    - Order를 Accept한다.
+      - OrderStatus가 WAITING 상태여야 한다.
+    - Order를 Serve 한다.
+      - OrderStatus가 ACCEPTED 상태여야 한다.
+    - Order를 Complete 한다.
+      - OrderStatus가 SERVED 상태여야 한다.
+      - OrderTable을 Empty 한다.
+  - DELIVERY ORDER
+    - Delivery Order를 Accept한다.
+      - OrderStatus가 WAITING 상태여야 한다.
+      - Kitchen Riders를 호출한다.
+    - Delivery Order를 Serve한다.
+      - OrderStatus가 ACCEPTED 상태여야 한다.
+    - Delivery Order를 Delivery Complete 처리한다.
+      - OrderStatus가 DELIVERING 상태여야 한다.
+    - Delivery Order를 Complete 한다.
+      - OrderStatus가 DELIVERED 상태여야 한다.
+  - TAKEOUT ORDER
+    - Takeout Order를 Accept 한다.
+      - OrderStatus가 WAITING 상태여야 한다.
+    - Takeout Order를 Serve 한다.
+      - OrderStatus가 ACCEPTED 상태여야 한다.
+    - Takeout Order를 Complete 한다.
+      - OrderStatus가 SERVED 상태여야 한다.
