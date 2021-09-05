@@ -1,5 +1,7 @@
-package kitchenpos.application;
+package kitchenpos.application.order;
 
+import kitchenpos.application.ordertable.InMemoryOrderTableRepository;
+import kitchenpos.application.menu.InMemoryMenuRepository;
 import kitchenpos.menu.infra.MenuRepository;
 import kitchenpos.order.application.Impl.OrderServiceImpl;
 import kitchenpos.order.application.OrderService;
