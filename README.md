@@ -95,8 +95,8 @@
 | --- | --- | --- |
 |키친포스|kitchenpos|음식점에서 매장 관리에 사용되는 관리 시스템(현재 프로젝트로 구현된 앱 전체)|
 |상품|Product|메뉴를 구성하는 최소 단위로 음식점에서 만들어지는 음식|
-|상품 이름|Product name|상품의 이름이며 null 또는 비속어가 포함되면 안된다.|
-|상품 가격|Product price|상품의 가격이며 null 또는 음수가 될 수 없다.|
+|상품 이름|Product name|비속어가 포함되지 않은 상품의 이름|
+|상품 가격|Product price|음수가 아닌 상품의 가격|
 |비속어|Profanity|욕설과 같은 비속어|
 |상품 등록|Product create|새로운 상품을 등록|
 |상품 가격 변경|Product changePrice|상품의 가격을 변경|
