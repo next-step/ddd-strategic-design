@@ -1,6 +1,6 @@
 package kitchenpos.menu.application.usecase;
 
-import kitchenpos.domain.Menu;
+import kitchenpos.menu.Menu;
 
 import java.util.List;
 
