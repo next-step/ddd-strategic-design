@@ -171,11 +171,13 @@
     - 가격(`price`)은 0원 이상이어야 한다.
 - 상품 가격(`price`)을 변경(`changePrice`)할 수 있다.
     - 상품 가격 변경(`changePrice`)할 때 메뉴(`Menu`)의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다(`hide`).
+- 상품을 등록(`createProduct`)할 수 있다.
 - 상품 목록을 조회(`findAllProduct`)할 수 있다.
 
 ### 메뉴 그룹(`MenuGroup`)
 - 메뉴 그룹(`MenuGroup`)는 이름(`name`)을 가진다.
     - 이름(`name`)은 필수 입력값이다.
+- 메뉴 그룹을 등록(`createMenuGroup`)할 수 있다.
 - 메뉴 그룹 목록을 조회(`findAllMenuGroup`)할 수 있다.
 
 ### 메뉴(`Menu`)
@@ -192,6 +194,7 @@
 - 메뉴(`Menu`)는 메뉴 상품(`MenuProduct`)을 이용한 메뉴 상품 목록(`MenuProducts`)을 가진다.
     - 메뉴 상품 목록(`MenuProducts`)은 필수 입력 사항이며 메뉴 상품(`MenuProduct`)을 하나이상 가져야 한다.
     - 메뉴 상품 목록(`MenuProducts`)중 하나의 상품(`Product`)는 하나의 메뉴상품(`MenuProduct`)에만 존재해야 한다.
+- 메뉴를 등록(`createMenu`)할 수 있다.
 - 메뉴 목록을 조회(`findAllMenu`)할 수 있다.
 
 ### 메뉴 상품(`MenuProduct`)
@@ -210,6 +213,7 @@
 - 주문 테이블(`OrderTable`)에서 손님이 나갈(`clear`) 수 있다. 
     - 주문(`Order`)가 완료되지 않으면 나갈 수 없다.
 - 주문 테이블(`OrderTable`)은 손님 수를 변경(`changeNumberOfGuests`)할 수 있다.
+- 주문 테이블을 등록(`createOrderTable`)할 수 있다.
 - 주문 테이블 목록을 조회(`findAllOrderTable`)할 수 있다.
 
 ### 주문(`Order`)
@@ -221,6 +225,7 @@
     - 주문 항목들(`OrderLineItems`)은 하나이상의 주문 항목(`OrderLineItem`)을 가져야 한다.
 - 배달 주문(`DELIVERY`)일 경우 배송지(`deliveryAddress`)를 필수로 가져야한다.
 - 매장 주문(`EAT_IN`)일 경우 주문 테이블(`OrderTable`)를 가져야한다.
+- 주문을 등록(`createOrder`)할 수 있다.
 - 주문 목록을 조회(`findAllOrder`)할 수 있다.
 
 ### 주문 항목(`OrderLineItem`)
