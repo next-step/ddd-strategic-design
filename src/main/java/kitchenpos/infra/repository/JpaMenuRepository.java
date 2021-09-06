@@ -1,5 +1,7 @@
-package kitchenpos.domain;
+package kitchenpos.infra.repository;
 
+import kitchenpos.domain.menu.menu.Menu;
+import kitchenpos.domain.menu.menu.MenuRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

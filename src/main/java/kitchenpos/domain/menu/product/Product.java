@@ -1,14 +1,15 @@
-package kitchenpos.domain;
+package kitchenpos.domain.menu.product;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.UUID;
 
-@Table(name = "menu_group")
+@Table(name = "product")
 @Entity
-public class MenuGroup {
+public class Product {
     @Column(name = "id", columnDefinition = "varbinary(16)")
     @Id
     private UUID id;
@@ -16,7 +17,10 @@ public class MenuGroup {
     @Column(name = "name", nullable = false)
     private String name;
 
-    public MenuGroup() {
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    public Product() {
     }
 
     public UUID getId() {
@@ -33,5 +37,13 @@ public class MenuGroup {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(final BigDecimal price) {
+        this.price = price;
     }
 }

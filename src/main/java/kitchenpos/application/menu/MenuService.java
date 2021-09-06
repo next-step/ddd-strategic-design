@@ -1,7 +1,13 @@
-package kitchenpos.application;
+package kitchenpos.application.menu;
 
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.domain.menu.menugroup.MenuGroupRepository;
+import kitchenpos.domain.menu.menu.MenuRepository;
+import kitchenpos.domain.menu.menu.Menu;
+import kitchenpos.domain.menu.menugroup.MenuGroup;
+import kitchenpos.domain.menu.menu.MenuProduct;
+import kitchenpos.domain.menu.product.Product;
+import kitchenpos.domain.menu.product.ProductRepository;
+import kitchenpos.domain.menu.common.PurgomalumClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
