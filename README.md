@@ -126,6 +126,7 @@
 | 접수 대기 | Order Wait | 주문이 됐지만 아직 확인되지 않은 상태 |
 | 주문 접수 | Order Accepted | 고객이 주문한 내용에 대해서 주문이 확인 된 상태 |
 | 주문을 서빙 | Order Served | 손님의 주문이 접수된 이후 주문된 메뉴를 제공한 상태 |
+| 주문을 배달시작 | Start Delivery | 배달주문의 배달을 시작 |
 | 주문을 배달 | Order Delivery | 배달주문이 주문한 고객에서 배달되는 상태 |
 | 배달 완료 | Delivery Complete | 배달주문이 주문한 고객에게 배달이 완료된 상태 |
 | 주문 완료 | Order Complete | 주문에 대한 처리가 완료된 상태(매장주문 - 고객의 주문에 대해서 계산까지 완료되고 빈 테이블로 설정, 배달주문 - 배달 완료 이후 주문완료 처리) |
@@ -195,28 +196,34 @@
       - DeliveryAddress 값이 존재해야 한다.
     - OrderType이 TAKEOUT인 Order를 생성한다.
       - OrderLineItem의 수량은 0 이상이어야 한다.
-  - EAT IN ORDER
-    - Order를 Accept한다.
-      - OrderStatus가 WAITING 상태여야 한다.
-    - Order를 Serve 한다.
-      - OrderStatus가 ACCEPTED 상태여야 한다.
-    - Order를 Complete 한다.
-      - OrderStatus가 SERVED 상태여야 한다.
-      - OrderTable을 Empty 한다.
-  - DELIVERY ORDER
-    - Delivery Order를 Accept한다.
-      - OrderStatus가 WAITING 상태여야 한다.
-      - Kitchen Riders를 호출한다.
-    - Delivery Order를 Serve한다.
-      - OrderStatus가 ACCEPTED 상태여야 한다.
-    - Delivery Order를 Delivery Complete 처리한다.
-      - OrderStatus가 DELIVERING 상태여야 한다.
-    - Delivery Order를 Complete 한다.
-      - OrderStatus가 DELIVERED 상태여야 한다.
-  - TAKEOUT ORDER
-    - Takeout Order를 Accept 한다.
-      - OrderStatus가 WAITING 상태여야 한다.
-    - Takeout Order를 Serve 한다.
-      - OrderStatus가 ACCEPTED 상태여야 한다.
-    - Takeout Order를 Complete 한다.
-      - OrderStatus가 SERVED 상태여야 한다.
+  - Order를 Accept한다.
+    - Order가 존재하지 않으면 예외처리한다.
+    - OrderStatus가 WAITING 상태여야 한다.
+      - OrderStatus가 WAITING 상태가 아니면 예외처리 한다.
+    - OrderType이 DELIVERY일때 OrderLineItem의 Price는 0일수 없다.
+    - OrderType이 DELIVERY일때 Kitchen Riders를 호출한다.
+    - OrderStatus를 ACCEPTED로 변경한다.
+  - Order를 serve한다.
+    - Order가 존재하지 않으면 예외처리한다.
+    - OrderStatus가 ACCEPTED 상태여야 한다.
+      - OrderStatus가 ACCEPTED가 아니면 예외처리한다.
+    - OrderStatus를 SERVED 로 변경한다.
+  - Order를 startDelivery 한다.
+    - Order가 존재하지 않으면 예외처리한다.
+    - OrderType이 DELIVERY가 아니면 예외처리한다.
+    - OrderStatus가 SERVED 상태여야 한다
+      - OrderStatus가 SERVED가 아니면 예외처리한다.
+    - OrderStatus를 DELIVERING으로 변경한다.
+  - Order를 completeDelivery 한다.
+    - Order가 존재하지 않으면 예외처리한다.
+    - OrderStatus가 DELIVERING 상태여야 한다
+      - OrderStatus가 DELIVERING이 아니면 예외처리한다.
+    - OrderStatus를 DELIVERED로 변경한다.
+  - Order를 Complete 한다.
+    - Order가 존재하지 않으면 예외처리한다.
+    - OrderType이 DELIVERY 이면 OrderStatus가 DELIVERED 상태여야 한다.
+      - OrderStatus가 DELIVERED가 아니면 예외처리한다.
+    - OrderType이 TAKEOUT이나 EAT_IN이면 SERVED 상태여야 한다.
+      - OrderStatus가 SERVED가 아니면 예외처리힌다.
+    - OrderStatus를 COMPLETED로 변경한다.
+    - OrderType이 EAT_IN이면 OrderTable을 Empty 한다.
