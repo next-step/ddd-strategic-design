@@ -1,11 +1,11 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.menu.menu.Menu;
-import kitchenpos.domain.menu.menu.MenuRepository;
-import kitchenpos.domain.menu.product.Product;
-import kitchenpos.domain.menu.product.ProductRepository;
-import kitchenpos.application.menu.ProductService;
-import kitchenpos.domain.menu.common.PurgomalumClient;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.MenuRepository;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.application.ProductService;
+import kitchenpos.product.domain.PurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class ProductServiceTest {
     void setUp() {
         productRepository = new InMemoryProductRepository();
         menuRepository = new InMemoryMenuRepository();
-        purgomalumClient = new FakePurgomalumClient();
+        purgomalumClient = new FakeProductPurgomalumClient();
         productService = new ProductService(productRepository, menuRepository, purgomalumClient);
     }
 
