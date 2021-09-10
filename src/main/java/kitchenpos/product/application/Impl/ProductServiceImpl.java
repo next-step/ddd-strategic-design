@@ -2,11 +2,11 @@ package kitchenpos.product.application.Impl;
 
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.infra.MenuRepository;
+import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.menu.infra.PurgomalumClient;
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.infra.ProductRepository;
+import kitchenpos.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

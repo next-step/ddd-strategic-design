@@ -1,4 +1,4 @@
-package kitchenpos.menugroup.infra;
+package kitchenpos.menugroup.domain;
 
 import kitchenpos.menugroup.domain.MenuGroup;
 
