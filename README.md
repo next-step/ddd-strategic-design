@@ -87,22 +87,41 @@
 - 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.
 - 주문 목록을 조회할 수 있다.
 
+<br>
+
 ## 용어 사전
+
+### 상품
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 |키친포스|kitchenpos|음식점에서 매장 관리에 사용되는 관리 시스템(현재 프로젝트로 구현된 앱 전체)|
 |상품|Product|메뉴를 구성하는 최소 단위로 음식점에서 만들어지는 음식|
-|상품 이름|Product name|상품의 이름|
-|상품 가격|Product price|상품의 가격|
+|상품 이름|Product name|비속어가 포함되지 않은 상품의 이름|
+|상품 가격|Product price|음수가 아닌 상품의 가격|
 |비속어|Profanity|욕설과 같은 비속어|
 |상품 등록|Product create|새로운 상품을 등록|
 |상품 가격 변경|Product changePrice|상품의 가격을 변경|
 |상품 목록 조회|Product findAll|등록된 상품 전체 목록을 조회|
+
+<br>
+
+### 메뉴 그룹
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 |메뉴 그룹|MenuGroup|메뉴가 분류될 수 있는 종류|
 |메뉴 그룹 이름|MenuGroup name|메뉴 그룹의 이름|
 |메뉴 그룹 등록|MenuGroup create|새로운 메뉴 그룹을 등록|
 |메뉴 그룹 목록 조회|MenuGroup findAll|등록된 메뉴 그룹 전체 목록을 조회|
+
+
+<br>
+
+### 메뉴
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 |메뉴|Menu|특정 메뉴 그룹에 속하며 하나 이상의 상품들로 구성되는 단위|
 |메뉴 이름|Menu name|메뉴의 이름|
 |메뉴 가격|Menu price|메뉴의 가격|
@@ -113,15 +132,29 @@
 |메뉴 노출|Menu display|메뉴 노출(숨김) 상태를 노출로 변경|
 |메뉴 숨김|Menu hide|메뉴 노출(숨김) 상태를 숨김으로 변경|
 |메뉴 목록 조회|Menu findAll|등록된 메뉴 전체 목록을 조회|
+
+<br>
+
+### 주문 테이블
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 |주문 테이블|OrderTable|음식점 내 테이블|
 |주문 테이블 이름|OrderTable name|주문 테이블의 이름|
 |주문 테이블 방문한 손님 수|OrderTable name|주문 테이블을 이용하고 있는 손님 수|
 |주문 테이블 빈 테이블|OrderTable empty|주문 테이블이 비었는지 여부에 대한 상태|
 |주문 테이블 등록|OrderTable create|새로운 주문 테이블 등록|
-|주문 테이블 해지|sit|빈 테이블 상태를 비어있지 않은 상태로 변경|
-|주문 테이블 설정|clear|빈 테이블 상태를 비어있는 상태로 변경|
+|주문 테이블 빈 테이블로 해지|sit|빈 테이블 상태를 비어있지 않은 상태로 변경|
+|주문 테이블 빈 테이블로 설정|clear|빈 테이블 상태를 비어있는 상태로 변경|
 |주문 테이블 방문한 손님 수 변경|OrderTable changeNumberOfGuests|주문 테이블의 방문한 손님 수를 변경|
 |주문 테이블 목록 조회|OrderTable findAll|주문 테이블 전체 목록을 조회|
+
+<br>
+
+### 주문
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 |주문|Order|음식점에서 손님이 1개 이상의 등록된 메뉴를 요청하는 행위|
 |주문 유형|OrderType|주문의 유형으로 배달 주문, 포장 주문, 매장주문이 있다|
 |배달 주문|OrderType.DELIVERY|배달을 통해 전달되는 주문|
@@ -134,7 +167,7 @@
 |배달 중인|OrderStatus.DELIVERING|주문이 손님에게 배달중인 상태|
 |배달 완료된|OrderStatus.DELIVERED|배달중이던 주문이 손님에게 전달완료된 상태|
 |완료된|OrderStatus.COMPLETED|주문이 완료된 상태|
-|주문한 메뉴|OrderLineItem|주문을 구성하는 메뉴|
+|주문한 메뉴|OrderLineItem|주문을 구성하는 메뉴이며 주문 유형이 배달 또는 포장인 경우 수량은 1개 이상이어야 하고, 메뉴가 숨김 상태이면 안된다.|
 |배달 주소|deliveryAddress|주문이 배달되어 도착할 손님의 주소|
 |주문 등록|Order create|새로운 주문을 등록|
 |주문 접수|Order accept|주문의 주문 상태를 '접수된' 상태로 변경|
@@ -144,3 +177,120 @@
 |주문 완료|Order complete|주문의 주문 상태를 '완료된' 상태로 변경|
 |주문 목록 조회|Order findAll|주문 전체 목록을 조회|
 |배달 대행사|kitchenriders|주문 배달시작시 음식점에서 배달을 요청하는 곳|
+
+<br>
+
+## 모델링
+
+### 상품(Product)
+
+- 속성
+  - 비속어(Profanity)가 포함되지 않는 이름(name) 을 가진다
+  - 0원 이상인 가격(price) 을 가진다
+
+<br>
+
+- 기능
+  - 상품을 등록(create) 할 수 있다.
+    - 상품의 이름(name)에 비속어(Profanity)가 포함되면 안된다.
+    - 상품의 가격(price)는 0원 이상이어야 한다.
+  - 상품의 가격(price)을 변경 할 수 있다.
+    - 변경할 상품의 가격(price)는 0원 이상이어야 한다.
+    - 가격(price)이 변경된 상품을 메뉴에 속한 상품(MenuProduct)으로 갖는 메뉴의 경우, 메뉴의 가격이 메뉴에 속한 상품(MenuProduct) 가격의 합보다 비싸면 해당 메뉴는 숨김 상태(displayed = false)가 된다.
+  - 상품의 목록을 조회(findAll) 할 수 있다.
+
+<br>
+
+### 메뉴 그룹(MenuGroup)
+
+- 속성
+  - 이름(name)을 가진다.
+
+<br>
+
+- 기능
+  - 메뉴 그룹을 등록(create) 할 수 있다.
+    - 메뉴의 이름(name) 없이 등록할 수 없다.
+  - 메뉴 그룹의 목록을 조회(findAll) 할 수 있다.
+
+<br>
+
+### 메뉴(Menu)
+
+- 속성
+  - 메뉴에 속한 상품(MenuProduct)을 가진다. 
+  - 비속어(Profanity)를 포함하고 있지 않는 이름(name)을 가진다. 
+  - 0원 이상의 가격(price)를 가지며 이 가격은 메뉴에 속한 상품(MenuProduct) 가격의 합보다 비싸면 안된다.
+  - 해당 메뉴가 포함될 메뉴 그룹(MenuGroup)이 있어야 한다.
+  - 노출 또는 숨김상태(display)를 가진다.
+
+<br>
+
+- 기능
+  - 메뉴를 등록(create) 할 수 있다.
+    - 메뉴에 속한 상품(MenuProduct)없이 등록할 수 없으며 메뉴에 속한 상품(MenuProduct)의 수량은 0 이상이어야 한다.
+    - 메뉴의 이름(name)은 비속어(Profanity)를 포함하고 있으면 안된다.
+    - 메뉴의 가격(price)은 0원 이상이어야 하며 해당 메뉴가 가지는 메뉴에 속한 상품(MenuProduct)의 가격의 합보다 비싸면 안된다.
+    - 메뉴가 포함될 메뉴 그룹(MenuGroup)없이 등록할 수 없다.
+  - 메뉴의 가격을 변경(changePrice) 할 수 있다.
+    - 0원 이상의 가격으로만 변경 할 수 있다.
+    - 변경될 메뉴의 가격은 메뉴에 속한 상품(MenuProduct)의 가격의 합보다 비싸면 안된다.
+  - 메뉴를 노출(display = true) 처리 할 수 있다.
+    - 메뉴의 가격이 메뉴에 속한 상품(MenuProduct)의 가격의 합보다 비싸면 메뉴를 노출 할 수 없다.
+  - 메뉴를 숨김(display = false) 처리 할 수 있다.
+  - 메뉴의 목록을 조회(findAll) 할 수 있다.
+
+<br>
+
+### 주문 테이블(OrderTable)
+
+- 속성
+  - 비어있지 않은 이름(name)을 가진다.
+
+<br>
+
+- 기능
+  - 주문 테이블을 등록(create) 할 수 있다.
+    - 빈 이름("")으로 등록 할 수 없다.
+  - 빈 테이블로 해지(sit) 할 수 있다.
+  - 빈 테이블로 설정(clear) 할 수 있다.
+    - 해당 주문 테이블의 주문(order)가 완료(OrderStatus.COMPLETED) 상태가 아니면 빈 테이블로 설정(clear) 할 수 없다.
+  - 방문한 손님 수를 변경(changeNumberOfGuests) 할 수 있다.
+    - 변경할 손님 수는 0 이상이어야 한다.
+  - 주문 테이블의 목록을 조회(findAll) 할 수 있다.
+
+<br>
+
+### 주문(Order)
+
+- 속성
+  - 주문 유형(OrderType) 을 가지며 주문 유형으로는 배달 주문(DELIVERY), 포장 주문(TAKEOUT), 매장 주문(EAT_IN)이 있다.
+  - 1개 이상의 등록된 메뉴(Menu)를 주문한 메뉴(OrderLineItem)로 가지며 주문한 메뉴(OrderLineItem)는 가격(price)를 가진다.
+  - 배달 주문(DELIVERY)의 경우 비어있지 않은 배달 주소(deliveryAddress)를 가진다.
+  - 주문 상태(OrderStatus)를 가지며 주문 상태로는 접수 대기(WAITING), 접수된(ACCEPTED), 서빙된(SERVED), 배달 중인(DELIVERING), 배달 완료된(DELIVERED), 완료된(COMPLETED) 상태가 있다.
+  - 주문 테이블(OrderTable)을 가진다.
+
+<br>
+
+- 기능
+  - 주문을 등록(create) 할 수 있다.
+    - 주문 유형(OrderType)이 배달 주문(DELIVERY), 포장 주문(TAKEOUT), 매장 주문(EAT_IN) 중 하나여야 한다.
+    - 등록된 메뉴(Menu) 가 아니면 주문 할 수 없다.
+    - 주문한 메뉴(OrderLineItem)의 수량은 0개 이상이어야 한다. 단, 매장 주문(EAT_IN) 의 경우 수량이 0 미만일 수 있다.
+    - 매장 주문(EAT_IN)의 경우 빈 테이블에 등록할 수 없다.
+    - 메뉴의 상태가 숨김(display=false)인 경우 주문을 등록할 수 없다.
+    - 주문한 메뉴(OrderLineItem)의 가격은 실제 메뉴의 가격(price)와 일치해야 한다.
+  - 주문을 접수(accept) 할 수 있다.
+    - 주문의 상태(OrderStatus)가 접수 대기(WAITING)인 주문만 접수(accept) 할 수 있다.
+    - 주문 유형(OrderType)이 배달 주문(DELIVERY)인 경우 이를 접수하게 되면 배달 대행사(kitchenriders)를 호출해야 한다.
+  - 주문을 서빙(serve) 할 수 있다.
+    - 주문 상태(OrderStatus)가 접수된(ACCEPTED) 상태인 주문만 서빙 할 수 있다.
+  - 주문을 배달(startDelivery) 할 수 있다.
+    - 주문 상태(OrderStatus)가 서빙된(SERVED) 상태인 주문만 서빙 할 수 있다.
+  - 주문 배달을 완료(completeDelivery) 할 수 있다.
+    - 주문 상태(OrderStatus)가 배달중인(DELIVERING) 상태인 주문만 서빙 할 수 있다.
+  - 주문을 완료(complete) 할 수 있다.
+    - 주문 유형(OrderType)이 배달 주문(DELIVERY)인 경우 주문 상태(OrderStatus)가 배달 완료된(DELIVERED) 상태인 주문만 완료 할 수 있다.
+    - 주문 유형(OrderType)이 포장 주문(TAKEOUT)인 경우 주문 상태(OrderStatus)가 서빙된(SERVED) 상태인 주문만 완료 할 수 있다.
+    - 주문 완료시 해당 주문의 주문 테이블(OrderTable)을 빈 테이블로 설정(clear) 한다. 
+  - 주문 목록을 조회(findAll) 할 수 있다.
