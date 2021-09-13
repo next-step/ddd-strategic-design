@@ -1,7 +1,7 @@
 package kitchenpos.application;
 
 import kitchenpos.menu.domain.Menu;
-import kitchenpos.menugroup.domain.MenuGroupRepository;
+import kitchenpos.menu.domain.MenuGroupRepository;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.application.MenuService;
 import kitchenpos.menu.domain.MenuRepository;
