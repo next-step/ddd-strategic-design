@@ -248,10 +248,9 @@
 
 ### 주문 (Order)
 **속성**
-- 주문은 식별자(`id`), 주문 날짜(`orderDateTime`)를 가진다.
+- 주문은 식별자(`id`), 주문 날짜(`orderDateTime`), 주문 항목(`OrderLineItem`)을 가진다.
 - 주문 종류(`OrderType`)는 배달 주문(`DELIVERY`), 포장 주문(`TAKEOUT`), 매장 주문(`EAT_IN`) 3가지로 나뉜다.
 - 주문 상태(`OrderStatus`)는 주문 대기(`WAITING`), 주문 수락(`ACCEPTED`), 서빙(`SERVED`), 배달 중(`DELIVERING`), 배달 완료(`DELIVERED`), 주문 완료(`COMPLETED`) 6가지 중 하나로 설정한다.
-- 1개 이상의 주문 항목(`OrderLineItem`)을 가진다.
 - 등록되어있고 노출(`displayed`)된 메뉴(`Menu`)를 가진다.
   
 **기능**
