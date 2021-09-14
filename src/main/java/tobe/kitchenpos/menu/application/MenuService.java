@@ -133,4 +133,21 @@ public class MenuService {
     public List<Menu> findAll() {
         return menuRepository.findAll();
     }
+
+    @Transactional
+    public MenuGroup menuGroupCreate(final MenuGroup request) {
+        final String name = request.getName();
+        if (Objects.isNull(name) || name.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        final MenuGroup menuGroup = new MenuGroup();
+        menuGroup.setId(UUID.randomUUID());
+        menuGroup.setName(name);
+        return menuGroupRepository.save(menuGroup);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MenuGroup> menuGroupFindAll() {
+        return menuGroupRepository.findAll();
+    }
 }
