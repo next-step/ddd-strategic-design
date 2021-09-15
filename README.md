@@ -248,7 +248,7 @@
 
 ### 주문 (Order)
 **속성**
-- 주문은 식별자(`id`), 주문 날짜(`orderDateTime`), 주문 항목(`OrderLineItem`)을 가진다.
+- 주문은 식별자(`id`), 주문 날짜(`orderDateTime`), 주문 항목(`OrderLineItem`), 주문 테이블 식별자(`orderTableId`)을 가진다.
 - 주문 종류(`OrderType`)는 배달 주문(`DELIVERY`), 포장 주문(`TAKEOUT`), 매장 주문(`EAT_IN`) 3가지로 나뉜다.
 - 주문 상태(`OrderStatus`)는 주문 대기(`WAITING`), 주문 수락(`ACCEPTED`), 서빙(`SERVED`), 배달 중(`DELIVERING`), 배달 완료(`DELIVERED`), 주문 완료(`COMPLETED`) 6가지 중 하나로 설정한다.
 - 등록되어있고 노출(`displayed`)된 메뉴(`Menu`)를 가진다.
@@ -259,7 +259,7 @@
 - 배달 주문
   - 배달 주문을 등록(``create``)한다. 
     - 메뉴 가격과 일치하는 주문 가격(`price`)을 가진다.
-    - 주문 수량(`quantity`)은 0 이상을 가진다.  
+    - 주문 항목(`OrderLineItem`)의 주문 수량(`quantity`)은 0 이상을 가진다.  
     - 비어있지 않은 배달 주소(`deliveryAddress`)를 가진다.
   - 주문 대기 상태의 배달 주문을 수락한다. (``accept``)
     - 배달 대행사(`kitchenridersClient`)를 호출한다.(`requestDelivery`)      
@@ -271,7 +271,7 @@
 - 포장 주문
   - 포장 주문을 등록(``create``)한다.
     - 메뉴 가격과 일치하는 주문 가격(`price`)을 가진다.
-    - 주문 수량(`quantity`)은 0 이상을 가진다.
+    - 주문 항목(`OrderLineItem`)의 주문 수량(`quantity`)은 0 이상을 가진다.
   - 주문 대기 상태의 포장 주문을 수락한다. (``accept``)
   - 주문 수락 상태의 포장 주문을 서빙한다. (``serve``)
   - 서빙된 포장 주문을 완료한다. (``complete``)
@@ -279,7 +279,7 @@
 - 매장 주문
   - 매장 주문을 등록(``create``)한다.
     - 메뉴 가격과 일치하는 주문 가격(`price`)을 가진다.
-    - 주문 수량(`quantity`)은 0 미만을 가질 수 있다.  
+    - 주문 항목(`OrderLineItem`)의 주문 수량(`quantity`)은 0 미만을 가질 수 있다.  
     - 등록된 주문 테이블 식별자(`orderTableId`)을 가진다.  
       - 주문 테이블(`OrderTable`)은 비어있지 않다.
   - 주문 대기 상태의 매장 주문을 수락한다. (``accept``)
