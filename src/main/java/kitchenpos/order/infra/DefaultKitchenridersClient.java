@@ -1,6 +1,6 @@
 package kitchenpos.order.infra;
 
-import kitchenpos.order.application.KitchenridersClient;
+import kitchenpos.order.domain.model.KitchenridersClient;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
