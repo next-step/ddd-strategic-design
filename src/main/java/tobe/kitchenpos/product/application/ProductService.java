@@ -1,8 +1,8 @@
 package tobe.kitchenpos.product.application;
 
-import tobe.kitchenpos.menu.domain.menu.Menu;
-import tobe.kitchenpos.menu.domain.menu.MenuProduct;
-import tobe.kitchenpos.menu.domain.menu.MenuRepository;
+import tobe.kitchenpos.menu.menu.domain.Menu;
+import tobe.kitchenpos.menu.menu.domain.MenuProduct;
+import tobe.kitchenpos.menu.menu.domain.MenuRepository;
 import tobe.kitchenpos.product.domain.*;
 import kitchenpos.infra.PurgomalumClient;
 import org.springframework.stereotype.Service;
