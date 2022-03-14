@@ -94,8 +94,8 @@
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 상품 | Product | 이름과 가격을 갖고 있으며 메뉴에 포함될 수 있는 제품을 뜻함 |
-| 상품 이름 | Product Name | 상품의 이름이며 비속어가 포함될 수 없음 |
-| 상품 가격 | Product Price | 상품의 값이며 0원 이상 |
+| 상품 이름 | Product Name | 상품의 이름 |
+| 상품 가격 | Product Price | 상품의 값(가격) |
 | 상품 등록 | Register Product | 상품을 등록 |
 | 상품 가격 변경 | Change Product Price | 상품의 가격을 변경 |
 
