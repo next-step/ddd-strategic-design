@@ -153,8 +153,7 @@
 
 #### 속성
 
-- `name`을 가진다.
-- `price`를 가진다.
+- 상품은 이름(`name`)과 가격(`price`)을 가진다.
 
 #### 기능/조건
 
@@ -184,12 +183,11 @@
 
 #### 속성
 
-- `name`을 가진다.
-- `price`를 가진다.
-- 자신이 속한 `menuGroup`을 가진다.
-- 자신이 속한 메뉴 그룹을 식별하기 위한 `menuGroupId`를 가진다.
-- 자신의 노출 여부를 나타내는 `displayed`를 가진다.
-- 자신에게 속한 상품들인 `menuProducts`를 가진다.
+- 메뉴는 이름(`name`)과 가격(`price`)을 가진다.
+- 메뉴는 하나의 `menuGroup`에 속한.
+  - 속한 메뉴 그룹을 식별하기 위한 `menuGroupId`를 가진다.
+- 메뉴는 노출 여부를 나타내는 `displayed`를 가진다.
+- 메뉴는 하나 이상의 MenuProduct를 가진다.
   - `menuProduct`는 `product`를 가진다.
   - `menuProduct`는 상품을 식별하기 위한 `productId`를 가진다.
   - `menuProduct`는 상품의 갯수(`quantity`)를 가진다.
