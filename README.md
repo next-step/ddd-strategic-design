@@ -91,6 +91,35 @@
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-|  |  |  |
+| 상품 | product | 판매하려는 품목 |
+| 상품 가격 | product price | 상품의 가격 |
+| 상품 수량 | product quantity | 상품의 갯수 |
+| 비속어 | profanity word | 격이 낮고 속된 말 |
+| 메뉴그룹 | menu group | 비슷한 성격의 메뉴들의 집합 |
+| 메뉴 | menu | 1개이상의 상품을 수량과 가격으로 표현한 것 |
+| 메뉴 노출 상태 |  menu display status | 메뉴가 고객에서 노출되는지 상태여부 |
+| 메뉴 노출 | menu display | 메뉴를 고객에서 노출시킨다. |
+| 메뉴 숨김 | menu hide | 메뉴를 숨긴다. |
+| 주문 테이블 | order table | 매장에서 손님들이 주문하는 테이블 |
+| 주문 테이블 착석 | order table sit | 주문테이블에 손님들이 착석한 상태 |
+| 주문 테이블 착석여부 | order table status | 주문테이블이 사람이 착석되어있는지 판단하는 상태 |
+| 주문 테이블 손님 수 | order table number Of guests | 주문테이블에 착석되어 있는 사람 수 |
+| 빈 테이블 | empty table | 주문 테이블이 비어있는 상태 |
+| 주문 | order | 고객이 상품을 요청하는 행위 |
+| 주문 타입 | order type | 주문의 유형 |
+| 매장주문 | eat in order | 매장에서 식사하는 주문 타입 |
+| 포장주문 | take out order | 상품을 포장하는 주문 타입 |
+| 배달주문 | delivery order | 상품을 배달요청하는 주문 타입 |
+| 배달 주소 | delivery address | 배달주문을 수령하는 장소 |
+| 주문 상태 | order status | 주문의 진행 상태 |
+| 주문 대기 | order waiting | 주문이 요청된 상태 |
+| 주문 접수 | order accept | 판매자가 주문을 확인하여 접수한 상태 |
+| 주문 서빙 | order serve | 요청된 주문이 준비된 상태 |
+| 배달시작 | delivery start | 배달주문이 배달을 시작한 상태 |
+| 배달완료 | delivery complete | 배달주문이 완료된 상태 |
+| 주문 완료 | order complete | 요청된 주문의 모든과정이 완료된 상태 |
+| 키친라이더 | kitchen rider | 배달을 해주는 사람 |
+| 배달 요청 | delivery request | 배달주문이 접수될 경우 키친라이더에게 배달을 요청한 상태 |
+
 
 ## 모델링
