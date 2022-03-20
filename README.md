@@ -100,7 +100,7 @@
 | 제품 | Product | 이름과 가격을 갖는다. 부적절한 단어가 포함된 단어는 등록할 수 없다. |
 | 메뉴 제품 | Menu Product | 제품과 제품의 수량을 갖는다. |
 | 메뉴 | Menu | 하나의 메뉴 그룹을 갖으며, 하나 이상의 메뉴 제품을 갖는다. 부적절한 단어가 포함된 단어는 등록할 수 없다. |
-| 부적절한 단어 | Abuse Works | https://www.purgomalum.com/service/containsprofanity에 등록되어 있는 단어들을 뜻한다. |
+| 부적절한 단어 | Abuse Words | https://www.purgomalum.com/service/containsprofanity에 등록되어 있는 단어들을 뜻한다. |
 | 메뉴 전시 | Menu Show | 주문할 수 있는 메뉴를 보여준다. |
 | 메뉴 가격 | Menu Price | 메뉴에 등록된 제품들의 가격의 합 보다 같거나 작아야 한다. |
 
