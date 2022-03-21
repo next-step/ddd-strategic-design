@@ -1,7 +1,7 @@
 package kitchenpos.order.domain;
 
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.order.domain.menu.OrderMenu;
+import kitchenpos.order.domain.menu.MenuApiCaller;
 import kitchenpos.order.infrastructure.OrderRepository;
 import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.ordertable.domain.OrderTableRepository;
@@ -16,20 +16,20 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final MenuRepository menuRepository;
     private final OrderTableRepository orderTableRepository;
     private final KitchenridersClient kitchenridersClient;
+    private final MenuApiCaller menuApiCaller;
 
     public OrderService(
         final OrderRepository orderRepository,
-        final MenuRepository menuRepository,
         final OrderTableRepository orderTableRepository,
-        final KitchenridersClient kitchenridersClient
+        final KitchenridersClient kitchenridersClient,
+        final MenuApiCaller menuApiCaller
     ) {
         this.orderRepository = orderRepository;
-        this.menuRepository = menuRepository;
         this.orderTableRepository = orderTableRepository;
         this.kitchenridersClient = kitchenridersClient;
+        this.menuApiCaller = menuApiCaller;
     }
 
     @Transactional
@@ -42,7 +42,7 @@ public class OrderService {
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        final List<Menu> menus = menuRepository.findAllByIdIn(
+        final List<OrderMenu> menus = menuApiCaller.findAllByIdIn(
             orderLineItemRequests.stream()
                 .map(OrderLineItem::getMenuId)
                 .collect(Collectors.toList())
@@ -58,7 +58,7 @@ public class OrderService {
                     throw new IllegalArgumentException();
                 }
             }
-            final Menu menu = menuRepository.findById(orderLineItemRequest.getMenuId())
+            final OrderMenu menu = menuApiCaller.findById(orderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
             if (!menu.isDisplayed()) {
                 throw new IllegalStateException();

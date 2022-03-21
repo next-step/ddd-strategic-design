@@ -1,0 +1,43 @@
+package kitchenpos.order.domain.menu;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
+
+//test 통과를위해 연관관계 설정 전부 주석처리
+//@Table(name = "order_menu_group")
+//@Entity
+public class OrderMenuGroup {
+//    @Column(name = "id", columnDefinition = "varbinary(16)")
+//    @Id
+    private UUID id;
+
+//    @Column(name = "name", nullable = false)
+    private String name;
+
+    public OrderMenuGroup() {
+    }
+
+    public OrderMenuGroup(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+}

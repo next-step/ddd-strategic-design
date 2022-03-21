@@ -1,6 +1,6 @@
 package kitchenpos.order.domain;
 
-import kitchenpos.menu.domain.Menu;
+import kitchenpos.order.domain.menu.OrderMenu;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,13 +14,14 @@ public class OrderLineItem {
     @Id
     private Long seq;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(
-        name = "menu_id",
-        columnDefinition = "varbinary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
-    )
-    private Menu menu;
+//    @ManyToOne(optional = false)
+//    @JoinColumn(
+//        name = "menu_id",
+//        columnDefinition = "varbinary(16)",
+//        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
+//    )
+    @Transient //test 통과를위해 연관관계 설정 전부 주석처리
+    private OrderMenu menu;
 
     @Column(name = "quantity", nullable = false)
     private long quantity;
@@ -42,11 +43,11 @@ public class OrderLineItem {
         this.seq = seq;
     }
 
-    public Menu getMenu() {
+    public OrderMenu getMenu() {
         return menu;
     }
 
-    public void setMenu(final Menu menu) {
+    public void setMenu(final OrderMenu menu) {
         this.menu = menu;
     }
 

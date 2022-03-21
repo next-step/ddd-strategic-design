@@ -39,4 +39,9 @@ public class MenuFacade {
         return menuService.findAll().stream().map(MenuInfo.Response::from).collect(Collectors.toList());
     }
 
+    public MenuInfo.Response find(final UUID menuId) {
+        Menu menu = menuService.find(menuId);
+        return MenuInfo.Response.from(menu);
+    }
+
 }

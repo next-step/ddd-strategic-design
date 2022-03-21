@@ -14,4 +14,6 @@ public interface MenuService {
     Menu hide(final UUID menuId);
 
     List<Menu> findAll();
+
+    Menu find(final UUID menuId);
 }
