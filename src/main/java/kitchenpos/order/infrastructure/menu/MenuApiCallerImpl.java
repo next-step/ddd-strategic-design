@@ -1,10 +1,7 @@
 package kitchenpos.order.infrastructure.menu;
 
 import kitchenpos.menu.application.MenuFacade;
-import kitchenpos.menu.domain.MenuInfo;
-import kitchenpos.menu.domain.menugroup.MenuGroup;
-import kitchenpos.menu.domain.product.MenuProduct;
-import kitchenpos.menu.domain.product.Product;
+import kitchenpos.menu.application.MenuInfo;
 import kitchenpos.order.domain.menu.*;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,7 @@ package kitchenpos.menu.interfaces;
 
 import kitchenpos.menu.application.MenuFacade;
 import kitchenpos.menu.domain.MenuCommand;
-import kitchenpos.menu.domain.MenuInfo;
+import kitchenpos.menu.application.MenuInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
