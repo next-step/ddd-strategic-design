@@ -5,6 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MenuApiCaller {
-    Optional<OrderMenu> findById(UUID menuId);
-    List<OrderMenu> findAllByIdIn(List<UUID> ids);
+    Optional<Menu> findById(UUID menuId);
+    List<Menu> findAllByIdIn(List<UUID> ids);
 }

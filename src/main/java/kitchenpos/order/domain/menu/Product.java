@@ -10,7 +10,7 @@ import java.util.UUID;
 //test 통과를위해 연관관계 설정 전부 주석처리
 //@Table(name = "order_product")
 //@Entity
-public class OrderProduct {
+public class Product {
 //    @Column(name = "id", columnDefinition = "varbinary(16)")
 //    @Id
     private UUID id;
@@ -21,10 +21,10 @@ public class OrderProduct {
 //    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    public OrderProduct() {
+    public Product() {
     }
 
-    public OrderProduct(UUID id, String name, BigDecimal price) {
+    public Product(UUID id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;

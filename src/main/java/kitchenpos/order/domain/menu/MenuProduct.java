@@ -1,12 +1,11 @@
 package kitchenpos.order.domain.menu;
 
-import javax.persistence.*;
 import java.util.UUID;
 
 //test 통과를위해 연관관계 설정 전부 주석처리
 //@Table(name = "order_menu_product")
 //@Entity
-public class OrderMenuProduct {
+public class MenuProduct {
 //    @Column(name = "seq")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Id
@@ -18,7 +17,7 @@ public class OrderMenuProduct {
 //        columnDefinition = "varbinary(16)",
 //        foreignKey = @ForeignKey(name = "fk_menu_product_to_product")
 //    )
-    private OrderProduct product;
+    private Product product;
 
 //    @Column(name = "quantity", nullable = false)
     private long quantity;
@@ -26,10 +25,10 @@ public class OrderMenuProduct {
 //    @Transient
     private UUID productId;
 
-    public OrderMenuProduct() {
+    public MenuProduct() {
     }
 
-    public OrderMenuProduct(Long seq, OrderProduct product, long quantity, UUID productId) {
+    public MenuProduct(Long seq, Product product, long quantity, UUID productId) {
         this.seq = seq;
         this.product = product;
         this.quantity = quantity;
@@ -44,11 +43,11 @@ public class OrderMenuProduct {
         this.seq = seq;
     }
 
-    public OrderProduct getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(final OrderProduct product) {
+    public void setProduct(final Product product) {
         this.product = product;
     }
 

@@ -9,7 +9,7 @@ import java.util.UUID;
 //test 통과를위해 연관관계 설정 전부 주석처리
 //@Table(name = "order_menu_group")
 //@Entity
-public class OrderMenuGroup {
+public class MenuGroup {
 //    @Column(name = "id", columnDefinition = "varbinary(16)")
 //    @Id
     private UUID id;
@@ -17,10 +17,10 @@ public class OrderMenuGroup {
 //    @Column(name = "name", nullable = false)
     private String name;
 
-    public OrderMenuGroup() {
+    public MenuGroup() {
     }
 
-    public OrderMenuGroup(UUID id, String name) {
+    public MenuGroup(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

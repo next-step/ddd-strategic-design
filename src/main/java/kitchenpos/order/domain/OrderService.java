@@ -1,6 +1,6 @@
 package kitchenpos.order.domain;
 
-import kitchenpos.order.domain.menu.OrderMenu;
+import kitchenpos.order.domain.menu.Menu;
 import kitchenpos.order.domain.menu.MenuApiCaller;
 import kitchenpos.order.infrastructure.OrderRepository;
 import kitchenpos.ordertable.domain.OrderTable;
@@ -42,7 +42,7 @@ public class OrderService {
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        final List<OrderMenu> menus = menuApiCaller.findAllByIdIn(
+        final List<Menu> menus = menuApiCaller.findAllByIdIn(
             orderLineItemRequests.stream()
                 .map(OrderLineItem::getMenuId)
                 .collect(Collectors.toList())
@@ -58,7 +58,7 @@ public class OrderService {
                     throw new IllegalArgumentException();
                 }
             }
-            final OrderMenu menu = menuApiCaller.findById(orderLineItemRequest.getMenuId())
+            final Menu menu = menuApiCaller.findById(orderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
             if (!menu.isDisplayed()) {
                 throw new IllegalStateException();

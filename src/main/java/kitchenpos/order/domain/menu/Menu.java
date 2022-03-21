@@ -1,9 +1,5 @@
 package kitchenpos.order.domain.menu;
 
-import kitchenpos.menu.domain.menugroup.MenuGroup;
-import kitchenpos.menu.domain.product.MenuProduct;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +7,7 @@ import java.util.UUID;
 //test 통과를위해 연관관계 설정 전부 주석처리
 //@Table(name = "order_menu")
 //@Entity
-public class OrderMenu {
+public class Menu {
 //    @Column(name = "id", columnDefinition = "varbinary(16)")
 //    @Id
     private UUID id;
@@ -28,7 +24,7 @@ public class OrderMenu {
 //        columnDefinition = "varbinary(16)",
 //        foreignKey = @ForeignKey(name = "fk_menu_to_menu_group")
 //    )
-    private OrderMenuGroup menuGroup;
+    private MenuGroup menuGroup;
 
 //    @Column(name = "displayed", nullable = false)
     private boolean displayed;
@@ -40,15 +36,15 @@ public class OrderMenu {
 //        columnDefinition = "varbinary(16)",
 //        foreignKey = @ForeignKey(name = "fk_menu_product_to_menu")
 //    )
-    private List<OrderMenuProduct> menuProducts;
+    private List<MenuProduct> menuProducts;
 
 //    @Transient
     private UUID menuGroupId;
 
-    public OrderMenu() {
+    public Menu() {
     }
 
-    public OrderMenu(UUID id, String name, BigDecimal price, OrderMenuGroup menuGroupEntity, boolean displayed, List<OrderMenuProduct> menuProductEntities, UUID menuGroupId) {
+    public Menu(UUID id, String name, BigDecimal price, MenuGroup menuGroupEntity, boolean displayed, List<MenuProduct> menuProductEntities, UUID menuGroupId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -82,11 +78,11 @@ public class OrderMenu {
         this.price = price;
     }
 
-    public OrderMenuGroup getMenuGroup() {
+    public MenuGroup getMenuGroup() {
         return menuGroup;
     }
 
-    public void setMenuGroup(OrderMenuGroup menuGroup) {
+    public void setMenuGroup(MenuGroup menuGroup) {
         this.menuGroup = menuGroup;
     }
 
@@ -98,11 +94,11 @@ public class OrderMenu {
         this.displayed = displayed;
     }
 
-    public List<OrderMenuProduct> getMenuProducts() {
+    public List<MenuProduct> getMenuProducts() {
         return menuProducts;
     }
 
-    public void setMenuProducts(final List<OrderMenuProduct> menuProducts) {
+    public void setMenuProducts(final List<MenuProduct> menuProducts) {
         this.menuProducts = menuProducts;
     }
 
