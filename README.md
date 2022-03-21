@@ -144,97 +144,90 @@
 
 ### Product (상품)
 속성
-- name(이름)
-  - 공백일 수 없다.
-  - 비속어가 포함될 수 없다.
-- price(가격)
-  - 0원 이상이어야 한다.
-    행위
-- register (등록할 수 있다)
-- changePrice (가격을 변경할 수 있다)
-  - 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다.
+- `Product`는 공백이 아니고 비속어가 포함되지 않는 `name`을 갖는다.
+- `Product`는 0원 이상인 `price`를 갖는다. 
+
+행위
+- 새 `Product`를 등록할 수 있다(`register`)
+- 등록된 `Product`의 가격을 변경할 수 있다(`changePrice`)
+  - 변경될 때 메뉴(`Menu`)의 가격이 메뉴에 속한 상품(`Menu Line Item`) 금액(`amount`)의 합보다 크면 메뉴가 숨겨진다(`hide`)
+
 ### Menu Group (메뉴 그룹)
 속성
-- name(이름)
-  - 이름을 공백일 수 없다.
-    행위
-- register (등록할 수 있다)
+- `MenuGroup`은 공백이 아닌 `name`을 갖는다.
+
+행위
+- 새 `MenuGroup`을 등록할 수 있다.(`register`)
+
 ### Menu (메뉴)
 속성
-- menuLineItems (메뉴 항목 목록)
-  - 1개 이상을 포함해야 한다.
-- name (이름)
-  - 공백일 수 없다.
-  - 비속어가 포함될 수 없다.
-- price (가격)
-  - 0원 이상이어야 한다.
-  - 상품 목록 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
-- isDisplayed(노출 여부)
-  - 가격이 상품 목록 금액의 합보다 높을 경우 노출할 수 없다.
-- menuGroup (메뉴 그룹)
-  - 반드시 특정 메뉴 그룹에 속해야 한다.
-    행위
-- register (등록할 수 있다)
-- changePrice (가격을 변경할 수 있다)
-- display (노출할 수 있다)
-- hide (숨길 수 있다)
+- `Menu`는 1개 이상의 `MenuLineItem`을 갖는다.
+- `Menu`는 공백이 아니고 비속어가 포함되지 않는 `name`을 갖는다.
+- `Menu`는 0원 이상이고 `MenuLineItem` 금액의 합보다 같거나 작은 `price`를 갖는다.
+- `Menu`는 메뉴 노출 여부를 나타내는 `isDisplayed`를 갖는다.
+- `Menu`는 특정 메뉴 그룹을 나타내는 `menuGroup`을 갖는다.
+
+행위
+- 새 `Menu`를 등록할 수 있다.(`register`)
+- 등록된 `Menu`의 가격을 변경할 수 있다.(`changePrice`)
+- `Menu`를 노출할 수 있다.(`display`)
+  - `Menu`의 가격이 `MenuLineItem` 금액의 합보다 높을 경우 노출할 수 없다.
+- `Menu`를 숨길 수 있다.(hide)
+
 ### Menu Line Item (메뉴 항목)
 속성
-- product (상품)
-- quantity (수량)
-  - 0 이상이어야 한다.
-    행위
-- calculateAmount (금액을 계산할 수 있다)
+- `MenuLineItem`은 `Product`를 갖는다.
+- `MenuLineItem`은 0 이상인 `quantity`를 갖는다.
+
+행위
+- `MenuLineItem`은 `Product`의 가격과 `quantity`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
+
 ### Order Table (주문 테이블)
 속성
-- name (이름)
-  - 공백일 수 없다.
-- numberOfGuests (방문한 손님 수)
-  - 0 이상이어야 한다.
-- isEmpty (빈 테이블 여부)
-  행위
-- register (등록할 수 있다)
-- empty (빈 테이블로 설정할 수 있다)
-  - 완료되지 않은 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다.
-- inUse (빈 테이블을 해지할 수 있다)
-- changeNumberOfGuests (손님 수를 변경할 수 있다)
-  - 빈 테이블은 변경할 수 없다.
+- `OrderTable`은 공백이 아닌 `name`을 갖는다.
+- `OrderTable`은 0명 이상 인 `numberOfGuests`을 갖는다.
+- `OrderTable`은 빈 테이블 여부를 나타내는 `isEmpty`를 갖는다.
+
+ 행위
+- 새 `OrderTable`을 등록할 수 있다.(`register`)
+- `OrderTable`을 빈 테이블로 설정할 수 있다(`empty`)
+  - 완료되지 않은 `Order`이 있는 `OrderTable`은 빈 테이블로 설정할 수 없다.
+- `OrderTable`을 사용중으로 설정할 수 있다.(`inUse`)
+- `OrderTable`의 손님 수를 변경할 수 있다.(`changeNumberOfGuests`)
+  - `empty`인 `OrderTable`은 변경할 수 없다.
 ### Order (주문)
 속성
-- type (종류)
-  - TakeOut, EatIn, Delivery
-- orderLineItems (주문 항목 목록)
-  - 1개 이상을 포함해야 한다.
-  - 매장 주문은 주문 항목의 메뉴 수량이 0 미만일 수 있다.
-  - 매장 주문을 제외한 주문의 경우 주문 항목의 메뉴 수량은 0 이상이어야 한다.
-- status (상태)
-  - Waiting, Accepted, Served, Delivering, Delivered, Done
-- orderTable (주문 테이블)
-  - 매장 주문일 때만 포함해야 한다.
-- deliveryAddress (배달 주소)
-  - 배달 주문일 때만 공백일 수 없다.
-    행위
-- register (등록할 수 있다)
-  - 주문 종류가 올바르지 않으면 등록할 수 없다.
-  - 배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다.
-  - 빈 테이블에는 매장 주문을 등록할 수 없다.
-  - 숨겨진 메뉴는 주문할 수 없다.
-  - 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
-- accept (접수한다)
-  - 접수 대기 중인 주문만 접수할 수 있다.
-  - 배달 주문을 접수되면 배달 대행사를 호출한다.
-    serve (서빙한다)
-- 접수된 주문만 서빙할 수 있다.
-- delivery (배달한다)
-  - 배달 주문만 배달할 수 있다.
-  - 서빙된 주문만 배달할 수 있다.
-- delivered (배달 완료한다)
-  - 배달 중인 주문만 배달 완료할 수 있다.
-- done (완료한다)
-  - 주문 테이블의 모든 주문이 완료되었으면 빈 테이블로 설정한다.
+- `Order`는 주문의 종류를 나타내는 `type`을 갖는다.
+  - `type`의 종류에는 `TakeOut`(포장), `EatIn`(매장식사), `Delivery`(배달)이 있다.
+- `Order`는 1개 이상의 `OrderLineItems`을 갖는다.
+- `Order`는 주문의 진행 상태를 나타내는 `status`를 갖는다.
+  - `status`의 종류에는 `Waiting`(접수대기), `Accepted`(접수됨), `Served`(제공됨), `Delivering`(배달중), `Delivered`(배달완료), `Done`(주문완료) 가 있다.
+- `Order`의 `type`이 `EatIn` 인 경우 `orderTable`을 갖는다. (주문 테이블)
+- `Order`의 `type`이 `Delivery`인 경우 공백이 아닌 `deliveryAddress`를 갖는다.
+    
+행위
+- 새 `Order`를 등록할 수 있다(`register`)
+  - `Order`의 `type`이 올바르지 않으면 등록할 수 없다.
+  - `deliveryAddress`가 올바르지 않으면 `type`이 `Delivery`인 `Order`를 등록할 수 없다.
+  - `empty` `OrderTable`에는 `type`이 `EatIn`인 `Order`를 등록할 수 없다.
+  - `hide`된 `Menu`는 `Order`에서 주문할 수 없다.
+  - `OrderLineItem`의 `price`는 실제 `Menu`의 `price`와 일치해야 한다.
+- `Order`를 접수한다(`accept`)
+  - `Waiting` 상태인 `Order`만 접수할 수 있다.
+  - `type`이 `Delivery`인 `Order`는 배달 대행사를 호출한다.
+- `Order`를 서빙한다.(`serve`)
+  - `Accepted` 상태인 `Order`만 서빙할 수 있다.
+- `Order`를 배달한다(`delivery`)
+  - `type`이 `Delivery`인 `Order`만 배달할 수 있다.
+  - `Served` 상태인 `Order`만 배달할 수 있다.
+- `Order`를 배달완료시킨다(`completeDelivery`)
+  - `Delivering` 상태인 `Order`만 배달 완료시킬 수 있다.
+- `Order`를 완료시킨다(`done`)
+  - `OrderTable`의 모든 `Order`가 완료되었으면 빈테이블로 설정한다.
 ### Order Line Item (주문 항목)
 속성
-- menu (메뉴)
-- quantityOfMenus (메뉴 수량)
-  행위
-- calculateAmount (금액을 계산할 수 있다)
+- `OrderLineItem`은 `Menu`를 갖는다
+- `OrderLineItem`은 `quantityOfMenus`를 갖는다.
+  - `Order`의 `type`이 `EatIn`이면 `quantityOfMenus`는 0 미만일 수 있다.
+  - `Order`의 `type`이 `Delivery`, `TakeOut`이면 `quantityOfMenus`는 0 이상이어야 한다.
+- `OrderLineItem`은 `Menu`의 가격과 `quantityOfMenus`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
