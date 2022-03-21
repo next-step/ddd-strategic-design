@@ -1,4 +1,4 @@
-package kitchenpos.menu.interfaces;
+package kitchenpos.menu.interfaces.api;
 
 import kitchenpos.menu.domain.product.ProductService;
 import kitchenpos.menu.domain.product.Product;

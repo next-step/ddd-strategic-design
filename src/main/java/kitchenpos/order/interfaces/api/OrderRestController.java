@@ -1,4 +1,4 @@
-package kitchenpos.order.interfaces;
+package kitchenpos.order.interfaces.api;
 
 import kitchenpos.order.domain.OrderService;
 import kitchenpos.order.domain.Order;

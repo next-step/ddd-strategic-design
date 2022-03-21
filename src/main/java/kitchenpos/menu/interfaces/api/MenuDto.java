@@ -1,4 +1,4 @@
-package kitchenpos.menu.interfaces;
+package kitchenpos.menu.interfaces.api;
 
 import java.math.BigDecimal;
 import java.util.List;
