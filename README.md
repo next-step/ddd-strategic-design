@@ -173,3 +173,10 @@
 - OrderTable 에서 numberOfGuests 를 변경할 수 있다.
 - OrderTable 은 테이블의 착석여부를 결정하는 empty 를 가진다.
 - OrderTable 에서 empty 를 변경할 수 있다.
+- Order 는 주문 유형을 구분할 수 있는 OrderType 을 가진다.
+- Order 는 주문의 진행상태를 구분할 수 있는 OrderStatus 를 가진다.
+- Order 에서 OrderStatus 를 변경할 수 있다.
+- Order 는 주문의 생성시각을 표현하는 orderDateTime 을 가진다.
+- Order 는 주문항목을 나타내는 OrderLineItem 목록을 가진다.
+- Order 는 배달주소를 표현하는 deliveryAddress 를 가진다.
+- Order 는 주문이 일어난 OrderTable 의 id 를 가진다.
