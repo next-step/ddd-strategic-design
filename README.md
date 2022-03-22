@@ -157,3 +157,19 @@
 | [주문상태] 완료   | COMPLETED  | 매장에서 제공한 메뉴가 손님에게 전달된 상태           |
 
 ## 모델링
+- Product 는 이름을 표현하는 name 을 가진다.
+- Product 는 가격을 표현하는 price 를 가진다.
+- Product 에서 price 를 변경할 수 있다.
+- MenuGroup 은 이름을 표현하는 name 을 가진다.
+- Menu 는 이름을 표현하는 name 을 가진다.
+- Menu 는 가격을 표현하는 price 를 가진다.
+- Menu 에서 price 를 변경할 수 있다.
+- Menu 는 자신이 속한 MenuGroup 의 id 를 가진다.
+- Menu 는 자신의 노출여부를 결정하는 displayed 를 가진다.
+- Menu 에서 displayed 를 변경할 수 있다.
+- Menu 는 메뉴를 구성하는 상품의 목록인 MenuProduct 목록을 가진다.
+- OrderTable 은 이름을 표현하는 name 을 가진다.
+- OrderTable 은 테이블에 착석한 손님 수를 표현하는 numberOfGuests 를 가진다.
+- OrderTable 에서 numberOfGuests 를 변경할 수 있다.
+- OrderTable 은 테이블의 착석여부를 결정하는 empty 를 가진다.
+- OrderTable 에서 empty 를 변경할 수 있다.
