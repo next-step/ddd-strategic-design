@@ -157,25 +157,41 @@
 | [주문상태] 완료   | COMPLETED  | 매장에서 제공한 메뉴가 손님에게 전달된 상태           |
 
 ## 모델링
+### Product(상품)
 - Product 는 이름을 표현하는 name 을 가진다.
 - Product 는 가격을 표현하는 price 를 가진다.
-- Product 에서 price 를 변경할 수 있다.
+  - Product 에서 price 를 변경할 수 있다.
+### MenuGroup(메뉴그룹)
 - MenuGroup 은 이름을 표현하는 name 을 가진다.
+### Menu(메뉴)
 - Menu 는 이름을 표현하는 name 을 가진다.
 - Menu 는 가격을 표현하는 price 를 가진다.
-- Menu 에서 price 를 변경할 수 있다.
+  - Menu 에서 price 를 변경할 수 있다.
 - Menu 는 자신이 속한 MenuGroup 의 id 를 가진다.
 - Menu 는 자신의 노출여부를 결정하는 displayed 를 가진다.
-- Menu 에서 displayed 를 변경할 수 있다.
+  - Menu 에서 displayed 를 변경할 수 있다.
 - Menu 는 메뉴를 구성하는 상품의 목록인 MenuProduct 목록을 가진다.
+### OrderTable(주문테이블)
 - OrderTable 은 이름을 표현하는 name 을 가진다.
 - OrderTable 은 테이블에 착석한 손님 수를 표현하는 numberOfGuests 를 가진다.
-- OrderTable 에서 numberOfGuests 를 변경할 수 있다.
+  - OrderTable 에서 numberOfGuests 를 변경할 수 있다.
 - OrderTable 은 테이블의 착석여부를 결정하는 empty 를 가진다.
-- OrderTable 에서 empty 를 변경할 수 있다.
+  - OrderTable 에서 empty 를 변경할 수 있다.
+### Order(주문)
 - Order 는 주문 유형을 구분할 수 있는 OrderType 을 가진다.
+  - OrderType 은 다음의 유형으로 구성되어 있다.
+    - DELIVERY : 배달주문
+    - TAKEOUT : 포장주문
+    - EAT_IN : 매장식사주문
 - Order 는 주문의 진행상태를 구분할 수 있는 OrderStatus 를 가진다.
-- Order 에서 OrderStatus 를 변경할 수 있다.
+  - Order 에서 OrderStatus 는 다음의 유형으로 구성되어 있다.
+    - WAITING : 대기
+    - ACCEPTED : 접수
+    - SERVED : 제공
+    - DELIVERING : 배달중
+    - DELIVERED : 배달완료
+    - COMPLETED : 완료
+  - Order 에서 OrderStatus 를 변경할 수 있다.
 - Order 는 주문의 생성시각을 표현하는 orderDateTime 을 가진다.
 - Order 는 주문항목을 나타내는 OrderLineItem 목록을 가진다.
 - Order 는 배달주소를 표현하는 deliveryAddress 를 가진다.
