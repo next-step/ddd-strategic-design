@@ -171,6 +171,8 @@
 - Menu 는 자신의 노출여부를 결정하는 displayed 를 가진다.
   - Menu 에서 displayed 를 변경할 수 있다.
 - Menu 는 메뉴를 구성하는 상품의 목록인 MenuProduct 목록을 가진다.
+  - MenuProduct 는 메뉴를 구성하는 Product 의 id 를 가진다.
+  - MenuProduct 는 상품의 수량을 표현하는 quantity 를 가진다.
 ### OrderTable(주문테이블)
 - OrderTable 은 이름을 표현하는 name 을 가진다.
 - OrderTable 은 테이블에 착석한 손님 수를 표현하는 numberOfGuests 를 가진다.
@@ -194,5 +196,9 @@
   - Order 에서 OrderStatus 를 변경할 수 있다.
 - Order 는 주문의 생성시각을 표현하는 orderDateTime 을 가진다.
 - Order 는 주문항목을 나타내는 OrderLineItem 목록을 가진다.
+  - OrderLineItem 은 주문 Menu 의 id 를 가진다.
+  - OrderLineItem 은 주문수량을 표현하는 quantity 를 가진다.
+  - OrderLineItem 은 주문가격을 표현하는 price 를 가진다.
+- Order 에서 OrderLineItem 을 활용해 주문의 총 가격을 계산할 수 있다.
 - Order 는 배달주소를 표현하는 deliveryAddress 를 가진다.
 - Order 는 주문이 일어난 OrderTable 의 id 를 가진다.
