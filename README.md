@@ -148,7 +148,7 @@
 - `Product`는 0원 이상인 `price`를 갖는다. 
 
 행위
-- 새 `Product`를 등록할 수 있다(`register`)
+- `Product`를 등록할 수 있다(`create`)
 - 등록된 `Product`의 가격을 변경할 수 있다(`changePrice`)
   - 변경될 때 메뉴(`Menu`)의 가격이 메뉴에 속한 상품(`Menu Line Item`) 금액(`amount`)의 합보다 크면 메뉴가 숨겨진다(`hide`)
 
@@ -157,30 +157,25 @@
 - `MenuGroup`은 공백이 아닌 `name`을 갖는다.
 
 행위
-- 새 `MenuGroup`을 등록할 수 있다.(`register`)
+- `MenuGroup`을 등록할 수 있다.(`create`)
 
 ### Menu (메뉴)
 속성
 - `Menu`는 1개 이상의 `MenuLineItem`을 갖는다.
+  - `MenuLineItem`은 `Product`를 갖는다.
+  - `MenuLineItem`은 0 이상인 `quantity`를 갖는다.
+  - `MenuLineItem`은 `Product`의 가격과 `quantity`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
 - `Menu`는 공백이 아니고 비속어가 포함되지 않는 `name`을 갖는다.
 - `Menu`는 0원 이상이고 `MenuLineItem` 금액의 합보다 같거나 작은 `price`를 갖는다.
 - `Menu`는 메뉴 노출 여부를 나타내는 `isDisplayed`를 갖는다.
 - `Menu`는 특정 메뉴 그룹을 나타내는 `menuGroup`을 갖는다.
 
 행위
-- 새 `Menu`를 등록할 수 있다.(`register`)
+- `Menu`를 등록할 수 있다.(`create`)
 - 등록된 `Menu`의 가격을 변경할 수 있다.(`changePrice`)
 - `Menu`를 노출할 수 있다.(`display`)
   - `Menu`의 가격이 `MenuLineItem` 금액의 합보다 높을 경우 노출할 수 없다.
 - `Menu`를 숨길 수 있다.(hide)
-
-### Menu Line Item (메뉴 항목)
-속성
-- `MenuLineItem`은 `Product`를 갖는다.
-- `MenuLineItem`은 0 이상인 `quantity`를 갖는다.
-
-행위
-- `MenuLineItem`은 `Product`의 가격과 `quantity`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
 
 ### Order Table (주문 테이블)
 속성
@@ -189,24 +184,32 @@
 - `OrderTable`은 빈 테이블 여부를 나타내는 `isEmpty`를 갖는다.
 
  행위
-- 새 `OrderTable`을 등록할 수 있다.(`register`)
+- `OrderTable`을 등록할 수 있다.(`create`)
+  - `OrderTable`의 `name`이 공백이면 등록할 수 없다.
 - `OrderTable`을 빈 테이블로 설정할 수 있다(`empty`)
   - 완료되지 않은 `Order`이 있는 `OrderTable`은 빈 테이블로 설정할 수 없다.
 - `OrderTable`을 사용중으로 설정할 수 있다.(`inUse`)
 - `OrderTable`의 손님 수를 변경할 수 있다.(`changeNumberOfGuests`)
   - `empty`인 `OrderTable`은 변경할 수 없다.
+
+
 ### Order (주문)
 속성
 - `Order`는 주문의 종류를 나타내는 `type`을 갖는다.
   - `type`의 종류에는 `TakeOut`(포장), `EatIn`(매장식사), `Delivery`(배달)이 있다.
 - `Order`는 1개 이상의 `OrderLineItems`을 갖는다.
+  - `OrderLineItem`은 `Menu`를 갖는다
+  - `OrderLineItem`은 `quantityOfMenus`를 갖는다.
+    - `Order`의 `type`이 `EatIn`이면 `quantityOfMenus`는 0 미만일 수 있다.
+    - `Order`의 `type`이 `Delivery`, `TakeOut`이면 `quantityOfMenus`는 0 이상이어야 한다.
+  - `OrderLineItem`은 `Menu`의 가격과 `quantityOfMenus`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
 - `Order`는 주문의 진행 상태를 나타내는 `status`를 갖는다.
   - `status`의 종류에는 `Waiting`(접수대기), `Accepted`(접수됨), `Served`(제공됨), `Delivering`(배달중), `Delivered`(배달완료), `Done`(주문완료) 가 있다.
 - `Order`의 `type`이 `EatIn` 인 경우 `orderTable`을 갖는다. (주문 테이블)
 - `Order`의 `type`이 `Delivery`인 경우 공백이 아닌 `deliveryAddress`를 갖는다.
     
 행위
-- 새 `Order`를 등록할 수 있다(`register`)
+- `Order`를 등록할 수 있다(`create`)
   - `Order`의 `type`이 올바르지 않으면 등록할 수 없다.
   - `deliveryAddress`가 올바르지 않으면 `type`이 `Delivery`인 `Order`를 등록할 수 없다.
   - `empty` `OrderTable`에는 `type`이 `EatIn`인 `Order`를 등록할 수 없다.
@@ -224,10 +227,4 @@
   - `Delivering` 상태인 `Order`만 배달 완료시킬 수 있다.
 - `Order`를 완료시킨다(`done`)
   - `OrderTable`의 모든 `Order`가 완료되었으면 빈테이블로 설정한다.
-### Order Line Item (주문 항목)
-속성
-- `OrderLineItem`은 `Menu`를 갖는다
-- `OrderLineItem`은 `quantityOfMenus`를 갖는다.
-  - `Order`의 `type`이 `EatIn`이면 `quantityOfMenus`는 0 미만일 수 있다.
-  - `Order`의 `type`이 `Delivery`, `TakeOut`이면 `quantityOfMenus`는 0 이상이어야 한다.
-- `OrderLineItem`은 `Menu`의 가격과 `quantityOfMenus`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
+
