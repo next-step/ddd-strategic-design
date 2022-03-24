@@ -121,9 +121,11 @@
 
 - 기능
   - 상품을 등록한다.(`create`)
+    - 상품의 가격(`price`)은 0원 이상이어야 한다.
     - 상품의 이름(`name`)에는 비속어가 포함되지 않아야 한다. 
   - 상품의 가격을 변경한다.(`chnagePrice`)
     - 상품의 가격(`price`)은 0원 이상이어야 한다.
+    - 메뉴 상품 목록(`menuProducts`)의 가격 합계가 메뉴의 가격(`price`) 이하이면 메뉴가 숨겨진다.
   - 상품 목록을 조회한다.(`findAll`)
 
 ### 메뉴 그룹(`MenuGroup`)
@@ -203,5 +205,5 @@
   - 주문을 완료한다.(`complete`)
     - 매장(`eatIn`) 및 포장(`takeout`) 주문이면 서빙(`served`) 상태여야 한다.
     - 배달 주문(`delivery`)이면 배달 완료(`delivered`) 상태여야 한다.
-    - 매장(`eatIn`) 주문이면 주문 테이블(`OrderTable`)을 빈 테이블로 설정한다.
+    - 매장(`eatIn`) 주문이면 주문 테이블(`OrderTable`)을 빈 테이블로 설정 및 방문 고객 수(`numberOfGuests`)를 0으로 변경한다.
   - 주문 목록을 조회한다.(`findAll`)
