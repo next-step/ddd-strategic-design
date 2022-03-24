@@ -1,9 +1,9 @@
 package kitchenpos.ordertable.application;
 
-import kitchenpos.application.InMemoryOrderRepository;
+import kitchenpos.order.domain.InMemoryOrderRepository;
 import kitchenpos.ordertable.domain.InMemoryOrderTableRepository;
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
+import kitchenpos.order.domain.OrderRepository;
+import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.ordertable.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
