@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import kitchenpos.application.FakeKitchenridersClient;
+import kitchenpos.infra.FakeKitchenridersClient;
 import kitchenpos.menu.domain.InMemoryMenuRepository;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.domain.InMemoryOrderRepository;
