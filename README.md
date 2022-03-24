@@ -88,60 +88,143 @@
 - 주문 목록을 조회할 수 있다.
 
 ## 용어 사전
-
-| 한글명          | 영문명                      | 설명                                                                                                        |
-|--------------|--------------------------|-----------------------------------------------------------------------------------------------------------|
-| 상품           | product                  | 메뉴를 구성하는 최소 기준 데이터                                                                                        |
-| 상품 ID        | product id               | 다른 상품과 구별되는 고유한 값                                                                                         |
-| 상품 가격        | product price            | 0원 이상의 값을 갖는 상품의 가격                                                                                       |
-| 상품 이름        | product name             | 비속어가 포함되지 않은 상품의 이름                                                                                       |
-| 상품 등록        | create product           | 새로운 상품을 등록한다.                                                                                             |
-| 상품 가격 변경     | change product price     | 등록된 상품의 가격을 변경한다.                                                                                         |
-| 상품 전체 조회     | find all product         | 등록된 상품 전체를 조회한다.                                                                                          |
-| 메뉴 그룹        | menu group               | 메뉴의 묶음                                                                                                    |
-| 메뉴 그룹 ID     | menu group id            | 다른 메뉴 그룹과 구별되는 고유한 값                                                                                      |
-| 메뉴 그룹 이름     | menu group name          | 빈 값일 수 없는 메뉴 그룹의 이름                                                                                       |
-| 메뉴 그룹 등록     | create menu group        | 새로운 메뉴 그룹을 등록한다.                                                                                          |
-| 메뉴 그룹 전체 조회  | find all menu group      | 등록된 메뉴 그룹 전체를 조회한다.                                                                                       |
-| 메뉴           | menu                     | 1개 이상의 상품으로 이루어진 주문의 구성 단위                                                                                |
-| 메뉴 ID        | menu id                  | 다른 메뉴와 구별되는 고유한 값                                                                                         |
-| 메뉴 상품        | menu product             | 메뉴에 속하는 상품을 나타내는 단위                                                                                       |
-| 메뉴 상품 수량     | menu product quantity    | 메뉴에 속하는 상품의 수량을 나타내는 단위                                                                                   |
-| 메뉴 상품 금액 합계  | menu product amount sum  | 메뉴에 속하는 상품 금액의 합계                                                                                         |
-| 메뉴 이름        | menu name                | 비속어가 포함되지 않은 메뉴의 이름                                                                                       |
-| 메뉴 가격        | menu price               | 0원 이상이고 메뉴 상품 금액 합계보다 작거나 같은 메뉴의 가격                                                                       |
-| 노출됨          | displayed                | 고객에게 메뉴가 노출되는지 여부                                                                                         |
-| 메뉴 등록        | create menu              | 새로운 메뉴를 등록한다.                                                                                             |
-| 메뉴 가격 변경     | change menu price        | 등록된 메뉴의 가격을 변경한다.                                                                                         |
-| 메뉴 노출        | display menu             | 등록된 메뉴를 손님에게 노출시킨다.                                                                                       |
-| 메뉴 숨김        | hide menu                | 등록된 메뉴를 손님에게 보이지 않게 숨긴다.                                                                                  |
-| 메뉴 전체 조회     | find all menu            | 등록된 메뉴 전체를 조회한다.                                                                                          |
-| 주문 테이블       | order table              | 매장 식사 타입의 주문이 묶이는 단위                                                                                      |
-| 주문 테이블 id    | order table id           | 다른 주문 테이블과 구별되는 고유한 값                                                                                     |
-| 주문 테이블 이름    | order table name         | 비속어가 포함되지 않은 주문 테이블의 이름                                                                                   |
-| 비어있음         | empty                    | 테이블이 비어있는지 여부                                                                                             |
-| 손님수          | number of guests         | 테이블에 방문한 손님 수                                                                                             |
-| 주문 테이블 등록    | create order table       | 새로운 주문테이블을 등록한다.                                                                                          |
-| 주문 테이블 사용중   | sit order table          | 비어있는 주문 테이블을 사용중으로 바꾼다.                                                                                   |
-| 주문 테이블 비움    | clear order table        | 주문 테이블을 비어있는 상태로 바꾼다.                                                                                     |
-| 주문 테이블 인원 변경 | change number of guests  | 주문 테이블에 방문한 손님 수를 변경한다.                                                                                   |
-| 주문 테이블 전체 조회 | find all order table     | 등록된 주문 테이블 전체를 조회한다.                                                                                      |
-| 주문           | order                    | 1개 이상의 메뉴로 구성된 주문 단위                                                                                      |
-| 주문 ID        | order id                 | 다른 주문과 구별되는 고유한 값                                                                                         |
-| 주문 유형        | order type               | 주문의 형태를 나타냄 배달, 포장, 매장 주문 중 하나의 값을 갖는다.                                                                   |
-| 주문 항목        | order line item          | 주문에 속하는 주문한 메뉴를 나타내는 단위                                                                                   |
-| 주문 항목 수량     | order line item quantity | 주문 항목의 수량, 주문 유형이 매장주문인 경우만 0 미만일 수 있다.                                                                   |
-| 배달 주소        | delivery address         | 음식이 배달될 주소. 주문 유형이 배달인 경우 반드시 있어야한다.                                                                      |
-| 주문 상태        | order status             | 주문 시작부터 완료될때까지의 상태로 아래와 같은 값을 갖는다. <br/> * 접수대기중<br/> * 접수됨<br/> * 서빙됨<br/> * 배달중<br/> * 배달완료<br/> * 주문완료 |
-| 배달 대행사       | delivery agency          | 배달 주문일 때 손님에게까지 배달을 의뢰할 배달 대행 회사                                                                          |
-| 주문 등록        | create order             | 새로운 주문을 등록한다.                                                                                             |
-| 주문 접수        | accept order             | 대기중인 주문을 접수한다.                                                                                            |
-| 주문 서빙        | serve order              | 접수된 주문의 메뉴를 서빙한다.                                                                                         |
-| 배달 시작        | start delivery           | 서빙된 메뉴의 배달을 시작한다.                                                                                         |
-| 배달 완료        | complete delivery        | 배달 중인 주문의 배달을 완료한다.                                                                                       |
-| 주문 완료        | complete order           | 서빙되었거나, 배달완료된 주문을 완료시킨다.                                                                                  |
-| 주문 전체 조회     | find all order           | 등록된 주문 전체를 조회한다.                                                                                          |
-
+### 상품
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 상품             | Product                     | 매장에서 관리되는 음식의 최소 단위                           |
+### 메뉴 그룹
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 메뉴 그룹        | Menu Group                  | 메뉴의 묶음                                                  |
+### 메뉴
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 메뉴             | Menu                        | 한 개 이상의 메뉴 항목으로 구성된 주문의 단위로 하나의 메뉴 그룹에 속한다 |
+| 노출된 메뉴      | Displayed Menu              | 주문할 수 있는 상태인 메뉴                                   |
+| 숨겨진 메뉴      | Hidden Menu                 | 주문할 수 없는 상태인 메뉴                                   |
+| 메뉴 항목        | Menu Line Item              | 상품과 상품의 수량으로 나타낸 메뉴의 구성요소                           |
+### 주문 테이블
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 주문 테이블      | Order Table                 | 매장 식사 타입의 주문이 묶일 수 있는 단위 손님이 앉을 수 있는 테이블 |
+| 빈 테이블        | Empty Order Table           | 손님이 없는 주문 테이블                                      |
+| 사용 중인 테이블 | Order Table In Use          | 손님이 사용 중인 주문 테이블                                 |
+| 방문한 손님 수   | Number of Guests            | 주문 테이블을 사용 중인 손님의 수                            |
+### 주문
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 주문             | Order                       | 한 개 이상의 주문 항목으로 구성된 주문할 수 있는 단위        |
+| 주문 항목        | Order Line Item             | 메뉴와 메뉴의 수량으로 나타낸 주문의 구성요소                |
+| 주문 항목의 수량 | Quantity of Order Line Item | 주문 항목의 메뉴의 수량으로 매장 식사인 경우 0 미만일 수 있다. |
+| 주문 종류        | Order Type                  | 주문은 포장, 매장 식사, 배달로 종류가 나뉜다.                |
+| 배달             | Delivery                    | 손님의 주소지로 주문한 메뉴를 배달대행사를 통해 배달해준다.  |
+| 포장             | Take out                    | 손님이 매장에 와서 직접 주문한 메뉴를 수령한다.              |
+| 매장 식사        | Eat In                      | 손님이 주문한 메뉴를 주문 테이블에서 식사한다.               |
+| 주문 상태        | Order Status                | 주문이 진행되는 상태 접수 대기, 접수, 서빙, 배달, 배달 완료, 주문 완료 |
+| 접수 대기        | Waiting                     | 손님의 주문을 사장님이 확인하지 않은 상태                    |
+| 접수             | Accepted                    | 사장님이 주문을 확인한 상태                                  |
+| 서빙             | Served                      | 메뉴가 전달 된 상태                                          |
+| 배달 중          | Delivering                  | 서빙된 메뉴를 배달 주문한 손님에게 배달 중인 상태            |
+| 배달 완료        | Delivered                   | 배달이 완료된 상태                                           |
+| 주문 완료        | Done                        | 주문이 완료된 상태                                           |
+### 배달
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 배달 대행사      | Delivery Agency             | 대신 배달해주는 회사                                         |
+| 배달 주소        | Delivery Address            | 배달 주문이 도착되어야 하는 주소                             |
+### 공통
+| 한글명           | 영문명                      | 설명                                                         |
+| ---------------- | --------------------------- | ------------------------------------------------------------ |
+| 금액             | Amount                      | 상품 또는 메뉴 가격과 수량을 곱한 금액                       |
+| 가격             | Price                       | 상품 또는 메뉴 하나의 가격                                   |
+| 비속어           | Profanity                   | 부적절한 언어로 상품, 메뉴 이름과 같은 곳에 포함될 수 없다.  |
 
 
 ## 모델링
+
+### Product (상품)
+속성
+- `Product`는 공백이 아니고 비속어가 포함되지 않는 `name`을 갖는다.
+- `Product`는 0원 이상인 `price`를 갖는다. 
+
+행위
+- `Product`를 등록할 수 있다(`create`)
+- 등록된 `Product`의 가격을 변경할 수 있다(`changePrice`)
+  - 변경될 때 메뉴(`Menu`)의 가격이 메뉴에 속한 상품(`Menu Line Item`) 금액(`amount`)의 합보다 크면 메뉴가 숨겨진다(`hide`)
+
+### Menu Group (메뉴 그룹)
+속성
+- `MenuGroup`은 공백이 아닌 `name`을 갖는다.
+
+행위
+- `MenuGroup`을 등록할 수 있다.(`create`)
+
+### Menu (메뉴)
+속성
+- `Menu`는 1개 이상의 `MenuLineItem`을 갖는다.
+  - `MenuLineItem`은 `Product`를 갖는다.
+  - `MenuLineItem`은 0 이상인 `quantity`를 갖는다.
+  - `MenuLineItem`은 `Product`의 가격과 `quantity`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
+- `Menu`는 공백이 아니고 비속어가 포함되지 않는 `name`을 갖는다.
+- `Menu`는 0원 이상이고 `MenuLineItem` 금액의 합보다 같거나 작은 `price`를 갖는다.
+- `Menu`는 메뉴 노출 여부를 나타내는 `isDisplayed`를 갖는다.
+- `Menu`는 특정 메뉴 그룹을 나타내는 `menuGroup`을 갖는다.
+
+행위
+- `Menu`를 등록할 수 있다.(`create`)
+- 등록된 `Menu`의 가격을 변경할 수 있다.(`changePrice`)
+- `Menu`를 노출할 수 있다.(`display`)
+  - `Menu`의 가격이 `MenuLineItem` 금액의 합보다 높을 경우 노출할 수 없다.
+- `Menu`를 숨길 수 있다.(hide)
+
+### Order Table (주문 테이블)
+속성
+- `OrderTable`은 공백이 아닌 `name`을 갖는다.
+- `OrderTable`은 0명 이상 인 `numberOfGuests`을 갖는다.
+- `OrderTable`은 빈 테이블 여부를 나타내는 `isEmpty`를 갖는다.
+
+ 행위
+- `OrderTable`을 등록할 수 있다.(`create`)
+  - `OrderTable`의 `name`이 공백이면 등록할 수 없다.
+- `OrderTable`을 빈 테이블로 설정할 수 있다(`empty`)
+  - 완료되지 않은 `Order`이 있는 `OrderTable`은 빈 테이블로 설정할 수 없다.
+- `OrderTable`을 사용중으로 설정할 수 있다.(`inUse`)
+- `OrderTable`의 손님 수를 변경할 수 있다.(`changeNumberOfGuests`)
+  - `empty`인 `OrderTable`은 변경할 수 없다.
+
+
+### Order (주문)
+속성
+- `Order`는 주문의 종류를 나타내는 `type`을 갖는다.
+  - `type`의 종류에는 `TakeOut`(포장), `EatIn`(매장식사), `Delivery`(배달)이 있다.
+- `Order`는 1개 이상의 `OrderLineItems`을 갖는다.
+  - `OrderLineItem`은 `Menu`를 갖는다
+  - `OrderLineItem`은 `quantityOfMenus`를 갖는다.
+    - `Order`의 `type`이 `EatIn`이면 `quantityOfMenus`는 0 미만일 수 있다.
+    - `Order`의 `type`이 `Delivery`, `TakeOut`이면 `quantityOfMenus`는 0 이상이어야 한다.
+  - `OrderLineItem`은 `Menu`의 가격과 `quantityOfMenus`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
+- `Order`는 주문의 진행 상태를 나타내는 `status`를 갖는다.
+  - `status`의 종류에는 `Waiting`(접수대기), `Accepted`(접수됨), `Served`(제공됨), `Delivering`(배달중), `Delivered`(배달완료), `Done`(주문완료) 가 있다.
+- `Order`의 `type`이 `EatIn` 인 경우 `orderTable`을 갖는다. (주문 테이블)
+- `Order`의 `type`이 `Delivery`인 경우 공백이 아닌 `deliveryAddress`를 갖는다.
+    
+행위
+- `Order`를 등록할 수 있다(`create`)
+  - `Order`의 `type`이 올바르지 않으면 등록할 수 없다.
+  - `deliveryAddress`가 올바르지 않으면 `type`이 `Delivery`인 `Order`를 등록할 수 없다.
+  - `empty` `OrderTable`에는 `type`이 `EatIn`인 `Order`를 등록할 수 없다.
+  - `hide`된 `Menu`는 `Order`에서 주문할 수 없다.
+  - `OrderLineItem`의 `price`는 실제 `Menu`의 `price`와 일치해야 한다.
+- `Order`를 접수한다(`accept`)
+  - `Waiting` 상태인 `Order`만 접수할 수 있다.
+  - `type`이 `Delivery`인 `Order`는 배달 대행사를 호출한다.
+- `Order`를 서빙한다.(`serve`)
+  - `Accepted` 상태인 `Order`만 서빙할 수 있다.
+- `Order`를 배달한다(`delivery`)
+  - `type`이 `Delivery`인 `Order`만 배달할 수 있다.
+  - `Served` 상태인 `Order`만 배달할 수 있다.
+- `Order`를 배달완료시킨다(`completeDelivery`)
+  - `Delivering` 상태인 `Order`만 배달 완료시킬 수 있다.
+- `Order`를 완료시킨다(`done`)
+  - `OrderTable`의 모든 `Order`가 완료되었으면 빈테이블로 설정한다.
+
