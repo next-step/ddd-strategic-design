@@ -137,3 +137,77 @@
 | 주문 내역    | Order History    | **주문**의 상태와 물품이나 금액 따위를 나타닌다                                                                   |
 
 ## 모델링
+
+## 상품
+- `상품(Product)` 은 반드시 식별자와 **이름** 그리고 **가격**을 가진다.
+- `상품(Product)` 은 가격을 변경할 수 있다.
+
+## 메뉴 그룹
+- `메뉴그룹(MenuGroup)` 은 반드시 식별자와 이름을 가진다. 
+
+## 메뉴
+- `메뉴 (Menu)` 는 하나 이상의 `메뉴 상품 (Menu Product)` , 이름, 가격, `메뉴그룹(Menu Group)`을 가진다.
+- `메뉴 상품(Menu Product)` 는 식별자와 `상품(Product)`, 수량을 가진다.
+- `메뉴 (Menu)` 는 가격을 변경할 수 있다.
+- `메뉴 (Menu)` 는 `숨기(invisible)`거나 `노출(visible)`할 수 있다.
+
+## 주문 테이블
+- `주문테이블(order table)` 은 반드시 이름, `방문 손님 수(number of guest)`, 지정 여부를 가진다.
+- `주문테이블(order table)` 은 `손님 수를 변경할 수 있다.
+
+## 주문
+
+### 공통
+
+- `주문(Order)`는 식별자, 주문 상태, 주문 시간, 주문타입 그리고 `주문 라인 아이템(Order Line Item)` 을 가진다.
+- `주문 라인 아이템(Order Line Item)` 은 식별자와 메뉴, 가격, 수량을 가진다.
+- 
+### 매장 주문
+```mermaid
+sequenceDiagram
+    actor Admin 
+    autonumber
+
+		Admin ->> System : 테이블 선택 및 인원 지정
+		Admin ->> System : 주문 등록(요청)
+		Admin ->> System : 주문 수락
+		Admin ->> System : 준비 완료
+		Admin ->> System : 주문 완료
+
+```
+- `매장 주문(table order)` 주문은 `주문테이블(order table)`을 가진다.
+- `매장 주문(table order)`은  **요청  →** **수락** → **준비 완료** → **주문 완료** 순서로 진행된다.
+- 주문이 완료된 `매장 주문(table order)`은 테이블을 `정리(clean)` 한다.
+
+### 포장 주문
+```mermaid
+sequenceDiagram
+		actor Customer
+    actor Admin 
+		Admin->> System : 주문 요청
+		Admin ->> System : 주문 수락
+		Admin ->> System : 준비 완료
+		Admin -->> Customer : 음식수령
+		Admin ->> System : 주문 완료
+
+```
+- `포장 주문(take-out order)` 은  **요청  →** **수락** → **준비 완료** → **주문 완료** 순서로 진행된다.
+
+### 배달 주문
+```mermaid
+sequenceDiagram
+
+    actor Admin 
+    autonumber
+		Admin->> System : 주문 요청
+		Admin ->> System : 주문 수락
+		System -->> Delivery Agency : 배송 요청
+		Admin ->> System : 준비 완료
+		Delivery Agency ->> System : 배송 시작
+		Delivery Agency ->> System : 배달 완료
+		Admin ->> System : 주문 완료
+
+```
+- `배달주문(delivery order)` 은 반드시 `배달주소(delivery address)`를 가진다.
+- `배달주문(delivery order)` 은 **요청** → **수락** → **준비완료** → **배달시작** → **배달완료** → **주문완료** 순서로 진행된다.
+
