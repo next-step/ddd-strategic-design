@@ -92,22 +92,18 @@
 
 ### 상품
 
-| 한글명             | 영문명                         | 설명                             |
-|-----------------|-----------------------------|--------------------------------|
-| 가게 점주           | Shopkeeper                  | 가게를 운영하는 사장님                   |
-| 손님              | Guest                       | 가게를 이용하려는 손님                   |
-| 상품              | Product                     | 상품은 이름과 가격을 포함하고, 메뉴에 포함된다.    |
-| 상품 이름           | Product name                | 상품의 이름을 말하고, 비속어를 포함할 수 없다.    |
-| 상품 가격           | Product price               | 상품의 가격을 말하고, 0원 이상의 가격만 들어간다.  |
-| 상품 목록           | Product list                | 전체 상품 리스트의 정보                  |
-| 상품 등록           | Register product            | 상품을 등록할 수 있다.                  |
-| 상품 가격 변경        | Change product price        | 상품 가격을 변경한다.                   |
-| 비속어             | Profanity                   | 욕설                             |
-| 메뉴에 속한 상품 금액의 합 | total product price in menu | 메뉴에 속하는 전체 상품 금액을 함한 값이다.      |
-
-[//]: # (| 상품 이름이 올바른지 확인  | Verify the product name is correct  | 상품 이름이 올바른지의 여부를 정의하고, 상품 이름은 비어있을 수 없고, 비속어가 포함될 수 없다.                                          |)
-
-[//]: # (| 상품 가격이 올바른지 확인  | Verify the product price is correct | 상품 가격이 올바른지의 여부를 정의한다. 상품의 가격은 0원 이상이어야 하고, 해당 상품이 포함된 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴를 숨김 처리 한다. |)
+| 한글명             | 영문명                             | 설명                             |
+|-----------------|---------------------------------|--------------------------------|
+| 가게 점주           | Shopkeeper                      | 가게를 운영하는 사장님                   |
+| 손님              | Guest                           | 가게를 이용하려는 손님                   |
+| 상품              | Product                         | 상품은 이름과 가격을 포함하고, 메뉴에 포함된다.    |
+| 상품 이름           | Product name                    | 상품의 이름을 말하고, 비속어를 포함할 수 없다.    |
+| 상품 가격           | Product price                   | 상품의 가격을 말하고, 0원 이상의 가격만 들어간다.  |
+| 상품 목록           | Product list                    | 전체 상품 리스트의 정보                  |
+| 상품 등록           | Register product                | 상품을 등록할 수 있다.                  |
+| 상품 가격 변경        | Change product price            | 상품 가격을 변경한다.                   |
+| 비속어             | Profanity                       | 욕설                             |
+| 메뉴에 속한 상품 금액의 합 | Total MenuProduct Price in Menu | 메뉴에 속하는 전체 상품 금액을 함한 값이다.      |
 
 ### 메뉴 그룹
 
@@ -119,41 +115,35 @@
 | 메뉴 그룹 등록 | Register menu group | 메뉴 그룹을 등록한다.             |
 | 메뉴 그룹 목록 | Menu group list     | 전체 메뉴 그룹 리스트의 정보         |
 
-[//]: # (| 메뉴 그룹의 이름이 올바른지 확인 | Verify the menu group name is correct    | 메뉴 그룹 이름이 올바른지 여부를 정의한다. 메뉴 그룹 이름은 비어있을 수 없다.                     |)
-
 ### 메뉴
 
-| 한글명             | 영문명                         | 설명                                                                    |
-|-----------------|-----------------------------|-----------------------------------------------------------------------|
-| 가게 점주           | Shopkeeper                  | 가게를 운영하는 사장님                                                          |
-| 손님              | Guest                       | 가게를 이용하려는 손님                                                          |
-| 메뉴              | Menu                        | 메뉴는 이름과 가격, 메뉴 그룹, 숨김 처리 여부, 메뉴에 등록된 상품의 정보를 가진다.                     |
-| 메뉴 이름           | Menu name                   | 메뉴의 이름을 말하고, 비속어를 포함할 수 없다.                                           |
-| 메뉴 가격           | Menu Price                  | 메뉴에 속하는 전체 상품 금액을 합한 값을 의미하고, 메뉴에 등록이 된 가격이다. 그리고 메뉴 가격은 0원 이상이어야 한다. |
-| 메뉴에 속한 상품 금액의 합 | Total product price in menu | 현재 메뉴에 속하는 전체 상품 금액을 합한 값이다. 메뉴에 속한 상품 금액의 합은 메뉴 가격 보다 크거나 같아야 한다.    |
-| 메뉴 그룹           | Menu group                  | 메뉴의 한 묶음이고, 하나의 메뉴를 포함해야 한다.                                          |
-| 숨김 처리           | Displayed                   | 메뉴가 숨김 처리됐는지 정보                                                       |
-| 메뉴에 등록된 상품의 정보  | Menu product                | 메뉴에 등록된 상품의 정보이다. 상품의 정보와 상품의 개수가 들어가있다.                              |
-| 비속어             | Profanity                   | 욕설                                                                    |
-| 메뉴 등록           | Register menu               | 메뉴를 등록한다.                                                             |
-| 메뉴 가격 변경        | Change menu price           | 메뉴에 속하는 메뉴 가격을 변경한다,                                                  |
-| 노출되는 메뉴         | Display menu                | 손님이 주문할 수 있도록 메뉴를 화면에 노출한다.                                           |
-| 숨겨지는 메뉴         | Hide menu                   | 손님이 주문할 수 없도록 메뉴를 화면에서 숨긴다.                                           |
-| 메뉴 목록           | Menu list                   | 전체 메뉴 리스트                                                             |
-
-[//]: # (| 메뉴 이름이 올바른지 확인    | Verify the menu name is correct  |                                                                                                                                          |)
-
-[//]: # (| 메뉴 가격이 올바른지 확인    | Verify the menu price is correct | |)
+| 한글명             | 영문명                     | 설명                                                                    |
+|-----------------|-------------------------|-----------------------------------------------------------------------|
+| 가게 점주           | Shopkeeper              | 가게를 운영하는 사장님                                                          |
+| 손님              | Guest                   | 가게를 이용하려는 손님                                                          |
+| 메뉴              | Menu                    | 메뉴는 이름과 가격, 메뉴 그룹, 숨김 처리 여부, 메뉴에 등록된 상품의 정보를 가진다.                     |
+| 메뉴 이름           | Menu name               | 메뉴의 이름을 말하고, 비속어를 포함할 수 없다.                                           |
+| 메뉴 가격           | Menu Price              | 메뉴에 속하는 전체 상품 금액을 합한 값을 의미하고, 메뉴에 등록이 된 가격이다. 그리고 메뉴 가격은 0원 이상이어야 한다. |
+| 메뉴에 속한 상품 금액의 합 | Total MenuProduct Price | 현재 메뉴에 속하는 전체 상품 금액을 합한 값이다. 메뉴에 속한 상품 금액의 합은 메뉴 가격 보다 크거나 같아야 한다.    |
+| 메뉴 그룹           | Menu group              | 메뉴의 한 묶음이고, 하나의 메뉴를 포함해야 한다.                                          |
+| 숨김 처리           | Displayed               | 메뉴가 숨김 처리됐는지 정보                                                       |
+| 메뉴에 등록된 상품의 정보  | Menu product            | 메뉴에 등록된 상품의 정보이다. 상품의 정보와 상품의 개수가 들어가있다.                              |
+| 비속어             | Profanity               | 욕설                                                                    |
+| 메뉴 등록           | Register menu           | 메뉴를 등록한다.                                                             |
+| 노출되는 메뉴         | DisplayMenu             | 손님이 주문할 수 있도록 메뉴를 화면에 노출한다.                                           |
+| 숨겨지는 메뉴         | HideMenu                | 손님이 주문할 수 없도록 메뉴를 화면에서 숨긴다.                                           |
+| 메뉴 목록           | Menu list               | 전체 메뉴 리스트                                                             |
 
 ### 주문 테이블
 
 | 한글명               | 영문명                     | 설명                                                                      |
 |-------------------|-------------------------|-------------------------------------------------------------------------|
 | 가게 점주             | Shopkeeper              | 가게를 운영하는 사장님                                                            |
-| 손님                |                         | 가게를 이용하려는 손님                                                            |
+| 손님                | Guest                   | 가게를 이용하려는 손님                                                            |
 | 주문 테이블            | Order table             | 주문 테이블은 주문 테이블의 이름과 매장 식사를 예약한 손님의 수의 정보, 그리고 테이블이 비어있는지의 정보를 가진다.      |
 | 비어있는지의 정보         | Empty                   | 주문 테이블이 비어있는지의 정보                                                       |
-| 빈 테이블             | Empty table             | 비어있는 주문 테이블                                                             |
+| 빈 테이블             | EmptyTable              | 비어있는 주문 테이블                                                             |
+| 예약된 테이블           | ReservedTable           | 비어있지 않고, 예약된 주문 테이블                                                     |
 | 주문 테이블 등록         | Register order table    | 주문 테이블에 등록한다. 주문 테이블을 등록할 때, 이름이 올바른지 확인하고, 매장 식사를 예약한 손님의 수가 맞는지 확인한다. |
 | 테이블 예약            | Sit                     | 손님이 매장 식사 주문을 하면 테이블을 비어 있지않도록 설정한다.                                    |
 | 식사 완료             | Clear                   | 손님이 식사를 완료하면 해당 테이블을 비어있도록 설정한다.                                        |
@@ -163,43 +153,148 @@
 | 매장 식사를 예약한 손님의 수  | Number of guests        | 매장 식사를 예약한 손님의 수이다. 손님의 수는 0명 이상이어야 한다.                                 |
 | 주문 테이블 목록         | Table order list        | 전체 주문 테이블 리스트                                                           |
 
-[//]: # (| 주문 테이블 이름이 올바른지 확인 | Verify the order table name is correct   | 이름이 올바른지 확인한다.                                                                                 |)
+### 주문
 
-[//]: # (| 방문한 손님 수가 올바른지 확인  | Verify the number of guests is correct   | 매장 식사를 예약한 손님의 수가 맞는지 확인한다.                                                                    |)
+| 한글명            | 영문명                         | 설명                                                                       |
+|----------------|-----------------------------|--------------------------------------------------------------------------|
+| 가게 점주          | Shopkeeper                  | 가게를 운영하는 사장님                                                             |
+| 손님             | Guest                       | 가게를 이용하려는 손님                                                             |
+| 주문             | Order                       | 주문은 주문 유형과 주문 상태를 가지며, 주문 유형에 따라 배달 주소, 매장 안 테이블의 정보를 가진다.               |
+| 주문 항목          | Order line item             | 주문한 메뉴와 해당 메뉴를 주문한 개수를 의미한다. 배달 주문과 포장 주문일 때, 주문 항목의 수량이 0개 이상이어야 한다.    |
+| 주문 항목의 수량      | Quantity of Order line item | 주문 항목 정보에서 해당 메뉴를 주문한 수량                                                 |
+| 주문 유형          | Order type                  | 주문 유형을 의미한다. 주문 유형은 배달, 포장, 매장 세 가지가 존재한다.                               |
+| 배달 주문          | Delivery order              | 배달 주문을 의미한다. 배달 주문은 배달지의 정보를 가져야 한다. 그리고, 주문 항목의 수량이 0개 이상이어야 한다.        |
+| 포장 주문          | Take out order              | 포장 주문을 의미한다. 포장 주문은 주문 항목의 수량이 0개 이상이어야 한다.                              |
+| 매장 주문          | Eat in order                | 매장 주문을 의미한다. 매장 주문은 매장 안의 테이블이 필요하다.                                     |
+| 배달 주소          | Delivery address            | 배달 주소는 배달 주문 할 때, 배달 주소가 필요하다.                                           |
+| 매장 안 테이블       | Order table                 | 주문 테이블을 의미한다. 주문 테이블의 이름과 매장 식사를 예약한 손님의 수의 정보, 그리고 테이블이 비어있는지의 정보를 가진다. |
+| 등록된 메뉴         | menu                        | 메뉴를 의미한다. 메뉴는 이름과 가격, 메뉴 그룹, 숨김 처리 여부, 메뉴에 등록된 상품의 정보를 가진다.              |
+| 빈 테이블          | Empty table                 | 비어있는 매장 안 테이블                                                            |
+| 숨겨진 메뉴         | Hide menu                   | 숨겨져서 손님이 주문할 수 없는 메뉴                                                     |
+| 주문한 메뉴 가격      | Ordered menu price          | 주문하고 저장된 주문 항목 정보에 존재하는 메뉴 가격                                            |
+| 실제 메뉴 가격       | Actual menu price           | 실제 가게에 존재하는 메뉴 가격                                                        |
+| 주문한 전체 가격      | Total order price           | 실제 가게에 존재하는 메뉴 가격                                                        |
+| 배달 대행사         | Kitchen riders              | 치킨 배달을 대신해주는 대행사                                                         |
+| 배달 대행사 호출      | Request delivery            | 주문이 접수되고 배달이 되면 배달 대행사를 호출한다.                                            |
+| 접수 대기 중        | Waiting                     | 접수 대기 중인 상태                                                              |
+| 서빙             | Serve                       | 준비 중인 상태                                                                 |
+| 배달 중           | Delivering                  | 배달 중인 상태                                                                 |
+| 배달 완료          | Delivered                   | 배달이 완료된 상태                                                               |
+| 완료             | Complete                    | 손님에게 올바르게 제공된 상태                                                         |
+| 주문 접수          | Order acceptance            | 손님은 가게에 주문을 접수한다. 주문이 생성이되면 해당 주문은 접수 대기 중 상태이다.                         |
+| 주문 서빙          | Serve order                 | 접수 중인 주문을 받아 준비한다.                                                       |
+| 주문 배달          | Deliver order               | 준비를 끝마친 주문을 배달한다.                                                        |
+| 배달 완료          | Deliver completed order     | 배달 중인 주문을 배달 완료한다.                                                       |
+| 주문 완료로 변경      | Complete order              | 주문이 손님에게 올바르게 제공이 되면 주문 상태를 완료로 변경한다.                                    |
+| 완료되지 않은 매장 주문  | Incomplete eat in order     | 주문 상태가 완료가 아닌 매장 주문                                                      |
+| 주문 목록          | Order list                  | 전체 주문 리스트                                                                |
+
+## 모델링
+
+### 상품
+
+속성
+
+- 상품(`Product`)은 고유번호(`ProductId`)를 가진다.
+- 상품(`Product`)은 비속어(`Profanity`)가 포함되지 않는 이름(`PriceName`)을 가진다.
+    - 이름(`name`)은 `PurgoMalumClient`를 통해 비속어(`Profanity`)가 포함됐는지 확인한다.
+- 상품(`Product`)은 0원 이상인 가격(`ProductPrice`)을 가진다.
+
+행위
+
+- **`ProductService`**는 상품 가격(`ProductPrice`), 상품 이름(`PriceName`)을 전달하면 상품(`Product`)을 생성할 수 있다.
+    - 상품(`Product`)은 상품 속성에 부합하지 않는 메뉴를 생성할 수 없다.
+- **`ProductService`**는 상품 고유번호(`ProductId`)와 상품 가격(`ProductPrice`)을 전달하면 상품(`Product`)의 가격(`price`)을 변경할 수 있다.
+    - 해당 상품(`Product`)이 들어가는 메뉴 가격(`MenuPrice`)이 메뉴에 속한 메뉴 품목 금액 합(`Total MenuProduct price in menu`)보다 작으면, 숨김
+      메뉴(`HideMenu`)가 된다.
+- **`ProductService`**는 상품(`Product`)의 목록을 조회할 수 있다.
+
+### 메뉴 그룹
+
+속성
+
+- 메뉴그룹(`MenuGroup`)은 고유한 (`MenuGroupId`)를 가진다.
+- 메뉴그룹은 비어있지 않은 이름(`MenuGroupName`)을 가진다.
+
+행위
+
+- **`MenuGroupService`**는 메뉴그룹 이름(`MenuGroupName`)을 전달하면 메뉴 그룹을 생성할 수 있다.
+- **`MenuGroupService`**는 메뉴그룹(`MenuGroup`)을 조회할 수 있다.
+
+### 메뉴
+
+속성
+
+- 메뉴(`Menu`)는 고유번호(`MenuId`)를 가진다.
+- 메뉴(`Menu`)는 비속어(`Profanity`)가 포함되지 않는 이름(`MenuName`)을 가진다.
+    - 이름(`MenuName`)은 `PurgoMalumClient`를 통해 비속어(`Profanity`)가 포함됐는지 확인한다.
+- 메뉴(`Menu`)는 메뉴에 속한 메뉴 품목 금액의 합(`Total MenuProduct Price in Menu`)보다 작은 메뉴 가격(`MenuPrice`)을 가진다.
+- 메뉴(`Menu`)는 1개 이상의 메뉴그룹(`MenuGroup`)에 속해있다.
+- 메뉴(`Menu`)는 노출 상태(`displayed`) 정보를 가지며 노출 매뉴(`DisplayMenu`), 숨김 메뉴(`HideMenu`) 중 하나를 가진다.
+- 메뉴(`Menu`)는 하나 이상의 메뉴 품목(`MenuProduct`) 정보를 가진다.
+    - 메뉴 품목(`MenuProduct`)은 상품(`Product`)과 수량(`Quantity`)을 가진다.
+
+행위
+
+- **`MenuService`**는 메뉴 가격(`MenuPrice`)과 메뉴그룹 고유번호(`MenuGroupId`), 메뉴 이름(`MenuName`), 메뉴 숨김 처리 여부(`MenuDisplayed`), 그리고
+  하나 이상의 메뉴 품목(`MenuProducts`)을 전달하면 메뉴(`Menu`)를 생성할 수 있다.
+    - 메뉴(`Menu`)는 메뉴 속성에 부합하지 않는 메뉴를 생성할 수 없다.
+- **`MenuService`**는 메뉴 고유번호(`MenuId`)와 메뉴 가격(`MenuPrice`)을 전달하면 메뉴 가격(`MenuPrice`)을 변경할 수 있다.
+    - 메뉴 품목 금액의 합(`Total MenuProduct Price`)보다 적은 메뉴 가격(`MenuPrice`)을 가지면 숨겨지는 메뉴(`HideMenu`)가 된다.
+- **`MenuService`**는 메뉴 고유번호(`MenuId`)를 전달하면 메뉴 품목 금액의 합(`Total MenuProduct Price`)보다 적은 메뉴 가격을 가진 메뉴(`Menu`)를 노출
+  메뉴(`DisplayMenu`)로 변경한다.
+- **`MenuService`**는 메뉴 고유번호(`MenuId`)를 전달하면 숨김 메뉴(`HideMenu`)로 변경한다.
+- **`MenuService`**는 메뉴(`Menu`)를 조회할 수 있다.
+
+### 주문 테이블
+
+속성
+
+- 주문 테이블(`OrderTable`)은 고유번호(`OrderTableId`)를 가진다.
+- 주문 테이블(`OrderTable`)은 이름(`OrderName`)을 가진다.
+- 주문 테이블(`OrderTable`)이 비어있는 상태(`empty`) 정보를 가지고 있고, 빈 테이블(`EmptyTable`)이거나 예약된 테이블(`ReservedTable`) 둘 중 하나이다.
+- 예약된 주문 테이블(`ReservedTable`)에는 예약한 손님 수(`numberOfGuests`)를 가지고 있다.
+
+행위
+
+- **`OrderTableService`**는 주문 이름(`OrderName`)을 전달하면 주문 테이블(`OrderTable`)을 생성할 수 있다.
+    - 생성한 주문 테이블(`OrderTable`)은 빈 테이블(`EmptyTable`)이어야 하고, 예약한 손님이 없어야 한다.
+- **`OrderTableService`**는 주문 테이블 고유번호(`OrderTableId`)를 전달하면 빈 테이블(`EmptyTable`)을 예약된 테이블(`ReservedTable`)로 변경할 수 있다.
+- **`OrderTableService`**는 주문 테이블 고유번호(`OrderTableId`)를 전달하면 예약된 테이블(`ReservedTable`)을 빈 테이블(`EmptyTable`)로 변경할 수 있다.
+    - 식사가 완료된 예약된 테이블(`ReservedTable`)을 비우면 빈 테이블(`EmptyTable`)로 변경하고, 예약한 손님을 없앤다.
+- **`OrderTableService`**는 주문 테이블 고유번호(`OrderTableId`)와 변경할 예약 손님 수(`numberOfGuests`)를 전달하면 예약한 주문 테이블(`OrderTable`)의 손님
+  수를 변경할 수 있다.
+    - 변경하려는 손님 수는 0명 이상이어야 하고, 예약된 테이블(`ReservedTable`)이면, 손님 수를 변경할 수 있다.
+- **`OrderTableService`**는 주문 테이블을 조회할 수 있다.
 
 ### 주문
 
-| 한글명           | 영문명                         | 설명                                                                       |
-|---------------|-----------------------------|--------------------------------------------------------------------------|
-| 가게 점주         | Shopkeeper                  | 가게를 운영하는 사장님                                                             |
-| 손님            | Guest                       | 가게를 이용하려는 손님                                                             |
-| 주문            | Order                       | 주문은 주문 유형과 주문 상태를 가지며, 주문 유형에 따라 배달 주소, 매장 안 테이블의 정보를 가진다.               |
-| 주문 항목         | Order line item             | 주문한 메뉴와 해당 메뉴를 주문한 개수를 의미한다. 배달 주문과 포장 주문일 때, 주문 항목의 수량이 0개 이상이어야 한다.    |
-| 주문 항목의 수량     | Quantity of Order line item | 주문 항목 정보에서 해당 메뉴를 주문한 수량                                                 |
-| 주문 유형         | Order type                  | 주문 유형을 의미한다. 주문 유형은 배달, 포장, 매장 세 가지가 존재한다.                               |
-| 배달 주문         | Delivery order              | 배달 주문을 의미한다. 배달 주문은 배달지의 정보를 가져야 한다. 그리고, 주문 항목의 수량이 0개 이상이어야 한다.        |
-| 포장 주문         | Take out order              | 포장 주문을 의미한다. 포장 주문은 주문 항목의 수량이 0개 이상이어야 한다.                              |
-| 매장 주문         | Eat in order                | 매장 주문을 의미한다. 매장 주문은 매장 안의 테이블이 필요하다.                                     |
-| 배달 주소         | Delivery address            | 배달 주소는 배달 주문 할 때, 배달 주소가 필요하다.                                           |
-| 매장 안 테이블      | Order table                 | 주문 테이블을 의미한다. 주문 테이블의 이름과 매장 식사를 예약한 손님의 수의 정보, 그리고 테이블이 비어있는지의 정보를 가진다. |
-| 등록된 메뉴        | menu                        | 메뉴를 의미한다. 메뉴는 이름과 가격, 메뉴 그룹, 숨김 처리 여부, 메뉴에 등록된 상품의 정보를 가진다.              |
-| 빈 테이블         | Empty table                 | 비어있는 매장 안 테이블                                                            |
-| 숨겨진 메뉴        | Hide menu                   | 숨겨져서 손님이 주문할 수 없는 메뉴                                                     |
-| 주문한 메뉴 가격     | Ordered menu price          | 주문하고 저장된 주문 항목 정보에 존재하는 메뉴 가격                                            |
-| 실제 메뉴 가격      | Actual menu price           | 실제 가게에 존재하는 메뉴 가격                                                        |
-| 배달 대행사        | Kitchen riders              | 치킨 배달을 대신해주는 대행사                                                         |
-| 배달 대행사 호출     | Request delivery            | 주문이 접수되고 배달이 되면 배달 대행사를 호출한다.                                            |
-| 접수 대기 중       | Waiting                     | 접수 대기 중인 상태                                                              |
-| 서빙            | Serve                       | 준비 중인 상태                                                                 |
-| 배달 중          | Delivering                  | 배달 중인 상태                                                                 |
-| 배달 완료         | Delivered                   | 배달이 완료된 상태                                                               |
-| 완료            | Complete                    | 손님에게 올바르게 제공된 상태                                                         |
-| 주문 접수         | Order acceptance            | 손님은 가게에 주문을 접수한다. 주문이 생성이되면 해당 주문은 접수 대기 중 상태이다.                         |
-| 주문 서빙         | Serve order                 | 접수 중인 주문을 받아 준비한다.                                                       |
-| 주문 배달         | Deliver order               | 준비를 끝마친 주문을 배달한다.                                                        |
-| 배달 완료         | Deliver completed order     | 배달 중인 주문을 배달 완료한다.                                                       |
-| 주문 완료로 변경     | Complete order              | 주문이 손님에게 올바르게 제공이 되면 주문 상태를 완료로 변경한다.                                    |
-| 완료되지 않은 매장 주문 | Incomplete eat in order     | 주문 상태가 완료가 아닌 매장 주문                                                      |
-| 주문 목록         | Order list                  | 전체 주문 리스트                                                                |
+속성
 
-## 모델링
+- 주문은 주문 고유번호(`OrderId`)를 가진다.
+- 주문 타입(`OrderType`)은 배달주문(`DELIVERY`), 포장주문(`TAKEOUT`), 매장식사(`EAT_IN`)  중 하나이다.
+    - `DELIVERY` : 배달주문은 주소(`deliveryAddress`)가 있어야 하며, 주문 상품 품목의 수량(`OrderLineItemQuantity`)이 있어야 한다.
+    - `TAKEOUT` : 포장주문은 상품 품목의 수량(`OrderLineItemQuantity`)이 있어야 한다.
+    - `EAT_IN` : 매장식사는 주문 테이블 정보(`orderTable`)를 가지며 상품 품목의 수량(`OrderLineItemQuantity`)이 없어도 된다
+- 주문 상태(`OrderStatus`)는 주문 대기(`WAITING`), 주문 접수(`ACCEPTED`), 주문 준비(`SERVED`), 배달 시작(`DELIVERING`), 배달 완료(`DELIVERED`),
+  주문 완료(`COMPLETED`) 중 하나다.
+- 주문은 주문한 시각(`orderDateTime`)을 가진다.
+- 주문은 한개 이상의 주문 상품 품목(`OrderLineItems`)의 정보를 가진다.
+    - 주문 상품 품목은 메뉴(`Menu`)와 수량(`OrderLineItemQuantity`) 그리고 가격(`OrderLineItemPrice`)을 가진다.
+
+행위
+
+- **`OrderService`**는 주문 타입(`OrderType`)과 한 개 이상의 주문 상품 품목(`OrderLineItems`)을 전달하면 주문을 생성할 수 있다.
+    - 주문하는 메뉴가 숨겨져있지 않아야 하고, 메뉴의 가격(`MenuPrice`)과 주문하려는 메뉴의 가격(`OrderLineItemPrice`)이 같아야 한다.
+    - 배달주문(`DELIVERY`)은 주소(`deliveryAddress`)가 있어야 하고, 매장식사(`EAT_IN`)는 주문 테이블(`OrderTable`)이 있어야 한다.
+- **`OrderService`**는 주문 고유번호(`OrderId`)를 전달하면 주문 대기 상태(`WAITING`)인 주문을 수락할 수 있다.
+    - 배달 주문일 때, `kitchenridersClient`에 주문을 요청하고 주문 고유번호(`OrderId`)와 주문한 전체 가격(`Total order price`), 그리고 주문
+      주소(`deliveryAddress`)를 전달한다.
+- **`OrderService`**는 주문 고유번호(`OrderId`)를 전달하면 접수(`ACCEPTED`)한 주문을 준비(`Server`)할 수 있다.
+- **`OrderService`**는 주문 고유번호(`OrderId`)를 전달하면 접수(*`SERVED`*)한 배달주문(`DELIVERY`) 을 배달 시작(`startDelivery`)할 수 있다.
+- **`OrderService`**는 주문 고유번호(`OrderId`)를 전달하면 배달 시작(`DELIVERING`)한 배달주문(`DELIVERY`) 을 배달 완료(`completeDelivery`)할 수 있다.
+- **`OrderService`**는 주문 고유번호(`OrderId`)를 전달하면 주문을 완료(`complete`)할 수 있다.
+    - 배달 완료(`DELIVERED`)된 배달주문(`DELIVERY`)을 주문 완료한다.
+    - 준비된(`SERVED`) 포장주문(`TAKEOUT`)을 주문 완료한다.
+    - 준비된(`SERVED`)  매장식사(`EAT_IN`)인 주문을 완료하고, 완료된 주문(`COMPLETED`)은 주문 테이블을 비우고, 예약한 손님을 없앤다.
+- **`OrderService`**는 주문을 조회할 수 있다.
