@@ -129,6 +129,8 @@
 | 배달 요청 | delivery request | 배달주문이 접수될 경우 키친라이더에게 배달을 요청한 상태 |
 
 ### 주문 타입 (주문의유형)
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 매장주문 | eat in order | 매장에서 식사하는 주문 타입 |
 | 포장주문 | take out order | 상품을 포장하는 주문 타입 |
 | 배달주문 | delivery order | 상품을 배달요청하는 주문 타입 |
@@ -144,6 +146,82 @@
 | 완료 | order complete | 요청된 주문의 모든과정이 완료된 상태 |
 
 ### 공통
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 비속어 | profanity word | 격이 낮고 속된 말 |
 
 ## 모델링
+
+### 상품
+
+- 속성
+  - 상품(Product)의 가격(price)은 0원 이상이어야 한다.
+  - 상품(Product)의 이름(name)에는 비속어(Profanity)가 포함될수 없다.
+  
+- 행위
+  - 상품(Product)을 등록(create)할수 있다.
+  - 상품(Product)의 가격(price)을 변경(change)할 수 있다.
+    - 상품(Product)의 가격(price)이 변경될때 메뉴(Menu)의 가격(price)이 메뉴에 속한 상품(MenuProduct) 금액의 합(sum)보다 크면 메뉴가 숨겨진다.(hide)
+  - 상품(Product)의 목록을 조회(findAll)할수 있다.
+  
+### 메뉴그룹
+
+- 속성
+  - 메뉴그룹(MenuGroup)의 이름(name)은 비워둘 수 없다.
+- 행위
+  - 메뉴그룹(MenuGroup)을 등록(create)할 수 있다.
+  - 메뉴그룹(MenuGroup)의 목록을 조회(findAll)할 수 있다.
+
+### 메뉴
+
+- 속성
+  - 상품(Product)이 없으면 등록(create)할 수 없다.
+  - 메뉴(Menu)에 속한 상품(Product)의 수량(quantity)은 0이상 이어야 한다.
+  - 메뉴(Menu)의 가격(price)은 0원 이상이어야한다.
+  - 메뉴에 속한 상품(MenuProduct) 금액(price)의 합(sum)은 메뉴(Menu)의 가격(price)보다 크거나 같아야한다.
+  - 메뉴는 특정 메뉴그룹(MenuGroup)에 속해야한다.
+  - 메뉴의 이름(name)에는 비속어(Profanity)가 포함될수 없다.
+- 행위
+  - 메뉴(Menu)를 등록(create)할 수 있다.
+  - 메뉴(Menu)의 가격을 변경(change)할 수 있다.
+  - 메뉴(Menu)를 노출(display)할 수 있다.
+  - 메뉴(Menu)를 숨길(hide) 수 있다.
+  - 메뉴(Menu)의 목록을 조회(findAll)할 수 있다.
+  
+### 주문테이블
+- 속성
+  - 주문테이블(OrderTable)의 이름(name)은 비워둘 수 없다.
+  - 방문한 손님수(numberOfGuests)는 0이상 이어야한다.
+- 행위
+  - 주문테이블(OrderTable)을 등록(create)할 수 있다.
+  - 주문테이블(OrderTable)이 빈테이블(empty) 경우 착석(sit)할수 있다.
+  - 주문테이블(OrderTable)을 정리(clear)할 수 있다.
+    - 완료(complete)되지 않은 주문(Order)이 있는 주문테이블(OrderTable)은 빈테이블(empty)로 설정할 수 없다.
+  - 주문테이블(OrderTable)은 손님수(numberOfGuests)를 변경(change)할 수 있다.
+    - 주문테이블(OrderTable)이 빈테이블(empty) 일 경우 손님수(numberOfGuests)를 변경할 수 없다.
+  - 주문테이블(OrderTable)의 목록을 조회(findAll)할 수 있다.
+
+### 주문
+- 속성
+  - 주문유형(OrderType)은 배달주문(deliveryOrder), 포장주문(takeOutOrder), 매장주문(eatInOrder)이 있다.
+  - 주문상태(OrderStatus)는 대기(waiting), 접수(accept), 서빙(serve), 배달시작(delivery start), 배달완료(delivery complete), 완료(complete) 가 있다.
+- 행위
+  - 주문(Order)을 등록(create)할 수 있다.
+    - 메뉴(Menu)가 없으면 등록할 수 없다.
+    - 주문유형(OrderType)이 올바르지 않으면 등록할 수 없다.
+    - 매장주문(eatInOrder)은 주문항목(OrderLineItem)의 수량(quantity)이 0 미만일 수 있다.  
+  - 주문(Order)을 접수(accept)한다.
+    - 대기(waiting)중인 주문(Order)만 접수(accept)할 수있다.
+    - 배달주문(deliveryOrder)이 접수(accept)되면 배달 대행사(kitchen rider)를 호출(delivery request)한다.
+  - 주문(Order)을 서빙(serve)한다.
+    - 접수(accept)된 주문(Order)만 서빙(serve)할 수 있다.
+  - 주문(Order)을 배달(delivery)한다.
+    - 배달주문(deliveryOrder)만 배달(delivery start)할 수 있다.
+    - 서빙(serve)된 주문(Order)만 배달(delivery start)할 수 있다.
+  - 주문(Order)을 배달완료(delivery complete) 한다.
+    - 배달(delivery start)중인 주문(Order)만 배달완료(delivery complete)할 수 있다.
+  - 주문(Order)을 완료(complete)한다.
+    - 배달주문(deliveryOrder)의 경우 배달완료(delivery complete)된 주문(Order)만 완료(complete)할 수 있다.
+    - 포장(takeOut Order) 및 매장 주문(eatInOrder)의 경우 서빙(serve)된 주문(Order)만 완료(complete)할 수 있다.
+    - 주문테이블(OrderTable)의 모든 주문(Order)이 완료(complete)되면 빈테이블(empty)로 정리(clear)한다.
+  - 주문(Order)목록을 조회(findAll)할 수 있다.
