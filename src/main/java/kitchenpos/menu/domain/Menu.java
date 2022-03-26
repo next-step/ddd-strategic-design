@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.menugroup.domain.MenuGroup;
+import kitchenpos.menu.menugroup.domain.MenuGroup;
 
 @Table(name = "menu")
 @Entity
