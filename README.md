@@ -122,7 +122,7 @@
 ### PRODUCT(상품)
 - 속성
   - `PRODUCT`는 `PROUDCT`를 구별할 수 있는 `PROUDCT ID`를 가진다.
-  - `PRODUCT`은 `NAME(이름)`을 가진다.
+  - `PRODUCT`은 `NAME(이름)`이 있다.
   - `PRODUCT`은 0 이상 `PRICE(가격)`을 가진다.
 - 기능
   - `PRODUCT`을 등록할 수 있다.
@@ -138,7 +138,7 @@
 
 - 속성
   - `MENU`는 `MENU`를 구별할 수 있는 `메뉴 ID`를 가진다.
-  - `MENU`는 `NAME(이름)`을 가진다.
+  - `MENU`는 `NAME(이름)`이 있다.
   - `MENU`는 0 이상 `PRICE(가격)`을 가진다.
   - `MENU`는 `MENU GROUP(메뉴그룹)`에 포함된다.
     - `MENU GROUP(메뉴 그룹)`을 구별할 수 있는 `MENU GROUP ID`를 가진다.
@@ -164,10 +164,18 @@
 ### MENU GROUP(메뉴 그룹)
 - 속성
   - `MENU GROUP`은 `MENU GROUP`을 구별할 수 있는 `MENU GROUP ID`를 가진다.
-  - `NAME(이름)`이 있어야한다.
-- `MENU GROUP`을 등록 할 수 있다.
-  - `NAME(이름)`이 있어야한다.
-- `MENU GROUP` 목록을 조회 할 수 있다.
+  - `NAME(이름)`이 있다.
+- 기능
+  - `MENU GROUP`을 등록 할 수 있다.
+    - `NAME(이름)`이 있어야한다.
+  - `MENU GROUP` 목록을 조회 할 수 있다.
+
+### MENU PRODUCT(메뉴 상품)
+- 속성
+  - `MENU PROUDCT`은 `MENU PRODUCT`을 구별할 수 있는 `MENU PRODUCT SEQ`를 가진다.
+  - `PRODUCT(상품)`을 가지고 있다.
+  - `MENU PROUDCT`은 `PRODUCT`을 구별할 수 있는 `PRODUCT ID`를 가진다.
+  - `QUANTITY(수량)`을 가진다.
 
 ### 주문
 
