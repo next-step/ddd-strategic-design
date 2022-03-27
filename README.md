@@ -215,6 +215,7 @@
 * `EAT_IN` 유형의 `ACCEPT`상태 `Order`는 손님에게 전달 되고 `SERVED` 상태가 된다.
 * 손님에게 전달된 `EAT_IN` 유형의 `SERVED`상태 `Order`는 완료 되어 `COMPLETED` 상태가 된다. 
 * `EAT_IN` 유형의 `SERVED`상태 `Order`는 완료 되어 `COMPLETED` 상태가 된다. 
+  * `COMPLETED`상태 `Order`를 주문한 `OrderTable`에 더이상 `COMPLETED`상태가 아닌 `EAT_IN` 유형의 `Order`이 없다면 `OrderTable`을 정리한다. 
 
 ### OrderLineItem
 * `OrderLineItem`은 주문한 `Menu`, 수량 그리고 주문 메뉴 가격을 가진다.
@@ -226,9 +227,9 @@
 ### OrderTable
 * `OrderTable`은 이름, 손님의 수 그리고 비었는지 여부를 가진다.
 * `OrderTable`을 추가할 수 있다.
-* 손님들이 `OrderTable`에 앉을 수 있으며, 이후에도 손님이 더 오거나 떠날 수 있다.
-* 손님들이 아직 `OrderTable`에 앉아있지 않더라도 비어있지 않은 테이블로 취급될 수 있다.
-* 모든 `Order`가 `COMPLETED`된 `OrderTable`을 정리하여 빈 테이블로 만들 수 있다.
+* `EAT_IN` 유형의 `Order` 손님들이 `OrderTable`에 앉을 수 있으며, 이후에도 손님이 더 오거나 떠날 수 있다.
+* `EAT_IN` 유형의 `Order` 손님들이 아직 `OrderTable`에 앉아있지 않더라도 비어있지 않은 테이블로 취급될 수 있다.
+* `EAT_IN` 유형의 모든 `Order`가 `COMPLETED`된 `OrderTable`을 정리하여 빈 테이블로 만들 수 있다.
 
 <br>
 <br>
