@@ -96,7 +96,8 @@
 | 메뉴 | MENU | 손님에게 제공하기 위한 음식의 목록과 가격이 포함된다. |
 | 메뉴 그룹 | MENU GROUP | 메뉴를 묶은 메뉴의 상위카테고리이다. |
 | 메뉴 상품 | MENU PRODUCT | 메뉴에 담기는 상품과 갯수 |
-| 전시 | DISPLAY | 메뉴를 손님이 확인할 수 있는 여부 |
+| 숨김 | HIDE | 메뉴를 손님이 확인할 수 없는 상태 |
+| 공개 여부 | DISPLAY | 메뉴를 손님에게 보여줄지 여부 |
 | 주문 | ORDER | 손님이 식사를 하기위해 메뉴를 지정하는 행위 |
 | 주문 라인 아이템 | ORDER LINE ITEM | 주문에 담기는 세부 주문 정보 |
 | 주문 상태 | ORDER STATUS | 주문이 시작되면 실행되는 단계 |
@@ -117,3 +118,134 @@
 | 테이블 | TABLE | 손님이 식당에서 식사를 하면 식사를 하게되는 곳 |
 
 ## 모델링
+
+### PRODUCT(상품)
+- 속성
+  - `PRODUCT`는 `PROUDCT`를 구별할 수 있는 `PROUDCT ID`를 가진다.
+  - `PRODUCT`은 `NAME(이름)`이 있다.
+  - `PRODUCT`은 0 이상 `PRICE(가격)`을 가진다.
+- 기능
+  - `PRODUCT`을 등록할 수 있다.
+    - `PRICE(가격)`는 0보다 커야한다.
+    - `NAME(이름)`이 있어야한다.
+    - `NAME(이름)`에 `PROFANITY(비속어)`는 사용할 수 없다.
+  - `PRODUCT`의 `PRICE(가격)`를 변경할 수 있다.
+    - `PRICE(가격)`는 0보다 커야한다.
+    - `MENU(메뉴)`의 `PRICE(가격)`이 `MENU PRODUCT(메뉴상품)`의 합보다 크면 메뉴는 `HIDE(숨김)`이 된다.
+  - `PRODUCT` 목록을 조회할 수 있다.
+
+### MENU(메뉴)
+- 속성
+  - `MENU`는 `MENU`를 구별할 수 있는 `메뉴 ID`를 가진다.
+  - `MENU`는 `NAME(이름)`이 있다.
+  - `MENU`는 0 이상 `PRICE(가격)`을 가진다.
+  - `MENU`는 `MENU GROUP(메뉴그룹)`에 포함된다.
+    - `MENU GROUP(메뉴 그룹)`을 구별할 수 있는 `MENU GROUP ID`를 가진다.
+  - `MENU`는 `DISPLAY(공개 여부)` 속성을 가진다.
+  - `MENU`는 `MENU PRODUCT(메뉴상품)`을 한 개 이상 가진다.
+- 기능
+  - `MENU`를 등록할 수 있다.
+    - `MENU`의 `PRICE(가격)`은 `MENU`가 가진 `MENU PRODUCT(메뉴상품)`의 합보다 클 수 없다.
+    - `MENU`의 `PRICE(가격)`은 0 이상이어야한다.
+    - `MENU`의 `NAME(이름)`에 `PROFANITY(비속어)`는 사용할 수 없다.
+    - `NAME(이름)`이 있어야한다.
+    - `MENU PRODDUCT(메뉴 상품)`의 `QUANTITY(수량)`이 0 이상이어야한다.
+    - `MENU GROUP(메뉴 그룹)`에 포함되어 있어야한다.
+- `MENU`의 `PRICE(가격)`을 변경할 수 있다.
+  - `MENU`의 `PRICE(가격)`은 `MENU`가 가진 `MENU PRODUCT(메뉴상품)`의 합보다 클 수 없다.
+  - `MENU`의 `PRICE(가격)`은 0 이상이어야한다.
+- `MENU`의 `DISPLAY(공개 여부)` 상태를 활성화 할 수 있다.
+  - `MEMU`의 `PRICE(가격)`이 `MENU PRODUCT(메뉴상품)`의 합보다 크면 활성화 할 수 없다.
+- `MENU`의 `DISPLAY` 상태를 `HIDE(숨김)` 할 수 있다.
+- `MENU`의 목록을 조회 할 수 있다.
+
+### MENU GROUP(메뉴 그룹)
+- 속성
+  - `MENU GROUP`은 `MENU GROUP`을 구별할 수 있는 `MENU GROUP ID`를 가진다.
+  - `NAME(이름)`이 있다.
+- 기능
+  - `MENU GROUP`을 등록 할 수 있다.
+    - `NAME(이름)`이 있어야한다.
+  - `MENU GROUP` 목록을 조회 할 수 있다.
+
+### MENU PRODUCT(메뉴 상품)
+- 속성
+  - `MENU PROUDCT`은 `MENU PRODUCT`을 구별할 수 있는 `MENU PRODUCT SEQ`를 가진다.
+  - `PRODUCT(상품)`을 가지고 있다.
+  - `MENU PROUDCT`은 `PRODUCT`을 구별할 수 있는 `PRODUCT ID`를 가진다.
+  - `QUANTITY(수량)`을 가진다.
+
+### ORDER(주문)
+- 속성
+  - `ORDER`은 `ORDER`을 구별할 수 있는 `ORDER ID`를 가진다.
+  - `ORDER`은 어떤 주문인지 구분할 수 있는 `ORDER TYPE(주문 형태)`을 가진다.
+    - `ORDER TYPE(주문 형태)`은 `DELIVERY(배달)`을 선택할 수 있다.
+    - `ORDER TYPE(주문 형태)`은 `TAKEOUT(포장)`을 선택할 수 있다.
+    - `ORDER TYPE(주문 형태)`은 `EAT IN(식당 주문)`을 선택할 수 있다.
+  - `ORDER`은 `ORDER STATUS(주문 상태)`를 가진다.
+    - `ORDER STATUS(주문 상태)`은 `WAITING(대기)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `ACCEPTED(대기)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `SERVED(조리)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `DELIVERING(조리)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `DELIVERED(배달완료)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `COMPLETED(주문완료)`상태가 될 수 있다. 
+  - `ORDER`은 `ORDER DATE TIME(주문 시간)`를 가진다.
+  - `ORDER`은 한 개 이상의 `ORDER LINE ITEM(주문 라인 아이템)`을 가진다.
+- 기능 
+  - `ORDER`을 `생성`할 수 있다.
+    - `ORDER TYPE(주문 형태)`이 입력받아야한다.
+    - `ORDER LINE ITEM(주문 라인 아이템)`을 입력받아야한다.
+    - `ORDER LINE ITEM(주문 라인 아이템)`의 `MENU`는 저장된 `MENU(메뉴)`에 포함되어야한다.
+    - `MENU`가 `숨김(HIDE)` 상태에서는 `생성`할 수 없다. 
+    - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`이 있어야한다.
+    - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`이 비어있으면 안된다.
+    - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`가 아닌 경우, 
+      `ORDER LINE ITEM(주문 라인 아이템)`의 `QUANTITY(수량)`이 0보다 커야한다.
+    - `MENU(메뉴)`의 `PRICE(가격)`과 `ORDER LINE ITEM(주문 라인 아이템)`의 합이 일치해야한다.   
+    - `ORDER TYPE(주문 타입)`이 `DELIVERY(배달)`이면, `DELIVERY ADDRESS(배달주소)`가 필요하다.
+  - `ORDER`을 `수락`으로 변경할 수 있다.
+    - `ORDER STATUS(주문상태)`가 `WAIT(주문대기)` 여야한다.
+    - `KITCHEN RIDERS CLIENT(키친 라이더 클라이언트)`를 호출한다.
+  - `ORDER`을 `조리`로 변경할 수 있다.
+    - `ORDER STATUS(주문상태)`가 `ACCEPTED(승인)` 여야한다.
+  - `ORDER`을 `배달시작`으로 변경할 수 있다.
+    - `ORDER TYPE(주문 형태)`이 `DELIVERY(배달)`이어야한다.
+    - `ORDER STATUS(주문 상태)가`이 `SERVED(조리)`이어야한다.
+  - `ORDER`을 `배달 완료`으로 변경 할 수 있다.
+    - `ORDER STATUS(주문 상태)가`이 `SERVED(조리)`이어야한다.
+  - `ORDER`을 `주문 완료`으로 변경 할 수 있다.
+    - `ORDER TYPE(주문형태)`이 `EAT IN(식당식사)`이면, `ORDER STATUS(주문 상태)`가 `SERVED(조리)`여야한다.
+    - `ORDER TYPE(주문형태)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`을 `비어진`상태로 바꾼다.
+    - `ORDER TYPE(주문형태)`이 `DELIVERY(배달)`이면, `ORDER STATUS(주문 상태)`가 `DELIVERED(배달완료)`여야한다.
+    - `ORDER TYPE(주문형태)`이 `TAKE OUT(포장)`이면, `ORDER STATUS(주문 상태)`가 `SERVED(조리)`여야한다.
+  - `ORDER`의 목록을 조회할 수 있다.
+
+### ORDER LINE ITEM(오더 라인 아이템)
+- 속성
+  - `ORDER LINE ITEM`은 `ORDER LINE ITEM`을 구별할 수 있는 `ORDER LINE ITEM SEQ`를 가진다.
+  - `MENU(메뉴)`을 가지고 있다.
+  - `ORDER LINE ITEM`은 `MENU(메뉴)`을 구별할 수 있는 `MENU ID`를 가진다.
+  - `QUANTITY(수량)`을 가진다.
+  - `PRICE(가격)`을 가진다.
+
+### ORDER TABLE(주문 테이블)
+- 속성
+  - `ORDER TABLE`는 `ORDER TABLE`을 구별할 수 있는 `ORDER TABLE ID`를 가진다.
+  - `ORDER TABLE`는 `NAME(이름)`이 있다.
+  - `ORDER TABLE`는 `NUMBER OF GUESTS(손님수)`을 가진다.
+  - `ORDER TABLE`는 `EMPTY(비어있는지 여부)` 상태를 가진다.
+- 기능
+  - `ORDER TABLE`을 `생성`할 수 있다.
+    - `NAME(이름)`이 있어야한다.
+    - `ORDER TABLE`은 최초 생성시 `NUMBER OF GUESTS(손님수)`는 0명이다.
+    - `ORDER TABLE`은 최초 생성시 `EMPTY(비어있는지 여부)`가 활성화이다.
+  - `ORDER TABLE`을 `앉을` 수 있다.
+    - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 비활성화이다.
+  - `ORDER TABLE`을 `해제`할 수 있다.
+    - `ORDER STATUS(주문 상태)`가 `COMPLETE(주문 완료)`여야한다.
+    - `ORDER TABLE`은 `NUMBER OF GUESTS(손님수)`는 0명이된다.
+    - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 활성화이다.
+  - `ORDER TABLE`의 `손님 수`를 변경할 수 있다
+    - 변경할 `NUMBER OF GUESTS(손님수)`는 0보다 커야한다.
+    - 변경할 `ORDER TABLE`이 `EMPTY(비어있는지 여부)`가 활성화이면 안된다.
+  - `ORDER TABLE` 목록을 조회할 수 있다.
