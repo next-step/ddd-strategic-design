@@ -220,24 +220,32 @@
     - `ORDER TYPE(주문형태)`이 `TAKE OUT(포장)`이면, `ORDER STATUS(주문 상태)`가 `SERVED(조리)`여야한다.
   - `ORDER`의 목록을 조회할 수 있다.
 
+### ORDER LINE ITEM(오더 라인 아이템)
+- 속성
+  - `ORDER LINE ITEM`은 `ORDER LINE ITEM`을 구별할 수 있는 `ORDER LINE ITEM SEQ`를 가진다.
+  - `MENU(메뉴)`을 가지고 있다.
+  - `ORDER LINE ITEM`은 `MENU(메뉴)`을 구별할 수 있는 `MENU ID`를 가진다.
+  - `QUANTITY(수량)`을 가진다.
+  - `PRICE(가격)`을 가진다.
+
 ### ORDER TABLE(주문 테이블)
 - 속성
-- `ORDER TABLE`는 `ORDER TABLE`을 구별할 수 있는 `ORDER TABLE ID`를 가진다.
-- `ORDER TABLE`는 `NAME(이름)`이 있다.
-- `ORDER TABLE`는 `NUMBER OF GUESTS(손님수)`을 가진다.
-- `ORDER TABLE`는 `EMPTY(비어있는지 여부)` 상태를 가진다.
+  - `ORDER TABLE`는 `ORDER TABLE`을 구별할 수 있는 `ORDER TABLE ID`를 가진다.
+  - `ORDER TABLE`는 `NAME(이름)`이 있다.
+  - `ORDER TABLE`는 `NUMBER OF GUESTS(손님수)`을 가진다.
+  - `ORDER TABLE`는 `EMPTY(비어있는지 여부)` 상태를 가진다.
 - 기능
-- `ORDER TABLE`을 `생성`할 수 있다.
-  - `NAME(이름)`이 있어야한다.
-  - `ORDER TABLE`은 최초 생성시 `NUMBER OF GUESTS(손님수)`는 0명이다.
-  - `ORDER TABLE`은 최초 생성시 `EMPTY(비어있는지 여부)`가 활성화이다.
-- `ORDER TABLE`을 `앉을` 수 있다.
-  - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 비활성화이다.
-- `ORDER TABLE`을 `해제`할 수 있다.
-  - `ORDER STATUS(주문 상태)`가 `COMPLETE(주문 완료)`여야한다.
-  - `ORDER TABLE`은 `NUMBER OF GUESTS(손님수)`는 0명이된다.
-  - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 활성화이다.
-- `ORDER TABLE`의 `손님 수`를 변경할 수 있다
-  - 변경할 `NUMBER OF GUESTS(손님수)`는 0보다 커야한다.
-  - 변경할 `ORDER TABLE`이 `EMPTY(비어있는지 여부)`가 활성화이면 안된다.
-- `ORDER TABLE` 목록을 조회할 수 있다.
+  - `ORDER TABLE`을 `생성`할 수 있다.
+    - `NAME(이름)`이 있어야한다.
+    - `ORDER TABLE`은 최초 생성시 `NUMBER OF GUESTS(손님수)`는 0명이다.
+    - `ORDER TABLE`은 최초 생성시 `EMPTY(비어있는지 여부)`가 활성화이다.
+  - `ORDER TABLE`을 `앉을` 수 있다.
+    - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 비활성화이다.
+  - `ORDER TABLE`을 `해제`할 수 있다.
+    - `ORDER STATUS(주문 상태)`가 `COMPLETE(주문 완료)`여야한다.
+    - `ORDER TABLE`은 `NUMBER OF GUESTS(손님수)`는 0명이된다.
+    - `ORDER TABLE`은 `EMPTY(비어있는지 여부)`가 활성화이다.
+  - `ORDER TABLE`의 `손님 수`를 변경할 수 있다
+    - 변경할 `NUMBER OF GUESTS(손님수)`는 0보다 커야한다.
+    - 변경할 `ORDER TABLE`이 `EMPTY(비어있는지 여부)`가 활성화이면 안된다.
+  - `ORDER TABLE` 목록을 조회할 수 있다.
