@@ -166,6 +166,7 @@
 - `메뉴 (Menu)` 는 반드시 하나의 `메뉴그룹(Menu Group)` 에 속해야 한다.
 - `메뉴 (Menu)` 의 가격은 변경될 수 있다.
 - `메뉴 (Menu)` 를 `숨기(invisible)`거나 `노출(visible)`할 수 있다.
+  - `메뉴 (Menu)` 의 가격이 `메뉴 상품 (Menu Product)`의 가격의 합보다 큰 경우 메뉴가 `숨겨(invisible)`진다.
 
 ## 주문
 
@@ -189,13 +190,13 @@ sequenceDiagram
 		Admin ->> System : 주문 완료
 
 ```
-
 - `매장 주문(table order)`은  **요청  →** **수락** → **준비 완료** → **주문 완료** 순서로 진행된다.
 - `주문테이블(order table)` 은 반드시 이름, `방문 손님 수(number of guest)`, 지정 여부를 가진다.
-- `주문테이블(order table)` 의 방문 손님 수는 0 이상이여야 한다. (**필수값**이 아니다.)
+- `주문테이블(order table)` 의 `방문 손님 수(number of guest)`는 변경할 수 있으며, 0 이상이여야 한다. (**필수값**이 아니다.)
 - `주문테이블(order table)` 은 `지정(assign)`되어 있지 않으면 손님 수를 변경할 수 없다.
-- `매장 주문(table order)` 주문은 `지정(assign)` 된  `주문테이블(order table)`을 가진다.
-- `매장 주문(table order)` 이 주문완료 된 경우 테이블을 `정리(clean)` 해야 한다.
+- `매장 주문(table order)` 주문은  반드시 `지정(assign)` 된 `주문테이블(order table)`을 가진다.
+- `매장 주문(table order)` 이 주문완료 된 경우 주문 테이블(order table)을 `정리(clean)` 해야 한다.
+  -  주문 완료 되지 않은 테이블을 정리 할 수 없다.
 - `매장 주문(table order)` 의 경우 `주문 라인 아이템(Order Line Item)` 의 수량이 0보다 작을 수 있다.
 
 ### 배달 주문
