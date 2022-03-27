@@ -116,82 +116,79 @@
 ## 모델링
 
 ### 상품(Product) 컨텍스트
-- Product는 이름과 가격을 가진다. (식별자도 가진다)
-- Product는 등록할 수 있다.
-  - 가격은 0원 이상이다
-  - 이름에는 비속어가 포함될 수 없다
-
+- Product는 식별자와 이름, 가격을 가진다.
+- Product를 생성한다.
+  - 가격은 0원 이상이다.
+  - 이름에는 비속어가 포함될 수 없다.
 - Product의 가격은 변경될 수 있다.
-- ProductService에서 Product를 만든다
-- ProductService에서 Product의 가격을 변경할 수 있다
-- ProductService에서 모든 Product를 조회할 수 있다
-
+- ProductService는 Product를 등록한다.
+- ProductService는 Product의 가격을 변경한다.
+- ProductService는 모든 Product를 조회한다.
 
 ### 메뉴(Menu) 컨텍스트
 - MenuGroup은 식별자와 이름을 가진다.
-  - MenuGroup을 생성한다
-- MenuGroup의 이름은 비어있을 수 없다.
-- MenuGroupService는  MenuGroup을 등록할 수 있다
+- MenuGroup을 생성한다.
+  - 이름은 비어있을 수 없다.
+- MenuGroupService는 MenuGroup을 등록한다.
+- MenuGroupService는 모든 MenuGroup을 조회한다.
 - Menu는 식별자와 이름, 가격, MenuProduct, MenuGroup, 전시상태를 가진다.
 - Menu를 생성한다.
-  - MenuProduct가 한개 이상 있어야 함
-  - MenuGroup이 있어야 함
-  - 가격은 0원 이상이어야 함
-  - Menu의 이름에는 비속어가 포함될 수 없다
-  - 메뉴에 속한 MenuProduct 금액의 합은 메뉴의 가격보다 크거나 같아야 함.
-- Menu의 가격이 MenuProduct의 금액합보다 높을 경우 Hide 한다
-- MenuProduct는 시퀀스와 Product, 그 수량을 가진다
-- MenuService에서 Menu를 등록할 수 있다
-- MenuService에서 Menu의 가격을 변경할 수 있다
-- MenuService는 Menu를 전시(Display)하거나 숨긴다(Hide).
+  - MenuProduct가 한개 이상 있어야 한다.
+  - MenuGroup이 있어야 한다.
+  - 가격은 0원 이상이어야 한다.
+  - 이름에는 비속어가 포함될 수 없다.
+  - 메뉴에 속한 MenuProduct 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
+- Menu는 전시되거나 숨길 수 있다.
+- Menu는 가격을 변경할 수 있다.
+- MenuProduct는 시퀀스와 Product, 그 수량을 가진다.
+- MenuService는 Menu를 등록한다.
+- MenuService는 Menu의 가격을 변경한다.
+- MenuService는 Menu를 전시한다.
+  - Menu의 가격이 MenuProduct 가격의 합보다 같거나 작아야 한다.
+  - Menu의 가격이 MenuProduct 가격의 합보다 높을 경우 전시하지 못한다.
+- MenuService는 Menu를 숨긴다.
 - MenuService는 모든 Menu를 조회한다.
-- MenuGroupService는 모든 MenuGroup를 조회한다.
-- MenuGroupService에서 MenuGroup을 만든다
-- MenuGroupService에서 모든 MenuGroup을 조회할 수 있다
-
 
 ### 주문(Order) 컨텍스트
-
 - Order는 식별자, 주문 유형, 주문 상태, 주문 시간, OrderLineItem, 배달 주소, OrderTable을 가진다.
-- Order 생성한다.(공통)
+- Order를 생성한다.(공통)
   - 주문 유형이 있어야 한다.
   - 하나 이상의 OrderLineItem이 있어야 한다.
   - OrderLineItem의 Menu는 Display 되어 있어야 한다.
-  - 주문상태는 WAITING
-- TAKE-OUT 생성한다
-  - OrderLineItem의 수량이 0이상이어야 한다.
+  - 주문한 가격과 OrderLineItem의 Menu 가격이 일치해야 한다.
+  - 주문의 최초 상태는 WAITING 이다.
+- TAKE-OUT Order를 생성한다
+  - OrderLineItem의 수량이 0 이상이어야 한다.
 - Delivery Order를 생성한다.
-  - OrderLineItem의 수량이 0이상이어야 한다.
+  - OrderLineItem의 수량이 0 이상이어야 한다.
   - 배달 주소가 있어야 한다.
 - EAT-IN Order를 생성한다.
   - 식탁이 비어있지 않아야 한다.
-  - OrderLineItem의 수량이 0보다 작을 수 있다.
--  
-- Order Line Item은 시퀀스와 Menu와 그 수량과 가격을 가진다
-- OrderService에서 주문한 가격과 실제 가격이 같아야 한다.
-- OrderService는 Order를 만들 수 있다
-- OrderService는 Order을 접수할 수 있다
-  - Order는 Waiting상태여야만 한다
-  - Delivery Order의 경우 배달하기 위해 Delivery Service를 호출한다
-- OrderService는 Order를 서빙할 수 있다
-  - Order는 Aceepted 상태여야만 한다
-- OrderService는 Order를 배달할 수 있다
-  - Delivery Order만 배달 가능하다
-  - Order는 Served 상태여야만 한다
-- OrderService는 Order를 배달 완료할 수 있다
-  - Delivery Order만 배달 완료할 수 있다
-  - Order는 Deliverying 상태여야만 한다
-- OrderService는 Order를 완료할 수 있다
-  - Delivery Order는 Delivered 상태만 Completed할 수 있다
-  - TAKE-OUT / EAT-IN의 경우 Served상태만 Completed할 수 있다
-  - EAT-IN이 완료되면 Order Table을 비운다
-- OrderService는 모든 Order를 조회할 수 있다
--  
+  - OrderLineItem의 수량은 수정을 위해 0보다 작을 수 있다.
+- OrderLineItem은 시퀀스와 Menu와 그 수량과 가격을 가진다.
+- OrderService는 Order를 등록한다.
+- OrderService는 Order를 수락할 수 있다.
+  - Order는 WAITING 상태여야만 한다.
+  - Delivery Order의 경우 배달하기 위해 Delivery Service를 호출한다.
+- OrderService는 Order를 서빙할 수 있다.
+  - Order는 ACCEPTED 상태여야만 한다.
+- OrderService는 Order를 배달할 수 있다.
+- Delivery Order만 배달 가능하다.
+  - Order는 SERVED 상태여야만 한다.
+- OrderService는 Order를 배달 완료할 수 있다.
+  - Delivery Order만 배달 완료할 수 있다.
+  - Order는 DELIVERING 상태여야만 한다.
+- OrderService는 Order를 완료할 수 있다.
+  - Delivery Order는 DELIVERED 상태여야만 한다.
+  - TAKE-OUT / EAT-IN의 경우 SERVED 상태여야만 한다.
+  - EAT-IN이 완료되면 Order Table을 비운다.
+- OrderService는 모든 Order를 조회한다.
 - OrderTable은 식별자, 이름, Guest 수, 착석상태를 가진다.
 - OrderTable을 생성한다.
   - 이름은 비어있으면 안된다.
-- OrderTableService는 OrderTable을 채운다(착석)
+- OrderTableService는 OrderTable을 등록한다.
+- OrderTableService는 OrderTable을 채운다(착석).
 - OrderTableService는 착석한 식탁의 Guest 수를 변경한다.
-- OrderTableService는 OrderTable을 만들 수 있다
+  - Guest의 수는 0 이상이다.
 - OrderTableService는 완료된 주문의 OrderTable을 정리한다.
-- OrderTableService는 모든 OrderTable을 조회할 수 있다
+- OrderTableService는 모든 OrderTable을 조회한다.
