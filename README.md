@@ -159,26 +159,47 @@
 ## 모델링
 ### Product(상품)
 - Product 는 이름을 표현하는 name 을 가진다.
+  - Product 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - Product 의 name 에는 비속어가 포함될 수 없다.
 - Product 는 가격을 표현하는 price 를 가진다.
+  - Product 에서 price 는 반드시 존재해야 한다.
+  - Product 에서 price 는 0보다 작을 수 없다.
   - Product 에서 price 를 변경할 수 있다.
 ### MenuGroup(메뉴그룹)
 - MenuGroup 은 이름을 표현하는 name 을 가진다.
+  - MenuGroup 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - MenuGroup 의 name 에는 비속어가 포함될 수 없다.
 ### Menu(메뉴)
 - Menu 는 이름을 표현하는 name 을 가진다.
+  - Menu 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - Menu 의 name 에는 비속어가 포함될 수 없다.
 - Menu 는 가격을 표현하는 price 를 가진다.
+  - Menu 에서 price 는 반드시 존재해야 한다.
+  - Menu 에서 price 는 0보다 작을 수 없다.
   - Menu 에서 price 를 변경할 수 있다.
+  - Menu 의 price 는 메뉴를 구성하는 상품가격의 합보다 클 수 없다.
 - Menu 는 자신이 속한 MenuGroup 의 id 를 가진다.
 - Menu 는 자신의 노출여부를 결정하는 displayed 를 가진다.
   - Menu 에서 displayed 를 변경할 수 있다.
+  - Menu 의 price 가 메뉴를 구성하는 상품들의 가격합보다 큰 경우, Menu 를 노출시킬 수 없다.
 - Menu 는 메뉴를 구성하는 상품의 목록인 MenuProduct 목록을 가진다.
   - MenuProduct 는 메뉴를 구성하는 Product 의 id 를 가진다.
   - MenuProduct 는 상품의 수량을 표현하는 quantity 를 가진다.
+  - MenuProduct 로 등록된 Product 의 price 가 변경될 때, 메뉴를 구성하는 상품가격의 합이 Menu 의 price 보다 작은경우 displayed 는 false 로 변경된다.
+  - Menu 를 구성하는 Product 의 수와 키친포스의 등록된 Product 의 수는 동일해야 한다.
+    (한 메뉴의 동일한 상품을 중복해서 등록할 수 없다.)
+  - 메뉴를 구성하는 상품의 총 가격은 MenuProduct 로 등록된 price 와 quantity 의 곱들의 합이다.
 ### OrderTable(주문테이블)
 - OrderTable 은 이름을 표현하는 name 을 가진다.
+  - OrderTable 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
 - OrderTable 은 테이블에 착석한 손님 수를 표현하는 numberOfGuests 를 가진다.
   - OrderTable 에서 numberOfGuests 를 변경할 수 있다.
+  - 비어있는 OrderTable 의 numberOfGuests 를 변경할 수 없다.
 - OrderTable 은 테이블의 착석여부를 결정하는 empty 를 가진다.
   - OrderTable 에서 empty 를 변경할 수 있다.
+  - OrderTable 을 비울 때 numberOfGuests 는 0이 되어야 한다.
+  - OrderTable 에 완료되지 않은 주문이 존재하는 경우, OrderTable 을 비울 수 없다.
+    (완료되지 않은 주문은 OrderStatus 가 COMPLETE 가 아닌 Order 를 의미한다.)
 ### Order(주문)
 - Order 는 주문 유형을 구분할 수 있는 OrderType 을 가진다.
   - OrderType 은 다음의 유형으로 구성되어 있다.
