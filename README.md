@@ -157,3 +157,88 @@
 | [주문상태] 완료   | COMPLETED  | 매장에서 제공한 메뉴가 손님에게 전달된 상태           |
 
 ## 모델링
+### Product(상품)
+- Product 는 이름을 표현하는 name 을 가진다.
+  - Product 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - Product 의 name 에는 비속어가 포함될 수 없다.
+- Product 는 가격을 표현하는 price 를 가진다.
+  - Product 에서 price 는 반드시 존재해야 한다.
+  - Product 에서 price 는 0보다 작을 수 없다.
+  - Product 에서 price 를 변경할 수 있다.
+### MenuGroup(메뉴그룹)
+- MenuGroup 은 이름을 표현하는 name 을 가진다.
+  - MenuGroup 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - MenuGroup 의 name 에는 비속어가 포함될 수 없다.
+### Menu(메뉴)
+- Menu 는 이름을 표현하는 name 을 가진다.
+  - Menu 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+  - Menu 의 name 에는 비속어가 포함될 수 없다.
+- Menu 는 가격을 표현하는 price 를 가진다.
+  - Menu 에서 price 는 반드시 존재해야 한다.
+  - Menu 에서 price 는 0보다 작을 수 없다.
+  - Menu 에서 price 를 변경할 수 있다.
+  - Menu 의 price 는 메뉴를 구성하는 상품가격의 합보다 클 수 없다.
+- Menu 는 자신이 속한 MenuGroup 의 id 를 가진다.
+- Menu 는 자신의 노출여부를 결정하는 displayed 를 가진다.
+  - Menu 에서 displayed 를 변경할 수 있다.
+  - Menu 의 price 가 메뉴를 구성하는 상품들의 가격합보다 큰 경우, Menu 를 노출시킬 수 없다.
+- Menu 는 메뉴를 구성하는 상품의 목록인 MenuProduct 목록을 가진다.
+  - MenuProduct 는 메뉴를 구성하는 Product 의 id 를 가진다.
+  - MenuProduct 는 상품의 수량을 표현하는 quantity 를 가진다.
+  - MenuProduct 로 등록된 Product 의 price 가 변경될 때, 메뉴를 구성하는 상품가격의 합이 Menu 의 price 보다 작은경우 displayed 는 false 로 변경된다.
+  - Menu 를 구성하는 MenuProduct Product 의 수와 키친포스의 등록된 Product 의 수는 동일해야 한다.  
+    (한 메뉴의 동일한 상품을 중복해서 등록할 수 없다.)
+  - 메뉴를 구성하는 상품의 총 가격은 MenuProduct 로 등록된 price 와 quantity 의 곱들의 합이다.
+### OrderTable(주문테이블)
+- OrderTable 은 이름을 표현하는 name 을 가진다.
+  - OrderTable 의 name 은 반드시 존재해야 하며, 공백일 수 없다.
+- OrderTable 은 테이블에 착석한 손님 수를 표현하는 numberOfGuests 를 가진다.
+  - OrderTable 에서 numberOfGuests 를 변경할 수 있다.
+  - 비어있는 OrderTable 의 numberOfGuests 를 변경할 수 없다.
+- OrderTable 은 테이블의 착석여부를 결정하는 empty 를 가진다.
+  - OrderTable 에서 empty 를 변경할 수 있다.
+  - OrderTable 을 비울 때 numberOfGuests 는 0이 되어야 한다.
+  - OrderTable 에 완료되지 않은 주문이 존재하는 경우, OrderTable 을 비울 수 없다.  
+    (완료되지 않은 주문은 OrderStatus 가 COMPLETE 가 아닌 Order 를 의미한다.)
+### Order(주문)
+- Order 는 주문 유형을 구분할 수 있는 OrderType 을 필수로 가진다.
+  - OrderType 은 다음의 유형으로 구성되어 있다.
+    - DELIVERY : 배달주문
+    - TAKEOUT : 포장주문
+    - EAT_IN : 매장식사주문
+- Order 는 주문의 진행상태를 구분할 수 있는 OrderStatus 를 가진다.
+  - Order 에서 OrderStatus 는 다음의 상태로 구성되어 있다.
+    - WAITING : 대기
+    - ACCEPTED : 접수
+    - SERVED : 제공
+    - DELIVERING : 배달중
+    - DELIVERED : 배달완료
+    - COMPLETED : 완료
+  - Order 에서 OrderStatus 를 변경할 수 있다.
+  - OrderType 별 OrderStatus 는 다음과 같은 순서로만 변경이 가능하다.
+    - DELIVERY (배달주문) : WAITING -> ACCEPTED -> SERVED -> DELIVERING -> DELIVERED -> COMPLETED
+    - TAKEOUT (포장주문) : WAITING -> ACCEPTED -> SERVED -> COMPLETED
+    - EAT_IN (매장식사주문) : WAITING -> ACCEPTED -> SERVED -> COMPLETED
+  - OrderType 가 EAT_IN (매장식사주문) 인 경우, OrderTable 의 numberOfGuest 가 0이 되고 empty 상태로 변경된다.  
+    (매장식사가 끝난 테이블은 비워주어야 한다.)
+- Order 는 주문의 생성시각을 표현하는 orderDateTime 을 가진다.
+- Order 는 주문항목을 나타내는 OrderLineItem 목록을 가진다.
+  - OrderLineItem 은 반드시 하나 이상 존재해야 한다.
+  - Order 를 구성하는 OrderLineItem Menu 의 수와 키친포스의 등록된 Menu 의 수는 동일해야 한다.  
+    (동일한 메뉴를 중복해서 주문할 수 없다.)
+  - OrderLineItem 은 주문 Menu 의 id 를 가진다.
+  - OrderLineItem 의 Menu 는 반드시 노출상태여야 한다.  
+    (판매중인 Menu 만 주문할 수 있다.)
+  - OrderLineItem 은 주문수량을 표현하는 quantity 를 가진다.
+  - OrderType 이 EAT_IN(먹고가기) 가 아닌 경우, OrderLineItem 의 주문수량은 0보다 작을 수 없다.  
+    (배달 또는 포장주문은 수량정보를 입력해야 한다.)
+  - OrderLineItem 은 주문가격을 표현하는 price 를 가진다.
+  - OrderLineItem 의 주문가격과 Menu 의 가격은 일치해야 한다.
+- Order 에서 OrderLineItem 을 활용해 주문의 총 가격을 계산할 수 있다.
+- Order 는 배달주소를 표현하는 deliveryAddress 를 가진다.
+  - OrderType 이 DELIVERY(배달주문) 인 경우 deliveryAddress 는 반드시 입력해야 한다.
+  - deliveryAddress 는 공백일 수 없다.
+- Order 는 주문이 일어난 OrderTable 의 id 를 가진다.
+  - OrderType EAT_IN(매장식사) 인 경우 OrderTable id 는 반드시 입력해야 한다.
+  - OrderTable 이 empty 상태인 테이블을 입력할 수 없다.  
+    (비어있는 테이블에 주문할 수 없다.)
