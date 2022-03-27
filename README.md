@@ -144,7 +144,6 @@
     - `MENU GROUP(메뉴 그룹)`을 구별할 수 있는 `MENU GROUP ID`를 가진다.
   - `MENU`는 `DISPLAY(공개 여부)` 속성을 가진다.
   - `MENU`는 `MENU PRODUCT(메뉴상품)`을 한 개 이상 가진다.
-
 - 기능
   - `MENU`를 등록할 수 있다.
     - `MENU`의 `PRICE(가격)`은 `MENU`가 가진 `MENU PRODUCT(메뉴상품)`의 합보다 클 수 없다.
@@ -153,7 +152,7 @@
     - `NAME(이름)`이 있어야한다.
     - `MENU PRODDUCT(메뉴 상품)`의 `QUANTITY(수량)`이 0 이상이어야한다.
     - `MENU GROUP(메뉴 그룹)`에 포함되어 있어야한다.
-- `MENU`의 가격을 변경할 수 있다.
+- `MENU`의 `PRICE(가격)`을 변경할 수 있다.
   - `MENU`의 `PRICE(가격)`은 `MENU`가 가진 `MENU PRODUCT(메뉴상품)`의 합보다 클 수 없다.
   - `MENU`의 `PRICE(가격)`은 0 이상이어야한다.
 - `MENU`의 `DISPLAY(공개 여부)` 상태를 활성화 할 수 있다.
@@ -176,32 +175,57 @@
   - `PRODUCT(상품)`을 가지고 있다.
   - `MENU PROUDCT`은 `PRODUCT`을 구별할 수 있는 `PRODUCT ID`를 가진다.
   - `QUANTITY(수량)`을 가진다.
+    
+### ORDER(주문)
+- 속성
+  - `ORDER`은 `ORDER`을 구별할 수 있는 `ORDER ID`를 가진다.
+  - `ORDER`은 어떤 주문인지 구분할 수 있는 `ORDER TYPE(주문 형태)`을 가진다.
+    - `ORDER TYPE(주문 형태)`은 `DELIVERY(배달)`을 선택할 수 있다.
+    - `ORDER TYPE(주문 형태)`은 `TAKEOUT(포장)`을 선택할 수 있다.
+    - `ORDER TYPE(주문 형태)`은 `EAT IN(식당 주문)`을 선택할 수 있다.
+  - `ORDER`은 `ORDER STATUS(주문 상태)`를 가진다.
+    - `ORDER STATUS(주문 상태)`은 `WAITING(대기)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `ACCEPTED(대기)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `SERVED(조리)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `DELIVERING(조리)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `DELIVERED(배달완료)`상태가 될 수 있다. 
+    - `ORDER STATUS(주문 상태)`은 `COMPLETED(주문완료)`상태가 될 수 있다. 
+  - `ORDER`은 `ORDER DATE TIME(주문 시간)`를 가진다.
+  - `ORDER`은 한 개 이상의 `ORDER LINE ITEM(주문 라인 아이템)`을 가진다.
+- 기능 
+- `ORDER`을 `생성`할 수 있다.
+  - `ORDER TYPE(주문 형태)`이 입력받아야한다.
+  - `ORDER LINE ITEM(주문 라인 아이템)`을 입력받아야한다.
+  - `ORDER LINE ITEM(주문 라인 아이템)`의 `MENU`는 저장된 `MENU(메뉴)`에 포함되어야한다.
+  - `MENU`가 `숨김(HIDE)` 상태에서는 `생성`할 수 없다. 
+  - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`이 있어야한다.
+  - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`이 비어있으면 안된다.
+  - `ORDER TYPE(주문 타입)`이 `EAT IN(식당식사)`가 아닌 경우, 
+    `ORDER LINE ITEM(주문 라인 아이템)`의 `QUANTITY(수량)`이 0보다 커야한다.
+  - `MENU(메뉴)`의 `PRICE(가격)`과 `ORDER LINE ITEM(주문 라인 아이템)`의 합이 일치해야한다.   
+  - `ORDER TYPE(주문 타입)`이 `DELIVERY(배달)`이면, `DELIVERY ADDRESS(배달주소)`가 필요하다.
 
-### 주문
+- `ORDER`을 `수락`으로 변경할 수 있다.
+  - `ORDER STATUS(주문상태)`가 `WAIT(주문대기)` 여야한다.
+  - `KITCHEN RIDERS CLIENT(키친 라이더 클라이언트)`를 호출한다.
 
-- `주문`은 `주문`을 구별할 수 있는 `주문 ID`를 가진다.
-- `주문`은 `주문 타입`을 가진다.
-- `주문`은 `주문 상태`를 가진다.
-- `주문`은 `주문 시간`를 가진다.
-- `주문`은 한 개 이상의 `주문 라인 아이템`을 가진다.
-- `주문`을 `생성`할 수 있다.
-  - `주문`이 `식당식사`이면, `생성`시 `주문 테이블`이 있어야한다.
-  - `주문`이 `식당식사`이면, `생성`시 `수량`이 0보다 커야한다.
-- `주문`을 `수락`할 수 있다.
-  - `주문상태`가 `주문대기` 여야한다.
-- `주문`을 `조리`할 수 있다.
-  - `주문상태`가 `수락`상태여야한다.
-- `주문`을 `배달시작`할 수 있다.
-  - `주문`이 `배달`이어야한다.
-  - `주문 상태가`이 `조리`이어야한다.
-- `주문`이 `배달`이면, `배달 시작`시 `주문 상태`가 `조리`면 안된다.
-- `주문`을 `배달 완료` 할 수 있다.
-  - `주문`이 `배달`이면, `배달 완료`시 `주문 상태`가 `배달중`이면 안된다.
-- `주문`을 `주문 완료` 할 수 있다.
-  - `주문`이 `식당식사`이면, `주문완료`시 `주문 상태`가 `조리`면 안된다.
-  - `주문`이 `식당식사`이면, `주문완료`시 `주문 테이블`를 `해제`상태로 설정한다.
-  - `주문`이 `포장`이면, `주문완료`시 `주문 상태`가 `조리`면 안된다.
-  - `주문`이 `배달`이면, `주문완료`시 `주문 상태`가 `배달완료`여야한다.
+- `ORDER`을 `조리`로 변경할 수 있다.
+  - `ORDER STATUS(주문상태)`가 `ACCEPTED(승인)` 여야한다.
+
+- `ORDER`을 `배달시작`으로 변경할 수 있다.
+  - `ORDER TYPE(주문 형태)`이 `DELIVERY(배달)`이어야한다.
+  - `ORDER STATUS(주문 상태)가`이 `SERVED(조리)`이어야한다.
+
+- `ORDER`을 `배달 완료`으로 변경 할 수 있다.
+  - `ORDER STATUS(주문 상태)가`이 `SERVED(조리)`이어야한다.
+
+- `ORDER`을 `주문 완료`으로 변경 할 수 있다.
+  - `ORDER TYPE(주문형태)`이 `EAT IN(식당식사)`이면, `ORDER STATUS(주문 상태)`가 `SERVED(조리)`여야한다.
+  - `ORDER TYPE(주문형태)`이 `EAT IN(식당식사)`이면, `ORDER TABLE(주문 테이블)`을 `비어진`상태로 바꾼다.
+  - `ORDER TYPE(주문형태)`이 `DELIVERY(배달)`이면, `ORDER STATUS(주문 상태)`가 `DELIVERED(배달완료)`여야한다.
+  - `ORDER TYPE(주문형태)`이 `TAKE OUT(포장)`이면, `ORDER STATUS(주문 상태)`가 `SERVED(조리)`여야한다.
+
+- `ORDER`의 목록을 조회할 수 있다.
 
 ### 주문 테이블
 
