@@ -1,6 +1,5 @@
 package kitchenpos.order.table.application;
 
-import kitchenpos.order.order.application.OrderTableService;
 import kitchenpos.order.order.domain.InMemoryOrderRepository;
 import kitchenpos.order.order.domain.OrderRepository;
 import kitchenpos.order.order.domain.OrderStatus;
