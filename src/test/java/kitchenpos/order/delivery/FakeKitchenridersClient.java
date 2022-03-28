@@ -1,7 +1,5 @@
 package kitchenpos.order.delivery;
 
-import kitchenpos.order.delivery.KitchenridersClient;
-
 import java.math.BigDecimal;
 import java.util.UUID;
 
