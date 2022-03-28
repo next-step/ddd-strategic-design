@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.order.order.domain;
 
 import kitchenpos.menu.domain.Menu;
 
@@ -25,9 +25,9 @@ public class OrderLineItem {
 
     @ManyToOne(optional = false)
     @JoinColumn(
-        name = "menu_id",
-        columnDefinition = "varbinary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
+            name = "menu_id",
+            columnDefinition = "varbinary(16)",
+            foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
     )
     private Menu menu;
 

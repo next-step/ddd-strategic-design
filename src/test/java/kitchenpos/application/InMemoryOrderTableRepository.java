@@ -1,9 +1,14 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
+import kitchenpos.order.table.domain.OrderTable;
+import kitchenpos.order.table.domain.OrderTableRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 public class InMemoryOrderTableRepository implements OrderTableRepository {
     private final Map<UUID, OrderTable> orderTables = new HashMap<>();
