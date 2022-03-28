@@ -196,17 +196,21 @@
 ### Order (주문)
 속성
 - `Order`는 주문의 종류를 나타내는 `type`을 갖는다.
-  - `type`의 종류에는 `TakeOut`(포장), `EatIn`(매장식사), `Delivery`(배달)이 있다.
+  - `type`의 종류에는 `EatIn`(매장식사), `Delivery`(배달), `TakeOut`(포장)이 있다.
 - `Order`는 1개 이상의 `OrderLineItems`을 갖는다.
   - `OrderLineItem`은 `Menu`를 갖는다
   - `OrderLineItem`은 `quantityOfMenus`를 갖는다.
-    - `Order`의 `type`이 `EatIn`이면 `quantityOfMenus`는 0 미만일 수 있다.
-    - `Order`의 `type`이 `Delivery`, `TakeOut`이면 `quantityOfMenus`는 0 이상이어야 한다.
   - `OrderLineItem`은 `Menu`의 가격과 `quantityOfMenus`를 곱한 금액을 계산할 수 있다.(`calculateAmount`)
 - `Order`는 주문의 진행 상태를 나타내는 `status`를 갖는다.
   - `status`의 종류에는 `Waiting`(접수대기), `Accepted`(접수됨), `Served`(제공됨), `Delivering`(배달중), `Delivered`(배달완료), `Done`(주문완료) 가 있다.
-- `Order`의 `type`이 `EatIn` 인 경우 `orderTable`을 갖는다. (주문 테이블)
-- `Order`의 `type`이 `Delivery`인 경우 공백이 아닌 `deliveryAddress`를 갖는다.
+- `Order`의 `type`이 `EatIn`일 때
+  - `OrderLineItem`의 `quantityOfMenus`는 0 미만일 수 있다.
+  - 속성으로 `orderTable`을 갖는다. (주문 테이블)
+- `Order`의 `type`이 `Delivery`일 때
+  - `OrderLineItem`의 `quantityOfMenus`는 0 이상이어야 한다.
+  - 속성으로 `deliveryAddress`를 갖는다.
+- `Order`의 `type`이 `TakeOut`일 때
+  - `OrderLineItem`의 `quantityOfMenus`는 0 이상이어야 한다.
     
 행위
 - `Order`를 등록할 수 있다(`create`)
