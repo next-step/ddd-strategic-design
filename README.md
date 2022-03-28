@@ -93,19 +93,43 @@
 | --- | --- | --- |
 | 주문 | Order | 손님이 메뉴를 보고 선택하여 요구하는 내용이다. |
 | 주문 유형 | Order Type |주문이 제공되는 방식을 의미하며, 포장,배달,매장 내 식사가 가능하다. |
-| 주문 상태 | Order Status | 주문이 처리되고 있는 상태를 의마한다. 대기중(WAITING), 수락(ACCEPTED), 제공 완료(SERVED), 배달 중(DELIVERING), 배달 완료(DELIVERED), 완료(COMPLETED) 상태가 존재한다.|
+| 주문 상태 | Order Status | 주문이 처리되고 있는 상태를 의미한다. 대기 중(WAITING), 수락(ACCEPTED), 제공 완료(SERVED), 배달 중(DELIVERING), 배달 완료(DELIVERED), 완료(COMPLETED) 상태가 존재한다.|
 | 손님 | Customer | 매장에 방문하여 포장,식사를 주문하거나 배달을 주문하는 사람을 뜻한다. |
-| 메뉴 | Menu | 매장에서 취급하는 상품을 소개한다. 이름, 가격을 지니며 어떤 상품으로 구성되었는지를 포함한다. |  
-| 포장 | Takeout | 매장에 방문하여 특정 메뉴를 직접 가져가는 것을 말한다. |
-| 배달 | Delivery | 특정 장소로 메뉴를 가져다주는 것을 말한다. |
+| 메뉴 | Menu | 매장에서 취급하는 상품을 소개한다. 이름, 가격을 지니며 어떤 상품으로 구성되었는지를 포함한다. |
+| 숨겨진 메뉴 | Hidden Menu | 손님에게 보여지지 않도록 처리된 메뉴를 의미한다. | 
+| 메뉴 상품 | 메뉴의 구성요소로서 소개되는 상품을 의미한다. |
+| 포장 주문 | Takeout Order | 매장에 방문하여 특정 메뉴를 직접 가져가는 주문을 말한다. |
+| 배달 주문 | Delivery Order | 특정 장소로 메뉴를 가져다주는 주문을 말한다. |
 | 배달 주소 | Delivery Address | 배달 주문이 전달될 장소의 주소를 의미한다. |
-| 매장 내 식사 | Eat In | 매장에 방문하여 특정 메뉴를 매장에서 먹는 것을 말한다. |
+| 매장 내 식사 주문 | Eat In Order | 매장에 방문하여 특정 메뉴를 주문하는 것 말한다. |
 | 상품 | Product | 매장에서 취급하는 상품이다. 이름과 가격을 지닌다. |
 | 이름 | Name | 상품, 메뉴, 메뉴 그룹들을 부르는 명칭이다.  |
 | 가격 | Price | 특정 재화의 가치를 표현한다. |
 | 수량 | Quantity | 특정 재화의 수량을 표현한다. |
 | 주문 테이블 | Order Table | 매장 내 식사를 위한 테이블이다. 비어있는지 여부를 알 수 있는 정보와 손님 수에 대한 정보를 지닌다. |
-| 서빙 | Serve | 손님이 주문한 음식을 제공하는 것을 의미한다. |
+| 서빙 | Serving | 손님이 주문한 음식을 제공하는 것을 의미한다. |
 | 메뉴 그룹 | Menu Group | 특정 메뉴들의 집합을 의미한다. 이름을 가진다. |
 
 ## 모델링
+- `MenuFactory`는 `Menu`를 생성한다.
+- `Menu`는 메뉴를 구성하는 `MenuProduct`를 지닌다.
+- `Menu`의 가격을 변경할 수 있고, 전시/비전시 처리가 가능하다.
+- `MenuValidator`는 `Menu`를 검증한다.
+- `OrderFactory`는 `Order`를 생성한다.
+- `Order`는 주문 타입을 나타내는 `OrderType`을 지닌다.
+- `Order`는 주문 상태를 나타내는 `OrderStatus`를 지닌다.
+- `Order`는 주문 내역을 나타내는 `OrderLineItem`을 지닌다.
+- `Order`는 매장 내 식사를 주문한 테이블을 나타내는 `OrderTable`을 지닌다.
+- `OrderTable`에는 손님을 앉히거나 비울 수 있다.
+- `OrderTable`로 안내받은 손님 수를 변경할 수 있다.
+- 대기 중(WAITING)인 `Order`를 수락할 수 있다. 수락한 주문이 배달 주문이라면, `KitchenRidersClient`를 통해 배달을 요청한다.
+- 수락 된(ACCEPTED) `Order`를 서빙할  수 있다.
+- 서빙 완료(SERVED)된 `Order`는 배달을 시작할 수 있다. 단, 배달 주문일 경우에만 가능하다.
+- 배달 중(DELIVERING)인 `Order`는 배달을 완료할 수 있다.
+- 배달 주문의 경우, 배달 완료(DELIVERED) 상태면 `Order`를 완료할 수 있다.
+- 매장내 식사 및 포장 주문의 경우, 제공 완료(SERVED) 상태면 `Order`를 완료할 수 있다.
+- 매장내 식사인 `Order`의 경우, 완료 상태가 되면 해당 주문이 들어온 `OrderTable`을 비운다.
+- `OrderValidator`는 `Order`를 검증한다.
+- `ProductFactory`는 `Product`를 생성한다.
+- `Product`는 이름,가격을 지닌다.
+- `ProductValidator`는 `Product`를 검증한다.
