@@ -154,3 +154,123 @@
 | 비속어           | Profanity                   | 부적절한 언어로 상품, 메뉴 이름과 같은 곳에 포함될 수 없다.  |
 
 ## 모델링
+
+### Product (상품)
+
+속성
+
+- `name(이름)`,`price(가격)`을 가진다.
+
+행위
+
+- `register (추가할 수 있다)`
+  - `name(이름)`은 공백이거나 비속어를 포함할 수 없다.
+  - `price(가격)` 0원 이상이어야 한다.
+- `changePrice (가격을 변경할 수 있다)`
+  - 변경될 `Menu(메뉴)`의 `price(가격)`이 `Menu(메뉴)`에 속한 `MenuProduct(메뉴 항목)`의 `price(가격)`의 합보다 크면 `Menu(메뉴)`가 `hide(숨겨진다.)`
+
+### Menu Group (메뉴 그룹)
+
+속성
+
+- `name(이름)`을 가진다.
+
+행위
+
+- `register (등록할 수 있다)`
+  - `name(이름)`은 공백일 수 없다.
+
+### Menu (메뉴)
+
+속성
+
+- 1개 이상의 `menuProduct(메뉴 항목)` 포함해야 한다.
+- `name(이름)`, `price(가격)` 을 가진다.
+-  반드시 특정 `menuGroup(메뉴 그룹)`에 속해야 한다.
+
+행위
+
+- `register (등록할 수 있다)`
+  - `name(이름)`은 공백이거나 비속어를 포함할 수 없다.
+  - `price(가격)`은 0원 이상이어야 하며 `menuProduct(메뉴 항목)`들의 `price(가격)`의 합은 `Menu(메뉴)`의 `price(가격)`보다 크거나 같아야 한다.
+  - `menuGroup (메뉴 그룹)`이 존재하지 않는다면 추가할 수 없다.
+- `changePrice (가격을 변경할 수 있다)`
+  - 변경할 `price(가격)`은 0원 이상이어야 하며 `menuProduct(메뉴 항목)`들의 `price(가격)`의 합은 `Menu(메뉴)`의 `price(가격)`보다 크거나 같아야 한다.
+- `display (노출할 수 있다)`
+  - `price(가격)`이 `menuProduct(메뉴 항목)`들의 `price(가격)`의 합보다 큰 경우 노출할 수 없다.
+- `hide (숨길 수 있다)`
+
+### Menu Product (메뉴 항목)
+
+속성
+
+- `product (상품)`,`quantity (수량)`을 포함한다.
+
+행위
+
+- `calculateAmount (금액을 계산할 수 있다)`
+
+### Order Table (주문 테이블)
+
+속성
+
+- `name (이름)`과 `numberOfGuests (방문한 손님 수)` 을 가진다.
+
+행위
+
+- `register (등록할 수 있다)`
+  - `name(이름)`은 공백일 수 없다.
+- `empty (빈 테이블로 설정할 수 있다)`
+  - 완료되지 않은 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다.
+- `inUse (빈 테이블을 해지할 수 있다)`
+- `changeNumberOfGuests (손님 수를 변경할 수 있다.)`
+  - 빈 테이블은 변경할 수 없다.
+
+### Order (주문)
+
+속성
+
+- `type(종류)` 가 있다.
+  - `type(종류)`에는 `takeOut(포장)`, `eatIn(매장)`, `delivery(배달)`이 있다.
+- 1개 이상의 `orderLineItem (주문 항목)`을 포함해야 한다.
+- `status (상태)`가 있다.
+  - `waiting(접수 대기)`, `accepted(접수)`, `served(서빙됨)`, `Delivering(배달중)`, `delivered(배달 완료)`, `done(완료)` 가 있다.
+- `eatIn(매장)`인 경우 `orderTable (주문 테이블)`를 가진다.
+- `Delivery(배달)`인 경우 `deliveryAddress (배달 주소)`를 가진다.
+- 하나 이상의 `orderLineItem(주문항목)`을 가진다.
+
+행위
+
+- `register (등록할 수 있다)`
+  - `type(종류)`가 올바르지 않으면 등록할 수 없다.
+  - `hideMenu(숨겨진 메뉴)`는 주문할 수 없다.
+  - `orderLineItem(주문항목)`의 `menu (메뉴)`의 `price(가격)`은 실제 `menu (메뉴)`의 `price(가격)`과 일치해야 한다.
+  - `deliveryAddress(배달 주소)`가 올바르지 않으면 `Delivery(배달)`을 등록할 수 없다.
+  - `TakeOut(포장)`, `Delivery(배달)`의 경우 `orderLineItem(주문 항목)`의 `menu(메뉴)`의 `quantity(수량)`은 0 이상이어야 한다.
+  - `emptyTable(빈 테이블)`에는 `EatIn(매장)`을 등록할 수 없다.
+  - `EatIn(매장)`인 경우 `orderLineItem(주문 항목)`의 `menu(메뉴)`의 `quantity(수량)`이 0 미만일 수 있다.
+
+- `accept (접수한다)`
+  - `waiting(접수 대기)` 중인 주문만 접수할 수 있다.
+  - `delivery(배달)` 주문을 접수되면 배달 대행사를 호출한다.
+- `serve(서빙한다)`
+  - `accepted(접수)`된 주문만 서빙할 수 있다.
+- `delivery (배달한다)`
+  - `delivery(배달)` 주문만 배달할 수 있다.
+  - `served(서빙됨)` 주문만 배달할 수 있다.
+- `delivered (배달 완료한다)`
+  - `Delivering(배달 중)`인 주문만 배달 완료할 수 있다.
+- `done (완료한다)`
+  - 주문 테이블의 모든 주문이 완료되었으면 빈 테이블로 설정한다.
+
+### Order Line Item (주문 항목)
+
+속성
+
+- `menu (메뉴)`
+- `quantity (메뉴 수량)`
+
+행위
+
+- `calculateAmount (금액을 계산할 수 있다)`
+
