@@ -9,7 +9,7 @@ import java.util.UUID;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderRepository;
 import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.order.domain.OrderTable;
 
 public class InMemoryOrderRepository implements OrderRepository {
     private final Map<UUID, Order> orders = new HashMap<>();

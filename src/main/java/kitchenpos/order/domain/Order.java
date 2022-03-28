@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import kitchenpos.ordertable.domain.OrderTable;
 
 @Table(name = "orders")
 @Entity

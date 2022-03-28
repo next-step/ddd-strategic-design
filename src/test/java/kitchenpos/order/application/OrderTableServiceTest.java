@@ -1,4 +1,4 @@
-package kitchenpos.ordertable.application;
+package kitchenpos.order.application;
 
 import static kitchenpos.Fixtures.order;
 import static kitchenpos.Fixtures.orderTable;
@@ -11,9 +11,9 @@ import java.util.UUID;
 import kitchenpos.order.InMemoryOrderRepository;
 import kitchenpos.order.domain.OrderRepository;
 import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.ordertable.InMemoryOrderTableRepository;
-import kitchenpos.ordertable.domain.OrderTable;
-import kitchenpos.ordertable.domain.OrderTableRepository;
+import kitchenpos.order.InMemoryOrderTableRepository;
+import kitchenpos.order.domain.OrderTable;
+import kitchenpos.order.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
