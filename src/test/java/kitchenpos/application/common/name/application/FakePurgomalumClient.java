@@ -1,4 +1,4 @@
-package kitchenpos.application;
+package kitchenpos.application.common.name.application;
 
 import kitchenpos.common.naming.application.PurgomalumClient;
 
