@@ -1,113 +1,113 @@
 ## 모델링
 
-### 상품
+### Product
 
 속성
 
-- 상품은 비속어가 포함될 수 없는 이름을 가진다.
-- 상품은 0원 이상인 가격을 가진다.
+- `Product`는 비속어가 포함될 수 없는 `name`을 가진다.
+- `Product`는 0원 이상인 `price`를 가진다.
 
 기능
 
-- 상품을 등록할 수 있다
-- 상품 가격을 변경할 수 있다
-  - 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다.
+- `Product`를 등록할 수 있다
+- `Product` `price`를 변경할 수 있다
+  - 변경될 때 `Menu`의 `price`가 `Menu`에 속한 `Product` `amount`를 합보다 크면 `Menu`가 숨겨진다.
   
 
-### 메뉴
+### `Menu`
 
 속성
 
-- 메뉴는 1개 이상의 메뉴 항목 목록을 가진다.
-- 메뉴는 비속어가 포함될 수 없는 이름을 가진다
-- 메뉴는 0원 이상의 가격을 가진다.
-  - 메뉴 항목 목록 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
-- 메뉴는 노출 여부를 가진다.
-- 메뉴는 메뉴 그룹을 가진다.
+- `Menu`는 1개 이상의 `MenuLineItem` 목록을 가진다.
+- `Menu`는 비속어가 포함될 수 없는 `name`을 가진다
+- `Menu`는 0원 이상의 `price`를 가진다.
+  - `MenuLineItem` 목록 `amount`를 합은 `Menu`의 가격보다 크거나 같아야 한다.
+- `Menu`는 `isDisplayed`를 가진다.
+- `Menu`는 `MenuGroup`을 가진다.
 
 행위
 
-- 메뉴를 등록할 수 있다.
-- 메뉴 가격을 변경할 수 있다
-- 메뉴를 노출할 수 있다
-- 메뉴를 숨길 수 있다
+- `Menu`를 등록할 수 있다.
+- `Menu`는 `price`를 변경할 수 있다
+- `Menu`를 노출할 수 있다
+- `Menu`를 숨길 수 있다
 
-### 메뉴 항목
+### MenuLineItem
 
 속성
-- 메뉴 항목은 상품을 가진다.
-- 메뉴 항목은 0개 이상의 상품 수량을 가진다.
+- `MenuLineItem`은 `Product`를 가진다.
+- `MenuLineItem`은 0개 이상의 `quantity`를 가진다.
 
 행위
 
-- 메뉴 항목은 상품과 상품 수량으로 금액을 계산할 수 있다
+- `MenuLineItem`은 `Product`와 `quantity`로 `amount`를 계산할 수 있다
 
-### 메뉴 그룹
-
-속성
-
-- 메뉴 그룹은 공백이 아닌 이름을 가진다.
-
-행위
-
-- 메뉴 그룹을 등록할 수 있다.
-
-### 주문 테이블
+### MenuGroup
 
 속성
 
-- 주문 테이블은 공백이 아닌 이름을 가진다.
-- 주문 테이블은 방문한 손님 수를 가진다.
-- 주문 테이블은 테이블이 비워져 있는지 여부를 가진다.
+- `MenuGroup`은 공백이 아닌 `name`을 가진다.
 
 행위
 
-- 주문 테이블을 등록할 수 있다.
-- 빈 테이블로 설정할 수 있다.
-  - 완료되지 않은 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다.
-- 사용 중인 테이블로 설정할 수 있다.
-- 사용 중인 테이블이면 손님 수를 변경할 수 있다
+- `MenuGroup`을 등록할 수 있다.
 
-### 주문
+### `OrderTable`
 
 속성
 
-- 주문은 종류를 가진다.
-  - 종류는 포장, 매장식사, 배달이 있다.
-- 주문은 하나 이상의 주문 항목을 가진다
-- 주문은 상태를 가진다.
-  - 상태는 접수 대기, 접수, 서빙, 배달 중, 배달완료, 주문완료가 있다.
-- 주문은 매장 주문이면 손님들이 식사하는 주문 테이블을 가진다.
-- 주문은 배달 주문일 때 배달 주소를 가진다.
+- `OrderTable`은 공백이 아닌 `name`을 가진다.
+- `OrderTable`은 방문한 `numberOfGuests`를 가진다.
+- `OrderTable`은 `isEmpty`을 가진다.
 
 행위
 
-- 주문을 등록할 수 있다.
-  - 빈 테이블에는 매장 주문을 등록할 수 없다.
-  - 숨겨진 메뉴는 주문할 수 없다.
-  - 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
-- 주문을 접수할 수 있다.
-  - 상태가 접수 대기 중인 주문만 접수할 수 있다.
-  - 배달 주문이 접수되면 배달 대행사를 호출한다.
-- 주문을 서빙할 수 있다.
-  - 상태가 접수인 주문만 서빙할 수 있다.
-- 주문을 배달할 수 있다.
-  - 배달 주문만 배달할 수 있다.
-  - 상태가 서빙인 주문만 배달할 수 있다.
-- 주문을 배달 완료할 수 있다.
-  - 상태가 배달 중인 주문만 배달 완료할 수 있다.
-- 주문을 완료할 수 있다
-  - 주문 테이블의 모든 주문이 완료되었으면 빈 테이블로 설정한다.
+- `OrderTable`을 등록할 수 있다.
+- `OrderTable`은 빈 테이블로 설정할 수 있다.
+  - 완료되지 않은 주문이 있는 `OrderTable`은 빈 테이블로 설정할 수 없다.
+- `OrderTable`을 사용 중으로 변경할 수 있다.
+- `OrderTable`이 사용 중이면 `numberOfGuests`를 변경할 수 있다
 
-### 주문 항목
+### Order
 
 속성
 
-- 주문 항목은 메뉴를 가진다.
-- 주문 항목은 메뉴 수량을 가진다.
-  - 매장 주문은 메뉴 수량이 0 미만일 수 있다.
-  - 매장 주문을 제외한 주문은 메뉴 수량이 0 이상이어야 한다.
+- `Order`는 `OrderType`를 가진다.
+  - `OrderType`은 `EatIn`, `Delivery`, `TakeOut`이 있다.
+- `Order`는 하나 이상의 `OrderLineItem`을 가진다
+- `Order`는 `OrderStatus`를 가진다.
+  - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Delivering`, `Delivered`, `Done`이 있다.
+- `Order`는 `OrderType`이 `EatIn`이면 손님들이 식사하는 `OrderTable`을 가진다.
+- `Order`는 `OrderType`이 `Delivery`일 때 `DeliveryAddress`를 가진다.
 
 행위
 
-- 주문 항목은 메뉴와 메뉴 수량으로 금액을 계산할 수 있다.
+- `Order`를 등록할 수 있다.
+  - `empty`인 `OrderTable`에는 `OrderType`이 `EatIn`인 `Order`를 등록할 수 없다.
+  - `hide`된 `Menu`는 주문할 수 없다.
+  - `OrderLineItem`의 `amount`는 실제 `Menu`의 `price`와 일치해야 한다.
+- `Order`를 접수할 수 있다.
+  - `OrderStatus`가 `Waiting`일 때만 접수할 수 있다.
+  - `OrderType`이 `Delivery`면 `DeliveryAgency`를 호출한다.
+- `Order`를 서빙할 수 있다.
+  - `OrderStatus`가 `Accepted`일 때만 서빙할 수 있다.
+- `Order`를 배달할 수 있다.
+  - `OrderType`이 `Delivery`일 때만 배달할 수 있다.
+  - `OrderStatus`가 `Served`일 때만 배달할 수 있다.
+- `Order`를 배달 완료할 수 있다.
+  - `OrderStatus`가 `Delivery`일 때만 배달 완료할 수 있다.
+- `Order`를 완료할 수 있다
+  - `OrderTable`의 모든 `Order`가 완료되었으면 빈 테이블로 설정한다.
+
+### OrderLineItem
+
+속성
+
+- `OrderLineItem`은 `Menu`를 가진다.
+- `OrderLineItem`은 `quantity`를 가진다.
+  - `Order`의 `status`가 `EatIn`이면 `quantity`가 0 미만일 수 있다.
+  - `EatIn`을 제외한 `Order`는 `quantity`가 0 이상이어야 한다.
+
+행위
+
+- `OrderLineItem`은 `Menu`와 `quantity`로 `amount`를 계산할 수 있다.
