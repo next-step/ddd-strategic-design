@@ -1,6 +1,7 @@
-package kitchenpos.ordertable.repository;
+package kitchenpos.ordertable.infra;
 
 import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.ordertable.domain.OrderTableRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
