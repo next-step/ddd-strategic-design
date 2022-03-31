@@ -1,9 +1,9 @@
 package kitchenpos.product.application;
 
-import kitchenpos.infra.PurgomalumClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.product.domain.BannedProductNameClient;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -19,16 +19,16 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository productRepository;
     private final MenuRepository menuRepository;
-    private final PurgomalumClient purgomalumClient;
+    private final BannedProductNameClient bannedProductNameClient;
 
     public ProductService(
-        final ProductRepository productRepository,
-        final MenuRepository menuRepository,
-        final PurgomalumClient purgomalumClient
+            final ProductRepository productRepository,
+            final MenuRepository menuRepository,
+            final BannedProductNameClient bannedProductNameClient
     ) {
         this.productRepository = productRepository;
         this.menuRepository = menuRepository;
-        this.purgomalumClient = purgomalumClient;
+        this.bannedProductNameClient = bannedProductNameClient;
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class ProductService {
             throw new IllegalArgumentException();
         }
         final String name = request.getName();
-        if (Objects.isNull(name) || purgomalumClient.containsProfanity(name)) {
+        if (Objects.isNull(name) || bannedProductNameClient.containsProfanity(name)) {
             throw new IllegalArgumentException();
         }
         final Product product = new Product();
@@ -55,15 +55,15 @@ public class ProductService {
             throw new IllegalArgumentException();
         }
         final Product product = productRepository.findById(productId)
-            .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(NoSuchElementException::new);
         product.setPrice(price);
         final List<Menu> menus = menuRepository.findAllByProductId(productId);
         for (final Menu menu : menus) {
             BigDecimal sum = BigDecimal.ZERO;
             for (final MenuProduct menuProduct : menu.getMenuProducts()) {
                 sum = menuProduct.getProduct()
-                    .getPrice()
-                    .multiply(BigDecimal.valueOf(menuProduct.getQuantity()));
+                        .getPrice()
+                        .multiply(BigDecimal.valueOf(menuProduct.getQuantity()));
             }
             if (menu.getPrice().compareTo(sum) > 0) {
                 menu.setDisplayed(false);
