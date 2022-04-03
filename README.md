@@ -116,22 +116,38 @@
 ## 모델링
 
 ### 상품(Product) 컨텍스트
+
+상태
 - Product는 식별자와 이름, 가격을 가진다.
+
+행위   
 - Product를 생성한다.
   - 가격은 0원 이상이다.
-  - 이름에는 비속어가 포함될 수 없다.
+  - 이름에는 비속어가 포함될 수 없다.  
 - Product의 가격은 변경될 수 있다.
 - ProductService는 Product를 등록한다.
 - ProductService는 Product의 가격을 변경한다.
 - ProductService는 모든 Product를 조회한다.
 
 ### 메뉴(Menu) 컨텍스트
+
+**MenuGroup**
+
+상태
 - MenuGroup은 식별자와 이름을 가진다.
+
+행위 
 - MenuGroup을 생성한다.
   - 이름은 비어있을 수 없다.
 - MenuGroupService는 MenuGroup을 등록한다.
 - MenuGroupService는 모든 MenuGroup을 조회한다.
+
+**Menu**
+
+상태 
 - Menu는 식별자와 이름, 가격, MenuProduct, MenuGroup, 전시상태를 가진다.
+
+행위 
 - Menu를 생성한다.
   - MenuProduct가 한개 이상 있어야 한다.
   - MenuGroup이 있어야 한다.
@@ -150,7 +166,13 @@
 - MenuService는 모든 Menu를 조회한다.
 
 ### 주문(Order) 컨텍스트
+
+**Order**
+
+상태 
 - Order는 식별자, 주문 유형, 주문 상태, 주문 시간, OrderLineItem, 배달 주소, OrderTable을 가진다.
+
+행위 
 - Order를 생성한다.(공통)
   - 주문 유형이 있어야 한다.
   - 하나 이상의 OrderLineItem이 있어야 한다.
@@ -169,7 +191,7 @@
 - OrderService는 Order를 등록한다.
 - OrderService는 Order를 수락할 수 있다.
   - Order는 WAITING 상태여야만 한다.
-  - Delivery Order의 경우 배달하기 위해 Delivery Service를 호출한다.
+  - Delivery Order의 경우 Delivery Service에게 배달 요청한다.
 - OrderService는 Order를 서빙할 수 있다.
   - Order는 ACCEPTED 상태여야만 한다.
 - OrderService는 Order를 배달할 수 있다.
@@ -183,7 +205,13 @@
   - TAKE-OUT / EAT-IN의 경우 SERVED 상태여야만 한다.
   - EAT-IN이 완료되면 Order Table을 비운다.
 - OrderService는 모든 Order를 조회한다.
+
+**OrderTable**
+
+상태 
 - OrderTable은 식별자, 이름, Guest 수, 착석상태를 가진다.
+
+행위 
 - OrderTable을 생성한다.
   - 이름은 비어있으면 안된다.
 - OrderTableService는 OrderTable을 등록한다.
