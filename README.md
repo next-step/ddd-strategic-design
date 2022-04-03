@@ -96,7 +96,7 @@
 | 주문 상태 | Order Status | 주문이 처리되고 있는 상태를 의미한다. 대기 중(WAITING), 수락(ACCEPTED), 제공 완료(SERVED), 배달 중(DELIVERING), 배달 완료(DELIVERED), 완료(COMPLETED) 상태가 존재한다.|
 | 주문 내역 | Order Line Item | 주문에 포함된 내역. 주문서나 영수증에 한 줄 한 줄 내역이 표시될 때, 각각을 주문 내역이라고 할 수 있다. |
 | 손님 | Customer | 매장에 방문하여 포장,식사를 주문하거나 배달을 주문하는 사람을 뜻한다. |
-| 메뉴 | Menu | 매장에서 취급하는 상품을 소개한다. 이름, 가격을 지니며 어떤 상품으로 구성되었는지를 포함한다. |
+| 메뉴 | Menu | 손님이 주문할 수 있는 선택지를 소개한다. 이름, 가격을 지니며 어떤 상품으로 구성되었는지를 포함한다. |
 | 숨겨진 메뉴 | Hidden Menu | 손님에게 보여지지 않도록 처리된 메뉴를 의미한다. | 
 | 메뉴 상품 | 메뉴의 구성요소로서 소개되는 상품을 의미한다. |
 | 포장 주문 | Takeout Order | 매장에 방문하여 특정 메뉴를 직접 가져가는 주문을 말한다. |
@@ -112,8 +112,10 @@
 | 메뉴 그룹 | Menu Group | 특정 메뉴들의 집합을 의미한다. 이름을 가진다. |
 
 ## 모델링
+
+### Menu
 - `MenuFactory`는 `Menu`를 생성한다.
-- `Menu`는 메뉴를 구성하는 `MenuProduct`를 지닌다.
+- `Menu`는 가격을 나타내는 `Price`, 비속어가 걸러진 이름인 `ProfanityFilteredName`, 전시 여부를 나타내는 displayed, 메뉴를 구성하는 `MenuProduct`를 지닌다. 
 - `Menu`의 가격을 변경할 수 있고, 전시/비전시 처리가 가능하다.
 - `MenuValidator`는 `Menu`를 검증한다.
   * 메뉴 생성 시 
@@ -121,48 +123,65 @@
     * 실제로 존재하는 메뉴 그룹인지 검증
     * 메뉴에 포함된 상품 가격의 총액보다 메뉴 가격이 같거니 적은지 검증
     * 상품 개수가 0개 이상인지 검증
-    * 이름에 욕설이 존재하지 않는지 검증
+    * `ProfanityFilterdName`을 갖는지 검증
   * 메뉴 가격 변경 시
     * 임의의 메뉴 상품의 총액(가격 * 수량) 보다 높지 않은지 검증
   * 전시 처리 시
     * 임의의 메뉴 상품의 총액(가격 * 수량) 보다 높지 않은지 검증
+
+### Order
 - `OrderFactory`는 `Order`를 생성한다.
-- `Order`는 주문 타입을 나타내는 `OrderType`을 지닌다.
 - `Order`는 주문 상태를 나타내는 `OrderStatus`를 지닌다.
 - `Order`는 주문 내역을 나타내는 `OrderLineItem`을 지닌다.
-- `Order`는 매장 내 식사를 주문한 테이블을 나타내는 `OrderTable`을 지닌다.
-- `OrderTable`에는 손님을 앉히거나 비울 수 있다.
-- `OrderTable`로 안내받은 손님 수를 변경할 수 있다.
-- 대기 중(WAITING)인 `Order`를 수락할 수 있다. 수락한 주문이 배달 주문이라면, `KitchenRidersClient`를 통해 배달을 요청한다.
-- 수락 된(ACCEPTED) `Order`를 서빙할  수 있다.
-- 서빙 완료(SERVED)된 `Order`는 배달을 시작할 수 있다. 단, 배달 주문일 경우에만 가능하다.
-- 배달 중(DELIVERING)인 `Order`는 배달을 완료할 수 있다.
-- 배달 주문의 경우, 배달 완료(DELIVERED) 상태면 `Order`를 완료할 수 있다.
-- 매장내 식사 및 포장 주문의 경우, 제공 완료(SERVED) 상태면 `Order`를 완료할 수 있다.
-- 매장내 식사인 `Order`의 경우, 완료 상태가 되면 해당 주문이 들어온 `OrderTable`을 비운다.
 - `OrderValidator`는 `Order`를 검증한다.
   * `Order` 생성 시
     * `OrderLineItem`이 모두 `Menu`에 존재하는 항목들인지 검증
-    * `DELIVERY`,`TAKE_OUT`인 경우, 수량이 0보다 작은 `OrderLineItem`이 없는지 검증
+    * `DeliveryOrder`,`TakeoutOrder`인 경우, 수량이 0보다 작은 `OrderLineItem`이 없는지 검증
     * `Order`에 비전시된 `Menu`가 존재하지 않는지 검증
     * `OrderLineItem`의 가격이 `Menu` 상의 가격과 동일한지 검증
-    * `DELIVERY`인 경우, `DeliveryAddress`가 존재하는지 검증
-    * `EAT_IN`인 경우, 배정된 `OrderTable`이 존재하는지 검증
+    * `DeliveryOrder`인 경우, `DeliveryAddress`가 존재하는지 검증
+    * `EatInOrder`인 경우, 배정된 `OrderTable`이 존재하는지 검증
   * `Order` 수락 시
     * `OrderStatus`가 `WAITING`인지 검증
   * `Order` 서빙 시
     * `OrderStatus`가 `ACCEPTED`인지 검증
-  * `Order` 배달 시작 시
-    * `OrderType`이 `DELIVERY`인지 검증
+  * `DeliveryOrder` 배달 시작 시
     * `OrderStatus`가 `SERVED`인지 검증
-  * `Order` 배달 완료 시
-    * `OrderType`이 `DELIVERY`인 경우, `OrderStatus`가 `DELIVERED`인지 검증
+  * `DeliveryOrder` 배달 완료 시
     * `OrderType`이 `TAKEOUT`, `EAT_IN`인 경우, `OrderStatus`가 `SERVED`인지 검증
+
+#### Delivery Order
+- `DeliveryOrder`는 배달해야 하는 장소를 나타내는 `DeliveryAddress`를 지닌다.
+- `DeliveryOrder`는 주문상태로 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED`를 지닌다.
+- 대기 중(WAITING)인 `DeliveryOrder`를 수락할 수 있으며, 이 때 `ACCEPTED` 상태로 변경한다. `DeliveryOrder`가 수락되면 배달 업무를 대신 수행해주는 배달대행사를 통해 배달을 요청한다.
+- 수락 된(ACCEPTED) `DeliveryOrder`를 서빙할 수 있다. 이 때 상태는 `SERVED`가 된다.
+- 서빙 완료(SERVED)된 `DeliveryOrder`는 배달을 시작할 수 있다. 상태를 `DELIVERING`으로 변경한다.
+- 배달 중(DELIVERING)인 `DeliveryOrder`의 배달을 완료할 수 있으며, 이 때 `DELIVERED` 상태가 된다.
+- 배달 완료된(DELIVERED) `DeliveryOrder`를 완료할 수 있다. 이 때 상태는 `COMPLETED`가 된다.
+
+#### Take-out Order
+- `TakeOutOrder`는 주문상태로 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED`를 지닌다.
+- 대기 중(WAITING)인 `TakeOutOrder`를 수락할 수 있으며, 이 때 `ACCEPTED` 상태로 변경한다.
+- 수락 된(ACCEPTED) `TakeOutOrder`를 서빙할 수 있다. 이 때 상태는 `SERVED`가 된다.
+- 제공 완료된(SERVED) `TakeOutOrder`를 완료할 수 있다. 이 때 상태는 `COMPLETED`가 된다.
+
+#### Eat-in Order
+- `EatInOrder`는 매장 내 식사를 주문한 테이블을 나타내는 `OrderTable`을 지닌다.
+- 대기 중(WAITING)인 `EatInOrder`를 수락할 수 있으며, 이 때 `ACCEPTED` 상태로 변경한다.
+- 수락 된(ACCEPTED) `EatInOrder`를 서빙할 수 있다. 이 때 상태는 `SERVED`가 된다.
+- 제공 완료된(SERVED) `EatInOrder`를 완료할 수 있다. 이 때 상태는 `COMPLETED`가 된다.
+- 완료 상태(COMPLETED)가 되면 해당 주문이 들어온 `OrderTable`을 비운다.
+
+### Order Table
+- `OrderTable`에는 손님을 앉히거나 비울 수 있다.
+- `OrderTable`로 안내받은 손님 수를 변경할 수 있다.
+
+### Product
 - `ProductFactory`는 `Product`를 생성한다.
-- `Product`는 이름,가격을 지닌다.
+- `Product`는 `ProfanityFilteredName`, `Price`을 지닌다.
 - `ProductValidator`는 `Product`를 검증한다.
   * `Product` 생성 시
     * 가격이 0원 이상인지 검증
-    * `Product` 이름에 욕설이 없는지 검증
+    * `ProfanityFilterdName`을 갖는지 검증
   * `Product` 가격 변경 시
     * 가격이 0원 이상인지 검증
