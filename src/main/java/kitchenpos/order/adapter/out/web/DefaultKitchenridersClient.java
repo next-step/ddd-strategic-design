@@ -1,4 +1,4 @@
-package kitchenpos.order.adapter.out.client;
+package kitchenpos.order.adapter.out.web;
 
 import org.springframework.stereotype.Component;
 

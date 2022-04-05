@@ -12,21 +12,21 @@ import java.util.List;
 @RequestMapping("/api/menu-groups")
 @RestController
 public class MenuGroupRestController {
-    private final MenuGroupServicePort menuGroupPortService;
+    private final MenuGroupServicePort menuGroupServicePort;
 
     public MenuGroupRestController(final MenuGroupServicePort menuGroupPortService) {
-        this.menuGroupPortService = menuGroupPortService;
+        this.menuGroupServicePort = menuGroupPortService;
     }
 
     @PostMapping
     public ResponseEntity<MenuGroup> create(@RequestBody final MenuGroup request) {
-        final MenuGroup response = menuGroupPortService.create(request);
+        final MenuGroup response = menuGroupServicePort.create(request);
         return ResponseEntity.created(URI.create("/api/menu-groups/" + response.getId()))
                              .body(response);
     }
 
     @GetMapping
     public ResponseEntity<List<MenuGroup>> findAll() {
-        return ResponseEntity.ok(menuGroupPortService.findAll());
+        return ResponseEntity.ok(menuGroupServicePort.findAll());
     }
 }
