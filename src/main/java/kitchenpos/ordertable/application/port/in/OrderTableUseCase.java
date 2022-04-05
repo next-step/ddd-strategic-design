@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import kitchenpos.ordertable.domain.OrderTable;
 
-public interface OrderTableServicePort {
+public interface OrderTableUseCase {
     OrderTable create(OrderTable request);
 
     OrderTable sit(UUID orderTableId);

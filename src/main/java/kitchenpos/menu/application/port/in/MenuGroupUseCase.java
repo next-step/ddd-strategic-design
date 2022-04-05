@@ -4,7 +4,7 @@ import java.util.List;
 
 import kitchenpos.menu.domain.MenuGroup;
 
-public interface MenuGroupServicePort {
+public interface MenuGroupUseCase {
     MenuGroup create(MenuGroup request);
 
     List<MenuGroup> findAll();

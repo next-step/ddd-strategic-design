@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import kitchenpos.menu.domain.Menu;
 
-public interface MenuServicePort {
+public interface MenuUseCase {
     Menu create(Menu request);
 
     Menu changePrice(UUID menuId, Menu request);

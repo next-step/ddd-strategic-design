@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import kitchenpos.product.domain.Product;
 
-public interface ProductServicePort {
+public interface ProductUseCase {
     Product create(Product request);
 
     Product changePrice(UUID productId, Product request);

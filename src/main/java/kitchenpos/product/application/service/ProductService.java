@@ -4,7 +4,7 @@ import kitchenpos.product.application.port.out.ProductPurgomalumClient;
 import kitchenpos.menu.application.port.out.MenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.product.application.port.in.ProductServicePort;
+import kitchenpos.product.application.port.in.ProductUseCase;
 import kitchenpos.product.application.port.out.ProductRepository;
 import kitchenpos.product.domain.Product;
 
@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class ProductService implements ProductServicePort {
+public class ProductService implements ProductUseCase {
     private final ProductRepository productRepository;
     private final MenuRepository menuRepository;
     private final ProductPurgomalumClient productPurgomalumClient;

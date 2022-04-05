@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import kitchenpos.order.domain.Order;
 
-public interface OrderServicePort {
+public interface OrderUseCase {
     Order create(Order request);
 
     Order accept(UUID orderId);

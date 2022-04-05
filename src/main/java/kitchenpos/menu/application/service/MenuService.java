@@ -1,7 +1,7 @@
 package kitchenpos.menu.application.service;
 
 import kitchenpos.menu.application.port.out.MenuPurgomalumClient;
-import kitchenpos.menu.application.port.in.MenuServicePort;
+import kitchenpos.menu.application.port.in.MenuUseCase;
 import kitchenpos.menu.application.port.out.MenuGroupRepository;
 import kitchenpos.menu.application.port.out.MenuRepository;
 import kitchenpos.menu.domain.Menu;
@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class MenuService implements MenuServicePort {
+public class MenuService implements MenuUseCase {
     private final MenuRepository menuRepository;
     private final MenuGroupRepository menuGroupRepository;
     private final ProductRepository productRepository;

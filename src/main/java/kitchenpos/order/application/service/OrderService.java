@@ -6,7 +6,7 @@ import kitchenpos.menu.domain.Menu;
 import kitchenpos.order.domain.OrderLineItem;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderType;
-import kitchenpos.order.application.port.in.OrderServicePort;
+import kitchenpos.order.application.port.in.OrderUseCase;
 import kitchenpos.order.application.port.out.OrderRepository;
 import kitchenpos.order.domain.Order;
 import kitchenpos.ordertable.application.port.out.OrderTableRepository;
@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderService implements OrderServicePort {
+public class OrderService implements OrderUseCase {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
     private final OrderTableRepository orderTableRepository;

@@ -1,6 +1,6 @@
 package kitchenpos.menu.application.service;
 
-import kitchenpos.menu.application.port.in.MenuGroupServicePort;
+import kitchenpos.menu.application.port.in.MenuGroupUseCase;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.application.port.out.MenuGroupRepository;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class MenuGroupService implements MenuGroupServicePort {
+public class MenuGroupService implements MenuGroupUseCase {
     private final MenuGroupRepository menuGroupRepository;
 
     public MenuGroupService(final MenuGroupRepository menuGroupRepository) {
