@@ -167,44 +167,83 @@
 
 ### 주문(Order) 컨텍스트
 
-**Order**
+**Delivery Order**
+
+상태
+- Delivery Order는 식별자, 주문 상태, 주문 시간, OrderLineItem, 배달 주소를 가진다.
+- OrderLineItem은 시퀀스와 Menu와 그 수량과 가격을 가진다.
+- 주문 상태는 대기 -> 수락 -> 조리 완료 -> 배달 중 -> 배달 완료 -> 완료 순으로 변경된다. 
+
+행위
+- Delivery Order를 생성한다.
+  - 하나 이상의 OrderLineItem이 있어야 한다.
+  - OrderLineItem의 Menu는 Display 되어 있어야 한다.
+  - 주문한 가격과 OrderLineItem의 Menu 가격이 일치해야 한다.
+  - 주문의 최초 상태는 WAITING 이다. 
+  - OrderLineItem의 수량이 0 이상이어야 한다.
+  - 배달 주소가 있어야 한다.
+- OrderService는 DeliveryOrder를 등록한다.
+- OrderService는 DeliveryOrder를 수락할 수 있다. 
+  - Order는 WAITING 상태여야만 한다.
+  - Delivery Service에게 배달 요청한다.
+- OrderService는 DeliveryOrder를 서빙할 수 있다.
+  - DeliveryOrder는 ACCEPTED 상태여야만 한다.
+- OrderService는 DeliveryOrder를 배달 완료할 수 있다.
+  - Order는 DELIVERING 상태여야만 한다.
+- OrderService는 DeliveryOrder를 완료할 수 있다.
+  - Delivery Order는 DELIVERED 상태여야만 한다.
+- OrderService는 모든 DeliveryOrder를 조회한다.
+
+
+**TAKE-OUT Order**
 
 상태 
-- Order는 식별자, 주문 유형, 주문 상태, 주문 시간, OrderLineItem, 배달 주소, OrderTable을 가진다.
+- TAKE-OUT Order는 식별자, 주문 상태, 주문 시간, OrderLineItem를 가진다.
+- OrderLineItem은 시퀀스와 Menu와 그 수량과 가격을 가진다.
+- 주문 상태는 대기 -> 수락 -> 조리 완료 -> 완료 순으로 변경된다.
+
+행위
+- TAKE-OUT Order를 생성한다.
+  - 하나 이상의 OrderLineItem이 있어야 한다.
+  - OrderLineItem의 Menu는 Display 되어 있어야 한다.
+  - 주문한 가격과 OrderLineItem의 Menu 가격이 일치해야 한다.
+  - 주문의 최초 상태는 WAITING 이다.
+  - OrderLineItem의 수량이 0 이상이어야 한다.
+- OrderService는 TAKE-OUT Order를 등록한다.
+- OrderService는 TAKE-OUT Order를 수락할 수 있다.
+  - TAKE-OUT Order는 WAITING 상태여야만 한다.
+- OrderService는 TAKE-OUT Order를 서빙할 수 있다.
+  - TAKE-OUT Order는 ACCEPTED 상태여야만 한다.
+- OrderService는 TAKE-OUT Order를 완료할 수 있다.
+  - TAKE-OUT Order는 SERVED 상태여야만 한다.
+- OrderService는 모든 TAKE-OUT Order를 조회한다.
+
+**EAT-IN Order**
+
+상태 
+- EAT-IN Order는 식별자, 주문 상태, 주문 시간, OrderLineItem, OrderTable을 가진다.
+- OrderLineItem은 시퀀스와 Menu와 그 수량과 가격을 가진다.
+- 주문 상태는 대기 -> 수락 -> 조리 완료 -> 완료 순으로 변경된다.
 
 행위 
-- Order를 생성한다.(공통)
+- EAT-IN Order를 생성한다.
   - 주문 유형이 있어야 한다.
   - 하나 이상의 OrderLineItem이 있어야 한다.
   - OrderLineItem의 Menu는 Display 되어 있어야 한다.
   - 주문한 가격과 OrderLineItem의 Menu 가격이 일치해야 한다.
   - 주문의 최초 상태는 WAITING 이다.
-- TAKE-OUT Order를 생성한다
-  - OrderLineItem의 수량이 0 이상이어야 한다.
-- Delivery Order를 생성한다.
-  - OrderLineItem의 수량이 0 이상이어야 한다.
-  - 배달 주소가 있어야 한다.
-- EAT-IN Order를 생성한다.
   - 식탁이 비어있지 않아야 한다.
   - OrderLineItem의 수량은 수정을 위해 0보다 작을 수 있다.
-- OrderLineItem은 시퀀스와 Menu와 그 수량과 가격을 가진다.
-- OrderService는 Order를 등록한다.
-- OrderService는 Order를 수락할 수 있다.
-  - Order는 WAITING 상태여야만 한다.
-  - Delivery Order의 경우 Delivery Service에게 배달 요청한다.
+- OrderService는 EAT-IN Order를 등록한다.
+- OrderService는 OrderTable의 손님 수를 변경할 수 있다.
+- OrderService는 EAT-IN Order를 수락할 수 있다.
+  - EAT-IN Order는 WAITING 상태여야만 한다.
 - OrderService는 Order를 서빙할 수 있다.
-  - Order는 ACCEPTED 상태여야만 한다.
-- OrderService는 Order를 배달할 수 있다.
-- Delivery Order만 배달 가능하다.
-  - Order는 SERVED 상태여야만 한다.
-- OrderService는 Order를 배달 완료할 수 있다.
-  - Delivery Order만 배달 완료할 수 있다.
-  - Order는 DELIVERING 상태여야만 한다.
-- OrderService는 Order를 완료할 수 있다.
-  - Delivery Order는 DELIVERED 상태여야만 한다.
-  - TAKE-OUT / EAT-IN의 경우 SERVED 상태여야만 한다.
-  - EAT-IN이 완료되면 Order Table을 비운다.
-- OrderService는 모든 Order를 조회한다.
+  - EAT-IN Order는 ACCEPTED 상태여야만 한다.
+- OrderService는 EAT-IN Order를 완료할 수 있다.
+  - EAT-IN Order는 SERVED 상태여야만 한다.
+  - Order Table을 비운다.
+- OrderService는 모든 EAT-IN Order를 조회한다.
 
 **OrderTable**
 
