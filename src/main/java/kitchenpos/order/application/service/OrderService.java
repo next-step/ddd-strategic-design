@@ -39,6 +39,7 @@ public class OrderService implements OrderServicePort {
         this.kitchenridersClient = kitchenridersClient;
     }
 
+    @Override
     @Transactional
     public Order create(final Order request) {
         final OrderType type = request.getType();
@@ -102,6 +103,7 @@ public class OrderService implements OrderServicePort {
         return orderRepository.save(order);
     }
 
+    @Override
     @Transactional
     public Order accept(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
@@ -122,6 +124,7 @@ public class OrderService implements OrderServicePort {
         return order;
     }
 
+    @Override
     @Transactional
     public Order serve(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
@@ -133,6 +136,7 @@ public class OrderService implements OrderServicePort {
         return order;
     }
 
+    @Override
     @Transactional
     public Order startDelivery(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
@@ -147,6 +151,7 @@ public class OrderService implements OrderServicePort {
         return order;
     }
 
+    @Override
     @Transactional
     public Order completeDelivery(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
@@ -158,6 +163,7 @@ public class OrderService implements OrderServicePort {
         return order;
     }
 
+    @Override
     @Transactional
     public Order complete(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
@@ -185,6 +191,7 @@ public class OrderService implements OrderServicePort {
         return order;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Order> findAll() {
         return orderRepository.findAll();

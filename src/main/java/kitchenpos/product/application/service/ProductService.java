@@ -33,6 +33,7 @@ public class ProductService implements ProductServicePort {
         this.productPurgomalumClient = productPurgomalumClient;
     }
 
+    @Override
     @Transactional
     public Product create(final Product request) {
         final BigDecimal price = request.getPrice();
@@ -50,6 +51,7 @@ public class ProductService implements ProductServicePort {
         return productRepository.save(product);
     }
 
+    @Override
     @Transactional
     public Product changePrice(final UUID productId, final Product request) {
         final BigDecimal price = request.getPrice();
@@ -74,6 +76,7 @@ public class ProductService implements ProductServicePort {
         return product;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {
         return productRepository.findAll();

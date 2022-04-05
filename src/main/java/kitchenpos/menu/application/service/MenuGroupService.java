@@ -19,6 +19,7 @@ public class MenuGroupService implements MenuGroupServicePort {
         this.menuGroupRepository = menuGroupRepository;
     }
 
+    @Override
     @Transactional
     public MenuGroup create(final MenuGroup request) {
         final String name = request.getName();
@@ -31,6 +32,7 @@ public class MenuGroupService implements MenuGroupServicePort {
         return menuGroupRepository.save(menuGroup);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<MenuGroup> findAll() {
         return menuGroupRepository.findAll();

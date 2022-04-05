@@ -24,6 +24,7 @@ public class OrderTableService implements OrderTableServicePort {
         this.orderRepository = orderRepository;
     }
 
+    @Override
     @Transactional
     public OrderTable create(final OrderTable request) {
         final String name = request.getName();
@@ -38,6 +39,7 @@ public class OrderTableService implements OrderTableServicePort {
         return orderTableRepository.save(orderTable);
     }
 
+    @Override
     @Transactional
     public OrderTable sit(final UUID orderTableId) {
         final OrderTable orderTable = orderTableRepository.findById(orderTableId)
@@ -46,6 +48,7 @@ public class OrderTableService implements OrderTableServicePort {
         return orderTable;
     }
 
+    @Override
     @Transactional
     public OrderTable clear(final UUID orderTableId) {
         final OrderTable orderTable = orderTableRepository.findById(orderTableId)
@@ -58,6 +61,7 @@ public class OrderTableService implements OrderTableServicePort {
         return orderTable;
     }
 
+    @Override
     @Transactional
     public OrderTable changeNumberOfGuests(final UUID orderTableId, final OrderTable request) {
         final int numberOfGuests = request.getNumberOfGuests();
@@ -73,6 +77,7 @@ public class OrderTableService implements OrderTableServicePort {
         return orderTable;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<OrderTable> findAll() {
         return orderTableRepository.findAll();

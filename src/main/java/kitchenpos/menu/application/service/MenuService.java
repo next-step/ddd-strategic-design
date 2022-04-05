@@ -36,6 +36,7 @@ public class MenuService implements MenuServicePort {
         this.menuPurgomalumClient = menuPurgomalumClient;
     }
 
+    @Override
     @Transactional
     public Menu create(final Menu request) {
         final BigDecimal price = request.getPrice();
@@ -91,6 +92,7 @@ public class MenuService implements MenuServicePort {
         return menuRepository.save(menu);
     }
 
+    @Override
     @Transactional
     public Menu changePrice(final UUID menuId, final Menu request) {
         final BigDecimal price = request.getPrice();
@@ -111,6 +113,7 @@ public class MenuService implements MenuServicePort {
         return menu;
     }
 
+    @Override
     @Transactional
     public Menu display(final UUID menuId) {
         final Menu menu = menuRepository.findById(menuId)
@@ -127,6 +130,7 @@ public class MenuService implements MenuServicePort {
         return menu;
     }
 
+    @Override
     @Transactional
     public Menu hide(final UUID menuId) {
         final Menu menu = menuRepository.findById(menuId)
@@ -135,6 +139,7 @@ public class MenuService implements MenuServicePort {
         return menu;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Menu> findAll() {
         return menuRepository.findAll();
