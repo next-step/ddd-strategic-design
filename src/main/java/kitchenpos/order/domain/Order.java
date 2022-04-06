@@ -1,9 +1,10 @@
-package kitchenpos.domain;
+package kitchenpos.order.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import kitchenpos.domain.OrderTable;
 
 @Table(name = "orders")
 @Entity

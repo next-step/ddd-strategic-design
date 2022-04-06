@@ -1,8 +1,9 @@
-package kitchenpos.domain;
+package kitchenpos.order.domain;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import kitchenpos.domain.OrderTable;
 
 public interface OrderRepository {
     Order save(Order order);
