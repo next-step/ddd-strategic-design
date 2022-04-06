@@ -12,7 +12,7 @@ import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderLineItem;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderType;
-import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.order.domain.OrderTable;
 import kitchenpos.product.domain.Product;
 
 public class Fixtures {
