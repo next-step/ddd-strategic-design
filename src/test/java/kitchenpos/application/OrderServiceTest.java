@@ -1,6 +1,15 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
+import kitchenpos.menu.application.port.out.MenuRepository;
+import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.order.domain.OrderType;
+import kitchenpos.order.application.port.out.OrderRepository;
+import kitchenpos.order.application.service.OrderService;
+import kitchenpos.order.domain.Order;
+import kitchenpos.ordertable.application.port.out.OrderTableRepository;
+import kitchenpos.ordertable.domain.OrderTable;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +31,23 @@ class OrderServiceTest {
     private OrderTableRepository orderTableRepository;
     private FakeKitchenridersClient kitchenridersClient;
     private OrderService orderService;
+
+    private static List<Arguments> orderLineItems() {
+        return Arrays.asList(
+            null,
+            Arguments.of(Collections.emptyList()),
+            Arguments.of(Arrays.asList(createOrderLineItemRequest(INVALID_ID, 19_000L, 3L)))
+        );
+    }
+
+    private static OrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
+        final OrderLineItem orderLineItem = new OrderLineItem();
+        orderLineItem.setSeq(new Random().nextLong());
+        orderLineItem.setMenuId(menuId);
+        orderLineItem.setPrice(BigDecimal.valueOf(price));
+        orderLineItem.setQuantity(quantity);
+        return orderLineItem;
+    }
 
     @BeforeEach
     void setUp() {
@@ -102,14 +128,6 @@ class OrderServiceTest {
         final Order expected = createOrderRequest(OrderType.TAKEOUT, orderLineItems);
         assertThatThrownBy(() -> orderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    private static List<Arguments> orderLineItems() {
-        return Arrays.asList(
-            null,
-            Arguments.of(Collections.emptyList()),
-            Arguments.of(Arrays.asList(createOrderLineItemRequest(INVALID_ID, 19_000L, 3L)))
-        );
     }
 
     @DisplayName("매장 주문은 주문 항목의 수량이 0 미만일 수 있다.")
@@ -301,7 +319,7 @@ class OrderServiceTest {
         assertAll(
             () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED),
             () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().isEmpty()).isTrue(),
-            () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().getNumberOfGuests()).isEqualTo(0)
+            () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().getNumberOfGuests()).isZero()
         );
     }
 
@@ -362,14 +380,5 @@ class OrderServiceTest {
         order.setOrderTableId(orderTableId);
         order.setOrderLineItems(Arrays.asList(orderLineItems));
         return order;
-    }
-
-    private static OrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
-        final OrderLineItem orderLineItem = new OrderLineItem();
-        orderLineItem.setSeq(new Random().nextLong());
-        orderLineItem.setMenuId(menuId);
-        orderLineItem.setPrice(BigDecimal.valueOf(price));
-        orderLineItem.setQuantity(quantity);
-        return orderLineItem;
     }
 }

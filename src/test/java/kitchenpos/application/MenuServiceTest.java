@@ -1,7 +1,15 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.menu.application.port.out.MenuPurgomalumClient;
+import kitchenpos.product.application.port.out.ProductPurgomalumClient;
+import kitchenpos.menu.application.port.out.MenuGroupRepository;
+import kitchenpos.menu.application.port.out.MenuRepository;
+import kitchenpos.menu.application.service.MenuService;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.product.application.port.out.ProductRepository;
+import kitchenpos.product.domain.Product;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,18 +31,33 @@ class MenuServiceTest {
     private MenuRepository menuRepository;
     private MenuGroupRepository menuGroupRepository;
     private ProductRepository productRepository;
-    private PurgomalumClient purgomalumClient;
+    private MenuPurgomalumClient menuPurgomalumClient;
     private MenuService menuService;
     private UUID menuGroupId;
     private Product product;
+
+    private static List<Arguments> menuProducts() {
+        return Arrays.asList(
+            null,
+            Arguments.of(Collections.emptyList()),
+            Arguments.of(Arrays.asList(createMenuProductRequest(INVALID_ID, 2L)))
+        );
+    }
+
+    private static MenuProduct createMenuProductRequest(final UUID productId, final long quantity) {
+        final MenuProduct menuProduct = new MenuProduct();
+        menuProduct.setProductId(productId);
+        menuProduct.setQuantity(quantity);
+        return menuProduct;
+    }
 
     @BeforeEach
     void setUp() {
         menuRepository = new InMemoryMenuRepository();
         menuGroupRepository = new InMemoryMenuGroupRepository();
         productRepository = new InMemoryProductRepository();
-        purgomalumClient = new FakePurgomalumClient();
-        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, purgomalumClient);
+        menuPurgomalumClient = new FakePurgomalumClient();
+        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, menuPurgomalumClient);
         menuGroupId = menuGroupRepository.save(menuGroup()).getId();
         product = productRepository.save(product("후라이드", 16_000L));
     }
@@ -64,14 +87,6 @@ class MenuServiceTest {
         final Menu expected = createMenuRequest("후라이드+후라이드", 19_000L, menuGroupId, true, menuProducts);
         assertThatThrownBy(() -> menuService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    private static List<Arguments> menuProducts() {
-        return Arrays.asList(
-            null,
-            Arguments.of(Collections.emptyList()),
-            Arguments.of(Arrays.asList(createMenuProductRequest(INVALID_ID, 2L)))
-        );
     }
 
     @DisplayName("메뉴에 속한 상품의 수량은 0개 이상이어야 한다.")
@@ -118,7 +133,7 @@ class MenuServiceTest {
     }
 
     @DisplayName("메뉴의 이름이 올바르지 않으면 등록할 수 없다.")
-    @ValueSource(strings = {"비속어", "욕설이 포함된 이름"})
+    @ValueSource(strings = { "비속어", "욕설이 포함된 이름" })
     @NullSource
     @ParameterizedTest
     void create(final String name) {
@@ -234,13 +249,6 @@ class MenuServiceTest {
         menu.setDisplayed(displayed);
         menu.setMenuProducts(menuProducts);
         return menu;
-    }
-
-    private static MenuProduct createMenuProductRequest(final UUID productId, final long quantity) {
-        final MenuProduct menuProduct = new MenuProduct();
-        menuProduct.setProductId(productId);
-        menuProduct.setQuantity(quantity);
-        return menuProduct;
     }
 
     private Menu changePriceRequest(final long price) {
