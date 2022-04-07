@@ -1,4 +1,4 @@
-package kitchenpos.order.domain;
+package kitchenpos.order.domain.ordertable;
 
 import java.util.List;
 import java.util.Optional;

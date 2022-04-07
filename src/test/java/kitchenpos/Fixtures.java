@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuGroup;
-import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.menu.domain.menugroup.MenuGroup;
+import kitchenpos.menu.domain.menuproduct.MenuProduct;
 import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.order.domain.orderlineitem.OrderLineItem;
 import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
+import kitchenpos.order.domain.ordertable.OrderTable;
 import kitchenpos.order.domain.OrderType;
 import kitchenpos.product.domain.Product;
 

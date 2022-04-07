@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import kitchenpos.order.domain.orderlineitem.OrderLineItem;
+import kitchenpos.order.domain.ordertable.OrderTable;
 
 @Table(name = "orders")
 @Entity
