@@ -152,7 +152,7 @@
 ### 상품(`Product`)
 - 상품(`Product`)은 반드시 이름(`name`)과 가격(`price`)을 가져야 한다.
   - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
-  - 상품 가격(`Product Price`)은 0원 이상이여야 한다.
+  - 상품을 등록할 때 가격(`Product Price`)은 0원 이상이여야 한다.
 - 상품(`Product`)은 가격을 0원 이상으로 변경(`Change`)할 수 있다.
 
 ### 메뉴 그룹(`Menu Group`)
