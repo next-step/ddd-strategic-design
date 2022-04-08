@@ -146,5 +146,82 @@
 | 배달 완료 | Delivered | 주문한 제품을 손님에게 배달한 상태 | 
 | 주문 완료 | Completed | 주문한 제품을 손님에게 전달한 상태 | 
 
+## 용어 사전 수정 사항
+
+---
+
+`| 배달 대행사 | Delivery Agency | 배달을 대행해주는 회사 |`
+
+`| 매장 주문 | Eat In Order | 매장 내에서 제품을 소비하기 위한 주문 |`
+
 
 ## 모델링
+
+---
+
+### 상품(`Product`)
+
+- 상품(`Product`)은 반드시 이름(`name`)과 가격(`price`)을 가져야 한다.
+  - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
+  - 상품 가격(`Product Price`)을 생성할 때는 0원 이상이어야 한다.
+- 상품(`Product`)은 가격을 변경할 수 있다.
+  - 상품 가격(`Product Price`)을 변경할 때는 0원 이상이어야 한다.
+  
+
+### 메뉴 그룹(`Menu Group`)
+
+- 메뉴 그룹(`Menu Group`)을 생성시 반드시 이름(`name`)을 가져야 한다.
+
+
+
+### 메뉴(Menu)
+
+- 메뉴(`Menu`)는 반드시 한 개 이상의 메뉴 상품(`Menu Product`)을 갖는다.
+- 메뉴(`Menu`)는 반드시 이름(`name`)을 가져야 한다.
+  - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
+- 메뉴(`Menu`)는 반드시 0원 이상의 가격(`price`)을 가져야 한다.
+  - 메뉴(`Menu`)의 가격(`price`)은 메뉴 제품(`Menu Product`) 가격의 총 합 보다 작아야 한다.
+- 메뉴(`Menu`)는 반드시 메뉴 그룹(`Menu Group`)을 가져야 한다.
+- 메뉴는 가격을 변경할 수 있다.
+  - 메뉴의 가격변경시 메뉴가 가진 메뉴 제품(`Menu Product`) 가격의 총 합 보다 작아야 한다.
+- 메뉴를 전시할 수 있다.
+  - 메뉴를 전시할때는 메뉴가 가진 메뉴 제품의 가격의 합보다 메뉴의 가격이 작아야 한다. 
+- 메뉴를 숨길수 있다.
+
+
+
+
+### 메뉴 상품(`Menu Product`)
+
+- 메뉴 상품(`Menu Product`)은 메뉴(`Menu`)와 개수(`quantity`)를 갖는다.
+
+### 주문(`Order`)
+
+- 주문 제품(`Order Line Item`)은 식별자(`Id`)와 메뉴(`Menu`), 가격(`Price`), 수량(`Quantity`)을 가진다.
+  - Q. 식별자(`Id`) 라는 단어는 개발자가 아닌 사람이 이해하기 어렵지 않을까?
+- 주문(`Order`)은 식별자(`Id`), 주문 제품(`Order Line Item`), 주문 타입(`Order Type`), 주문 상태(`Order Status`), 주문 시간(`Order Date Time`)을 갖는다.
+- 주문 타입에는 배달 주문(`Delivery Order`), 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`)이 있다.
+  - Q. 주문 제품(`Order Line Item`)과 주문 타입(`Order Type`)에 대한 정의가 있어야 이해할 수 있을 것 같다.
+
+### 배달 주문(`Delivery Order`)
+
+- 배달 주문(`Delivery Order`)은 반드시 배달 주소(`Deleivery Address`)를 갖는다.
+- 배달 주문은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 배달 중(`Delivering`) → 배달 완료(`Delivered`) → 주문 완료(`Completed`) 순서로 진행된다.
+- 주문이 수락되면 배달 대행사(`Delevery Agency`)에게 배달 요청한다.
+
+### 포장 주문(`Takeout Order`)
+
+- 포장 주문(`Takeout Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
+
+### 매장 주문(`Eat In Order`)
+
+- 매장 주문(`Eat In Order`)은 반드시 주문 식탁(`Order Table`)을 갖는다.
+- 매장 주문(`Eat In Order`)의 주문 제품(`Order Line Item`)은 수량이 음수일 수 있다.
+- 매장 주문(`Eat In Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
+
+## 주문 식탁(`Order Table`)
+
+- 주문 식탁(`Order Table`)은 반드시 이름(`name`)을 갖는다.
+- 주문 식탁(`Order Table`)의 손님 수(`Guest`)는 0명 이상이다.
+- 매장 주문(`Eat In Order`)이 주문 완료(`Completed`)가 되면 다음 매장 손님(`Guest`)이 이용할 수 있도록 식탁 청소(`Clean a Table`)한다.
+- 주문 식탁(`Order Table`)을 이용 중인 경우 손님 수(`Number of guests`)를 변경(`Change`)할 수 있다.
