@@ -153,10 +153,10 @@
 - 상품(`Product`)은 반드시 이름(`name`)과 가격(`price`)을 가져야 한다.
   - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
   - 상품 가격(`Product Price`)은 0원 이상이여야 한다.
-- 상품(`Product`)은 가격을 변경(`Change`)할 수 있다.
+- 상품(`Product`)은 가격을 0원 이상으로 변경(`Change`)할 수 있다.
 
 ### 메뉴 그룹(`Menu Group`)
-- 메뉴 그룹(`Menu Group`)은 반드시 이름(`name`)을 가져야 한다.
+- 메뉴 그룹(`Menu Group`)을 등록할 때 반드시 이름(`name`)을 가져야 한다.
 
 ### 메뉴(Menu)
 - 메뉴(`Menu`)는 반드시 한 개 이상의 메뉴 상품(`Menu Product`)을 갖는다.
@@ -184,7 +184,6 @@
 
 ### 매장 주문(`Eat In Order`)
 - 매장 주문(`Eat In Order`)은 반드시 주문 식탁(`Order Table`)을 갖는다.
-- 매장 주문(`Eat In Order`)의 주문 제품(`Order Line Item`)은 수량(`Quantity`)이 음수일 수 있다.
 - 매장 주문(`Eat In Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
 
 ## 주문 식탁(`Order Table`)
