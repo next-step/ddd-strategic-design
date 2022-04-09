@@ -1,4 +1,4 @@
-package kitchenpos.infra.client;
+package kitchenpos.common.infra.client;
 
 import org.springframework.stereotype.Component;
 

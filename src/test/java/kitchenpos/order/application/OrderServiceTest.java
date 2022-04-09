@@ -1,6 +1,6 @@
 package kitchenpos.order.application;
 
-import kitchenpos.infra.client.FakeKitchenridersClient;
+import kitchenpos.common.client.FakeKitchenridersClient;
 import kitchenpos.order.domain.InMemoryOrderRepository;
 import kitchenpos.order.domain.InMemoryOrderTableRepository;
 import kitchenpos.menu.domain.InMemoryMenuRepository;

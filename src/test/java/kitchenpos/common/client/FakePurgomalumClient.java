@@ -1,9 +1,8 @@
-package kitchenpos.infra.client;
-
-import kitchenpos.infra.client.PurgomalumClient;
+package kitchenpos.common.client;
 
 import java.util.Arrays;
 import java.util.List;
+import kitchenpos.common.infra.client.PurgomalumClient;
 
 public class FakePurgomalumClient implements PurgomalumClient {
     private static final List<String> profanities;
