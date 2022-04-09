@@ -112,7 +112,7 @@
 | --- | --- | --- |
 | 주문 식탁 | Order Table | 매장 식사 고객이 이용 가능한 식탁 |
 | 빈 식탁 | Empty Table | 이용 중인 고객이 없는 식탁 |
-| 식탁 청소 | Clean Table | 다음 매장식사 고객이 이용할 수 있도록 식탁을 깨끗하게 청소하는 것 |
+| 식탁 청소 | Clean a Table | 다음 매장식사 고객이 이용할 수 있도록 식탁을 깨끗하게 청소하는 것 |
 
 ### 주문 제품
 | 한글명 | 영문명 | 설명 |
@@ -123,9 +123,9 @@
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 주문 | Order | 하나 이상의 주문 제품을 포함하는 요소로 생산이나 배송, 또는 서비스의 제공을 요구하는 행위 |
-| 배달 기사 | Kitchen Riders | 배달 주문을 배달 주소로 전달해주는 기사 |
+| 배달 대행사 | Delivery Agency | 배달을 대행해주는 회사 |
+| 배달 요청 | Delivery Request | 배달 주문 제품을 라이더를 통해 제품을 주문한 사람에게 전달하도록 요청하는 것 |
 | 배달 주소 | Delivery Address | 주문한 음식을 배달 받을 주소 |
-| 배달 요청 | 배달 주문 제품을 라이더를 통해 제품을 주문한 사람에게 전달하도록 요청하는 것 |
 
 ### 주문 타입
 | 한글명 | 영문명 | 설명 |
@@ -133,12 +133,12 @@
 | 주문 타입 | Order Type | 주문 방법. (배달, 포장, 매장 주문이 있다) |
 | 배달 주문 | Delivery Order | 라이더를 통한 주문 |
 | 포장 주문 | Takeout Order | 매장 바깥에서 제품을 소비하기 위한 목적의 주문 |
-| 매장 주문 | Eat In | 매장 내에서 제품을 소비하기 위한 주문 |
+| 매장 주문 | Eat In Order | 매장 내에서 제품을 소비하기 위한 주문 |
 
 ### 주문 상태
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 주문 상태 | Order Status | 주문 접수 이후 상태. 주문 대기, 주문 수락, 주문 서빙, 배달 중, 배달 완료, 주문 완료 |
+| 한글명 | 영문명 | 설명 | 
+| --- | --- | --- | 
+| 주문 상태 | Order Status | 주문 접수 이후 상태. 주문 대기, 주문 수락, 주문 서빙, 배달 중, 배달 완료, 주문 완료 | 
 | 주문 대기 | Waiting | 고객이 주문을 요청한 상태 | 
 | 주문 수락 | Accepted | 고객이 요청한 주문을 가게 주인이 수락한 상태 | 
 | 주문 서빙 | Served | 주문한 제품을 고객 또는 배달기사에게 전달한 상태 | 
@@ -148,3 +148,46 @@
 
 
 ## 모델링
+
+### 상품(`Product`)
+- 상품(`Product`)은 반드시 이름(`name`)과 가격(`price`)을 가져야 한다.
+  - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
+  - 상품을 등록할 때 가격(`Product Price`)은 0원 이상이여야 한다.
+- 상품(`Product`)은 가격을 0원 이상으로 변경(`Change`)할 수 있다.
+
+### 메뉴 그룹(`Menu Group`)
+- 메뉴 그룹(`Menu Group`)을 등록할 때 반드시 이름(`name`)을 가져야 한다.
+
+### 메뉴(Menu)
+- 메뉴(`Menu`)는 반드시 한 개 이상의 메뉴 상품(`Menu Product`)을 갖는다.
+- 메뉴(`Menu`)는 반드시 이름(`name`)을 가져야 한다.
+  - 이름(`name`)에는 부적절한 단어(`Abuse Words`)가 포함되면 안된다.
+- 메뉴(`Menu`)는 반드시 0원 이상의 가격(`price`)을 가져야 한다.
+  - 메뉴(`Menu`)의 가격(`price`)은 메뉴 제품(`Menu Product`) 가격의 총 합 보다 작아야 한다.
+- 메뉴(`Menu`)는 반드시 메뉴 그룹(`Menu Group`)에 속한다.
+
+### 메뉴 상품(`Menu Product`)
+- 메뉴 상품(`Menu Product`)은 메뉴(`Menu`)와 개수(`Quantity`)를 갖는다.
+
+### 주문(`Order`)
+- 주문 제품(`Order Line Item`)은 식별자(`Id`)와 메뉴(`Menu`), 가격(`Price`), 수량(`Quantity`)을 가진다.
+- 주문(`Order`)은 식별자(`Id`), 주문 제품(`Order Line Item`), 주문 타입(`Order Type`), 주문 상태(`Order Status`), 주문 시간(`Order Date Time`)을 갖는다.
+- 주문 타입에는 배달 주문(`Delivery Order`), 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`)이 있다.
+
+### 배달 주문(`Delivery Order`)
+- 배달 주문(`Delivery Order`)은 반드시 배달 주소(`Deleivery Address`)를 갖는다.
+- 배달 주문은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 배달 중(`Delivering`) → 배달 완료(`Delivered`) → 주문 완료(`Completed`) 순서로 진행된다.
+- 주문이 수락되면 배달 대행사(`Delevery Agency`)에게 배달 요청한다.
+
+### 포장 주문(`Takeout Order`)
+- 포장 주문(`Takeout Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
+
+### 매장 주문(`Eat In Order`)
+- 매장 주문(`Eat In Order`)은 반드시 주문 식탁(`Order Table`)을 갖는다.
+- 매장 주문(`Eat In Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
+
+## 주문 식탁(`Order Table`)
+- 주문 식탁(`Order Table`)은 반드시 이름(`name`)을 갖는다.
+- 주문 식탁(`Order Table`)의 손님 수(`Guest`)는 0명 이상이다.
+- 매장 주문(`Eat In Order`)이 주문 완료(`Completed`)가 되면 다음 매장 손님(`Guest`)이 이용할 수 있도록 식탁 청소(`Clean a Table`)한다.
+- 주문 식탁(`Order Table`)을 이용 중인 경우 손님 수(`Number of guests`)를 변경(`Change`)할 수 있다.
