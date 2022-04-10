@@ -1,6 +1,6 @@
 package kitchenpos.order.repository;
 
-import kitchenpos.domain.OrderTable;
+import kitchenpos.orderTable.domain.OrderTable;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.enums.OrderStatus;
 

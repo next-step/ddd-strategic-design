@@ -3,7 +3,7 @@ package kitchenpos.application;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.repository.OrderRepository;
 import kitchenpos.order.domain.enums.OrderStatus;
-import kitchenpos.domain.OrderTable;
+import kitchenpos.orderTable.domain.OrderTable;
 
 import java.util.*;
 

@@ -8,6 +8,7 @@ import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderLineItem;
 import kitchenpos.order.domain.enums.OrderStatus;
 import kitchenpos.order.domain.enums.OrderType;
+import kitchenpos.orderTable.domain.OrderTable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
