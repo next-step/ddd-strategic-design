@@ -115,7 +115,7 @@ class ProductServiceTest {
     private Product createProductRequest(final String name, final BigDecimal price) {
         final Product product = new Product();
         product.setName(name);
-        product.setPrice(price);
+        product.changePrice(price);
         return product;
     }
 
@@ -125,7 +125,7 @@ class ProductServiceTest {
 
     private Product changePriceRequest(final BigDecimal price) {
         final Product product = new Product();
-        product.setPrice(price);
+        product.changePrice(price);
         return product;
     }
 }

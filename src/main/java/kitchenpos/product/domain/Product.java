@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 @Table(name = "product")
@@ -22,6 +23,29 @@ public class Product {
 
     public Product() {
     }
+
+    public Product(String name, BigDecimal price) {
+    	this.id = UUID.randomUUID();
+    	this.name = validateName(name);
+    	this.price = validatePrice(price);
+	}
+
+	public String validateName(String name) {
+		if (Objects.isNull(name)) {
+			throw new IllegalArgumentException();
+		}
+
+		return name;
+	}
+
+	public BigDecimal validatePrice(BigDecimal price) {
+		if (Objects.isNull(price) || price.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException();
+		}
+
+
+    	return price;
+	}
 
     public UUID getId() {
         return id;
@@ -43,7 +67,7 @@ public class Product {
         return price;
     }
 
-    public void setPrice(final BigDecimal price) {
-        this.price = price;
+    public void changePrice(final BigDecimal price) {
+        this.price = validatePrice(price);
     }
 }

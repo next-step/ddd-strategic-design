@@ -125,7 +125,7 @@ public class Fixtures {
         final Product product = new Product();
         product.setId(UUID.randomUUID());
         product.setName(name);
-        product.setPrice(BigDecimal.valueOf(price));
+        product.changePrice(BigDecimal.valueOf(price));
         return product;
     }
 }
