@@ -1,8 +1,8 @@
 package kitchenpos.order.application;
 
 import kitchenpos.order.infra.outbound.KitchenridersClient;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.orderlineitem.OrderLineItem;
 import kitchenpos.order.domain.OrderRepository;
