@@ -1,4 +1,8 @@
-package kitchenpos.domain;
+package kitchenpos.order.domain;
+
+import kitchenpos.order.domain.enums.OrderStatus;
+import kitchenpos.domain.OrderTable;
+import kitchenpos.order.domain.enums.OrderType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

@@ -4,6 +4,10 @@ import kitchenpos.domain.*;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.order.domain.enums.OrderStatus;
+import kitchenpos.order.domain.enums.OrderType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
