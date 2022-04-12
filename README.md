@@ -198,10 +198,8 @@
 ### 주문(`Order`)
 
 - 주문 제품(`Order Line Item`)은 식별자(`Id`)와 메뉴(`Menu`), 가격(`Price`), 수량(`Quantity`)을 가진다.
-  - Q. 식별자(`Id`) 라는 단어는 개발자가 아닌 사람이 이해하기 어렵지 않을까?
 - 주문(`Order`)은 식별자(`Id`), 주문 제품(`Order Line Item`), 주문 타입(`Order Type`), 주문 상태(`Order Status`), 주문 시간(`Order Date Time`)을 갖는다.
 - 주문 타입에는 배달 주문(`Delivery Order`), 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`)이 있다.
-  - Q. 주문 제품(`Order Line Item`)과 주문 타입(`Order Type`)에 대한 정의가 있어야 이해할 수 있을 것 같다.
 
 ### 배달 주문(`Delivery Order`)
 
