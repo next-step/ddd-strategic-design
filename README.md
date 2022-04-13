@@ -173,16 +173,10 @@
 - 주문 제품(`Order Line Item`)은 식별자(`Id`)와 메뉴(`Menu`), 가격(`Price`), 수량(`Quantity`)을 가진다.
 - 주문(`Order`)은 식별자(`Id`), 주문 제품(`Order Line Item`), 주문 타입(`Order Type`), 주문 상태(`Order Status`), 주문 시간(`Order Date Time`)을 갖는다.
 - 주문 타입에는 배달 주문(`Delivery Order`), 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`)이 있다.
-
-### 배달 주문(`Delivery Order`)
 - 배달 주문(`Delivery Order`)은 반드시 배달 주소(`Deleivery Address`)를 갖는다.
 - 배달 주문은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 배달 중(`Delivering`) → 배달 완료(`Delivered`) → 주문 완료(`Completed`) 순서로 진행된다.
 - 주문이 수락되면 배달 대행사(`Delevery Agency`)에게 배달 요청한다.
-
-### 포장 주문(`Takeout Order`)
 - 포장 주문(`Takeout Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
-
-### 매장 주문(`Eat In Order`)
 - 매장 주문(`Eat In Order`)은 반드시 주문 식탁(`Order Table`)을 갖는다.
 - 매장 주문(`Eat In Order`)은 주문 대기(`Waiting`) → 주문 수락(`Accepted`) → 주문 서빙(`Served`) → 주문 완료(`Completed`) 순서로 진행된다.
 
