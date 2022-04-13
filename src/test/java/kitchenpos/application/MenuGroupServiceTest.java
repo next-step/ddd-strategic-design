@@ -1,8 +1,8 @@
 package kitchenpos.application;
 
 import kitchenpos.menu.domain.MenuGroup;
-import kitchenpos.menu.repository.MenuGroupRepository;
-import kitchenpos.menu.service.MenuGroupService;
+import kitchenpos.menu.dao.MenuGroupRepository;
+import kitchenpos.menu.application.MenuGroupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
