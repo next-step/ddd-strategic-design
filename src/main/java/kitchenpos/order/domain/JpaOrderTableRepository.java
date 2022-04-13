@@ -1,6 +1,5 @@
-package kitchenpos.order.dao;
+package kitchenpos.order.domain;
 
-import kitchenpos.order.domain.OrderTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
