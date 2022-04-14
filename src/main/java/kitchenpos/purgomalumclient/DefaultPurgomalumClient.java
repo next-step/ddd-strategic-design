@@ -1,4 +1,4 @@
-package kitchenpos.common;
+package kitchenpos.purgomalumclient;
 
 import java.net.URI;
 import org.springframework.boot.web.client.RestTemplateBuilder;
