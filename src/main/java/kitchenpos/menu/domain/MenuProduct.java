@@ -1,6 +1,8 @@
 package kitchenpos.menu.domain;
 
 import javax.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import kitchenpos.product.domain.Product;
@@ -29,6 +31,19 @@ public class MenuProduct {
 
     public MenuProduct() {
     }
+
+    public MenuProduct(Product product, long quantity) {
+    	this.product = product;
+    	this.quantity = validateQuantity(quantity);
+	}
+
+	private long validateQuantity(long quantity) {
+		if (quantity < 0) {
+			throw new IllegalArgumentException();
+		}
+
+    	return quantity;
+	}
 
     public Long getSeq() {
         return seq;
@@ -61,4 +76,9 @@ public class MenuProduct {
     public void setProductId(final UUID productId) {
         this.productId = productId;
     }
+
+    public BigDecimal getCost() {
+    	return product.getPrice()
+			.multiply(BigDecimal.valueOf(quantity));
+	}
 }

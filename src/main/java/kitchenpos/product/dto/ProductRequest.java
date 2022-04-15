@@ -1,12 +1,13 @@
 package kitchenpos.product.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import org.springframework.lang.Nullable;
 
-import kitchenpos.product.domain.Product;
-
 public class ProductRequest {
+	private UUID id;
+
 	@Nullable
 	private String name;
 
@@ -16,16 +17,12 @@ public class ProductRequest {
 	}
 
 	public ProductRequest(BigDecimal price) {
-		this(null, price);
+		this.price = price;
 	}
 
 	public ProductRequest(String name, BigDecimal price) {
 		this.name = name;
 		this.price = price;
-	}
-
-	public Product toProduct() {
-		return new Product(name, price);
 	}
 
 	public BigDecimal getPrice() {
@@ -34,5 +31,9 @@ public class ProductRequest {
 
 	public String getName() {
 		return name;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 }

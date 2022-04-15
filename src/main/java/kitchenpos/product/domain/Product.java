@@ -1,12 +1,13 @@
 package kitchenpos.product.domain;
 
+import java.math.BigDecimal;
+import java.util.UUID;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
-import java.util.Objects;
-import java.util.UUID;
 
 @Table(name = "product")
 @Entity
@@ -15,36 +16,19 @@ public class Product {
     @Id
     private UUID id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Embedded
+    private Name name;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+	@Embedded
+    private Price price;
 
     public Product() {
     }
 
-    public Product(String name, BigDecimal price) {
+    public Product(Name name, Price price) {
     	this.id = UUID.randomUUID();
-    	this.name = validateName(name);
-    	this.price = validatePrice(price);
-	}
-
-	public String validateName(String name) {
-		if (Objects.isNull(name)) {
-			throw new IllegalArgumentException();
-		}
-
-		return name;
-	}
-
-	public BigDecimal validatePrice(BigDecimal price) {
-		if (Objects.isNull(price) || price.compareTo(BigDecimal.ZERO) < 0) {
-			throw new IllegalArgumentException();
-		}
-
-
-    	return price;
+    	this.name = name;
+    	this.price = price;
 	}
 
     public UUID getId() {
@@ -56,18 +40,14 @@ public class Product {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
+        return name.getValue();
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return price.getValue();
     }
 
-    public void changePrice(final BigDecimal price) {
-        this.price = validatePrice(price);
+    public void changePrice(final Price price) {
+        this.price = price;
     }
 }

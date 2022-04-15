@@ -1,14 +1,18 @@
 package kitchenpos;
 
+import kitchenpos.menu.domain.DisplayName;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.menu.domain.Name;
+import kitchenpos.menu.domain.Price;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderLineItem;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderTable;
 import kitchenpos.order.domain.OrderType;
 import kitchenpos.product.domain.Product;
+import kitchenpos.product.infra.PurgomalumClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,7 +21,9 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Fixtures {
-    public static final UUID INVALID_ID = new UUID(0L, 0L);
+	private static PurgomalumClient purgomalumClient;
+
+	public static final UUID INVALID_ID = new UUID(0L, 0L);
 
     public static Menu menu() {
         return menu(19_000L, true, menuProduct());
@@ -28,25 +34,23 @@ public class Fixtures {
     }
 
     public static Menu menu(final long price, final boolean displayed, final MenuProduct... menuProducts) {
-        final Menu menu = new Menu();
-        menu.setId(UUID.randomUUID());
-        menu.setName("후라이드+후라이드");
-        menu.setPrice(BigDecimal.valueOf(price));
-        menu.setMenuGroup(menuGroup());
-        menu.setDisplayed(displayed);
-        menu.setMenuProducts(Arrays.asList(menuProducts));
-        return menu;
+        return new Menu(displayName("후라이드+후라이드"), price(price), menuGroup(), displayed, Arrays.asList(menuProducts));
     }
 
-    public static MenuGroup menuGroup() {
+	private static Price price(long price) {
+		return new Price(BigDecimal.valueOf(price));
+	}
+
+	private static DisplayName displayName(String name) {
+		return new DisplayName(name, purgomalumClient);
+	}
+
+	public static MenuGroup menuGroup() {
         return menuGroup("두마리메뉴");
     }
 
     public static MenuGroup menuGroup(final String name) {
-        final MenuGroup menuGroup = new MenuGroup();
-        menuGroup.setId(UUID.randomUUID());
-        menuGroup.setName(name);
-        return menuGroup;
+		return new MenuGroup(new Name(name));
     }
 
     public static MenuProduct menuProduct() {
@@ -122,10 +126,6 @@ public class Fixtures {
     }
 
     public static Product product(final String name, final long price) {
-        final Product product = new Product();
-        product.setId(UUID.randomUUID());
-        product.setName(name);
-        product.changePrice(BigDecimal.valueOf(price));
-        return product;
+    	return new Product(new kitchenpos.product.domain.Name(name, purgomalumClient), new kitchenpos.product.domain.Price(BigDecimal.valueOf(price)));
     }
 }

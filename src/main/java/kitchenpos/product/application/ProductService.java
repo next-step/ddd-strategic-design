@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.menu.domain.Menus;
+import kitchenpos.product.domain.Name;
+import kitchenpos.product.domain.Price;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import kitchenpos.product.dto.ProductRequest;
@@ -19,35 +19,32 @@ import kitchenpos.product.infra.PurgomalumClient;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-    private final MenuRepository menuRepository;
     private final PurgomalumClient purgomalumClient;
 
     public ProductService(
         final ProductRepository productRepository,
-        final MenuRepository menuRepository,
         final PurgomalumClient purgomalumClient
     ) {
         this.productRepository = productRepository;
-        this.menuRepository = menuRepository;
         this.purgomalumClient = purgomalumClient;
     }
 
     @Transactional
     public ProductResponse create(final ProductRequest request) {
-    	final Product product = request.toProduct();
-        if (purgomalumClient.containsProfanity(product.getName())) {
-            throw new IllegalArgumentException();
-        }
+    	Name name = new Name(request.getName(), purgomalumClient);
+    	Price price = new Price(request.getPrice());
 
-        return ProductResponse.of(productRepository.save(product));
+        return ProductResponse.of(productRepository.save(new Product(name, price)));
     }
 
     @Transactional
     public ProductResponse changePrice(final UUID productId, final ProductRequest request) {
         final Product product = productRepository.findById(productId)
             .orElseThrow(NoSuchElementException::new);
-        product.changePrice(request.getPrice());
-		Menus menus = menuRepository.findAllByProductId(productId);
+        product.changePrice(new Price(request.getPrice()));
+		// menuRepository.findAllByProductId(productId);
+		// TODO : menu와 다른 context bound 인데 여기서 menu를 변경해서는 안됨
+		// TODO : menu에서 해당 validation을 해주기 때문에 필요 없음
 
         return ProductResponse.of(product);
     }
