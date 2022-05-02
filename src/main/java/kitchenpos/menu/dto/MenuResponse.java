@@ -48,4 +48,8 @@ public class MenuResponse {
 	public BigDecimal getPrice() {
 		return price;
 	}
+
+	public String getId() {
+		return id.toString();
+	}
 }

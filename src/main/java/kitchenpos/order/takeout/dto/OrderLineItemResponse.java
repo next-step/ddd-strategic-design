@@ -3,7 +3,7 @@ package kitchenpos.order.takeout.dto;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import kitchenpos.order.takeout.domain.OrderLineItem;
+import kitchenpos.order.takeout.domain.TakeoutOrderLineItem;
 
 public class OrderLineItemResponse {
 	private Long seq;
@@ -14,7 +14,7 @@ public class OrderLineItemResponse {
 
 	private BigDecimal price;
 
-	public static OrderLineItemResponse from(OrderLineItem orderLineItem) {
+	public static OrderLineItemResponse from(TakeoutOrderLineItem orderLineItem) {
 		OrderLineItemResponse orderLineItemResponse = new OrderLineItemResponse();
 		orderLineItemResponse.seq = orderLineItem.getSeq();
 		orderLineItemResponse.quantity = orderLineItem.getQuantity();

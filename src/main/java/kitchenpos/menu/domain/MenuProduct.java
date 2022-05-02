@@ -60,4 +60,8 @@ public class MenuProduct {
     	return price
 			.multiply(BigDecimal.valueOf(quantity));
 	}
+
+	public BigDecimal getPrice() {
+    	return price;
+	}
 }

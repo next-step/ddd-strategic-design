@@ -126,7 +126,7 @@ public class DeliveryOrder {
 		return this.orderDateTime;
 	}
 
-	public List<OrderLineItem> getDeliveryOrderLineItems() {
+	public List<DeliveryOrderLineItem> getDeliveryOrderLineItems() {
 		return this.deliveryOrderLineItems.getValue();
 	}
 

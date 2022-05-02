@@ -4,5 +4,5 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaOrderRepository extends EatinOrderRepository, JpaRepository<EatinOrder, UUID> {
+public interface JpaEatinOrderRepository extends EatinOrderRepository, JpaRepository<EatinOrder, UUID> {
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kitchenpos.order.delivery.domain.DeliveryOrder;
 import kitchenpos.order.delivery.domain.DeliveryOrderLineItems;
 import kitchenpos.order.delivery.domain.DeliveryOrderRepository;
-import kitchenpos.order.delivery.domain.OrderLineItem;
+import kitchenpos.order.delivery.domain.DeliveryOrderLineItem;
 import kitchenpos.order.delivery.dto.DeliveryOrderRequest;
 import kitchenpos.order.delivery.dto.DeliveryOrderResponse;
 import kitchenpos.order.delivery.infra.KitchenridersClient;
@@ -32,9 +32,9 @@ public class DeliveryOrderService {
 		return DeliveryOrderResponse.from(orderRepository.save(DeliveryOrder.create(new DeliveryOrderLineItems(getOrderLineItems(request)), request.getDeliveryAddress())));
 	}
 
-	private List<OrderLineItem> getOrderLineItems(DeliveryOrderRequest request) {
+	private List<DeliveryOrderLineItem> getOrderLineItems(DeliveryOrderRequest request) {
 		return request.getOrderLineItemRequests().stream()
-				.map(orderLineItemRequest -> OrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
+				.map(orderLineItemRequest -> DeliveryOrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
 				.collect(Collectors.toList());
 	}
 

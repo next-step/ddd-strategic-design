@@ -86,7 +86,7 @@ public class TakeoutOrder {
 		return this.orderDateTime;
 	}
 
-	public List<OrderLineItem> getTakeoutOrderLineItems() {
+	public List<TakeoutOrderLineItem> getTakeoutOrderLineItems() {
 		return orderLineItems.getValue();
 	}
 }

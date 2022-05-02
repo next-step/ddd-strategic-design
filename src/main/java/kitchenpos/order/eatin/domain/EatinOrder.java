@@ -103,7 +103,7 @@ public class EatinOrder {
 		return this.orderDateTime;
 	}
 
-	public List<OrderLineItem> getEatinOrderLineItems() {
+	public List<EatinOrderLineItem> getEatinOrderLineItems() {
 		return this.eatinOrderLineItems.getValue();
 	}
 

@@ -22,8 +22,8 @@ public class MenuRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Menu> create(@RequestBody final MenuRequest request) {
-        final Menu response = menuService.create(request);
+    public ResponseEntity<MenuResponse> create(@RequestBody final MenuRequest request) {
+        final MenuResponse response = menuService.create(request);
         return ResponseEntity.created(URI.create("/api/menus/" + response.getId()))
             .body(response);
     }
@@ -34,17 +34,17 @@ public class MenuRestController {
     }
 
     @PutMapping("/{menuId}/display")
-    public ResponseEntity<Menu> display(@PathVariable final UUID menuId) {
+    public ResponseEntity<MenuResponse> display(@PathVariable final UUID menuId) {
         return ResponseEntity.ok(menuService.display(menuId));
     }
 
     @PutMapping("/{menuId}/hide")
-    public ResponseEntity<Menu> hide(@PathVariable final UUID menuId) {
+    public ResponseEntity<MenuResponse> hide(@PathVariable final UUID menuId) {
         return ResponseEntity.ok(menuService.hide(menuId));
     }
 
     @GetMapping
-    public ResponseEntity<List<Menu>> findAll() {
+    public ResponseEntity<List<MenuResponse>> findAll() {
         return ResponseEntity.ok(menuService.findAll());
     }
 }

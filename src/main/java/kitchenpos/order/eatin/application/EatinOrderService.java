@@ -11,7 +11,7 @@ import kitchenpos.order.eatin.EatinOrderStatus;
 import kitchenpos.order.eatin.domain.EatinOrder;
 import kitchenpos.order.eatin.domain.EatinOrderLineItems;
 import kitchenpos.order.eatin.domain.EatinOrderRepository;
-import kitchenpos.order.eatin.domain.OrderLineItem;
+import kitchenpos.order.eatin.domain.EatinOrderLineItem;
 import kitchenpos.order.eatin.domain.OrderTable;
 import kitchenpos.order.eatin.domain.OrderTableRepository;
 import kitchenpos.order.eatin.dto.EatinOrderResponse;
@@ -37,9 +37,9 @@ public class EatinOrderService {
 		return EatinOrderResponse.from(orderRepository.save(EatinOrder.create(new EatinOrderLineItems(getOrderLineItems(request)), orderTable)));
 	}
 
-	private List<OrderLineItem> getOrderLineItems(EatinOrderRequest request) {
+	private List<EatinOrderLineItem> getOrderLineItems(EatinOrderRequest request) {
 		return request.getOrderLineItemRequests().stream()
-			.map(orderLineItemRequest -> OrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
+			.map(orderLineItemRequest -> EatinOrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
 			.collect(Collectors.toList());
 	}
 

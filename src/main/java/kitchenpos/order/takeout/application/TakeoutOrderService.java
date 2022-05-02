@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.eatin.domain.OrderTableRepository;
-import kitchenpos.order.takeout.domain.OrderLineItem;
+import kitchenpos.order.takeout.domain.TakeoutOrderLineItem;
 import kitchenpos.order.takeout.domain.TakeoutOrder;
 import kitchenpos.order.takeout.domain.TakeoutOrderLineItems;
 import kitchenpos.order.takeout.domain.TakeoutOrderRepository;
@@ -36,9 +36,9 @@ public class TakeoutOrderService {
 		return TakeoutOrderResponse.from(orderRepository.save(TakeoutOrder.create(new TakeoutOrderLineItems(getOrderLineItems(request)))));
 	}
 
-	private List<OrderLineItem> getOrderLineItems(TakeoutOrderRequest request) {
+	private List<TakeoutOrderLineItem> getOrderLineItems(TakeoutOrderRequest request) {
 		return request.getOrderLineItemRequests().stream()
-			.map(orderLineItemRequest -> OrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
+			.map(orderLineItemRequest -> TakeoutOrderLineItem.of(orderLineItemRequest.getQuantity(), orderLineItemRequest.getMenuId(), orderLineItemRequest.getPrice()))
 			.collect(Collectors.toList());
 	}
 

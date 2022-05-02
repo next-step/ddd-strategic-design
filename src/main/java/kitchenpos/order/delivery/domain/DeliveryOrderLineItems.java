@@ -19,26 +19,26 @@ public class DeliveryOrderLineItems {
 		columnDefinition = "varbinary(16)",
 		foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
 	)
-	private List<OrderLineItem> orderLineItems;
+	private List<DeliveryOrderLineItem> orderLineItems;
 
-	public DeliveryOrderLineItems(List<OrderLineItem> orderLineItems) {
+	public DeliveryOrderLineItems(List<DeliveryOrderLineItem> orderLineItems) {
 		this.orderLineItems = validateOrderLineItem(orderLineItems);
 	}
 
-	private List<OrderLineItem> validateOrderLineItem(List<OrderLineItem> orderLineItems) {
+	private List<DeliveryOrderLineItem> validateOrderLineItem(List<DeliveryOrderLineItem> orderLineItems) {
 		validateExistence(orderLineItems);
 		validateQuantity(orderLineItems);
 
 		return orderLineItems;
 	}
 
-	private void validateQuantity(List<OrderLineItem> orderLineItems) {
+	private void validateQuantity(List<DeliveryOrderLineItem> orderLineItems) {
 		if (orderLineItems.stream().anyMatch(orderLineItem -> orderLineItem.getQuantity() < 0)) {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	private void validateExistence(List<OrderLineItem> orderLineItems) {
+	private void validateExistence(List<DeliveryOrderLineItem> orderLineItems) {
 		if (Objects.isNull(orderLineItems) || orderLineItems.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
@@ -47,14 +47,14 @@ public class DeliveryOrderLineItems {
 	public BigDecimal getSum() {
 		BigDecimal sum = BigDecimal.ZERO;
 
-		for (final OrderLineItem orderLineItem : orderLineItems) {
+		for (final DeliveryOrderLineItem orderLineItem : orderLineItems) {
 			sum = orderLineItem	.getPrice()
 				.multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));
 		}
 		return sum;
 	}
 
-	public List<OrderLineItem> getValue() {
+	public List<DeliveryOrderLineItem> getValue() {
 		return this.orderLineItems;
 	}
 }

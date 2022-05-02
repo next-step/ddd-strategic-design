@@ -19,25 +19,25 @@ public class EatinOrderLineItems {
 		columnDefinition = "varbinary(16)",
 		foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
 	)
-	private List<OrderLineItem> orderLineItems;
+	private List<EatinOrderLineItem> orderLineItems;
 
-	public EatinOrderLineItems(List<OrderLineItem> orderLineItems) {
+	public EatinOrderLineItems(List<EatinOrderLineItem> orderLineItems) {
 		this.orderLineItems = validateOrderLineItem(orderLineItems);
 	}
 
-	private List<OrderLineItem> validateOrderLineItem(List<OrderLineItem> orderLineItems) {
+	private List<EatinOrderLineItem> validateOrderLineItem(List<EatinOrderLineItem> orderLineItems) {
 		validateExistence(orderLineItems);
 
 		return orderLineItems;
 	}
 
-	private void validateExistence(List<OrderLineItem> orderLineItems) {
+	private void validateExistence(List<EatinOrderLineItem> orderLineItems) {
 		if (Objects.isNull(orderLineItems) || orderLineItems.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	public List<OrderLineItem> getValue() {
+	public List<EatinOrderLineItem> getValue() {
 		return orderLineItems;
 	}
 }

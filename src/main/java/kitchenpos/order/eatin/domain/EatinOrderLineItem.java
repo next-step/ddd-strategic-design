@@ -10,9 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "order_line_item")
+@Table(name = "eatin_order_line_item")
 @Entity
-public class OrderLineItem {
+public class EatinOrderLineItem {
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,11 +27,11 @@ public class OrderLineItem {
     @Column
     private BigDecimal price;
 
-    public OrderLineItem() {
+    public EatinOrderLineItem() {
     }
 
-    public static OrderLineItem of(long quantity, UUID menuId, BigDecimal price) {
-    	OrderLineItem orderLineItem = new OrderLineItem();
+    public static EatinOrderLineItem of(long quantity, UUID menuId, BigDecimal price) {
+    	EatinOrderLineItem orderLineItem = new EatinOrderLineItem();
 		orderLineItem.quantity = quantity;
 		orderLineItem.menuId = menuId;
 		orderLineItem.price = price;
