@@ -118,10 +118,10 @@
 ##### 상태
 - 상품(Product)은 식별자와 이름과 가격을 가진다.
 ##### 행위
-- ProductService에서 가격과 이름을 받아, 상품(Product)을 만들 수 있다
+- ProductService에서 상품(Product)을 만들 수 있다
     - 가격은 0원 이상이다
     - 이름에는 비속어가 포함될 수 없다
-- ProductService에서 기존 등록된 상품 id와 변경 가격을 받아, 상품(Product)의 가격을 변경할 수 있다
+- ProductService에서 상품(Product)의 가격을 변경할 수 있다
     - 가격은 0원 이상이다
     - 메뉴(Menu)의 가격보다 변경된 가격의 메뉴 상품(Menu Product)의 가격과 수량의 곱이 커지면 해당 메뉴(Menu)를 숨긴다(hide)    
 - ProductService에서 모든 상품(Product)를 조회할 수 있다
@@ -131,7 +131,7 @@
 ##### 상태
 - 메뉴그룹(MenuGroup)은 식별자와 이름을 가진다.    
 ##### 행위
-- MenuGroupService는 이름을 받아, 메뉴 그룹(MenuGroup)을 등록할 수 있다
+- MenuGroupService는 메뉴 그룹(MenuGroup)을 등록할 수 있다
     - 이름은 비어있을 수 없다.
 - MenuGroupService에서 모든 메뉴그룹(MenuGroup)을 조회할 수 있다
 
@@ -140,17 +140,17 @@
 - 메뉴(Menu)는 식별자와 이름, 가격, 메뉴상품(MenuProduct), 메뉴그룹(MenuGroup), 전시상태를 가진다.
 
 ##### 행위
-- MenuService에서 가격과 메뉴그룹(MenuGroup) id, 메뉴상품(MenuProduct)와 이름과, 전시여부를 받아, 메뉴(Menu)를 등록할 수 있다
+- MenuService에서 메뉴(Menu)를 등록할 수 있다
     - 메뉴상품(MenuProduct)이 한개 이상 있어야 한다
     - 메뉴 그룹(MenuGroup)이 있어야 한다
     - 가격은 0원 이상이어야 한다
     - 이름에는 비속어가 포함될 수 없다
     - 메뉴(Menu)에 속한 메뉴상품(MenuProduct) 금액의 합은 메뉴(Menu)의 가격보다 크거나 같아야 한다
-- MenuService에서 메뉴(Menu)의 id와 변경 가격을 받아, 메뉴(Menu)의 가격을 변경할 수 있다
+- MenuService에서 메뉴(Menu)의 가격을 변경할 수 있다
     - 메뉴(Menu)의 가격보다 변경된 가격의 메뉴 상품(Menu Product)의 가격과 수량의 곱이 커질 수 없다
-- MenuService에서 메뉴(Menu)의 id를 받아, 전시(Display)할 수 있다.
+- MenuService에서 전시(Display)할 수 있다.
     - 메뉴(Menu)의 가격보다 변경된 가격의 메뉴 상품(Menu Product)의 가격과 수량의 곱이 커질 수 없다
-- MenuService에서 메뉴(Menu)의 id를 받아, 숨길 수 있다(Hide).
+- MenuService에서 숨길 수 있다(Hide).
 - MenuService에서 모든 메뉴(Menu)를 조회할 수 있다
 
 #### 메뉴상품(MenuProduct)
@@ -158,46 +158,77 @@
 - 메뉴상품(MenuProduct)은 시퀀스와 상품(Product), 그 수량을 가진다
 
 #### 주문(Order) 컨텍스트
-##### 주문(Order)
+##### 포장 주문(TAKE-OUT Order)
 ##### 상태
-- 주문(Order)은 식별자, 주문 유형, 주문 상태, 주문 시간, 메뉴 항목(OrderLineItem) 목록, 배달 주소, 식탁(OrderTable)을 가진다.
-- 주문 유형에는 배달(DELIVERY), 포장(TAKE-OUT), 매장(EAT-IN)가 있다.
-- 배달 주문(DELIVERY ORDER)에는 대기(Waiting), 수락(Accepted), 조리 완료(Served), 배달 중(Delivering), 배달 완료(Delivered), 완료(Completed) 순서로 진행된다.
+- 포장 주문(TAKE-OUT Order)은 식별자, 주문 유형, 주문 상태, 주문 시간, 메뉴 항목(OrderLineItem) 목록을 가진다.
 - 포장 주문(TAKE-OUT ORDER)에는 대기(Waiting), 수락(Accepted), 조리 완료(Served), 완료(Completed) 순서로 진행된다.
-- 매장 주문(EAT-IN ORDER)에는 대기(Waiting), 수락(Accepted), 조리 완료(Served), 완료(Completed) 순서로 진행된다.
 
 ##### 행위
-- OrderService는 주문 유형, 주문항목(Order Line Item)을 받아, 주문(Order)를 만들 수 있다
+- TakeOutOrderService는 포장 주문(TAKE-OUT Order)를 만들 수 있다
     - 주문한 가격과 실제 가격이 같아야 한다.
-    - 주문(Order) 생성한다.(공통)
-        - 주문(Order) 유형이 있어야 한다.
-        - 하나 이상의 주문항목(OrderLineItem)이 있어야 한다.
-        - 주문항목(OrderLineItem)의 메뉴(Menu)는 전시(Display) 되어 있어야 한다.
-        - 주문 상태는 대기(Waiting) 이다.
-    - 포장 주문(TAKE-OUT Order) 생성한다
-        - 주문 항목(Order Line Item)의 수량이 0이상이어야 한다.
-    - 배달 주문(Delivery Order)를 생성한다.
-        - 주문 항목(OrderLineItem)의 수량이 0이상이어야 한다.
-        - 배달 주소가 있어야 한다.
-    - 매장 주문(EAT-IN Order)를 생성한다.
-        - 식탁(Order Table)이 비어있지 않아야 한다.
-        - 주문 항목(Order Line Item)의 수량이 0보다 작을 수 있다.        
-- OrderService는 주문(Order) id를 받아, 주문(Order)을 접수할 수 있다
-    - 주문(Order)은 대기(Waiting) 상태여야만 한다
-    - 배달 주문(Delivery Order)의 경우 주문(Order) id와 주문항목(OrderLineItem)의 총 금액과 배달 주소를 전달하여, 배달 대행사(Delivery Service)에게 배달요청 한다
-- OrderService는 주문(ORder) id를 받아, 주문(Order)을 서빙할 수 있다
-    - 주문(Order)은 접수(Aceepted) 상태여야만 한다
-- OrderService는 주문(ORder) id를 받아, 주문(Order)을 배달할 수 있다
-    - 배달 주문(Delivery Order)만 배달 가능하다
-    - 주문(Order)은 조리 완료(Served) 상태여야만 한다
-- OrderService는 주문(ORder) id를 받아, 주문(Order)을 배달 완료(Delivered)할 수 있다
-    - 배달 주문(Delivery Order)만 배달 완료(Delivered)할 수 있다
-    - 주문(Order)은 배달 중(Delivering) 상태여야만 한다
-- OrderService는 주문(ORder) id를 받아, 주문(Order)을 완료(Completed)할 수 있다
-    - 배달 주문(Delivery Order)는 배달 완료(Delivered) 상태만 완료(Completed)할 수 있다
-    - 포장(TAKE-OUT) / 매장(EAT-IN)의 경우 조리 완료(Served)상태만 완료(Completed)할 수 있다
-    - 매장(EAT-IN)이 완료(Completed)되면 식탁(Order Table)을 비운다
-- OrderService는 모든 주문(Order)을 조회할 수 있다
+    - 주문(Order) 유형이 있어야 한다.
+    - 하나 이상의 주문항목(OrderLineItem)이 있어야 한다.
+    - 주문항목(OrderLineItem)의 메뉴(Menu)는 전시(Display) 되어 있어야 한다.
+    - 주문 상태는 대기(Waiting) 이다.    
+    - 주문 항목(Order Line Item)의 수량이 0이상이어야 한다.         
+- TakeOutOrderService는 포장 주문(TAKE-OUT Order)을 접수할 수 있다
+    - 포장 주문(TAKE-OUT Order)은 대기(Waiting) 상태여야만 한다    
+- TakeOutOrderService는 포장 주문(TAKE-OUT Order)을 서빙할 수 있다
+    - 포장 주문(TAKE-OUT Order)은 접수(Aceepted) 상태여야만 한다
+- TakeOutOrderService는 포장 주문(TAKE-OUT Order)을 완료(Completed)할 수 있다    
+    - 조리 완료(Served)상태만 완료(Completed)할 수 있다    
+- TakeOutOrderService는 모든 포장 주문(TAKE-OUT Order)을 조회할 수 있다
+
+##### 매장 주문(EAT-IN Order)
+##### 상태
+- 매장 주문(EAT-IN Order)은 식별자, 주문 유형, 주문 상태, 주문 시간, 메뉴 항목(OrderLineItem) 목록, 식탁(OrderTable)을 가진다.
+- 매장 주문(EAT-IN Order)에는 대기(Waiting), 수락(Accepted), 조리 완료(Served), 완료(Completed) 순서로 진행된다.
+
+##### 행위
+- EatInOrderService는 매장 주문(EAT-IN Order)을 만들 수 있다
+    - 주문한 가격과 실제 가격이 같아야 한다.
+    - 주문(Order) 유형이 있어야 한다.
+    - 하나 이상의 주문항목(OrderLineItem)이 있어야 한다.
+    - 주문항목(OrderLineItem)의 메뉴(Menu)는 전시(Display) 되어 있어야 한다.
+    - 주문 상태는 대기(Waiting) 이다.    
+    - 식탁(Order Table)이 비어있지 않아야 한다.
+    - 주문 항목(Order Line Item)의 수량이 0보다 작을 수 있다.         
+- EatInOrderService는 매장 주문(EAT-IN Order)을 접수할 수 있다
+    - 매장 주문(EAT-IN Order)은 대기(Waiting) 상태여야만 한다
+- EatInOrderService는 매장 주문(EAT-IN Order)을 서빙할 수 있다
+    - 매장 주문(EAT-IN Order)은 접수(Aceepted) 상태여야만 한다
+- EatInOrderService는 매장 주문(EAT-IN Order)을 완료(Completed)할 수 있다    
+    - 조리 완료(Served)상태만 완료(Completed)할 수 있다
+    - 완료(Completed)되면 식탁(Order Table)을 비운다
+- EatInOrderService는 모든 매장 주문(EAT-IN Order)을 조회할 수 있다
+
+##### 배달 주문(DELIVERY Order)
+##### 상태
+- 주문(Order)은 식별자, 주문 유형, 주문 상태, 주문 시간, 메뉴 항목(OrderLineItem) 목록, 배달 주소을 가진다.
+- 배달 주문(DELIVERY ORDER)에는 대기(Waiting), 수락(Accepted), 조리 완료(Served), 배달 중(Delivering), 배달 완료(Delivered), 완료(Completed) 순서로 진행된다.
+
+##### 행위
+- DeliveryOrderService는 배달 주문(Delivery Order)을 만들 수 있다
+    - 주문한 가격과 실제 가격이 같아야 한다.
+    - 주문(Order) 유형이 있어야 한다.
+    - 하나 이상의 주문항목(OrderLineItem)이 있어야 한다.
+    - 주문항목(OrderLineItem)의 메뉴(Menu)는 전시(Display) 되어 있어야 한다.
+    - 주문 상태는 대기(Waiting) 이다.
+    - 주문 항목(OrderLineItem)의 수량이 0이상이어야 한다.
+    - 배달 주소가 있어야 한다.
+- DeliveryOrderService는 배달 주문(Delivery Order)을 접수할 수 있다
+    - 배달 주문(Delivery Order)은 대기(Waiting) 상태여야만 한다
+    - 배달 대행사(Delivery Service)에게 배달요청 한다     
+- DeliveryOrderService는 배달 주문(Delivery Order)을 서빙할 수 있다
+    - 배달 주문(Delivery Order)은 접수(Aceepted) 상태여야만 한다
+- DeliveryOrderService는 배달 주문(Delivery Order)을 배달할 수 있다
+    - 배달 주문(Delivery Order)은 조리 완료(Served) 상태여야만 한다
+- DeliveryOrderService는 배달 주문(Delivery Order)을 배달 완료(Delivered)할 수 있다
+    - 배달 주문(Delivery Order)은 배달 중(Delivering) 상태여야만 한다
+- DeliveryOrderService는 배달 주문(Delivery Order)을 완료(Completed)할 수 있다
+    - 배달 완료(Delivered) 상태만 완료(Completed)할 수 있다
+- DeliveryOrderService는 모든 배달 주문(Delivery Order)을 조회할 수 있다
+
 ##### 주문항목(Order Line Item)
 ##### 상태
 - 주문항목(Order Line Item)은 시퀀스와 메뉴(Menu)와 그 수량과 가격을 가진다
@@ -207,11 +238,11 @@
 - 식탁(OrderTable)은 식별자, 이름, 고객(Guest) 수, 착석상태를 가진다.
     
 ##### 행위
-- OrderTableService는 이름을 받아, 식탁(OrderTable)을 만들 수 있다
+- OrderTableService는 식탁(OrderTable)을 만들 수 있다
     - 이름은 비어있으면 안된다.
-- OrderTableService는 식탁(Order Table) id를 받아, 식탁(OrderTable)을 채울 수 있다(착석)
-- OrderTableService는 식탁(Order Table) id를 받아 완료된 주문의 식탁(OrderTable)을 정리한다
-- OrderTableService는 식탁(Order Table) id와 변경 고객(Guest)수를 받아, 착석한 식탁의 고객(Guest) 수를 변경할 수 있다
+- OrderTableService는 식탁(OrderTable)을 채울 수 있다(착석)
+- OrderTableService는 완료된 주문의 식탁(OrderTable)을 정리할 수 있다
+- OrderTableService는 착석한 식탁의 고객(Guest) 수를 변경할 수 있다
     - 변경 고객(Guest) 수는 0보다 크거나 같아야 한다
     - 식탁(Order Table)은 비어있을 수 없다
 - OrderTableService는 모든 식탁(OrderTable)을 조회할 수 있다
