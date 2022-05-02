@@ -1,22 +1,25 @@
 package kitchenpos.menu.dto;
 
-import kitchenpos.product.dto.ProductRequest;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 public class MenuProductRequest {
-	private ProductRequest productRequest;
+	private UUID id;
+
+	private BigDecimal price;
 
 	private long quantity;
 
 	public MenuProductRequest() {
 	}
 
-	public MenuProductRequest(ProductRequest productRequest, long quantity) {
-		this.productRequest = productRequest;
+	public MenuProductRequest(BigDecimal price, long quantity) {
+		this.price = price;
 		this.quantity = quantity;
 	}
 
-	public ProductRequest getProductRequest() {
-		return productRequest;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
 	public long getQuantity() {

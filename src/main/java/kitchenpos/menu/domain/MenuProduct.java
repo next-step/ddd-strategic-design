@@ -15,13 +15,16 @@ public class MenuProduct {
     @Id
     private Long seq;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(
-        name = "product_id",
-        columnDefinition = "varbinary(16)",
-        foreignKey = @ForeignKey(name = "fk_menu_product_to_product")
-    )
-    private Product product;
+    // @ManyToOne(optional = false)
+    // @JoinColumn(
+    //     name = "product_id",
+    //     columnDefinition = "varbinary(16)",
+    //     foreignKey = @ForeignKey(name = "fk_menu_product_to_product")
+    // )
+    // private Product product;
+
+	@Column
+	private BigDecimal price;
 
     @Column(name = "quantity", nullable = false)
     private long quantity;
@@ -32,8 +35,8 @@ public class MenuProduct {
     public MenuProduct() {
     }
 
-    public MenuProduct(Product product, long quantity) {
-    	this.product = product;
+    public MenuProduct(BigDecimal price, long quantity) {
+    	this.price = price;
     	this.quantity = validateQuantity(quantity);
 	}
 
@@ -49,36 +52,12 @@ public class MenuProduct {
         return seq;
     }
 
-    public void setSeq(final Long seq) {
-        this.seq = seq;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(final Product product) {
-        this.product = product;
-    }
-
     public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(final long quantity) {
-        this.quantity = quantity;
-    }
-
-    public UUID getProductId() {
-        return productId;
-    }
-
-    public void setProductId(final UUID productId) {
-        this.productId = productId;
-    }
-
     public BigDecimal getCost() {
-    	return product.getPrice()
+    	return price
 			.multiply(BigDecimal.valueOf(quantity));
 	}
 }
