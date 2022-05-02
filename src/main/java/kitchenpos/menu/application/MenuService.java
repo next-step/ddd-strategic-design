@@ -40,9 +40,7 @@ public class MenuService {
 
     @Transactional
     public Menu create(final MenuRequest request) {
-    	List<MenuProduct> menuProducts = request.getMenuProductRequests().stream()
-			.map(menuProductRequest -> new MenuProduct(productRepository.findById(menuProductRequest.getProductRequest().getId()).orElseThrow(NoSuchElementException::new), menuProductRequest.getQuantity())).collect(
-				Collectors.toList());
+		List<MenuProduct> menuProducts = getMenuProducts(request);
 
 		Menu menu = new Menu(
 			new DisplayName(request.getName(), purgomalumClient)
@@ -54,6 +52,13 @@ public class MenuService {
 
 		return menuRepository.save(menu);
     }
+
+	private List<MenuProduct> getMenuProducts(MenuRequest request) {
+		return request.getMenuProductRequests().stream()
+				.map(menuProductRequest -> new MenuProduct(productRepository.findById(menuProductRequest.getProductRequest().getId()).orElseThrow(
+					NoSuchElementException::new), menuProductRequest.getQuantity())).collect(
+					Collectors.toList());
+	}
 
 	@Transactional
     public MenuResponse changePrice(final UUID menuId, final MenuRequest request) {

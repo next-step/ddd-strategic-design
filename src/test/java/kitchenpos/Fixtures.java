@@ -7,10 +7,9 @@ import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.domain.Name;
 import kitchenpos.menu.domain.Price;
 import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderType;
+import kitchenpos.order.common.OrderLineItem;
+import kitchenpos.order.common.OrderStatus;
+import kitchenpos.order.eatin.domain.OrderTable;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.infra.PurgomalumClient;
 
