@@ -143,13 +143,13 @@ docker compose -p kitchenpos up -d
 | 한글명      | 영문명                       | 설명                                                    |
 |----------|---------------------------|-------------------------------------------------------|
 | 배달 주문    | Delivery Order            | 배달 주문으로 주문 상세 내역, 배달 주소를 포함한다                         |
-| 배달 주소    | Delivery Address          | 배달해야할 손님의 주소                                          |
+| 배달 주소    | Delivery Address          | 배달 받을 손님의 주소                                          |
 | 주문 상세 내역 | Order Line Item           | [주문상세내역](#OrderLineItems)의 정보                         |
 | 대기 배달 주문 | Watting Delivery Order    | 주문 수락을 기다리는 대기 상태의 배달 주문                              |
 | 배달 주문 수락 | Accept Delivery Order     | 대기중이던 배달 주문을 수락하고, [배달원](#Kitchenriders)에게 배달을 요청한 상태 |
 | 배달 주문 제공 | Serve Delivery Order      | 수락한 배달을 [배달원](#Kitchenriders)에게 전달한 상태                |
-| 배달중인 주문  | Delivering Delivery Order | 배달원이 손님에게 배달을 진행 중인 상태                                |
-| 배달 완료    | Delivered Delivery Order  | 배달원이 손님에게 배달완료 한 상태                                   |
+| 배달중인 주문  | Delivering Delivery Order | 손님에게 배달을 진행 중인 상태                                     |
+| 배달 완료    | Delivered Delivery Order  | 손님에게 배달완료 한 상태                                        |
 | 주문 완료    | Complete Delivery Order   | 배달 완료된 주문을 완료처리                                       |
 
 ### TakeOut Order
