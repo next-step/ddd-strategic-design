@@ -95,10 +95,7 @@ docker compose -p kitchenpos up -d
 - 주문 목록을 조회할 수 있다.
 
 ## 용어 사전
-
 | 한글명 | 영문명 | 설명 |
-
-| 비속어 | profanity | 저급한 말 |
 
 ### 상품
 | 상품 | product | 메뉴 프로덕트가 사용하는 데이터 |
