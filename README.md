@@ -98,15 +98,18 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 
+### 공통
 | 가격 | price | 물건이 지니고 있는 가치를 돈으로 나타낸 것 |
 | 비속어 | profanity | 저급한 말 |
 | 등록하다 | register | 등록하다. |
 | 조회하다 | find | 조회하다. |
 | 변경하다 | change | 변경하다. |
 
+### 상품
 | 상품 | product | 메뉴 프로덕트가 사용하는 데이터 |
 | 상품 가격 | product price | 상품의 가격 |
 
+### 메뉴
 | 메뉴 | menu | 손님이 키친포스에서 메뉴판에서 확인할 수 있고 직접 주문할 수 있는 단위. 예) 후라이드 두마리 세트 |
 | 메뉴 상품 | menu product | 메뉴에서 사용되는 수량이 포함된 상품 |
 | 메뉴 가격 | menu price | 메뉴의 가격 |
@@ -115,6 +118,7 @@ docker compose -p kitchenpos up -d
 | 숨기다 | hide | 메뉴를 포스에서 숨기다. |
 | 노출하다 | show | 메뉴를 노출하다. |
 
+### 주문
 | 주문 | order | 상품을 주문하는 행위 |
 | 주문 가격 | order price | 주문의 가격 |
 | 주문자 | customer | 상품을 주문하는 사람 |
@@ -135,6 +139,7 @@ docker compose -p kitchenpos up -d
 | 배송지 | shipping address | 주문 상품을 수령하는 주소 |
 | 호출하다 | call | 배달 주문을 접수되면 배달 대행사를 호출하다. |
 
+### 테이블
 | 테이블 | table | 매장 주문에서 사용되는 테이블. |
 | 빈 테이블 | empty table | 테이블의 착석 인원이 없을 경우 |
 | 치우다 | clear | 테이블을 치우다. |
