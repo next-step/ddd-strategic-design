@@ -133,7 +133,6 @@ docker compose -p kitchenpos up -d
 | 주문 완료 | completed | 모든 주문 과정이 종료된 주문 상태. |
 | 대행사 | agency | 배달을 대행하는 업체 |
 | 배송지 | shipping address | 주문 상품을 수령하는 주소 |
-| 호출하다 | call | 배달 주문을 접수되면 배달 대행사를 호출하다. |
 
 ### 테이블
 | 테이블 | table | 매장 주문에서 사용되는 테이블. |
