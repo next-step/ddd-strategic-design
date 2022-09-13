@@ -109,14 +109,12 @@ docker compose -p kitchenpos up -d
 | 메뉴 상품 | menu product | 메뉴에서 사용되는 수량이 포함된 상품 |
 | 메뉴 가격 | menu price | 메뉴의 가격 |
 | 메뉴 목록 | menu group | 메뉴의 집합 |
-| 합 | sum | 메뉴에 속한 상품 금액의 합|
 | 숨기다 | hide | 메뉴를 포스에서 숨기다. |
 | 노출하다 | show | 메뉴를 노출하다. |
 
 ### 주문
 | 주문 | order | 상품을 주문하는 행위 |
 | 주문 가격 | order price | 주문의 가격 |
-| 주문자 | customer | 상품을 주문하는 사람 |
 | 주문 수량 | order quantity | 주문자가 구매한 메뉴의 개수 |
 | 주문 유형 | order type | 주문 방식 |
 | 포장 주문 | takeout order | 주문 유형의 한 종류이다. 주문 후 직접 찾아간다. |
@@ -137,6 +135,6 @@ docker compose -p kitchenpos up -d
 ### 테이블
 | 테이블 | table | 매장 주문에서 사용되는 테이블. |
 | 빈 테이블 | empty table | 테이블의 착석 인원이 없을 경우 |
-| 치우다 | clear | 테이블을 치우다. |
+| 손님 | guest | 테이블 착석 대상을 지칭 |
 
 ## 모델링
