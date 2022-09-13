@@ -172,3 +172,81 @@ docker compose -p kitchenpos up -d
 | 손님 수를 변경한다 | changeNumberOfGuests | 주문 테이블에 앉아있는 손님의 수를 변경한다. |
 
 ## 모델링
+
+## 상품
+
+- `상품(product)`은 식별자, 이름, 가격을 가진다.
+- `상품명(productName)`에는 `비속어(profanity)`가 포함되면 안된다.
+- `상품 가격(productPrice)`은 0원 이상이어야 한다.
+- `상품 가격(productPrice)`을 변경할 수 있다.
+  - 상품의 가격이 변경될 때, `해당 상품을 포함하는 메뉴`의 `메뉴 상품(menuProduct)`의 가격 총합이 상품을 포함하는 메뉴의 가격보다 낮아지면 해당 메뉴를 숨긴다.
+
+
+## 메뉴
+
+- `메뉴(menu)`는 식별자, 이름, 가격, 전시 여부, 메뉴 상품목록을 가진다.
+- `메뉴(menu)`는 `메뉴 그룹(menuGroup)`에 포함되어야 한다.
+- `메뉴(menu)`는 `메뉴 상품(menuProduct)`을 하나 이상 포함해야 한다.
+- `메뉴명(menuName)`은 `비속어(profanity)`가 포함될 수 없다.
+- `메뉴 가격(menuPrice)`은 0원 이상이어야 한다.
+- `메뉴 가격(menuPrice)`은 `메뉴 상품(menuProduct)`의 가격 총합보다 작아야한다.
+- `메뉴 가격(menuPrice)`을 변경할 때, 변경 후의 `메뉴 가격(menuPrice)`이 `메뉴 상품(menuProduct)`의 가격의 합보다 크면 `숨겨진다(hide).`
+- `메뉴(menu)`를 `전시할 수 있다(display).`
+  - `메뉴 가격(menuPrice)`이 `메뉴 상품(menuProduct)`의 가격 총합보다 높을 경우 `메뉴(menu)`를 `전시할 수 없다(display).`
+- `메뉴(menu)`를 `숨길 수 있다(hide).`
+
+## 메뉴 그룹
+
+- `메뉴그룹(menuGroup)`은 식별자, 이름을 가진다.
+- `메뉴그룹명(menuGroupName)`이 공백이어서는 안된다.
+
+## 주문
+
+### 공통
+
+- `주문 상품(orderLineItem)`이 하나 이상이어야 한다.
+- `주문 유형(orderType)`이 `매장 식사(EAT_IN)`, `배달(DELIVERY)`, `포장(TAKEOUT)` 중에 하나여야 한다.
+- `숨겨진 메뉴(hiddenMenu)`는 주문할 수 없다.
+- 존재하지 않는 `메뉴(menu)`는 주문할 수 없다.
+- `주문상품(orderLineItem)`의 가격은 실제 `메뉴 가격(menuPrice)`과 일치해야 한다.
+- `대기(waiting)` 상태의 `주문(order)`만 `수락할 수 있다(accept).`
+- `수락(accped)` 상태의 `주문(order)`만 `서빙할 수 있다(serve).`
+
+### 매장 주문
+
+- `매장 주문(EAT_IN)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록, 주문테이블을 가진다.
+- `주문(order)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.
+- `매장 주문(EAT_IN)`은 `사용중` 상태의 `주문테이블(orderTable)`에서만 이뤄진다.
+- `서빙 완료(served)` 된 `주문(order)`만 `완료할 수 있다(complete).`
+  - `주문 테이블(orderTable)`의 모든 `주문(order)`이 `주문 처리 완료(completed)` 상태가 되면 `사용 가능` 한 `주문테이블(orderTable)`로 변경한다.
+
+### 배달 주문
+
+- `배달 주문(DELIVERY)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록, 배달 주소를 가진다.
+- `주문(order)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `배달 중(delivering)` → `배달 완료(delivered)` → `주문 처리 완료(completed)` 순서로 진행된다.
+- 각 `주문 상품(orderLineItem)`의 개수는 0개 이상이어야 한다.
+- `배달 주소(deliveryAddress)`가 있어야 한다.
+- `서빙완료(served)` 된 `주문(order)`만 `배달을 시작할 수 있다(startDelivery).`
+- `배달 중(delivering)`인 `주문(order)`만 `배달을 완료할 수 있다(completeDelivery).`
+- `배달 완료(delivered)`된 `주문(order)`만 `완료할 수 있다(complete).`
+
+### 포장 주문
+
+- `포장 주문(TAKEOUT)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록을 가진다.
+- `주문(order)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.
+- 각 `주문 상품(orderLineItem)`의 개수는 0개 이상이어야 한다.
+- `서빙 완료(served)`된 `주문(order)`만 `완료할 수 있다(complete).`
+
+# 주문 테이블
+
+- `주문 테이블(orderTable)`은 식별자, 이름, 손님 수, 사용 여부를 가진다.
+- `주문테이블명(orderTableName)`은 공백이어서는 안된다.
+- `주문테이블(orderTable)`은 `사용할 수 있다(use).`
+  - `주문테이블(orderTable)`을 `사용(use)`하면 `사용중` 상태가 된다.
+- `주문 테이블(orderTable)`을 `치울 수 있다(clear)`.
+  - `주문 테이블(orderTable)`에 완료되지 않은 주문이 있으면 `치울 수 없다(clear)`.
+  - `주문 테이블(orderTable)`을 치우면 `손님 수(numberOfGuests)`는 0이 된다.
+  - `주문 테이블(orderTable)`을 `치우면(clear)` `사용 가능` 상태가 된다.
+- `주문 테이블(orderTable)`의 `손님 수를 변경할 수 있다(changeNumberOfGuests).`
+  - 변경하려는 `손님 수(numberOfGuests)`는 0명 이상이어야 한다.
+  - `사용 중`이 아닌 `주문 테이블(orderTable)`의 `손님 수(numberOfGuests)`를 변경할 수 없다.
