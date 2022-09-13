@@ -119,9 +119,9 @@ docker compose -p kitchenpos up -d
 | 주문 가격 | order price | 주문의 가격 |
 | 주문 수량 | order quantity | 주문자가 구매한 메뉴의 개수 |
 | 주문 유형 | order type | 주문 방식 |
-| 포장 주문 | takeout order | 주문 유형의 한 종류이다. 주문 후 직접 찾아간다. |
-| 배달 주문 | delivery order | 주문 유형의 한 종류이다. 주문 후 배송지로 배송된다. |
-| 매장 주문 | eat in order | 주문 유형의 한 종류이다. 주문 후 매장에서 식사한다. |
+| 배달 주문 | ┢ delivery order | 주문 유형의 한 종류이다. 주문 후 배송지로 배송된다. |
+| 매장 주문 | ┢ eat in order | 주문 유형의 한 종류이다. 주문 후 매장에서 식사한다. |
+| 포장 주문 | ┕ takeout order | 주문 유형의 한 종류이다. 주문 후 직접 찾아간다. |
 | 주문 항목 | order line item | 주문에서 사용되는 수량이 포함된 메뉴 |
 | 주문 상태 | order status | 주문의 단계|
 | 대기 | waiting | 주문을 신청한 상태 |
