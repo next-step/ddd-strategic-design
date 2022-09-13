@@ -98,12 +98,7 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 
-### 공통
-| 가격 | price | 물건이 지니고 있는 가치를 돈으로 나타낸 것 |
 | 비속어 | profanity | 저급한 말 |
-| 등록하다 | register | 등록하다. |
-| 조회하다 | find | 조회하다. |
-| 변경하다 | change | 변경하다. |
 
 ### 상품
 | 상품 | product | 메뉴 프로덕트가 사용하는 데이터 |
