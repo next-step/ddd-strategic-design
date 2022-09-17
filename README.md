@@ -193,9 +193,7 @@ docker compose -p kitchenpos up -d
 
 ### 상품
 
-- `상품(product)`은 식별자, 이름, 가격을 가진다.
-<br/>
-<br/>
+- `상품(product)`은 식별자, 이름, 가격을 가진다.<br/><br/>
 - `상품(product)`을 생성한다.
   - `상품명(productName)`에는 `비속어(profanity)`가 포함되면 안된다.
   - `상품 가격(productPrice)`은 0원 이상이어야 한다.
@@ -204,9 +202,7 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴
 
-- `메뉴(menu)`는 식별자, 이름, 가격, 전시 여부, 메뉴 상품목록을 가진다.
-<br/>
-<br/>
+- `메뉴(menu)`는 식별자, 이름, 가격, 전시 여부, 메뉴 상품목록을 가진다.<br/><br/>
 - `메뉴(menu)`를 생성한다.
   - `메뉴(menu)`는 `메뉴 그룹(menuGroup)`에 포함되어야 한다.
   - `메뉴(menu)`는 `메뉴 상품(menuProduct)`을 하나 이상 포함해야 한다.
@@ -223,18 +219,14 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴 그룹
 
-- `메뉴그룹(menuGroup)`은 식별자, 이름을 가진다.
-<br/>
-<br/>
+- `메뉴그룹(menuGroup)`은 식별자, 이름을 가진다.<br/><br/>
 - `메뉴그룹(menuGroup)`을 생성한다.
   - `메뉴그룹명(menuGroupName)`이 공백이어서는 안된다.
 
 ### 매장 주문
 
 - `매장 주문(eatInOrder)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록, 주문테이블을 가진다.
-- `매장주문(eatInOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.
-<br/>
-<br/>
+- `매장주문(eatInOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.<br/><br/>
 - `매장 주문(eatInOrder)`을 생성한다.
   - 존재하지 않는 `메뉴(menu)`나 `숨겨진 메뉴(hiddenMenu)`는 주문할 수 없다.
   - `주문 상품(orderLineItem)`이 하나 이상이어야 한다.
@@ -250,9 +242,7 @@ docker compose -p kitchenpos up -d
 
 ### 주문 테이블
 
-- `주문 테이블(orderTable)`은 식별자, 이름, 손님 수, 사용 여부를 가진다.
-  <br/>
-  <br/>
+- `주문 테이블(orderTable)`은 식별자, 이름, 손님 수, 사용 여부를 가진다.<br/><br/>
 - `주문 테이블(orderTable)`을 생성한다.
   - `주문테이블명(orderTableName)`은 공백이어서는 안된다.
 - `주문 테이블(orderTable)`을 `사용한다(use).`
@@ -268,9 +258,7 @@ docker compose -p kitchenpos up -d
 ### 배달 주문
 
 - `배달 주문(deliveryOrder)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록, 배달 주소를 가진다.
-- `배달 주문(deliveryOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `배달 중(delivering)` → `배달 완료(delivered)` → `주문 처리 완료(completed)` 순서로 진행된다.
-<br/>
-<br/>
+- `배달 주문(deliveryOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `배달 중(delivering)` → `배달 완료(delivered)` → `주문 처리 완료(completed)` 순서로 진행된다.<br/><br/>
 - `배달 주문(deliveryOrder)`를 생성한다.
   - 존재하지 않는 `메뉴(menu)`나 `숨겨진 메뉴(hiddenMenu)`는 주문할 수 없다.
   - `주문 상품(orderLineItem)`이 하나 이상이어야 한다.
@@ -292,9 +280,7 @@ docker compose -p kitchenpos up -d
 ### 포장 주문
 
 - `포장 주문(takeoutOrder)`은 식별자, 주문 상태, 주문 시간, 주문 상품 목록을 가진다.
-- `포장 주문(takeoutOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.
-<br/>
-<br/>
+- `포장 주문(takeoutOrder)`은 `대기(waiting)` → `수락(accepted)` → `서빙 완료(served)` → `주문 처리 완료(completed)` 순서로 진행된다.<br/><br/>
 - `포장 주문(takeoutOrder)`을 생성한다.
   - 존재하지 않는 `메뉴(menu)`나 `숨겨진 메뉴(hiddenMenu)`는 주문할 수 없다.
   - `주문 상품(orderLineItem)`이 하나 이상이어야 한다.
