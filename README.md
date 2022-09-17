@@ -126,14 +126,15 @@ docker compose -p kitchenpos up -d
 
 ### 주문
 
-| 한글명    | 영문명              | 설명                        |
-|--------|------------------|---------------------------|
-| 주문     | Order            | 메뉴에 등록된 상품을 구매하는 행위       |
-| 주문 항목  | Order Line Item  | 주문시 선택한 메뉴와 수량을 나타낸다.     |
-| 주문 유형  | Order Type       | 주문시 반드시 선택해야 하는 유형        |
-| 주문 상태  | Order Status     | 현재 주문의 진행 상태              |
-| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻한다.           |
-| 배달 대행사 | Kitchen Riders   | 주문에 대해서 배달을 하는 대행사        |
+| 한글명    | 영문명              | 설명                    |
+|--------|------------------|-----------------------|
+| 주문     | Order            | 메뉴에 등록된 상품을 구매하는 행위   |
+| 주문 항목  | Order Line Item  | 주문시 선택한 메뉴와 수량을 나타낸다. |
+| 주문 유형  | Order Type       | 주문시 반드시 선택해야 하는 유형    |
+| 주문 상태  | Order Status     | 현재 주문의 진행 상태          |
+| 주문 일시  | Order Date Time  | 주문 등록 일시              |
+| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻한다.       |
+| 배달 대행사 | Kitchen Riders   | 주문에 대해서 배달을 하는 대행사    |
 
 #### 주문 유형
 
@@ -154,4 +155,59 @@ docker compose -p kitchenpos up -d
 | 배달 완료  | Delivered        | 주문이 배달 완료된 상태             |
 | 주문 완료  | Order Completed  | 주문의 모든 과정이 완료된 상태         |
 
+### 공통
+
+| 한글명 | 영문명       | 설명                 |
+|-----|-----------|--------------------|
+| 비속어 | Profanity | 지정된 속성에는 사용할 수 없다. |
+
 ## 모델링
+
+### 상품
+
+- `상품(Product)` 이름에는 `비속어(Profanity)` 를 사용할 수 없다.
+- `상품(Product)` 가격은 0원 이상이어야 한다.
+- `상품(Product)` 가격을 변경할 수 있다.
+  - 가격이 변경될 때 해당 `상품(Product)`이 포함된 `메뉴(Menu)`의 가격이   
+    `메뉴상품(Menu Product)` 가격의 합보다 크면 `메뉴(Menu)` 가 숨겨진다.
+
+### 메뉴 그룹
+
+- `메뉴 그룹(Menu Group)` 은 이름이 반드시 있어야 한다.
+
+### 메뉴
+
+- `메뉴(Menu)` 는 반드시 하나의 `메뉴 그룹(Menu Group)` 에 속해야 한다.
+- `메뉴(Menu)` 에는 `메뉴상품(Menu Product)` 이 한개 이상 포함 되어야한다.
+- `메뉴상품(Menu Product)` 의 수량은 0개 이상이어야 한다.
+- `메뉴(Menu)` 이름에는 `비속어(Profanity)` 를 사용할 수 없다.
+- `메뉴(Menu)` 가격은 0원 이상이어야 한다.
+- `메뉴(Menu)` 는 `표시여부(Displayed)` 를 가진다.
+- `메뉴(Menu)` 가격을 변경할 수 있다.
+  - `메뉴(Menu)` 의 가격이 `메뉴상품(Menu Product)` 가격의 합보다 클 수 없다.
+- `메뉴(Menu)` 의 `표시여부(Displayed)` 를 변경할 수 있다.
+  - `메뉴(Menu)` 의 가격이 `메뉴상품(Menu Product)` 가격의 합보다 크면 `메뉴(Menu)`를 표시할 수 없다. 
+
+### 주문 테이블
+
+- `주문 테이블(Order Table)` 은 `매장 주문(Eat In Order)`시에 사용한다.
+- `주문 테이블(Order Table)` 은 이름이 반드시 있어야 한다.
+- `주문 테이블(Order Table)` 은 초기 상태로 생성된다.
+  - `손님수(Number Of Guests)` 0명
+  - `빈 테이블(Empty Table)` 설정
+- `빈 테이블(Empty Table)` 을 설정 할 수 있다.
+- `빈 테이블(Empty Table)` 을 해지 할 수 있다. asdfasdf
+  - `주문 완료(Order Completed)` 상태가 아닌 `주문(Order)`이 있는 `주문 테이블(Order Table)`은 해지할 수 없다.
+  - 초기 상태로 변경된다.
+- `손님수(Number Of Guests)` 를 변경할 수 있다.
+  - 변경하려는 `손님수(Number Of Guests)` 는 0명 이상이어야 한다.
+  - `빈 테이블(Empty Table)` 이 해지되어있는 경우에만 변경 가능하다.
+
+### 주문
+
+- `주문(Order)` 에는 `주문 항목(Order Line Item)` 이 한개 이상 포함 되어야한다.
+- `주문(Order)` 은 `주문 유형(Order Type)` 을 가지며 필수값이다.
+- `주문(Order)` 은 `주문 상태(Order Status)` 를 가지며 필수값이다.
+- `주문(Order)` 은 `주문일시(Order Date Time)` 을 가지며 필수값이다.
+- `주문(Order)` 은 `배달 주문(Delivery Order)` 일 경우 `배달주소(Delivery Address)` 가 필요하다.
+- `주문(Order)` 은 `매장 주문(Eat In Order)` 일 경우 `주문 테이블(Order Table)` 이 필요하다.
