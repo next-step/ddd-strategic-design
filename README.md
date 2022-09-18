@@ -200,4 +200,13 @@ docker compose -p kitchenpos up -d
 |-----|-----------|-----------------|
 | 비속어 | profanity | 음란한 표현, 욕설, 패담. |
 
+<br>
+
 ## 모델링
+
+### `Product`
+- `Product`는 고유식별번호와 `Name`과 `Price`를 갖는다.
+- `Name`에는 `Profanity`가 포함될 수 없다.
+- `Price`는 0 이상이어야 한다.
+  - `Price`를 변경할 수 있다.
+  - `Product`의 `Price`가 변경될 때 `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price`의 합보다 크면 `Menu`가 `hide`된다.
