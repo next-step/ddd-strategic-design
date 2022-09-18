@@ -145,7 +145,7 @@ docker compose -p kitchenpos up -d
 | 치운다 | clear | 주문 테이블을 `사용 가능` 으로 바꾼다. |
 | 손님 수를 변경한다 | changeNumberOfGuests | 주문 테이블에 앉아있는 손님의 수를 변경한다. |
 
-### 매장 주문 (Bounded Context)
+### 포장 주문 (Bounded Context)
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
@@ -164,7 +164,7 @@ docker compose -p kitchenpos up -d
 | 서빙한다 | serve | 대기중인 고객에게 음식을 서빙한다. |
 | 완료한다 | complete | 주문을 완료한다. |
 
-### 매장 주문 (Bounded Context)
+### 배달 주문 (Bounded Context)
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
