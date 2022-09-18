@@ -205,12 +205,21 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### `Product`
-- `Product`는 고유식별번호와 `Name`과 `Price`를 갖는다.
+- `Product`는 고유식별자와 `Name`과 `Price`를 갖는다.
 - `Name`에는 `Profanity`가 포함될 수 없다.
 - `Price`는 0 이상이어야 한다.
   - `Price`를 변경할 수 있다.
-  - `Product`의 `Price`가 변경될 때 `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price`의 합보다 크면 `Menu`가 `hide`된다.
+  - `Product`의 `Price`가 변경될 때 `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price`의 합보다 크면 `Menu`가 `hide` 된다.
 
 ### `MenuGroup`
-- `MenuGroup`은 고유식별번호와 `Name`을 갖는다.
+- `MenuGroup`은 고유식별자와 `Name`을 갖는다.
 - `Name`은 공백일 수 없다.
+
+### `Menu`
+- `Menu`는 고유식별자와 `Name`, `Price`, `MenuProducts`를 가진다.
+- `Menu`는 특정 `MenuGroup`에 속한다.
+- `Menu`의 `Price`는 `MenuProduct`들의 `Price` 합보다 작거나 같아야 한다.
+- `Menu`의 `Price`가 `MenuProduct`들의 `Price` 합보다 크면 `hide` 된다.
+
+### `MenuProduct`
+- `MenuProduct`는 `Price`와 `Quantity`를 가진다.
