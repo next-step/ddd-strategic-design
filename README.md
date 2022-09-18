@@ -102,7 +102,7 @@ docker compose -p kitchenpos up -d
 | 상품명               | Product name               | 상품의 이름                                                                                               |
 | 상품 가격             | Product price              | 상품의 가격                                                                                               |
 | 상품을 등록하다          | Add a product              | 새로운 상품을 추가하는 것을 의미                                                                                   |
-| 상품의 가격을 변경하다      | Change product price       |                                                                                                      |
+| 상품의 가격을 변경하다      | Change product price       | 등록된 상품의 가격을 변경하는 행위                                                                                  |
 | 상품의 목록을 조회하다      | List products              | 등록된 모든 상품을 보는 것을 의미                                                                                  |
 |                   |                            |                                                                                                      |
 | 메뉴 그룹             | Menu group                 | 메뉴를 묶는 카테고리. 메뉴는 반드시 하나의 메뉴 그룹에 속해 있어야 한다                                                            |
