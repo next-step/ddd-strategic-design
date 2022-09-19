@@ -121,6 +121,7 @@ docker compose -p kitchenpos up -d
 | 메뉴에 속한 상품 수량 | Menu product quantity | 메뉴가 주문될 때 메뉴에 속한 상품을 몇 개 팔지, 메뉴를 등록할 때 정한다.                      |
 | 공개된 (메뉴)     | Displayed (menu)      | 메뉴가 공개되어야 주문할 수 있으며, 비공개되면 주문할 수 없다.                             |
 | (메뉴를) 비공개하다  | Hide (menu)           | 메뉴를 비공개 상태로 만든다. (반의어: displayed)                                |
+| 메뉴 가격을 변경하다  | Change menu price     | 변경될 메뉴 가격이 메뉴에 속한 상품 및 수량의 가격의 합보다 작거나 같아야 한다.                   |
 
 ### 주문테이블
 
