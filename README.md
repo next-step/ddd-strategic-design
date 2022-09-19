@@ -146,12 +146,15 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 ### 상품
+#### 속성
 - `상품(product)`은 이름과 `상품 가격(product price)`을 가진다.
 - `상품(product)` 이름에는 `비속어(profanity)`가 포함될 수 없다.
 - `상품 가격(product price)`은 0원 이상이어야 한다.
+#### 기능
 - `상품 가격(product price)`을 변경할 수 있다.
 
 ### 메뉴
+#### 속성
 - `메뉴 그룹(menu group)`은 반드시 이름을 갖는다.
 - `메뉴(menu)`는 하나의 `메뉴 그룹(menu group)`에 속해야 한다.
 - `메뉴(menu)`는 `메뉴 상품(menu product)`, `메뉴 가격(menu price)`, 이름을 가진다.
@@ -160,31 +163,38 @@ docker compose -p kitchenpos up -d
 - `메뉴 가격(menu price)`은 0원 이상이어야 한다.
 - `메뉴 상품(menu product)`은 `상품(product)`과 수량을 갖는다.
 - `메뉴(menu)`를 `노출(visible)` 하거나 `숨기기(invisible)`를 할 수 있다.
+#### 기능
 - `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 합보다 높을 경우 `메뉴(menu)`를 `노출(visible)`할 수 없다.
 
-#### 배달 주문
+### 배달 주문
 - `배달 주문(delivery order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `배달 준비 완료(served)` `배달 중(delivering)` -> `배달 완료(delivered)` -> `주문 완료(completed)` 순으로 진행된다.
+#### 속성
 - `배달 주문(delivery order)`은 `주문 상태(order status)`, `주문 항목(order line item)`, `배달 주소(delivery address)`를 가진다.
 - `배달 주문(delivery order)`은 `주문 항목(order line item)` 의 수량이 0보다 커야 한다.
 - `주문 항목(order line item)`은 수량을 가진다.
-- 주문한 `메뉴 가격(menu price)`은 실제 `메뉴 가격(menu price)`과 일치해야 한다.
+#### 기능
+- `메뉴 가격(menu price)`은 `주문 항목(order line item)`의 가격과 일치해야 한다.
 - `배달 주문(delivery order)`이 `주문 접수(accepted)`되면 `배달 대행사(delivery agency)`를 호출한다.
 
-#### 포장 주문
+### 포장 주문
 - `포장 주문(takeout order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `포장 완료(served)` -> `주문 완료(completed)` 순으로 진행된다.
+#### 속성
 - `포장 주문(takeout order)`은 `주문 상태(order status)`, `주문 항목(order line item)`를 가진다.
 - `포장 주문(takeout order)`은 `주문 항목(order line item)` 의 수량이 0보다 커야 한다.
 - `주문 항목(order line item)`은 수량을 가진다.
-- 주문한 `메뉴 가격(menu price)`은 실제 `메뉴 가격(menu price)`과 일치해야 한다.
+#### 기능
+- `메뉴 가격(menu price)`은 `주문 항목(order line item)`의 가격과 일치해야 한다.
 
-#### 매장 주문
+### 매장 주문
 - `매장 주문(eat in order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `서빙 완료(served)` -> `주문 완료(completed)`순으로 진행된다.
+#### 속성
 - `배달 주문(eat in order)`은 `주문 상태(order status)`, `주문 항목(order line item)`, `주문 테이블(order table)`를 가진다.
 - `매장 주문(delivery order)`은 `주문 항목(order line item)` 의 수량이 0보다 작을 수 있다.
 - `주문 항목(order line item)`은 수량을 가진다.
-- 주문한 `메뉴 가격(menu price)`은 실제 `메뉴 가격(menu price)`과 일치해야 한다.
 - `주문 테이블(order table)`은 이름, `방문한 손님 수(number of guests)`을 갖는다.
 - `주문 테이블(order table)`의 이름은 비워 둘 수 없다.
-- `방문한 손님 수(number of guests)`는 변경할 수 있으며 0명 이상이어야 한다.
+#### 기능
+- `메뉴 가격(menu price)`은 `주문 항목(order line item)`의 가격과 일치해야 한다.
 - `주문 완료(completed)`되면 `주문 테이블(order table)`을 `빈 테이블(empty table)`로 설정한다.
 - `빈 테이블(empty table)`은 `방문한 손님 수(number of guests)`를 변경할 수 없다.
+- `방문한 손님 수(number of guests)`는 변경할 수 있으며 0명 이상이어야 한다.
