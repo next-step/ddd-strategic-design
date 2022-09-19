@@ -166,7 +166,6 @@ docker compose -p kitchenpos up -d
 #### 공통
 - `주문(order)`은 주문 상태, `주문 항목(order line item)`, `주문 유형(order type)`을 가진다. 
 - `주문 항목(order line item)`은 수량을 가진다.
-- `주문 항목(order line item)`의 수량은 0 이상이어야 한다.
 - 주문한 `메뉴 가격(menu price)`은 실제 `메뉴 가격(menu price)`과 일치해야 한다.
 
 #### 배달 주문
