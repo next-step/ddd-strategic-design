@@ -221,8 +221,14 @@ docker compose -p kitchenpos up -d
 - `MenuProduct`는 `Price`와 `Quantity`를 가진다.
 
 ### 매장 주문
-- `Order`는 `DELIVERY`, `TAKEOUT`, `EAT_IN`으로 이루어진 `OrderType`을 하나 가진다.
-- `Order`는 하나 이상의 `OrderLineItem`을 갖는다.
+- `OrderTable`은 고유식별자와 `Name`, `NumberOfGuests`, `Occupied`를 갖는다.
+- `OrderTable`의 모든 `Order`가 `completed`가 되면, `clear` 한다.
+- `clear`를 하면, `Occupied`가 false가 되고 `NumberOfGuests`가 0이 된다.
+- 매장 주문의 `Order`는 `OrderType`이 `EAT_IN`이다.
+- `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
+- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
+- `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
+- `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
 
 ### 배달 주문
 
