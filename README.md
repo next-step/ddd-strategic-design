@@ -111,38 +111,39 @@ docker compose -p kitchenpos up -d
 | 노출 | visible | 메뉴를 포스에서 나타낸다. |
 | 숨김 | invisible | 메뉴를 포스에서 숨긴다. |
 
-### 주문
-#### 공통
-| 주문 가격 | order price | 주문의 가격 |
-| 주문 상태 | order status | 주문의 단계|
-| 주문 | order | 상품을 주문하는 행위 |
-| 주문 항목 | order line item | 주문에서 사용되는 수량이 포함된 메뉴 |
-| 주문 유형 | order type | 주문 방식 |
+#### 배달 주문
+| 배달 주문 |  delivery order | 주문 유형의 한 종류이다. 주문 후 배송지로 배송된다. |
+| 주문 상태 | order status | 주문 요청 -> 주문 접수 -> 배달 준비 완료 -> 배달 중 -> 배달 완료 -> 주문 완료 |
 | 주문 요청 | waiting | 주문을 신청한 상태 |
 | 주문 접수 | accepted | 주문을 매장에서 수락한 주문 상태. |
-| 주문 완료 | completed | 모든 주문 과정이 종료된 주문 상태. |
-| 배달 주문 | ┢ delivery order | 주문 유형의 한 종류이다. 주문 후 배송지로 배송된다. |
-| 매장 주문 | ┢ eat in order | 주문 유형의 한 종류이다. 주문 후 매장에서 식사한다. |
-| 포장 주문 | ┕ takeout order | 주문 유형의 한 종류이다. 주문 후 직접 찾아간다. |
-
-#### 배달 주문
-| 배달 주문 상태 | delivery order status | 주문 요청 -> 주문 접수 -> 배달 준비 완료 -> 배달 중 -> 배달 완료 -> 주문 완료 |
-| 배달 주소 | delivery address | 주문 상품을 수령하는 주소 |
 | 배달 준비 완료 | served | 모든 주문 항목이 손님에게 전달할 수 있도록 준비된 주문 상태. |
 | 배달 중 | delivering | (배달) 주문을 배달 대행사가 배달 중인 주문 상태. |
 | 배달 완료 | delivered | (배달) 주문을 배달 대행사가 배달 주소지까지 배달한 주문 상태. |
+| 주문 완료 | completed | 모든 주문 과정이 종료된 주문 상태. |
+| 주문 항목 | order line item | 주문에서 사용되는 수량이 포함된 메뉴 |
+| 배달 주소 | delivery address | 주문 상품을 수령하는 주소 |
 | 배달 대행사 | delivery agency | 배달을 대행하는 업체 |
 
 #### 포장 주문
-| 포장 주문 상태 | takeout order status | 주문 요청 -> 주문 접수 -> 포장 완료 -> 주문 완료 |
-| 포장 완료 | served | 포장한 상품을 고객이 수령한 상태 |
+| 포장 주문 | takeout order | 주문 유형의 한 종류이다. 주문 후 직접 찾아간다. |
+| 주문 상태 | order status | 주문 요청 -> 주문 접수 -> 포장 완료 -> 주문 완료 |
+| 주문 요청 | waiting | 주문을 신청한 상태 |
+| 주문 접수 | accepted | 주문을 매장에서 수락한 주문 상태. |
+| 포장 주문 완료 | served | 포장한 상품을 고객이 수령한 상태 |
+| 주문 완료 | completed | 모든 주문 과정이 종료된 주문 상태. |
+| 주문 항목 | order line item | 주문에서 사용되는 수량이 포함된 메뉴 |
 
 #### 매장 주문
-| 매장 주문 상태 | eat in order status | 주문 요청 -> 주문 접수 -> 서빙 완료 -> 주문 완료 |
+| 매장 주문 | eat in order | 주문 유형의 한 종류이다. 주문 후 매장에서 식사한다. |
+| 주문 상태 | order status | 주문 요청 -> 주문 접수 -> 서빙 완료 -> 주문 완료 |
+| 주문 요청 | waiting | 주문을 신청한 상태 |
+| 주문 접수 | accepted | 주문을 매장에서 수락한 주문 상태. |
 | 서빙 완료 | served | 매장 내에서 주문 테이블에 상품을 전달한다. |
-| 빈 테이블 | empty table | 테이블의 착석 인원이 없을 경우 |
+| 주문 완료 | completed | 모든 주문 과정이 종료된 주문 상태. |
 | 주문 테이블 | order table | 매장 주문 시 선택하는 테이블 |
+| 빈 테이블 | empty table | 테이블의 착석 인원이 없을 경우 |
 | 방문한 손님 수 | number of guests | 매장 내에서 주문한 테이블당 손님의 수 |
+| 주문 항목 | order line item | 주문에서 사용되는 수량이 포함된 메뉴 |
 
 ## 모델링
 ### 상품
@@ -163,7 +164,7 @@ docker compose -p kitchenpos up -d
 - `메뉴 가격(menu price)`은 변경될 수 있고, `메뉴 상품(menu product)`의 합보다 작거나 같아야 한다.
 - `메뉴 가격(menu price)`은 0원 이상이어야 한다.
 - `메뉴 상품(menu product)`은 `상품(product)`과 수량을 갖는다.
-- `메뉴(menu)`를 `노출(visible)` 하거나 `숨기기(invisible)`를 할 수 있다.
+- `메뉴(menu)`를 `노출(visible)` 하거나 `숨김(invisible)`를 할 수 있다.
 #### 기능
 - `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 합보다 높을 경우 `메뉴(menu)`를 `노출(visible)`할 수 없다.
 
