@@ -154,9 +154,10 @@ docker compose -p kitchenpos up -d
 - `상품 가격(product price)`을 변경할 수 있다.
 
 ### 메뉴
-#### 속성
+#### 메뉴 그룹
 - `메뉴 그룹(menu group)`은 이름을 갖는다.
 - `메뉴(menu)`는 하나의 `메뉴 그룹(menu group)`에 속해야 한다.
+#### 속성
 - `메뉴(menu)`는 `메뉴 상품(menu product)`, `메뉴 가격(menu price)`, 이름을 가진다.
 - `메뉴(menu)` 이름에는 `비속어(profanity)`가 포함될 수 없다.
 - `메뉴 가격(menu price)`은 변경될 수 있고, `메뉴 상품(menu product)`의 합보다 작거나 같아야 한다.
