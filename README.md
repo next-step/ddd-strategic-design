@@ -239,3 +239,8 @@ docker compose -p kitchenpos up -d
 - `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
 
 ### 포장 주문
+- 포장 주문의 `Order`는 `OrderType`이 `TAKEOUT`이다.
+- `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
+- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
+- `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
+- `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
