@@ -109,7 +109,7 @@ docker compose -p kitchenpos up -d
 | 메뉴 상품 | menu product | 메뉴에서 사용되는 수량이 포함된 상품 |
 | 메뉴 가격 | menu price | 메뉴의 가격 |
 | 노출 | visible | 메뉴를 포스에서 나타낸다. |
-| 숨기기 | invisible | 메뉴를 포스에서 숨긴다. |
+| 숨김 | invisible | 메뉴를 포스에서 숨긴다. |
 
 ### 주문
 #### 공통
