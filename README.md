@@ -155,7 +155,7 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴
 #### 속성
-- `메뉴 그룹(menu group)`은 반드시 이름을 갖는다.
+- `메뉴 그룹(menu group)`은 이름을 갖는다.
 - `메뉴(menu)`는 하나의 `메뉴 그룹(menu group)`에 속해야 한다.
 - `메뉴(menu)`는 `메뉴 상품(menu product)`, `메뉴 가격(menu price)`, 이름을 가진다.
 - `메뉴(menu)` 이름에는 `비속어(profanity)`가 포함될 수 없다.
