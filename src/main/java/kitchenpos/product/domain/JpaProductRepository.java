@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.product.domain;
 
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
