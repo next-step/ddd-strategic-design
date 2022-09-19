@@ -1,5 +1,12 @@
 # 키친포스
 
+## 퀵 스타트
+
+```sh
+cd docker
+docker compose -p kitchenpos up -d
+```
+
 ## 요구 사항
 
 ### 상품
@@ -122,32 +129,142 @@
 
 ### 주문 테이블
 
-| 한글명     | 영문명                         | 설명                                     |
-|---------|-----------------------------|----------------------------------------|
-| 주문 테이블  | Order Table                 | 매장 내 식사 주문인 경우, 손님들이 식사를 하는 테이블이다.     |
-| 손님 수    | The Number Of Guests        | 매장 내 식사 손님 수. 0명 이상이어야 한다.             |
-| 테이블 등록  | Register Order Table        | 테이블을 등록한다.                             |
-| 테이블 점유  | Occupy Order Table          | 테이블을 점유된 상태로 설정한다.                     |
-| 테이블 정리  | Clear Order Table           | 테이블을 빈 테이블로 설정한다. 주문 완료 상태가 아니면 불가능하다. |
-| 손님 수 변경 | Change The Number Of Guests | 테이블의 손님 수를 변경한다. 빈 테이블은 변경할 수 없다.      |
+| 한글명       | 영문명                         | 설명                                     |
+|-----------|-----------------------------|----------------------------------------|
+| 주문 테이블    | OrderTable                  | 매장 내 식사 주문인 경우, 손님들이 식사를 하는 테이블이다.     |
+| 주문 테이블 이름 | OrderTable Name             | 주문 테이블의 이름.                            |
+| 손님 수      | The Number Of Guests        | 매장 내 식사 손님 수. 0명 이상이어야 한다.             |
+| 테이블 등록    | Register OrderTable         | 테이블을 등록한다.                             |
+| 점유 상태     | Empty                       | 테이블의 점유 여부.                            |
+| 테이블 점유    | Occupy OrderTable           | 테이블을 점유된 상태로 설정한다.                     |
+| 테이블 정리    | Clear OrderTable            | 테이블을 빈 테이블로 설정한다. 주문 완료 상태가 아니면 불가능하다. |
+| 손님 수 변경   | Change The Number Of Guests | 테이블의 손님 수를 변경한다. 빈 테이블은 변경할 수 없다.      |
 
 ### 주문
 
-| 한글명   | 영문명                     | 설명                                                                    |
-|-------|-------------------------|-----------------------------------------------------------------------|
-| 주문    | Order                   | 없는 메뉴나 진열되지 않은 메뉴를 제외하고 1개 이상의 메뉴를 구매하는 행위.                           |
-| 주문 등록 | Register Order          | 손님의 주문을 등록한다.                                                         |
-| 주문 항목 | Order Line Item         | 메뉴, 가격, 수량을 담고 있다. 개별 주문 항목 가격은 메뉴 가격과 같아야 한다.                        |
-| 주문 유형 | Order Type              | 주문 방식. (매장 내 식사, 포장, 배달 주문)                                           |
-| 매장 주문 | Eat In Order            | 매장 내에서 식사하는 주문.                                                       |
-| 포장 주문 | Takeout Order           | 포장해서 가져가는 주문.                                                         |
-| 배달 주문 | Delivery Order          | 배달 주소까지 배달해주는 주문. 배달 주문에는 주소가 필수.                                     |
-| 배달 주소 | Deliver Address         | 배달 받을 주소.                                                             |
-| 주문 대기 | Wait Order              | 사용자가 주문을 하고 접수 되기를 기다리고 있는 상태.                                        |
-| 주문 접수 | Accept Order            | 주인이 접수 대기중인 주문을 접수. 배달 주문인 경우, 배달 대행사에 배달 요청한다. 주문 대기 상태여야 한다.        |
-| 주문 제공 | Serve Order             | 주인이 접수된 주문을 제공. 주문이 접수된 상태여야 한다.                                      |
-| 배달 시작 | Start Delivery Order    | 배달 대행사가 배달을 시작한다. 배달 주문이어야 하고 주문이 제공된 상태여야 한다.                        |
-| 배달 완료 | Complete Delivery Order | 배달 대행사가 배달 주문을 완료한다. 배달 중 상태여야 한다.                                    |
-| 주문 완료 | Complete Order          | 주문의 모든 과정을 마친다. 배달 주문이라면 배달됨 상태여야 하고 포장이나 매장 내 식사 주문인 경우 제공된 상태여야 한다. |
+| 한글명    | 영문명                     | 설명                                                                    |
+|--------|-------------------------|-----------------------------------------------------------------------|
+| 주문     | Order                   | 없는 메뉴나 진열되지 않은 메뉴를 제외하고 1개 이상의 메뉴를 구매하는 행위.                           |
+| 주문 등록  | Register Order          | 손님의 주문을 등록한다.                                                         |
+| 주문 항목  | Order Line Item         | 메뉴, 가격, 수량을 담고 있다. 개별 주문 항목 가격은 메뉴 가격과 같아야 한다.                        |
+| 주문 유형  | Order Type              | 주문 방식. (매장 내 식사, 포장, 배달 주문)                                           |
+| 매장 주문  | Eat In Order            | 매장 내에서 식사하는 주문.                                                       |
+| 포장 주문  | Takeout Order           | 포장해서 가져가는 주문.                                                         |
+| 배달 주문  | Delivery Order          | 배달 주소까지 배달해주는 주문. 배달 주문에는 주소가 필수.                                     |
+| 배달 주소  | Delivery Address        | 배달 받을 주소.                                                             |
+| 배달 대행사 | Delivery Agency         | 배달 기사를 매장에 배정해주는 역할.                                                  |
+| 주문 상태  | Order Status            | 주문 처리 상태. (대기, 접수, 제공, 배달 시작, 배달 완료, 주문 완료)                           |
+| 주문 대기  | Wait Order              | 사용자가 주문을 하고 접수 되기를 기다리고 있는 상태.                                        |
+| 주문 접수  | Accept Order            | 주인이 접수 대기중인 주문을 접수. 배달 주문인 경우, 배달 대행사에 배달 요청한다. 주문 대기 상태여야 한다.        |
+| 주문 제공  | Serve Order             | 주인이 접수된 주문을 제공. 주문이 접수된 상태여야 한다.                                      |
+| 배달 시작  | Start Delivery Order    | 배달 대행사가 배달을 시작한다. 배달 주문이어야 하고 주문이 제공된 상태여야 한다.                        |
+| 배달 완료  | Complete Delivery Order | 배달 대행사가 배달 주문을 완료한다. 배달 중 상태여야 한다.                                    |
+| 주문 완료  | Complete Order          | 주문의 모든 과정을 마친다. 배달 주문이라면 배달됨 상태여야 하고 포장이나 매장 내 식사 주문인 경우 제공된 상태여야 한다. |
 
 ## 모델링
+
+### 상품(`Product`)
+
+- 속성
+    - `상품(Product)`은 모든 개별 상품을 구별할 수 있게 하는 `식별자`를 가진다
+    - `상품(Product)`은 `상품 이름(Product Name)`, `상품 가격(Product Price)`를 가진다.
+    - `상품 이름(Product Name)`은 필수 값이며 비속어가 포함되지 않아야 한다.
+    - `상품 가격(Product Price)`는 필수 값이며 0원 이상이어야 한다.
+- 기능
+    - `상품(Product)`를 등록할 수 있다.
+        - `상품 가격(Product Price)`는 필수 값이며 0원 이상이어야 한다.
+        - `상품 이름(Product Name)`은 필수 값이며 비속어가 포함되지 않아야 한다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `상품(Product)`의 가격을 변경할 수 있다.
+        - `메뉴 상품(MenuProduct)` 목록의 가격 합계가 `메뉴 가격(Menu Price)` 이하이면 `HIDE MENU` 상태가 된다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `상품(Product)` 목록을 조회할 수 있다.
+
+### 메뉴 그룹(`MenuGroup`)
+
+- 속성
+    - `메뉴 그룹(Menu Group)`은 모든 개별 메뉴 그룹을 구별할 수 있게 하는 `식별자`를 가진다
+    - `메뉴 그룹(Menu Group)`은 `메뉴 그룹 이름(Menu Gropu Name)`을 가진다
+    - `메뉴 그룹 이름(Menu Gropu Name)`은 필수 값이다.
+- 기능
+    - `메뉴 그룹(Menu Group)`을 등록할 수 있다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `메뉴 그룹(Menu Group)` 목록을 조회할 수 있다.
+
+### 메뉴(`Menu`)
+
+- 속성
+    - `메뉴(Menu)`는 모든 개별 메뉴를 구별할 수 있게 하는 `식별자`를 가진다
+    - `메뉴(Menu)`는 `메뉴 이름(Menu Name)`, `메뉴 가격(Menu Price)`, `진열 상태(displayed)`를 가진다.
+    - `메뉴(Menu)`는 `메뉴 그룹(MenuGroup)`과 `메뉴 상품(MenuProduct)` 목록을 가진다.
+    - `메뉴 이름(Menu Name)`은 필수 값이며 비속어가 포함되지 않아야 한다.
+    - `메뉴 가격(Menu Price)`은 필수 값이며 0원 이상이어야 한다.
+- 기능
+    - `메뉴(Menu)`를 등록할 수 있다.
+        - `메뉴 상품(MenuProduct)` 목록이 비어있지 않아야 한다.
+        - `상품(Product)`이 등록되어 있어야 한다.
+        - `메뉴 상품(MenuProduct)`의 수량이 0 이상이어야 한다.
+        - `메뉴 그룹(MenuGroup)`이 비어있지 않아야 한다.
+        - `메뉴 가격(Menu Price)`은 `메뉴 상품(MenuProduct)` 목록의 가격 합계보다 작아야 한다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `메뉴 가격(Menu Price)`을 변경할 수 있다.
+        - `메뉴 가격(Menu Price)`은 `메뉴 상품(MenuProduct)` 목록의 가격 합계보다 작아야 한다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `메뉴(Menu)`의 `진열 상태(displayed)`를 변경할 수 있다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+        - 변경할 수 있는 상태에는 `메뉴 진열(Display Menu)`, `메뉴 미진열(Hide Menu)`이 있다.
+        - `메뉴 진열(Display Menu)` 시에 `메뉴 가격(Menu Price)`이 `메뉴 상품(MenuProduct)` 목록의 가격 합계보다 작거나 같으면 별도의 예외 처리를 한다.
+    - `메뉴(Menu)` 목록을 조회할 수 있다.
+
+### 주문 테이블(`OrderTable`)
+
+- 속성
+    - `주문 테이블(OrderTable)`은 모든 개별 주문 테이블을 구별할 수 있게 하는 `식별자`를 가진다
+    - `주문 테이블(OrderTable)`은 `주문 테이블 이름(OrderTable Name)`, `손님 수(The Number Of Guests)`를 가진다.
+    - `주문 테이블(OrderTable)`은 테이블이 비어있는지 여부를 나타내는 `점유 상태(Empty)`를 가진다.
+    - `주문 테이블 이름(OrderTable Name)`은 필수 값이다.
+- 기능
+    - `주문 테이블(OrderTable)`을 등록할 수 있다.
+        - 데이터가 필수 조건을 만족하지 않는다면 별도의 처리를 한다.
+    - `주문 테이블(OrderTable)`의 `점유 상태(Empty)`를 변경할 수 있다.
+        - 변경할 수 있는 상태에는 `테이블 점유(Occupy OrderTable)`, `테이블 정리(Clear OrderTable)`가 있다.
+        - `주문(Order)`이 완료된 상태이어야 한다.
+        - `주문(Order)`이 완료된 상태가 아니라면 별도의 예외 처리를 한다.
+    - `주문 테이블(OrderTable)`의 `손님 수(The Number Of Guests)`를 변경할 수 있다.
+        - `테이블 점유(Occupy OrderTable)`된 상태여야 한다.
+        - `손님 수(The Number Of Guests)`는 0 이상이어야 한다.
+    - `주문 테이블(OrderTable)` 목록을 조회할 수 있다.
+
+### 주문(`Order`)
+
+- 속성
+    - `주문(Order)`는 모든 개별 주문을 구별할 수 있게 하는 `식별자`를 가진다
+    - `주문(Order)`는 주문 방식을 구별할 수 있는 `주문 유형(OrderType)`을 가진다.
+    - `주문(Order)`는 현재 상태를 구별할 수 있는 `주문 상태(OrderStatus)`를 가진다.
+    - `주문(Order)`는 `주문 시각(orderDateTime)`을 가진다.
+    - `주문(Order)`는 주문 `주문 항목(OrderLineItem)`, `배달 주소(Delivery Address)`, `주문 테이블(OrderTable)`을 가진다.
+- 기능
+    - `주문(Order)`를 등록할 수 있다.
+        - `주문 유형(Order Type)`은 `매장 내 주문(Eat In Order)`, `포장 주문(Takeout Order)`, `배달 주문(Delivery Order)` 중 하나여야 한다.
+        - `주문 항목(OrderLineItem)`이 등록되어 있어야 한다.
+        - `주문 항목(OrderLineItem)`의 수량이 0 이상이어야 한다.
+        - `주문 항목(OrderLineItem)`의 가격은 등록된 `메뉴(Menu)`의 가격과 일치해야 한다.
+        - `매장 내 주문(Eat In Order)`는 `주문 테이블(OrderTable)`의 `점유 상태(empty)`가 비어있는 상태가 아니어야 한다.
+        - `배달 주문(Delivery Order)`은 `배달 주소(Delivery Address)`가 있어야 한다.
+        - `주문 대기(WAITING)` 상태로 등록된다.
+        - `메뉴(Menu)`의 `진열 상태(displayed)`가 `미진열 메뉴(Hide Menu)` 상태면 등록할 수 없다.
+    - 주문 접수 (`Accept Order`)
+        - `주문 대기(WAITING)` 상태여야 한다.
+        - `배달 주문(Delivery Order)`면 `배달 대행사(Delivery Agency)`를 호출한다.
+    - 주문 제공 (`Serve Order`)
+        - `주문 접수(ACCEPTED)` 상태여야 한다.
+    - 배달 시작 (`Start Delivery Order`)
+        - `배달 주문(Delivery Order)`이어야 한다.
+        - `주문 제공(SERVED)` 상태여야 한다.
+    - 배달 완료 (`Complete Delivery Order`)
+        - `배달 중(DELIVERING)` 상태여야 한다.
+    - 주문 완료 (`Complete Order`)
+        - `매장 내 주문(Eat In Order)` 및 `포장 주문(Takeout Order)`이면 `주문 제공(SERVED)` 상태여야 한다.
+        - `배달 주문(Delivery Order)`이면 `배달 완료(DELIVERED)` 상태여야 한다.
+        - `매장 내 주문(Eat In Order)`이면 `테이블 정리(Clear Table)`를 수행하고 `손님 수(The Number Of Guests)`를 0으로 변경한다.
+    - `주문(Order)` 목록을 조회할 수 있다.
