@@ -131,7 +131,7 @@ docker compose -p kitchenpos up -d
 | 주문 항목  | Order Line Item  | 주문시 선택한 메뉴와 수량을 나타낸다. |
 | 주문 유형  | Order Type       | 주문시 반드시 선택해야 하는 유형, <br>  배달주문, 포장주문, 매장 주문이 있다.|
 | 주문 상태  | Order Status     | 현재 주문의 진행 상태, <br> 접수대기, 주문접수, 주문서빙, 배달중, 배달 완료, 주문 완료가 있다.|
-| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻하며,배달 주문에서만 사용 한다.         |
+| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻며,배달 주문에서만 사용 한다.         |
 | 배달 대행사 | Kitchen Riders   | 배달 주문에 대해서 배달을 하는 대행사, 배달 주문에서만 사용 한다.  |
 
 
@@ -169,11 +169,13 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### 상품 (`Product`)
-* **상품의 속성은 이름, 가격을 포함 한다.**
 
+#### 속성 
+* 상품의 비속어(`Profanity`)가 포함되지 않은 이름, 가격(`Price`)을 포함 한다.
+
+#### 행위
 * **상품 (`Product`)을 등록 한다.**
-  * 가격 (`price`)과 이름이 반드시 필요 하다.
-  * 상품의 이름은 비속어가 (`Profanity`) 포함 되면 안된다.
+  * 가격과 이름이 반드시 필요 하다.
   * 이름이 공백이면 등록 할수 없다.
   * 가격은 0원 이상 이어야 한다
 
@@ -184,23 +186,28 @@ docker compose -p kitchenpos up -d
 * **등록된 상품 (`Product`)목록을 조회 한다.**
 
 ### 메뉴 그룹(`MenuGroup`)
-* **메뉴 그룹(`MenuGroup`)의 속성은 이름을 포함한다**.
 
+#### 속성
+*  속성은 이름을 포함한다.
+
+#### 행위 
 * **메뉴 그룹(`MenuGroup`)을 등록 한다.**
   - 이름은 공백이면 등록할 수 없다.
 
 * **등록된 메뉴 그룹(`MenuGroup`) 목록을 조회 한다.**
 
 ### 메뉴 (`Menu`)
-* 메뉴(`Menu` )의 속성은 이름, 가격, 표시 여부(`Displayed`), 메뉴 상품 (`Menu Product`), 메뉴 그룹(`Menu Group`)이 있다.
 
+#### 속성
+* 속성은 비속어(`Profanity`)를 포함하지 않은 이름, 가격, 표시 여부(`Displayed`), 메뉴 상품 (`Menu Product`), 메뉴 그룹(`Menu Group`)이 있다.
+
+#### 행위 
 * **메뉴(`Menu`)을 등록 한다.**
   - 메뉴 (`Menu`)의 가격은 0원 이상 이어야 한다.
   - 등록된 메뉴 그룹(`Menu Group`)에 속하여야 한다.
   - 메뉴의(`Menu`) 메뉴 상품(`Menu Product`)은 1건 이상이어야 하며 등록된 상품(`product`)만 등록이 가능하다.
   - 메뉴 상품(`Menu Product`)의 수량은  1개 이상 이어야 한다.
   - 메뉴 상품(`Menu Product`)의 수량 * 가격의 합은 메뉴(`Menu`)의 가격보다 크거나 같아야 한다.
-  - 메뉴(`Menu`) 의 이름은 필수 이며 비속어(`Profanity`)를 포함하면 안된다.
 
 * **메뉴(`Menu`)의 가격을 변경 한다.**
   - 메뉴(`Menu`)의 변경할 가격은 0보다 작으면 안된다.
@@ -218,8 +225,11 @@ docker compose -p kitchenpos up -d
 
 ### 주문 테이블 (`Order Table`)
 * **주문 테이블(`Order Table`)은 매장 주문에서만 사용을 한다.**
-* **주문 테이블(`Order Table`)의 속성은 이름 과 손님수(`Number_of_guests`), 빈 테이블 지정이 있다.**
 
+#### 속성
+* **속성은 이름 과 손님수(`Number_of_guests`), 빈 테이블 지정이 있다.**
+
+#### 행위
 * **주문 테이블(`Order Table)`의 초기 상태**
   - 손님수(`Number Of Guests`) 0명
   - 빈 테이블(`Empty Table`)으로 지정 된다.  
@@ -235,65 +245,131 @@ docker compose -p kitchenpos up -d
 * **빈 테이블(`Empty Table`)으로 설정한다.**
   - 주문 테이블(`Order Table`)의 초기 상태로 변경된다.
   - 등록된 주문 테이블(`Order Table`)만 변경이 가능하다.
-  - 주문 완료(`Completed`) 상태가 아닌 `주문(Order)`이 있을 경우 빈 테이블(`Empty Table`)로 변경 할 수 없다.
+  - 주문 완료(`Completed`) 상태가 아닌 주문(`Order`)이 있을 경우 빈 테이블(`Empty Table`)로 변경 할 수 없다.
   
 * **주문 테이블(`Order Table`)의 손님 수(`Number Of Guests`)를 변경한다.**
   - 변경할 손님수(`Number Of Guests`)가 0이하 이면 안된다.
   - 등록된 주문 테이블(`Order Table`)만 변경이 가능하다.
   - 빈 테이블(`Empty Table`)이 설정 되어 있을 경우 손님수(`Number Of Guests`) 변경이 불 가능하다.
   
-* 등록된 주문 테이블(`Order Table`)을 조회 한다.
+* **등록된 주문 테이블(`Order Table`)을 조회 한다.**
 
 ### 주문 (`Order`)
-* 주문 (`Order`)의 속성은 , 주문 유형(`Order Type`), 주문 상태(`Order Status`), 주문 시간, 주문 항목(`Order Line Item`)  
-  배달 주소 (`Delivery Address`), 주문 테이블 (`order table`)을 가진다.
 
 * **주문 유형 (`Order Type`)은 배달 주문 (`Delivery Order`), 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`)이 있다.**
 
-* **포장 주문(`Takeout Order`)의 주문 상태(`Order Status`)는**  
-**접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) ->  주문 완료 (`Completed`) 순으로 진행 된다.**  
+* 주문 (`Order`)의 속성은 , 주문 유형(`Order Type`)은 필수 이며, 주문 상태(`Order Status`), 주문 시간, 주문 항목(`Order Line Item`)  
+  배달 주소 (`Delivery Address`), 주문 테이블 (`Order table`)을 가진다.
 
-* **매장 주문(`Eat In Order`)의 주문 상태(`Order Status`)는**  
-**접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) ->  주문 완료 (`Completed`) 순으로 진행 된다.**  
+  
+#### 배달 주문 (`Delivery Order`)
 
 * **배달 주문(`Delivery Order`)의 주문 상태(`Order Status`)는**  
-**접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) -> 배달중 (`Delivered`) -> 배달 완료 (`Delivered`) -> 주문 완료 (`Completed`) 순으로 진행이 된다.**
-
+  **접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) -> 배달중 (`Delivered`) -> 배달 완료 (`Delivered`) -> 주문 완료 (`Completed`) 순으로 진행이 된다.**
   
-* **주문(`Order`)을 등록 한다.**
-  - 존재 하지 않은 주문 유형(`Order Type`)을 가진 주문(`Order`)는 등록 할 수 없다. 
+##### 속성
+* 배달 주문 (`Delivery Order`)의 속성은 , 주문 유형(`Order Type`), 주문 상태(`Order Status`), 주문 시간, 주문 항목(`Order Line Item`)  
+  배달 주소 (`Delivery Address`)이 사용 된다.
+
+##### 행위 
+* **배달 주문(`Delivery Order`)을 등록 한다.**
+  - 존재 하지 않은 주문 유형(`Order Type`)을 가진 주문(`Order`)는 등록 할 수 없다.
   - 주문 항목(`Order Line Item`)은 하나 이상 있어야 한다.
   - 등록된 메뉴(`menu`)만 주문(`Order`)이 가능 하다.
-  - 매장 주문(`Eat In Order`)인 경우에는 주문 항목(`Order Line Item`)의 수량이 0개 이하 일수도 있다.
   - 주문 항목(`Order Line Item`)의 메뉴(`Menu`)가 숨겨져 있는 경우 등록할 수 없다.
   - 메뉴(`menu`)의 가격과 주문 항목(`Order Line Item`)의 가격과 같아야 한다.
-  - 주문유형이(`Order Type`) 배달 주문 (`Delivery Order`)일때 배달 주소 (`Delivery Address`)가 반드시 필요하다.
-  - 주문유형이(`Order Type`) 매장 주문 (`Eat In Order`)일때 주문 테이블(`Order Table`)이 사용이 가능해야 한다.
-  - 주문(`Order`) 등록시 주문 상태(`Order `)는 접수 대기(`Waiting`) 상태가 된다,
-  
-* **주문(`Order`)을 주문 접수(`Accepted`) 한다.**
+  - 배달 주소 (`Delivery Address`)가 반드시 필요하다.
+
+* **배달 주문(`Delivery Order`)을 주문 접수(`Accepted`) 한다.**
   - 등록된 주문만 주문 접수(`Accepted`) 할 수 있다.
   - 주문의 상태가 접수 대기(`Waiting`) 이어야 만 주문 접수(`Accepted`)가 가능하다.
-  - 주문의 유형이 배달 주문(`Delivery Order`)일때 배달 대행사(`Kitchen Riders`)에 배달을 요청 한다.
-  - 주문(`Order`)의 상태가 주문 접수(`Accepted`)상태로 변경 된다.
-
-* **주문(`Order`)을 주문 서빙(`Served`)한다.**
+  - 배달 대행사(`Kitchen Riders`)에 배달을 요청 한다.
+  
+* **배달 주문(`Delivery Order`)을 주문 서빙(`Served`)한다.**
   - 등록된 주문만 주문 서빙(`Served`) 할 수 있다.
   - 주문 접수(`Accepted`)인 상태에만 주문 서빙(`Served`)을 할 수 있다.
 
-* **주문(`Order`)을 배달중(`Delivering`) 상태로 변경 한다.**
+* **배달 주문(`Delivery Order`)을 배달중(`Delivering`) 상태로 변경 한다.**
   - 등록된 주문만 주문 서빙(`Delivering`) 할 수 있다.
   - 주문 유형(`Order Type`)이 배달 주문(`Delivery Order`)만 배달중(`Delivering`)상태로 변경 가능 하다.
   - 주문 상태(`Order Status`)가 주문 서빙(`Served`) 상태 이어만 배달중(`Delivering`)상태로 변경 가능 하다.
 
-* **주문(`Order`)을 배달 완료(`Delivered`)한다.**
+* **배달 주문(`Delivery Order`)을 배달 완료(`Delivered`)한다.**
   - 등록된 주문만 배달 완료(`Delivered`) 할 수 있다.
   - 주문 상태(`Order Status`)가 배달중(`Delivering`) 상태 에서만 배달완료(`Delivered`)가 가능 하다.
 
-* **주문(`Order`)을 주문 완료(`Completed`)한다.**
+* **배달 주문(`Delivery Order`) 주문 완료(`Completed`)한다.**
   - 등록된 주문만 주문 완료(`Completed`) 할 수 있다.
-  - 주문 유형이 배달 주문(`Delivery Order`)일때는  배달 완료(`Delivered`)일때만 주문 상태가 주문 완료(`Complete`)가 가능 하다.
-  - 주문 유형이 포장 주문(`Takeout Order`), 매장 주문(`Eat In Order`) 일때는 주문 상태가 주문 서빙(`Served`)일 때만 가능 하다.
-  - 주문 유형이 매장 주문(`Eat In Order`) 일때 완료(`Completed`)된 매장 주문은(`Eat In Order`) 주문 테이블(`Order Table`)을 초기 상태으로 변경 한다. 
+  - 배달 완료(`Delivered`)일때만 주문 상태가 주문 완료(`Complete`)가 가능 하다.
 
-* **등록된 주문(`Order Table`)을 조회 한다.**
+* **등록된 주문(`Order`)을 조회 한다.**
+
+#### 포장 주문 (`Takeout Order`)
+
+* **포장 주문(`Takeout Order`)의 주문 상태(`Order Status`)는**  
+  **접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) ->  주문 완료 (`Completed`) 순으로 진행 된다.**
+
+##### 속성
+* 포장 주문 (`Takeout Order`) 속성은 , 주문 유형(`Order Type`), 주문 상태(`Order Status`), 주문 시간, 주문 항목(`Order Line Item`)  
+  이 사용 된다.
+
+##### 행위
+* **포장 주문 (`Takeout Order`)을 등록 한다.**
+  - 주문 항목(`Order Line Item`)은 하나 이상 있어야 한다.
+  - 등록된 메뉴(`Menu`)만 포장 주문 (`Takeout Order`)이 가능 하다.
+  - 주문 항목(`Order Line Item`)의 수량이 1개 이상이어야 한다.
+  - 주문 항목(`Order Line Item`)의 메뉴(`Menu`)가 숨겨져 있는 경우 등록할 수 없다.
+  - 메뉴(`menu`)의 가격과 주문 항목(`Order Line Item`)의 가격과 같아야 한다.
+  - 포장 주문 (`Takeout Order`) 등록시 주문 상태(`Order `)는 접수 대기(`Waiting`) 상태가 된다,
+
+* **포장 주문 (`Takeout Order`)을 주문 접수(`Accepted`) 한다.**
+  - 등록된 주문만 주문 접수(`Accepted`) 할 수 있다.
+  - 주문의 상태가 접수 대기(`Waiting`) 이어야 만 주문 접수(`Accepted`)가 가능하다.
+  - 포장 주문 (`Takeout Order`)의 상태가 주문 접수(`Accepted`)상태로 변경 된다.
+
+* **포장 주문 (`Takeout Order`)을 주문 서빙(`Served`)한다.**
+  - 등록된 주문만 주문 서빙(`Served`) 할 수 있다.
+  - 주문 접수(`Accepted`)인 상태에만 주문 서빙(`Served`)을 할 수 있다.
+
+
+* **포장 주문 (`Takeout Order`)을 주문 완료(`Completed`)한다.**
+  - 등록된 주문만 주문 완료(`Completed`) 할 수 있다.
+  - 주문 상태가 주문 서빙(`Served`)일 때만 가능 하다.
+
+* **등록된 주문(`Order`)을 조회 한다.**
+
+#### 매장 주문 (`Eat In Order`)
+
+* **매장 주문(`Eat In Order`)의 주문 상태(`Order Status`)는**  
+  **접수 대기(`Waiting`) -> 주문 접수 (`Accepted`) -> 주문 서빙(`Served`) ->  주문 완료 (`Completed`) 순으로 진행 된다.**
+
+##### 속성
+* 매장 주문 (`Eat In Order`) 속성은 , 주문 유형(`Order Type`), 주문 상태(`Order Status`), 주문 시간, 주문 항목(`Order Line Item`)   
+주문 테이블 (`Order Table`) 이 사용 된다.
+
+##### 행위
+* **매장 주문 (`Eat In Order`)을 등록 한다.**
+  - 존재 하지 않은 주문 유형(`Order Type`)을 가진 주문(`Order`)는 등록 할 수 없다.
+  - 주문 항목(`Order Line Item`)은 하나 이상 있어야 한다.
+  - 등록된 메뉴(`menu`)만 주문(`Order`)이 가능 하다.
+  - 주문 항목(`Order Line Item`)의 수량이 0개 이하 일수도 있다.
+  - 주문 항목(`Order Line Item`)의 메뉴(`Menu`)가 숨겨져 있는 경우 등록할 수 없다.
+  - 메뉴(`Menu`)의 가격과 주문 항목(`Order Line Item`)의 가격과 같아야 한다.
+  - 주문(`Order`) 등록시 주문 상태(`Order`)는 접수 대기(`Waiting`) 상태가 된다,
+
+* **매장 주문 (`Eat In Order`)을 주문 접수(`Accepted`) 한다.**
+  - 등록된 주문만 주문 접수(`Accepted`) 할 수 있다.
+  - 주문의 상태가 접수 대기(`Waiting`) 이어야 만 주문 접수(`Accepted`)가 가능하다.
+  - 매장 주문 (`Eat In Order`)의 상태가 주문 접수(`Accepted`)상태로 변경 된다.
+
+* **매장 주문 (`Eat In Order`)을 주문 서빙(`Served`)한다.**
+  - 등록된 주문만 주문 서빙(`Served`) 할 수 있다.
+  - 주문 접수(`Accepted`)인 상태에만 주문 서빙(`Served`)을 할 수 있다.
+
+    
+* **매장 주문 (`Eat In Order`)을 주문 완료(`Completed`)한다.**
+  - 주문 상태가 주문 서빙(`Served`)일 때만 가능 하다.
+  - 등록된 주문만 주문 완료(`Completed`) 할 수 있다.
+    완료(`Completed`)된 매장 주문은(`Eat In Order`) 주문 테이블(`Order Table`)을 초기 상태으로 변경 한다.
+
+* **등록된 주문(`Order`)을 조회 한다.**
