@@ -130,10 +130,10 @@ docker compose -p kitchenpos up -d
 | 주문 테이블       | order table                         | 매장 주문시 사용되는 매장 내 테이블                             |
 | 주문 테이블 이름    | order table name                    | 주문 테이블의 이름, 이름은 반드시 입력 된다.                       |
 | 손님           | guest                               | 매장 내 테이블을 이용하는 손님                                |
-| 주문 테이블 손님 수  | order table number of guests        | 주문 테이블을 이용하는 손님의 수                               |
+| 테이블 내 손님 수   | order table number of guests        | 주문 테이블을 이용하는 손님의 수                               |
 | 주문 테이블 빈 테이블 | order table occupied                | 매장 내 주문 테이블의 사용 여부,<br/>손님이 착석하고 있으면 이용할 수 없다.   |
-| 주문 테이블 손님 착석 | order table guests sit              | 매장 내 주문 테이블에 손님이 착석한다.                           |
-| 주문 테이블 테이블 정리 | order table clear                   | 매장 내 주문 테이블를 이용한 손님들이 나간 후 테이블을 정리한다.            |
+| 테이블 손님 착석    | order table guests sit              | 매장 내 주문 테이블에 손님이 착석한다.                           |
+| 테이블 정리       | order table clear                   | 매장 내 주문 테이블를 이용한 손님들이 나간 후 테이블을 정리한다.            |
 
 ### 주문
 
