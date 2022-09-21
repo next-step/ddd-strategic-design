@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.eatinorder.domain;
 
 import kitchenpos.menu.domain.Menu;
 

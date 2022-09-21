@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.eatinorder.domain;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +13,3 @@ public interface OrderRepository {
 
     boolean existsByOrderTableAndStatusNot(OrderTable orderTable, OrderStatus status);
 }
-
