@@ -131,6 +131,7 @@ public class EatInOrderService {
         return order;
     }
 
+    @Deprecated
     @Transactional
     public EatInOrder startDelivery(final UUID orderId) {
         final EatInOrder order = eatInOrderRepository.findById(orderId)
@@ -145,6 +146,7 @@ public class EatInOrderService {
         return order;
     }
 
+    @Deprecated
     @Transactional
     public EatInOrder completeDelivery(final UUID orderId) {
         final EatInOrder order = eatInOrderRepository.findById(orderId)

@@ -35,11 +35,13 @@ public class EatInOrderRestController {
         return ResponseEntity.ok(eatInOrderService.serve(orderId));
     }
 
+    @Deprecated
     @PutMapping("/{orderId}/start-delivery")
     public ResponseEntity<EatInOrder> startDelivery(@PathVariable final UUID orderId) {
         return ResponseEntity.ok(eatInOrderService.startDelivery(orderId));
     }
 
+    @Deprecated
     @PutMapping("/{orderId}/complete-delivery")
     public ResponseEntity<EatInOrder> completeDelivery(@PathVariable final UUID orderId) {
         return ResponseEntity.ok(eatInOrderService.completeDelivery(orderId));
