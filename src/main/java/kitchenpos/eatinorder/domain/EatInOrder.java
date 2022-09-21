@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class EatInOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -46,7 +46,7 @@ public class Order {
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public EatInOrder() {
     }
 
     public UUID getId() {
