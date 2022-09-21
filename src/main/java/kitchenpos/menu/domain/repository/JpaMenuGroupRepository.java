@@ -1,8 +1,7 @@
-package kitchenpos.menu.infra;
+package kitchenpos.menu.domain.repository;
 
 import java.util.UUID;
 import kitchenpos.menu.domain.model.MenuGroup;
-import kitchenpos.menu.domain.repository.MenuGroupRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaMenuGroupRepository extends MenuGroupRepository, JpaRepository<MenuGroup, UUID> {
