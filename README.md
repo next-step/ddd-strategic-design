@@ -131,7 +131,7 @@ docker compose -p kitchenpos up -d
 | 매장 주문 | eatInOrder | 매장에서 식사하기 위해 한 종류 이상의 메뉴를 구매하는 것을 의미한다. 고객이 요청한 주문상품 정보들을 말한다. |
 | 메뉴 | menu | 주문할 수 있는 최소 단위 |
 | 공개 메뉴 | displayedMenu | 주문할 수 있는 메뉴 |
-| 공개 메뉴비 | hiddenMenu | 주문할 수 없는 메뉴 |
+| 비공개 메뉴 | hiddenMenu | 주문할 수 없는 메뉴 |
 | 주문 상품 | orderLineItem | 주문하려는 메뉴의 종류와 개수 정보를 포함하는 정보다. |
 | 주문 상태 | orderStatus | 주문의 진행 상황을 의미한다. <br> 대기, 수락, 서빙 완료, 주문 처리 완료가 있다. |
 | 대기 | waiting | 손님이 주문을 하고 사장님이 수락하지 않은 상태 |
