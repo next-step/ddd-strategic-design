@@ -1,4 +1,4 @@
-package kitchenpos.order.domain;
+package kitchenpos.order.infra;
 
 import java.math.BigDecimal;
 import java.util.UUID;

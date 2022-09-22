@@ -10,7 +10,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.repository.MenuRepository;
-import kitchenpos.order.domain.KitchenridersClient;
 import kitchenpos.order.domain.model.Order;
 import kitchenpos.order.domain.model.OrderLineItem;
 import kitchenpos.order.domain.model.OrderStatus;
@@ -18,6 +17,7 @@ import kitchenpos.order.domain.model.OrderTable;
 import kitchenpos.order.domain.model.OrderType;
 import kitchenpos.order.domain.repository.OrderRepository;
 import kitchenpos.order.domain.repository.OrderTableRepository;
+import kitchenpos.order.infra.KitchenridersClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
