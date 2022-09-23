@@ -1,12 +1,19 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
+import kitchenpos.menu.menu.domain.model.Menu;
+import kitchenpos.menu.menu.domain.model.MenuProduct;
+import kitchenpos.menu.menugroup.domain.model.MenuGroup;
+import kitchenpos.order.order.domain.model.Order;
+import kitchenpos.order.order.domain.model.OrderLineItem;
+import kitchenpos.order.order.domain.model.OrderStatus;
+import kitchenpos.order.order.domain.model.OrderType;
+import kitchenpos.order.ordertable.domain.model.OrderTable;
+import kitchenpos.product.domain.model.Product;
 
 public class Fixtures {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
