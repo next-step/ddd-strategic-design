@@ -15,7 +15,6 @@ import kitchenpos.global.domain.PurgomalumClient;
 import kitchenpos.menu.domain.InMemoryMenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.product.ProductService;
 import kitchenpos.product.domain.InMemoryProductRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;

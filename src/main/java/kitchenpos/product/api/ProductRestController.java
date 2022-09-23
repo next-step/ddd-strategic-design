@@ -3,7 +3,7 @@ package kitchenpos.product.api;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.product.ProductService;
+import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
