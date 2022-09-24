@@ -135,33 +135,33 @@ docker compose -p kitchenpos up -d
 
 ### 상품
 
-| 한글명  | 영문명          | 설명                                  |
-|------|--------------|-------------------------------------|
-| 상품   | product      | 메뉴에 대한 이름과 가격 메타정보. (햄버거, 감자튀김 등)   |
-| -    | id           | 상품에 대한 고유한 식별번호.                    |
-| 이름   | name         | 상품의 이름. 공백이 아니어야 한다. 비속어를 포함할 수 없다. |
-| 가격   | price        | 상품의 가격. 0원 이상이어야 한다.                |
-| 가격변경 | change price | 상품의 가격을 변경한다. 변경할 가격은 0원 이상이어야 한다.  |
+| 한글명  | 영문명                  | 설명                                  |
+|------|----------------------|-------------------------------------|
+| 상품   | product              | 메뉴에 대한 이름과 가격 메타정보. (햄버거, 감자튀김 등)   |
+| -    | id                   | 상품에 대한 고유한 식별번호.                    |
+| 이름   | product name         | 상품의 이름. 공백이 아니어야 한다. 비속어를 포함할 수 없다. |
+| 가격   | product price        | 상품의 가격. 0원 이상이어야 한다.                |
+| 가격변경 | change product price | 상품의 가격을 변경한다. 변경할 가격은 0원 이상이어야 한다.  |
 
 ### 메뉴그룹
 
-| 한글명  | 영문명        | 설명                               |
-|------|------------|----------------------------------|
-| 메뉴그룹 | menu group | 메뉴가 속하는 그룹. (세트메뉴 그룹, 단품메뉴 그룹 등) |
-| -    | id         | 메뉴 그룹에 대한 고유한 식별번호.              |
-| 이름   | name       | 메뉴그룹의 이름. 공백이 아니어야 한다.           |
+| 한글명  | 영문명             | 설명                               |
+|------|-----------------|----------------------------------|
+| 메뉴그룹 | menu group      | 메뉴가 속하는 그룹. (세트메뉴 그룹, 단품메뉴 그룹 등) |
+| -    | id              | 메뉴 그룹에 대한 고유한 식별번호.              |
+| 이름   | menu group name | 메뉴그룹의 이름. 공백이 아니어야 한다.           |
 
 ### 메뉴
 
-| 한글명  | 영문명          | 설명                                                             |
-|------|--------------|----------------------------------------------------------------|
-| 메뉴   | menu         | 손님에게 판매되기 위해 전시되는 정보. 1개 이상의 메뉴상품으로 이루어진다. (감자튀김 단품, 치즈버거 세트)  |
-| -    | id           | 메뉴에 대한 고유한 식별번호.                                               |
-| 이름   | name         | 메뉴의 이름. 공백이 아니어야 한다. 비속어를 포함할 수 없다.                            |
-| 가격   | price        | 메뉴의 가격. 0원 이상이어야 한다. 메뉴에 속한 상품 금액의 합보다 작거나 같아야한다.              |
-| 가격변경 | change price | 메뉴의 가격을 변경한다. 변경할 가격은 0원 이상이어야하고, 메뉴에 속한 상품 금액의 합보다 작거나 같아야한다. |
-| 전시   | display      | 메뉴를 노출한다. 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 비전시한다.           |
-| 비전시  | hide         | 메뉴를 숨긴다.                                                       |
+| 한글명  | 영문명               | 설명                                                             |
+|------|-------------------|----------------------------------------------------------------|
+| 메뉴   | menu              | 손님에게 판매되기 위해 전시되는 정보. 1개 이상의 메뉴상품으로 이루어진다. (감자튀김 단품, 치즈버거 세트)  |
+| -    | id                | 메뉴에 대한 고유한 식별번호.                                               |
+| 이름   | menu name         | 메뉴의 이름. 공백이 아니어야 한다. 비속어를 포함할 수 없다.                            |
+| 가격   | menu price        | 메뉴의 가격. 0원 이상이어야 한다. 메뉴에 속한 상품 금액의 합보다 작거나 같아야한다.              |
+| 가격변경 | change menu price | 메뉴의 가격을 변경한다. 변경할 가격은 0원 이상이어야하고, 메뉴에 속한 상품 금액의 합보다 작거나 같아야한다. |
+| 전시   | display           | 메뉴를 노출한다. 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 비전시한다.           |
+| 비전시  | hide              | 메뉴를 숨긴다.                                                       |
 
 ### 메뉴상품
 
@@ -178,7 +178,7 @@ docker compose -p kitchenpos up -d
 |---------|-------------------------|------------------------------------------------------------------------|
 | 주문테이블   | order table             | 매장 주문시 사용되는 매장 내 테이블                                                   |
 | -       | id                      | 주문테이블에 대한 고유한 식별번호.                                                    |
-| 이름      | name                    | 주문테이블의 이름. 공백이 아니어야 한다.                                                |
+| 이름      | order table name        | 주문테이블의 이름. 공백이 아니어야 한다.                                                |
 | 손님      | guest                   | 매장을 이용하는 사람                                                            |
 | 손님 수    | number of guests        | 매장을 이용하는 사람 수. 손님 수는 0 이상이어야 한다.                                       |
 | 손님 수 변경 | change number of guests | 손님 수를 변경한다. 변경할 손님 수는 0 이상이어야 한다.                                      |
@@ -213,12 +213,12 @@ docker compose -p kitchenpos up -d
 
 ### 주문항목
 
-| 한글명  | 영문명             | 설명                                                                                    |
-|------|-----------------|---------------------------------------------------------------------------------------|
-| 주문항목 | order line item | 주문에 속한 메뉴의 수량과 가격 메타정보. (햄버거 5개, 15,000원)                                             |
-| -    | seq             | 양의 정수로 이루어진 고유한 식별번호.                                                                 |
-| 수량   | quantity        | 주문에 속한 메뉴의 개수. 매장 주문은 주문 항목의 수량이 0 미만일 수 있다. 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다. |
-| 가격   | price           | 주문에 속한 메뉴의 가격과 수량을 곱한 값. 0 이상이어야 한다.                                                  |
+| 한글명  | 영문명                   | 설명                                                                                    |
+|------|-----------------------|---------------------------------------------------------------------------------------|
+| 주문항목 | order line item       | 주문에 속한 메뉴의 수량과 가격 메타정보. (햄버거 5개, 15,000원)                                             |
+| -    | seq                   | 양의 정수로 이루어진 고유한 식별번호.                                                                 |
+| 수량   | quantity              | 주문에 속한 메뉴의 개수. 매장 주문은 주문 항목의 수량이 0 미만일 수 있다. 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다. |
+| 가격   | order line item price | 주문에 속한 메뉴의 가격과 수량을 곱한 값. 0 이상이어야 한다.                                                  |
 
 ### 공통
 | 한글명 | 영문명       | 설명              |
@@ -230,38 +230,38 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### 상품
-- `Product`는 고유식별자와 `Name`과 `Price`를 갖는다.
-  - `Product`의 `Name`에는 `Profanity`가 포함될 수 없다.
-  - `Product`의 `Price`는 0 이상이어야 한다.
-- `Product`의 `Price`를 변경할 수 있다.
+- `Product`는 고유식별자와 `ProductName`과 `Price`를 갖는다.
+  - `ProductName`에는 `Profanity`가 포함될 수 없다.
+  - `ProductPrice`는 0 이상이어야 한다.
+- `ProductPrice`를 변경할 수 있다.
 
 ### 메뉴
-- `MenuGroup`은 고유식별자와 `Name`을 갖는다.
-  - `MenuGroup`의 `Name`은 공백일 수 없다.
+- `MenuGroup`은 고유식별자와 `MenuGroupName`을 갖는다.
+  - `MenuGroupName`은 공백일 수 없다.
 - `Menu`는 특정 `MenuGroup`에 속한다.
-- `Menu`는 고유식별자와 `Name`, `Price`, `MenuProducts`를 가진다.
-  - `Menu` 등록시, `Menu`의 `Price`는 `MenuProduct`들의 `Price` 합보다 작거나 같아야 한다.
-  - `Product`의 `Price` 변경시, `Menu`의 `Price`가 `MenuProduct`들의 `Price` 합보다 크면 `Menu`가 노출되지 않는다.(`hide`)
-- `MenuProduct`는 `Price`와 `Quantity`를 가진다.
+- `Menu`는 고유식별자와 `MenuName`, `MenuPrice`, `MenuProducts`를 가진다.
+  - `Menu` 등록시, `MenuPrice`는 `MenuProductPrice`들의 합보다 작거나 같아야 한다.
+  - `ProductPrice` 변경시, `MenuPrice`가 `MenuProductPrice`들의 합보다 크면 `Menu`가 노출되지 않는다.(`hide`)
+- `MenuProduct`는 `MenuProductPrice`와 `Quantity`를 가진다.
 
 ### 매장 주문
-- `OrderTable`은 고유식별자와 `Name`, `NumberOfGuests`, `Occupied`를 갖는다.
+- `OrderTable`은 고유식별자와 `OrderTableName`, `NumberOfGuests`, `Occupied`를 갖는다.
 - `OrderTable`의 모든 `Order`가 `completed`가 되면, `clear` 한다.
 - `clear`를 하면, `Occupied`가 false가 되고 `NumberOfGuests`가 0이 된다.
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
-- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
+- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `MenuPrice`와 `Order`의 `OrderLineItemPrice`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
-- `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
+- `OrderLineItem`은 고유식별자와 `OrderLineItemPrice`, `Quantity`를 갖는다.
 
 ### 배달 주문
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
-- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
+- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `MenuPrice`와 `Order`의 `OrderLineItemPrice`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`delivering`-`delivered`-`completed` 순으로 진행된다.
   - `Order`가 `accepted` 되면 `kitchen rider`를 호출한다.
-- `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
+- `OrderLineItem`은 고유식별자와 `OrderLineItemPrice`, `Quantity`를 갖는다.
 
 ### 포장 주문
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
-- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
+- `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `MenuPrice`와 `Order`의 `OrderLineItemPrice`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
-- `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
+- `OrderLineItem`은 고유식별자와 `OrderLineItemPrice`, `Quantity`를 갖는다.
