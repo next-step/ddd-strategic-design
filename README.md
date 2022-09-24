@@ -246,3 +246,14 @@ docker compose -p kitchenpos up -d
 - `order`를 `accept` 할 수 있다.
 - `order`를 `serve` 할 수 있다.
 - `order`를 `complete` 할 수 있다.
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
+
+### 포장 주문
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`을 가지고 있다.
+- 포장 주문의  `order type`은 `TAKEOUT`이다.
+- `order`를 등록 할 수 있다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+- `order`를 `serve` 할 수 있다.
+- `order`를 `complete` 할 수 있다.
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
