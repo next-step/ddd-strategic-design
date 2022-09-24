@@ -211,20 +211,20 @@ docker compose -p kitchenpos up -d
 ### 상품
 
 - `product`는 `id`, `name`, `price`를 가진다.
-  - `product`의 `price`는 0보다 커야한다.
-  - `product`의 `name`에는 `profanity`가 속할 수 없다.
+    - `product`의 `price`는 0보다 커야한다.
+    - `product`의 `name`에는 `profanity`가 속할 수 없다.
 - `product`를 등록할 수 있다.
 - `product`는 `priceChange`를 할 수 있다.
-  - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+    - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
 
 ### 메뉴
 
 - `menu`는 `id`, `name`, `price`, `menuGroup`, `displayed`, `menuProducts`을 가진다.
-  - `menu`의 `price`는 0보다 커야한다.
+    - `menu`의 `price`는 0보다 커야한다.
 - `menu`를 등록 할 수 있다.
-  - `menu` 등록시, `price`가 `menuProduct`들의 금액의 합보다 작거나 같아야 한다.
+    - `menu` 등록시, `price`가 `menuProduct`들의 금액의 합보다 작거나 같아야 한다.
 - `menu`는 `priceChange`를 할 수 있다.
-  - `menu`의 `price` 변경 시, `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+    - `menu`의 `price` 변경 시, `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
 - `menu`를 `display` 할 수 있다.
 - `menu`를 `hide` 할 수 있다.
 - `menuGroup`는 `id`, `name`을 가진다.
@@ -249,11 +249,28 @@ docker compose -p kitchenpos up -d
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
 
 ### 포장 주문
+
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`을 가지고 있다.
-- 포장 주문의  `order type`은 `TAKEOUT`이다.
+- 포장 주문의  `order type`은 `takeout`이다.
 - `order`를 등록 할 수 있다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
 - `order`를 `serve` 할 수 있다.
+- `order`를 `start delivery` 할 수 있다.
+- `order`를 `start delivery` 할 수 있다.
+- `order`를 `complete` 할 수 있다.
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
+
+### 배달 주문
+
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `deliveryAddress`, `orderLineItems`을 가지고 있다.
+- 배달 주문의  `order type`은 `delivery`이다.
+- `order`를 등록 할 수 있다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `delivering` -> `delivered` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+    - `order`를 `accpte`하면 `kitchen rider`는 `order`에 대한 정보를 받을 수 있다.
+- `order`를 `serve` 할 수 있다.
+- `order`를 `start delivery` 할 수 있다.
+- `order`를 `complete delivery` 할 수 있다.
 - `order`를 `complete` 할 수 있다.
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
