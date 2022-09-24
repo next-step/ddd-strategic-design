@@ -192,7 +192,6 @@ docker compose -p kitchenpos up -d
 |--------|-------------------|--------------------------------------------------------------------------------------------------------|
 | 주문     | order             | 손님이 메뉴를 구매하는 일련의 과정                                                                                    |
 | -      | id                | 주문에 대한 고유한 식별번호.                                                                                       |
-| 주문유형   | order type        | 주문의 유형. 배달, 포장, 매장 3가지가 존재한다.                                                                          |
 | 배달     | delivery          | 주문유형 중 하나. 배달을 통한 상품 전달 받음을 의미한다.                                                                      |
 | 포장     | takeout           | 주문유형 중 하나. 매장을 이용하지 않고 직접 찾아와 주문한 상품만 가져감을 의미한다.                                                       |
 | 매장     | eat in            | 주문유형 중 하나. 매장 내 주문테이블을 이용한 식사를 의미한다.                                                                   |
@@ -249,14 +248,12 @@ docker compose -p kitchenpos up -d
 - `OrderTable`은 고유식별자와 `Name`, `NumberOfGuests`, `Occupied`를 갖는다.
 - `OrderTable`의 모든 `Order`가 `completed`가 되면, `clear` 한다.
 - `clear`를 하면, `Occupied`가 false가 되고 `NumberOfGuests`가 0이 된다.
-- 매장 주문의 `Order`는 `OrderType`이 `EAT_IN`이다.
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
 - `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
 - `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
 
 ### 배달 주문
-- 배달 주문의 `Order`는 `OrderType`이 `DELIVERY`이다.
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
 - `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`delivering`-`delivered`-`completed` 순으로 진행된다.
@@ -264,7 +261,6 @@ docker compose -p kitchenpos up -d
 - `OrderLineItem`은 고유식별자와 `Price`, `Quantity`를 갖는다.
 
 ### 포장 주문
-- 포장 주문의 `Order`는 `OrderType`이 `TAKEOUT`이다.
 - `Order`는 고유식별자와 `OrderStatus`, `OrderDateTime`, `OrderLineItem` 목록을 가진다.
 - `Order`가 등록될 때 `Menu`는 `display` 중이어야하고, `Menu`의 `Price`와 `Order`의 `OrderLineItem`의 `Price`가 일치 해야한다.
 - `Order`의 `OrderStatus`는 `waiting`-`accepted`-`served`-`completed` 순으로 진행된다.
