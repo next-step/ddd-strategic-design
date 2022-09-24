@@ -229,3 +229,19 @@ docker compose -p kitchenpos up -d
 - `menuGroup`는 `id`, `name`을 가진다.
 - `menuGroup`을 등록 할 수 있다.
 - `menuProduct`는 `seq`, `product`, `quantity`를 가진다.
+
+### 매장 주문
+
+- `orderTable`는 `id`, `name`, `numberOfGuests`, `occupied`를 가진다.
+- `orderTable`를 생성 할 수 있다.
+- `orderTable`에 `sit` 할 수 있다.
+- `orderTable`을 `clear` 할 수 있다.
+- `orderTable`을 `occupied` 할 수 있다.
+- `orderTable`의 손님을 `change number of guests` 할 수 있다.
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`, `orderTable`을 가지고 있다.
+- 매장 주문의  `order type`은 `eat in`이다.
+- `order`를 등록 할 수 있다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+- `order`를 `serve` 할 수 있다.
+- `order`를 `complete` 할 수 있다.
