@@ -1,25 +1,29 @@
-package kitchenpos.application;
+package kitchenpos.product.application;
 
-import kitchenpos.domain.Menu;
-import kitchenpos.domain.MenuRepository;
-import kitchenpos.domain.Product;
-import kitchenpos.domain.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
+import static kitchenpos.Fixtures.menu;
+import static kitchenpos.Fixtures.menuProduct;
+import static kitchenpos.Fixtures.product;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+import kitchenpos.menu.domain.InMemoryMenuRepository;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.infra.FakePurgomalumClient;
+import kitchenpos.menu.infra.PurgomalumClient;
+import kitchenpos.product.domain.InMemoryProductRepository;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
-
-import static kitchenpos.Fixtures.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ProductServiceTest {
     private ProductRepository productRepository;

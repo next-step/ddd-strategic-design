@@ -1,9 +1,11 @@
-package kitchenpos.application;
+package kitchenpos.product.domain;
 
-import kitchenpos.domain.Product;
-import kitchenpos.domain.ProductRepository;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class InMemoryProductRepository implements ProductRepository {
