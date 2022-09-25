@@ -179,7 +179,7 @@ docker compose -p kitchenpos up -d
 - `배달 주문(delivery order)`이 `주문 접수(accepted)`되면 `배달 대행사(delivery agency)`를 호출한다.
 
 ### 포장 주문
-- `포장 주문(takeout order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `포장 완료(served)` -> `주문 완료(completed)` 순으로 진행된다.
+- `포장 주문(takeout order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `포장 주문 완료(served)` -> `주문 완료(completed)` 순으로 진행된다.
 #### 속성
 - `포장 주문(takeout order)`은 `주문 상태(order status)`, `주문 항목(order line item)`를 가진다.
 - `포장 주문(takeout order)`은 `주문 항목(order line item)` 의 수량이 0보다 커야 한다.
