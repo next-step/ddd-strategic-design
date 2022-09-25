@@ -162,12 +162,13 @@ docker compose -p kitchenpos up -d
 #### 속성
 - `메뉴(menu)`는 `메뉴 상품(menu product)`, `메뉴 가격(menu price)`, 이름을 가진다.
 - `메뉴(menu)` 이름에는 `비속어(profanity)`가 포함될 수 없다.
-- `메뉴 가격(menu price)`은 변경될 수 있고, `메뉴 상품(menu product)`의 합보다 작거나 같아야 한다.
 - `메뉴 가격(menu price)`은 0원 이상이어야 한다.
 - `메뉴 상품(menu product)`은 `상품(product)`과 수량을 갖는다.
 - `메뉴(menu)`를 `노출(visible)` 하거나 `숨김(invisible)`를 할 수 있다.
 #### 기능
 - `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 합보다 높을 경우 `메뉴(menu)`를 `노출(visible)`할 수 없다.
+- `메뉴 가격(menu price)`은 변경될 수 있다.
+  - `메뉴 가격(menu price)`은 `메뉴 상품(menu product)`의 합보다 작거나 같아야 한다.
 
 ### 배달 주문
 - `배달 주문(delivery order)`은 `주문 요청(waiting)` -> `주문 접수(accepted)` -> `배달 준비 완료(served)` `배달 중(delivering)` -> `배달 완료(delivered)` -> `주문 완료(completed)` 순으로 진행된다.
