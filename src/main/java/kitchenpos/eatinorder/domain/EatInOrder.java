@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
-@Table(name = "orders")
+@Table(name = "eat_in_orders")
 @Entity
-public class Order {
+public class EatInOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderType type;
+    private EatInOrderType type;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private EatInOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -30,7 +30,7 @@ public class Order {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<EatInOrderLineItem> eatInOrderLineItems;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
@@ -44,9 +44,9 @@ public class Order {
     private OrderTable orderTable;
 
     @Transient
-    private UUID orderTableId;
+    private UUID eatInOrderTableId;
 
-    public Order() {
+    public EatInOrder() {
     }
 
     public UUID getId() {
@@ -57,19 +57,19 @@ public class Order {
         this.id = id;
     }
 
-    public OrderType getType() {
+    public EatInOrderType getType() {
         return type;
     }
 
-    public void setType(final OrderType type) {
+    public void setType(final EatInOrderType type) {
         this.type = type;
     }
 
-    public OrderStatus getStatus() {
+    public EatInOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final EatInOrderStatus status) {
         this.status = status;
     }
 
@@ -81,12 +81,12 @@ public class Order {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
-        return orderLineItems;
+    public List<EatInOrderLineItem> getOrderLineItems() {
+        return eatInOrderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
-        this.orderLineItems = orderLineItems;
+    public void setOrderLineItems(final List<EatInOrderLineItem> eatInOrderLineItems) {
+        this.eatInOrderLineItems = eatInOrderLineItems;
     }
 
     public String getDeliveryAddress() {
@@ -105,11 +105,11 @@ public class Order {
         this.orderTable = orderTable;
     }
 
-    public UUID getOrderTableId() {
-        return orderTableId;
+    public UUID getEatInOrderTableId() {
+        return eatInOrderTableId;
     }
 
-    public void setOrderTableId(final UUID orderTableId) {
-        this.orderTableId = orderTableId;
+    public void setEatInOrderTableId(final UUID eatInOrderTableId) {
+        this.eatInOrderTableId = eatInOrderTableId;
     }
 }

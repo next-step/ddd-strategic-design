@@ -1,6 +1,5 @@
 package kitchenpos.eatinorder.application;
 
-import static kitchenpos.Fixtures.order;
 import static kitchenpos.Fixtures.orderTable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.UUID;
+import kitchenpos.Fixtures;
 import kitchenpos.eatinorder.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,14 +18,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderTableServiceTest {
     private OrderTableRepository orderTableRepository;
-    private OrderRepository orderRepository;
+    private EatInOrderRepository eatInOrderRepository;
     private OrderTableService orderTableService;
 
     @BeforeEach
     void setUp() {
         orderTableRepository = new InMemoryOrderTableRepository();
-        orderRepository = new InMemoryOrderRepository();
-        orderTableService = new OrderTableService(orderTableRepository, orderRepository);
+        eatInOrderRepository = new InMemoryEatInOrderRepository();
+        orderTableService = new OrderTableService(
+            orderTableRepository,
+            eatInOrderRepository
+        );
     }
 
     @DisplayName("주문 테이블을 등록할 수 있다.")
@@ -75,7 +78,7 @@ class OrderTableServiceTest {
     void clearWithUncompletedOrders() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
         final UUID orderTableId = orderTable.getId();
-        orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
+        eatInOrderRepository.save(Fixtures.eatInOrder(EatInOrderStatus.ACCEPTED, orderTable));
         assertThatThrownBy(() -> orderTableService.clear(orderTableId))
             .isInstanceOf(IllegalStateException.class);
     }
