@@ -156,15 +156,19 @@ docker compose -p kitchenpos up -d
   - `상품 가격(product price)`은 0원 이상이어야 한다.
 
 ### 메뉴
+#### 메뉴 그룹
+##### 속성
 - `메뉴 그룹(menu group)`은 이름을 갖는다.
+  - `메뉴 그룹(menu group)`의 이름은 비워 둘 수 없다.
+
+#### 메뉴
+##### 속성
 - `메뉴(menu)`는 하나의 `메뉴 그룹(menu group)`에 속해야 한다.
-#### 속성
 - `메뉴(menu)`는 `메뉴 상품(menu product)`, `메뉴 가격(menu price)`, 이름을 가진다.
   - `메뉴(menu)` 이름에는 `비속어(profanity)`가 포함될 수 없다.
   - `메뉴 가격(menu price)`은 0원 이상이어야 한다.
 - `메뉴 상품(menu product)`은 `상품(product)`과 수량을 갖는다.
-
-#### 기능
+##### 기능
 - `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 합보다 높을 경우 `메뉴(menu)`를 `노출(visible)`할 수 없다.
 - `메뉴 가격(menu price)`은 변경될 수 있다.
   - `메뉴 가격(menu price)`은 `메뉴 상품(menu product)`의 합보다 작거나 같아야 한다.
