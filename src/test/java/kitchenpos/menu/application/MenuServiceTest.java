@@ -1,26 +1,13 @@
 package kitchenpos.menu.application;
 
-import static kitchenpos.Fixtures.INVALID_ID;
-import static kitchenpos.Fixtures.menu;
-import static kitchenpos.Fixtures.menuGroup;
-import static kitchenpos.Fixtures.menuProduct;
-import static kitchenpos.Fixtures.product;
+import static kitchenpos.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-import kitchenpos.menu.domain.InMemoryMenuGroupRepository;
-import kitchenpos.menu.domain.InMemoryMenuRepository;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuGroupRepository;
-import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuRepository;
+import java.util.*;
+import kitchenpos.menu.domain.*;
 import kitchenpos.menu.infra.FakePurgomalumClient;
 import kitchenpos.menu.infra.PurgomalumClient;
 import kitchenpos.product.domain.InMemoryProductRepository;
