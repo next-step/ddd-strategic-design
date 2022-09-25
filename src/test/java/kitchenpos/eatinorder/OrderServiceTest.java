@@ -1,5 +1,7 @@
-package kitchenpos.application;
+package kitchenpos.eatinorder;
 
+import kitchenpos.deliveryorder.FakeKitchenridersClient;
+import kitchenpos.menu.InMemoryMenuRepository;
 import kitchenpos.deliveryorder.domain.OrderStatus;
 import kitchenpos.eatinorder.application.OrderService;
 import kitchenpos.eatinorder.domain.*;

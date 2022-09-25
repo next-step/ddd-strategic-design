@@ -1,4 +1,4 @@
-package kitchenpos.application;
+package kitchenpos.deliveryorder;
 
 import kitchenpos.deliveryorder.infra.KitchenridersClient;
 
