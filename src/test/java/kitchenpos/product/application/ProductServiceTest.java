@@ -11,11 +11,11 @@ import java.util.UUID;
 import kitchenpos.menu.domain.InMemoryMenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.menu.infra.FakePurgomalumClient;
-import kitchenpos.menu.infra.PurgomalumClient;
 import kitchenpos.product.domain.InMemoryProductRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.infra.FakeProductPurgomalumClient;
+import kitchenpos.product.infra.ProductPurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,15 +26,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ProductServiceTest {
     private ProductRepository productRepository;
     private MenuRepository menuRepository;
-    private PurgomalumClient purgomalumClient;
+    private ProductPurgomalumClient productPurgomalumClient;
     private ProductService productService;
 
     @BeforeEach
     void setUp() {
         productRepository = new InMemoryProductRepository();
         menuRepository = new InMemoryMenuRepository();
-        purgomalumClient = new FakePurgomalumClient();
-        productService = new ProductService(productRepository, menuRepository, purgomalumClient);
+        productPurgomalumClient = new FakeProductPurgomalumClient();
+        productService = new ProductService(productRepository, menuRepository, productPurgomalumClient);
     }
 
     @DisplayName("상품을 등록할 수 있다.")

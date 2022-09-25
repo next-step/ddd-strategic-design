@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import kitchenpos.menu.domain.*;
-import kitchenpos.menu.infra.PurgomalumClient;
+import kitchenpos.menu.infra.MenuPurgomalumClient;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -15,18 +15,18 @@ public class MenuService {
     private final MenuRepository menuRepository;
     private final MenuGroupRepository menuGroupRepository;
     private final ProductRepository productRepository;
-    private final PurgomalumClient purgomalumClient;
+    private final MenuPurgomalumClient menuPurgomalumClient;
 
     public MenuService(
         final MenuRepository menuRepository,
         final MenuGroupRepository menuGroupRepository,
         final ProductRepository productRepository,
-        final PurgomalumClient purgomalumClient
+        final MenuPurgomalumClient menuPurgomalumClient
     ) {
         this.menuRepository = menuRepository;
         this.menuGroupRepository = menuGroupRepository;
         this.productRepository = productRepository;
-        this.purgomalumClient = purgomalumClient;
+        this.menuPurgomalumClient = menuPurgomalumClient;
     }
 
     @Transactional
@@ -71,7 +71,7 @@ public class MenuService {
             throw new IllegalArgumentException();
         }
         final String name = request.getName();
-        if (Objects.isNull(name) || purgomalumClient.containsProfanity(name)) {
+        if (Objects.isNull(name) || menuPurgomalumClient.containsProfanity(name)) {
             throw new IllegalArgumentException();
         }
         final Menu menu = new Menu();

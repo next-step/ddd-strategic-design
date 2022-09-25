@@ -8,9 +8,9 @@ import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.menu.infra.PurgomalumClient;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.infra.ProductPurgomalumClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final MenuRepository menuRepository;
-    private final PurgomalumClient purgomalumClient;
+    private final ProductPurgomalumClient productPurgomalumClient;
 
     public ProductService(
         final ProductRepository productRepository,
         final MenuRepository menuRepository,
-        final PurgomalumClient purgomalumClient
+        final ProductPurgomalumClient productPurgomalumClient
     ) {
         this.productRepository = productRepository;
         this.menuRepository = menuRepository;
-        this.purgomalumClient = purgomalumClient;
+        this.productPurgomalumClient = productPurgomalumClient;
     }
 
     @Transactional
@@ -37,7 +37,7 @@ public class ProductService {
             throw new IllegalArgumentException();
         }
         final String name = request.getName();
-        if (Objects.isNull(name) || purgomalumClient.containsProfanity(name)) {
+        if (Objects.isNull(name) || productPurgomalumClient.containsProfanity(name)) {
             throw new IllegalArgumentException();
         }
         final Product product = new Product();

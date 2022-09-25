@@ -1,5 +1,5 @@
 package kitchenpos.menu.infra;
 
-public interface PurgomalumClient {
+public interface MenuPurgomalumClient {
     boolean containsProfanity(String text);
 }

@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.math.BigDecimal;
 import java.util.*;
 import kitchenpos.menu.domain.*;
-import kitchenpos.menu.infra.FakePurgomalumClient;
-import kitchenpos.menu.infra.PurgomalumClient;
+import kitchenpos.menu.infra.FakeMenuPurgomalumClient;
+import kitchenpos.menu.infra.MenuPurgomalumClient;
 import kitchenpos.product.domain.InMemoryProductRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
@@ -26,7 +26,7 @@ class MenuServiceTest {
     private MenuRepository menuRepository;
     private MenuGroupRepository menuGroupRepository;
     private ProductRepository productRepository;
-    private PurgomalumClient purgomalumClient;
+    private MenuPurgomalumClient menuPurgomalumClient;
     private MenuService menuService;
     private UUID menuGroupId;
     private Product product;
@@ -36,8 +36,10 @@ class MenuServiceTest {
         menuRepository = new InMemoryMenuRepository();
         menuGroupRepository = new InMemoryMenuGroupRepository();
         productRepository = new InMemoryProductRepository();
-        purgomalumClient = new FakePurgomalumClient();
-        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, purgomalumClient);
+        menuPurgomalumClient = new FakeMenuPurgomalumClient();
+        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository,
+            menuPurgomalumClient
+        );
         menuGroupId = menuGroupRepository.save(menuGroup()).getId();
         product = productRepository.save(product("후라이드", 16_000L));
     }
