@@ -219,3 +219,21 @@ docker compose -p kitchenpos up -d
 * `메뉴그륩(MenuGroup)`을 등록할 수 있다.
 * `메뉴그륩(MenuGroup)`을 조회할 수 있다.
 
+### 메뉴(Menu)
+#### 속성
+* `메뉴(Menu)`는 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `메뉴(Menu)`은 메뉴의 이름인 `메뉴명(Name)`을 가진다.
+  * `메뉴명(Name)`은 없거나 비어있을 수 없다.
+  * `메뉴명(Name)`은 `비속어(Profanity)`를 포함할 수 없다.
+* `메뉴(Menu)`는 메뉴의 가격인 `메뉴가격(Price)`을 가진다.
+  * `메뉴가격(Price)`은 0보다 큰 값을 가져야 한다.
+  * `메뉴가격(Price)`은 `메뉴상품(Menu Product)`의 가격의 합보다 작거나 같아야 한다.
+* `메뉴(Menu)`는 `공개여부(displayed)`를 가진다.
+* `메뉴(Menu)`는 메뉴의 그룹인 `메뉴그룹(MenuGroup)`을 가진다.
+  * `메뉴그룹(MenuGroup)`은 반드시 포함되어야 한다.
+* `메뉴(Menu)`는 한 개 이상의 `메뉴상품(Menu Product)`을 가진다.
+  * `메뉴상품(Menu Product)`는 `일련번호(Seq)`를 가진다.
+  * `메뉴상품(Menu Product)` 반드시 한 개 이상 포함되어야 한다.
+  * `메뉴상품(Menu Product)`은 `상품(Product)`을 가진다.
+  * `메뉴상품(Menu Product)`은 `메뉴상품수량(Quantity)`을 가진다.
+    * `메뉴상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
