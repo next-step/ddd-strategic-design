@@ -200,4 +200,5 @@ docker compose -p kitchenpos up -d
 - `메뉴 가격(menu price)`은 `주문 항목(order line item)`의 가격과 일치해야 한다.
 - `주문 완료(completed)`되면 `주문 테이블(order table)`을 `빈 테이블(empty table)`로 설정한다.
 - `빈 테이블(empty table)`은 `방문한 손님 수(number of guests)`를 변경할 수 없다.
-- `방문한 손님 수(number of guests)`는 변경할 수 있으며 0명 이상이어야 한다.
+- `방문한 손님 수(number of guests)`는 변경할 수 있다. 
+  - `방문한 손님 수(number of guests)`는 0명 이상이어야 한다.
