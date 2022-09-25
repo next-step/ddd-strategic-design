@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import kitchenpos.product.infra.ProductPurgomalumClient;
@@ -17,16 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-    private final MenuRepository menuRepository;
     private final ProductPurgomalumClient productPurgomalumClient;
 
     public ProductService(
         final ProductRepository productRepository,
-        final MenuRepository menuRepository,
         final ProductPurgomalumClient productPurgomalumClient
     ) {
         this.productRepository = productRepository;
-        this.menuRepository = menuRepository;
         this.productPurgomalumClient = productPurgomalumClient;
     }
 
@@ -56,20 +50,9 @@ public class ProductService {
         final Product product = productRepository.findById(productId)
             .orElseThrow(NoSuchElementException::new);
         product.setPrice(price);
-        final List<Menu> menus = menuRepository.findAllByProductId(productId);
-        for (final Menu menu : menus) {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final MenuProduct menuProduct : menu.getMenuProducts()) {
-                sum = sum.add(
-                    menuProduct.getProduct()
-                        .getPrice()
-                        .multiply(BigDecimal.valueOf(menuProduct.getQuantity()))
-                );
-            }
-            if (menu.getPrice().compareTo(sum) > 0) {
-                menu.setDisplayed(false);
-            }
-        }
+
+        // 메뉴 가격과 상품 가격에 대한 검증 로직
+
         return product;
     }
 
