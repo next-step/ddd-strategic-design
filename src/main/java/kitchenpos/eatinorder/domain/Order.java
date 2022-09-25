@@ -1,4 +1,6 @@
-package kitchenpos.domain;
+package kitchenpos.eatinorder.domain;
+
+import kitchenpos.deliveryorder.domain.OrderStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

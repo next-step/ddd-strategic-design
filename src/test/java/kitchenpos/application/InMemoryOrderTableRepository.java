@@ -1,7 +1,7 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
+import kitchenpos.eatinorder.domain.OrderTable;
+import kitchenpos.eatinorder.repository.OrderTableRepository;
 
 import java.util.*;
 
