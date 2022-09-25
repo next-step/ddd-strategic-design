@@ -208,3 +208,14 @@ docker compose -p kitchenpos up -d
 * `상품(Product)`의 `상품가격(Price)`을 변경할 수 있다.
   * `상품가격(Price)`이 변경되면 상품가격변경 이벤트를 발행한다.
 * `상품(Product)`을 조회할 수 있다.
+
+### 메뉴그룹(MenuGroup)
+#### 속성
+* `메뉴그룹(MenuGroup)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `메뉴그룹(MenuGroup)`은 메뉴그룹의 이름인 `메뉴그룹명(Name)`을 가진다.
+  * `메뉴그룹명(Name)`은 없거나 비어있을 수 없다.
+
+#### 행위
+* `메뉴그륩(MenuGroup)`을 등록할 수 있다.
+* `메뉴그륩(MenuGroup)`을 조회할 수 있다.
+
