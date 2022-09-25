@@ -191,46 +191,48 @@ docker compose -p kitchenpos up -d
 | 배달요청 | requestDelivery     | 배달대행사에게 배달을 요청하는 행위. 주문번호, 주문금액, 배달주소를 전달한다.                                     |
 
 ## 모델링
+### ContextMap
+![이미지](./kitchenpos_context_map.png)
 
 ### 상품
-- Product는 상품이름을 표현하는 ProductName를 갖는다.
-- ProductName에서 올바른 상품이름인지 판단한다.
-- Product는 상품가격을 표현하는 ProductPrice를 갖는다.
-- ProductPrice에서 올바른 상품 가격인지 판단한다.
+- `Product`는 상품이름을 표현하는 `ProductName`를 갖는다.
+- `ProductName`에서 올바른 상품이름인지 판단한다.
+- `Product`는 상품가격을 표현하는 `ProductPrice`를 갖는다.
+- `ProductPrice`에서 올바른 상품 가격인지 판단한다.
 
 ### 메뉴그룹
-- MenuGroup은 메뉴그룹이름을 표현하는 MemuGroupName을 갖는다.
-- MenuGroupName에서 올바른 메뉴그룹이름인지 판단한다.
+- `MenuGroup`은 메뉴그룹이름을 표현하는 `MenuGroupName`을 갖는다.
+- `MenuGroupName`에서 올바른 메뉴그룹이름인지 판단한다.
 
 ### 메뉴
-- Menu는 메뉴이름을 표현하는 MenuName을 갖는다.
-- MenuName에서 메뉴이름을 사용할 수 있는지 판단한다.
-- Menu는 메뉴가격을 표현하는 MenuPrice를 갖는다.
-- MenuPrice에서 올바른 메뉴가격인지 판단한다.
-- Menu는 구성상품 목록을 표현하는 MenuProducts를 갖는다.
-- MenuProducts에서 올바른 메뉴구성품 정보인지 판단한다.
-- MenuDisplayChangeCondition에서 메뉴를 노출할 수 있는지 판단한다.
+- `Menu`는 메뉴이름을 표현하는 `MenuName`을 갖는다.
+- `MenuName`에서 메뉴이름을 사용할 수 있는지 판단한다.
+- `Menu`는 메뉴가격을 표현하는 `MenuPrice`를 갖는다.
+- `MenuPrice`에서 올바른 메뉴가격인지 판단한다.
+- `Menu`는 구성상품 목록을 표현하는 `MenuProducts`를 갖는다.
+- `MenuProducts`에서 올바른 메뉴구성품 정보인지 판단한다.
+- `MenuDisplayChangeCondition`에서 메뉴를 노출할 수 있는지 판단한다. 
 
 ### 주문테이블
-- OrderTable은 주문테이블 이름을 표현하는 OrderTableName을 갖는다.
-- OrderTableName에서 올바른 주문테이블 이름인지 판단한다.
-- OrderTable은 방문한 손님 수를 표현하는 NumberOfGuests를 갖는다.
-- NumberOfGuests에서 올바른 방문한 손님 수 인지 판단한다.
-- OrderTableClearCondition에서 빈 테이블로 변경할 수 있는지 판단한다.
+- `OrderTable`은 주문테이블 이름을 표현하는 `OrderTableName`을 갖는다.
+- `OrderTableName`에서 올바른 주문테이블 이름인지 판단한다.
+- `OrderTable`은 방문한 손님 수를 표현하는 `NumberOfGuests`를 갖는다.
+- `NumberOfGuests`에서 올바른 방문한 손님 수 인지 판단한다.
+- `OrderTableClearCondition`에서 빈 테이블로 변경할 수 있는지 판단한다.
 
 ### 매장주문
-- EatInOrder는 주문상태를 구분하는 EatInOrderStatus를 갖는다.
-- EatInOrder는 주문한 메뉴들을 표현하는 EatInOrderMenus를 갖는다.
-- EatInOrderMenus에서 주문이 가능한 메뉴들인지 판단한다.
+- `EatInOrder`는 주문상태를 구분하는 `EatInOrderStatus`를 갖는다.
+- `EatInOrder`는 주문한 메뉴들을 표현하는 `EatInOrderMenus`를 갖는다.
+- `EatInOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
 
 ### 포장주문
-- TakeoutOrder는 주문상태를 구분하는 TakeoutOrderStatus를 갖는다.
-- TakeoutOrder는 주문메뉴정보를 표현하는 TakeoutOrderMenus를 갖는다.
-- TakeoutOrderMenus에서 주문이 가능한 메뉴들인지 판단한다.
+- `TakeoutOrder`는 주문상태를 구분하는 `TakeoutOrderStatus`를 갖는다.
+- `TakeoutOrder`는 주문메뉴정보를 표현하는 `TakeoutOrderMenus`를 갖는다.
+- `TakeoutOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
 
 ### 배달주문
-- DeliveryOrder는 주문상태를 구분하는 DeliveryOrderStatus를 갖는다.
-- DeliveryOrder는 주문한 메뉴들을 표현하는 DeliveryOrderMenus를 갖는다.
-- DeliveryOrderMenus에서 주문이 가능한 메뉴들인지 판단한다.
-- DeliveryOrder는 배달주문을 표현하는 DeliveryAddress를 갖는다.
-- DeliveryAddress에서 올바른 배달주소인지 판단한다.
+- `DeliveryOrder`는 주문상태를 구분하는 `DeliveryOrderStatus`를 갖는다.
+- `DeliveryOrder`는 주문한 메뉴들을 표현하는 `DeliveryOrderMenus`를 갖는다.
+- `DeliveryOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
+- `DeliveryOrder`는 배달주문을 표현하는 `DeliveryAddress`를 갖는다.
+- `DeliveryAddress`에서 올바른 배달주소인지 판단한다.
