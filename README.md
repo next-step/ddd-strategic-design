@@ -153,6 +153,7 @@ docker compose -p kitchenpos up -d
 - `상품 가격(product price)`은 0원 이상이어야 한다.
 #### 기능
 - `상품 가격(product price)`을 변경할 수 있다.
+  - `상품 가격(product price)`은 0원 이상이어야 한다.
 
 ### 메뉴
 #### 메뉴 그룹
