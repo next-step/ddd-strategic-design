@@ -216,8 +216,8 @@ docker compose -p kitchenpos up -d
   * `메뉴그룹명(Name)`은 없거나 비어있을 수 없다.
 
 #### 행위
-* `메뉴그륩(MenuGroup)`을 등록할 수 있다.
-* `메뉴그륩(MenuGroup)`을 조회할 수 있다.
+* `메뉴그룹(MenuGroup)`을 등록할 수 있다.
+* `메뉴그룹(MenuGroup)`을 조회할 수 있다.
 
 ### 메뉴(Menu)
 #### 속성
@@ -233,7 +233,19 @@ docker compose -p kitchenpos up -d
   * `메뉴그룹(MenuGroup)`은 반드시 포함되어야 한다.
 * `메뉴(Menu)`는 한 개 이상의 `메뉴상품(Menu Product)`을 가진다.
   * `메뉴상품(Menu Product)`는 `일련번호(Seq)`를 가진다.
-  * `메뉴상품(Menu Product)` 반드시 한 개 이상 포함되어야 한다.
   * `메뉴상품(Menu Product)`은 `상품(Product)`을 가진다.
   * `메뉴상품(Menu Product)`은 `메뉴상품수량(Quantity)`을 가진다.
     * `메뉴상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+  * `메뉴상품(Menu Product)` 반드시 한 개 이상 포함되어야 한다.
+
+#### 행위
+* `메뉴(Menu)`를 등록할 수 있다.
+* `메뉴(Menu)`의 `메뉴가격(Price)`을 변경할 수 있다.
+* `메뉴(Menu)`를 `공개(Display)`할 수 있다.
+  * `메뉴(Menu)`를 `공개(Display)`하면 `공개된 메뉴(Displayed Menu)`가 된다.
+* `메뉴(Menu)`를 `비공개(Hide)`할 수 있다.
+  * `메뉴(Menu)`를 `비공개(Hide)`하면 `비공개된 메뉴(Hidden Menu)`가 된다.
+* `메뉴(Menu)`를 조회할 수 있다.
+
+### 매장주문(EatInOrder)
+#### 속성
