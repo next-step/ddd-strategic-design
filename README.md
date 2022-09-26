@@ -63,35 +63,57 @@ docker compose -p kitchenpos up -d
 - 빈 테이블은 방문한 손님 수를 변경할 수 없다.
 - 주문 테이블의 목록을 조회할 수 있다.
 
-### 주문
-
-- 1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.
-- 1개 이상의 등록된 메뉴로 포장 주문을 등록할 수 있다.
+### 매장주문
 - 1개 이상의 등록된 메뉴로 매장 주문을 등록할 수 있다.
 - 주문 유형이 올바르지 않으면 등록할 수 없다.
 - 메뉴가 없으면 등록할 수 없다.
 - 매장 주문은 주문 항목의 수량이 0 미만일 수 있다.
-- 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다.
-- 배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다.
-    - 배달 주소는 비워 둘 수 없다.
 - 빈 테이블에는 매장 주문을 등록할 수 없다.
 - 숨겨진 메뉴는 주문할 수 없다.
 - 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
 - 주문을 접수한다.
 - 접수 대기 중인 주문만 접수할 수 있다.
-- 배달 주문을 접수되면 배달 대행사를 호출한다.
 - 주문을 서빙한다.
 - 접수된 주문만 서빙할 수 있다.
+- 주문을 완료한다.
+- 서빙된 주문만 완료할 수 있다.
+- 주문 테이블의 모든 매장 주문이 완료되면 빈 테이블로 설정한다.
+- 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.
+- 주문 목록을 조회할 수 있다.
+
+### 포장주문
+- 1개 이상의 등록된 메뉴로 포장 주문을 등록할 수 있다.
+- 주문 유형이 올바르지 않으면 등록할 수 없다.
+- 메뉴가 없으면 등록할 수 없다.
+- 주문 항목의 수량은 0 이상이어야 한다.
+- 숨겨진 메뉴는 주문할 수 없다.
+- 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
+- 주문을 접수한다.
+- 접수 대기 중인 주문만 접수할 수 있다.
+- 주문을 포장한다.
+- 접수된 주문만 포장할 수 있다.
+- 주문을 완료한다.
+- 서빙된 주문만 완료할 수 있다.
+- 주문 목록을 조회할 수 있다.
+
+### 배달주문
+- 1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.
+- 주문 유형이 올바르지 않으면 등록할 수 없다.
+- 메뉴가 없으면 등록할 수 없다.
+- 주문 항목의 수량은 0 이상이어야 한다.
+- 숨겨진 메뉴는 주문할 수 없다.
+- 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
+- 주문을 접수한다.
+- 접수 대기 중인 주문만 접수할 수 있다.
+- 접수되면 배달 대행사를 호출한다.
+- 주문을 포장한다.
 - 주문을 배달한다.
-- 배달 주문만 배달할 수 있다.
+- 배달 주문만 배달할 수 있다. 
 - 서빙된 주문만 배달할 수 있다.
 - 주문을 배달 완료한다.
 - 배달 중인 주문만 배달 완료할 수 있다.
 - 주문을 완료한다.
-- 배달 주문의 경우 배달 완료된 주문만 완료할 수 있다.
-- 포장 및 매장 주문의 경우 서빙된 주문만 완료할 수 있다.
-- 주문 테이블의 모든 매장 주문이 완료되면 빈 테이블로 설정한다.
-- 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.
+- 배달 완료된 주문만 완료할 수 있다.
 - 주문 목록을 조회할 수 있다.
 
 ## 용어 사전
@@ -195,44 +217,107 @@ docker compose -p kitchenpos up -d
 ![이미지](./kitchenpos_context_map.png)
 
 ### 상품
-- `Product`는 상품이름을 표현하는 `ProductName`를 갖는다.
-- `ProductName`에서 올바른 상품이름인지 판단한다.
-- `Product`는 상품가격을 표현하는 `ProductPrice`를 갖는다.
-- `ProductPrice`에서 올바른 상품 가격인지 판단한다.
+- `Product`는 상품이름과 상품가격을 갖는다.
+- `Product`를 등록할 수 있다.
+  - `ProductName`는 `공백`과 `비속어`를 제외한 이름으로 구성된다.
+  - `ProductPrice`는 0원 이상이어야 한다.
+- `ProductPrice`를 변경할 수 있다.
+  - `ProductPrice`는 0원 이상이어야 한다. 
+  - 상품이 포함된 메뉴의 `MenuPrice`가 `TotalProductPrice` 보다 크면 메뉴를 숨긴다.
+- 등록된 `Product` 목록을 조회할 수 있다. 
 
 ### 메뉴그룹
-- `MenuGroup`은 메뉴그룹이름을 표현하는 `MenuGroupName`을 갖는다.
-- `MenuGroupName`에서 올바른 메뉴그룹이름인지 판단한다.
+- `MenuGroup`은 메뉴그룹이름을 갖는다.
+- `MenuGroup`을 등록할 수 있다.
+  - `MenuGroupName`은 공백일 수 없다.
+- 등록된 `MenuGroup` 목록을 조회할 수 있다.
 
 ### 메뉴
-- `Menu`는 메뉴이름을 표현하는 `MenuName`을 갖는다.
-- `MenuName`에서 메뉴이름을 사용할 수 있는지 판단한다.
-- `Menu`는 메뉴가격을 표현하는 `MenuPrice`를 갖는다.
-- `MenuPrice`에서 올바른 메뉴가격인지 판단한다.
-- `Menu`는 구성상품 목록을 표현하는 `MenuProducts`를 갖는다.
-- `MenuProducts`에서 올바른 메뉴구성품 정보인지 판단한다.
-- `MenuDisplayChangeCondition`에서 메뉴를 노출할 수 있는지 판단한다. 
+- `Menu`는 메뉴이름, 메뉴가격, 메뉴그룹, 메뉴에 속한 상품 목록을 갖는다.
+- `Menu`를 등록할 수 있다.
+  - `MenuProducts`를 등록해야한다.
+    - `MenuProduct`를 1개 이상 등록해야한다.
+    - `MenuProduct`는 `Product`와 수량을 갖는다.
+      - `Product`는 등록된 상품을 사용해야한다. 
+      - `MenuProduct`의 수량은 0 이상이어야 한다.
+  - `MenuPrice`는 0원 이상이어야 한다.
+  - `MenuPrice`는 `TotalProductPrice` 보다 낮거나 같아야한다.
+  - `MenuGroup`정보를 입력해야한다.
+    - `MenuGroup`은 등록된 정보를 사용해야한다.
+  - `MenuName`은 공백 또는 비속어를 입력할 수 없다.
+- `MenuPrice`를 변경할 수 있다.
+  - `MenuPrice`는 0원 이상이어야 한다.
+  - `MenuPrice`는 `TotalProductPrice` 보다 낮거나 같아야한다.
+- `Menu`를 노출할 수 있다.
+  - `MenuPrice`가 `TotalProductPrice` 보다 높을경우 노출할 수 없다.
+- `Menu`를 숨길 수 있다.
+- `MenuProducts`에서 `TotalProductPrice`를 계산한다.
+- `MenuDisplayCondition`은 `Menu`노출 여부를 결정한다.
+  - `MenuPrice`가 `TotalProductPrice`보다 높으면 숨김상태를 반환한다.
+  - `MenuPrice`가 `TotalProductPrice`보다 낮거나 같으면 노출상태를 반환한다.
+- 등록된 `Menu` 목록을 조회할 수 있다.
 
 ### 주문테이블
-- `OrderTable`은 주문테이블 이름을 표현하는 `OrderTableName`을 갖는다.
-- `OrderTableName`에서 올바른 주문테이블 이름인지 판단한다.
-- `OrderTable`은 방문한 손님 수를 표현하는 `NumberOfGuests`를 갖는다.
-- `NumberOfGuests`에서 올바른 방문한 손님 수 인지 판단한다.
+- `OrderTable`은 주문테이블 이름, 방문한 손님 수, 빈 테이블 상태여부를 갖는다.
+- `OrderTable`을 등록할 수 있다.
+  - `OrderTableName`은 공백일 수 없다.
+- `OrderTable`을 이용중 상태로 설정할 수 있다.
+- `OrderTable`을 빈테이블로 설정할 수 있다.
+  - 완료되지 않은 `Order`가 있으면 빈 테이블로 설정할 수 없다.
+  - `NumberOfGuests`를 0으로 변경한다.
+- `NumberOfGuests`를 변경할 수 있다.
+  - `NumberOfGuests`는 0 이상이어야 한다.
+  - 빈테이블은 `NumberOfGuests`를 변경할 수 없다.
+- 등록된 `OrderTable` 목록을 조회할 수 있다.
 - `OrderTableClearCondition`에서 빈 테이블로 변경할 수 있는지 판단한다.
+  - `OrderTable`에 등록된 `Order`중에 상태가 주문완료인 경우 변경할 수 있다.
+  - `OrderTable`에 등록된 `Order`중에 상태가 주문완료가 아닌 경우 변경할 수 없다.
 
 ### 매장주문
-- `EatInOrder`는 주문상태를 구분하는 `EatInOrderStatus`를 갖는다.
-- `EatInOrder`는 주문한 메뉴들을 표현하는 `EatInOrderMenus`를 갖는다.
-- `EatInOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
+- `EatInOrder`는 주문상태, 주문테이블, 주문항목, 주문가격을 갖는다.
+- `EatInOrder`를 등록할 수 있다.
+  - `EatInOrderMenus`를 입력해야한다.
+    - `EatInOrderMenu`를 1개 이상 입력해야한다.
+    - `EatInOrderMenu`는 `Menu`와 수량을 갖는다.
+      - 노출된 `Menu`만 사용할 수 있다.
+      - 수량은 음의 정수, 0, 양의 정수를 입력할 수 있다. 
+  - `OrderTable`을 입력해야한다.
+    - 빈 테이블은 등록할 수 없다.
+  - `EatInOrderStatus`는 접수대기 상태로 등록한다.
+  - `EatInOrderPrice`를 입력해야한다.
+    - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
+- `EatInOrderStatus`를 변경할 수 있다.
+  - `EatInOrderStatus`가 주문완료 상태가 되면 `OrderTable`을 빈테이블로 변경한다. 
+- `EatInOrderMenus`에서 `TotalMenuPrice`를 계산한다.
+- 등록된 `EatInOrder`목록을 조회할 수 있다.
 
 ### 포장주문
-- `TakeoutOrder`는 주문상태를 구분하는 `TakeoutOrderStatus`를 갖는다.
-- `TakeoutOrder`는 주문메뉴정보를 표현하는 `TakeoutOrderMenus`를 갖는다.
-- `TakeoutOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
+- `TakeoutOrder`는 주문상태, 주문항목, 주문가격을 갖는다.
+- `TakeoutOrder`를 등록할 수 있다.
+  - `TakeoutOrderMenus`를 입력해야한다.
+    - `TakeoutOrderMenu`를 1개 이상 입력해야한다.
+    - `TakeoutOrderMenu`는 `Menu`와 수량을 갖는다.
+      - 노출된 `Menu`만 사용할 수 있다.
+      - 수량은 0, 양의 정수를 입력할 수 있다.
+  - `TakeoutOrderStatus`는 접수대기 상태로 등록한다.
+  - `TakeoutOrderPrice`를 입력해야한다.
+    - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
+- `TakeoutOrderStatus`를 변경할 수 있다.`
+- `TakeoutOrderMenus`에서 `TotalMenuPrice`를 계산한다.
+- 등록된 `TakeoutOrder`목록을 조회할 수 있다.
 
 ### 배달주문
-- `DeliveryOrder`는 주문상태를 구분하는 `DeliveryOrderStatus`를 갖는다.
-- `DeliveryOrder`는 주문한 메뉴들을 표현하는 `DeliveryOrderMenus`를 갖는다.
-- `DeliveryOrderMenus`에서 주문이 가능한 메뉴들인지 판단한다.
-- `DeliveryOrder`는 배달주문을 표현하는 `DeliveryAddress`를 갖는다.
-- `DeliveryAddress`에서 올바른 배달주소인지 판단한다.
+- `DeliveryOrder`는 주문상태, 주문항목, 주문가격을 갖는다.
+- `DeliveryOrder`를 등록할 수 있다.
+  - `DeliveryOrderMenus`를 입력해야한다.
+    - `DeliveryOrderMenu`를 1개 이상 입력해야한다.
+    - `DeliveryOrderMenu`는 `Menu`와 수량을 갖는다.
+      - 노출된 `Menu`만 사용할 수 있다.
+      - 수량은 0, 양의 정수를 입력할 수 있다.
+  - `DeliveryOrderStatus`는 접수대기 상태로 등록한다.
+  - `DeliveryOrderPrice`를 입력해야한다.
+    - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
+  - `DeliveryAddress`는 공백이면 안된다.
+- `DeliveryOrderStatus`를 변경할 수 있다.
+- `DeliveryOrderMenus`에서 `TotalMenuPrice`를 계산한다.
+- 등록된 `DeliveryOrder`목록을 조회할 수 있다.
