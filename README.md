@@ -150,5 +150,4 @@ docker compose -p kitchenpos up -d
 | 배달완료 | DELIVERED  | 손님에게 배달완료 한 상태 | X | X |
 | 주문완료 | COMPLETED  | 배달 완료된 주문을 완료 처리한 상태 | 제공된 포장 주문을 완료 처리한 상태 | |
 
-[//]: # ()
 ## 모델링
