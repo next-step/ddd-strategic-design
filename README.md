@@ -168,21 +168,24 @@ docker compose -p kitchenpos up -d
 
 ### 배달주문(DeliveryOrder)
 
-| 한글명    | 영문명                | 설명                                                                   |
-|--------|--------------------|----------------------------------------------------------------------|  
-| 주문     | Order              | 배달 주문은 고객이 고객의 배송지로 음식 배달을 요구하는 것을 의미한다.                             |
-| 주문ID   | ID                 | 배달 주문을 유일하게 식별할 수 있는 식별자이다.                                          |
-| 주문상태   | Order Status       | 배달 주문의 주문 진행 상태이다. '대기 중', '접수됨', '제공됨', '배달 중', '배달완료', '주문완료'가 있다. |
-| 주문시간   | Order Date Time    | 배달 주문이 들어온 시간이다.                                                     |
-| 주문상품   | Order Line Item    | 배달 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.                       |
-| 주문접수   | Accept             | 배달 주문 고객의 주문을 접수하는 것이다.                                              |
-| 접수된 주문 | Accepted Order     | 배달 주문이 접수된 주문을 의미한다.                                                 |
-| 배달 대행사 | Delivery Agency    | 배달 주문을 배달해주는 배달 대행사이다.                                               | 
-| 요청된 배달 | Requested Delivery | 배달 대행사에게 요청된 배달을 의미한다.                                               |
-| 준비된 주문 | Served Order       | 배달 주문에 대한 음식이 준비된 것을 의미한다.                                           |
-| 배달시작   | Delivering Order   | 배달 중인 주문을 의미한다.                                                      |
-| 배달완료   | Complete Delivery  | 고객에게 배달이 완료된 것을 의믜한다.                                                |
-| 완료된 주문 | Completed Order    | 배달 주문이 완료된 것을 의미한다.                                                  |
+| 한글명     | 영문명                | 설명                                                                  |
+|---------|--------------------|---------------------------------------------------------------------|  
+| 주문      | Order              | 배달 주문은 고객이 고객의 배송지로 음식 배달을 요구하는 것을 의미한다.                            |
+| 주문ID    | ID                 | 배달 주문을 유일하게 식별할 수 있는 식별자이다.                                         |
+| 주문상태    | Order Status       | 배달 주문의 주문 진행 상태이다. '대기 중', '접수됨', '준비됨', '배달 중', '배달완료', '주문완료'가 있다. |
+| 주문시간    | Order Date Time    | 배달 주문이 들어온 시간이다.                                                    |
+| 주문상품    | Order Line Item    | 배달 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.                      |
+| 주문접수    | Accept             | 배달 주문 고객의 주문을 접수하는 것이다.                                             |
+| 접수된 주문  | Accepted Order     | 배달 주문이 접수된 주문을 의미한다.                                                |
+| 배달 대행사  | Delivery Agency    | 배달 주문을 배달해주는 배달 대행사이다.                                              |
+| 배달요청    | Request Delivery   | 배달 대행사에게 배달을 요청하는 것이다.                                              |
+| 주문준비    | Prepare            | 배달 주문 음식을 준비하는 것이다.                                                 |
+| 준비된 주문  | Prepared Order     | 배달 주문에 대한 음식이 준비된 것을 의미한다.                                          |
+| 배달 시작   | Start Delivery     | 배달을 시작하는 것이다.                                                       |
+| 배달 중인 주문 | Delivering Order   | 배달 중인 주문을 의미한다.                                                     |
+| 배달완료    | complete Delivery  | 고객에게 배달이 완료하는 것이다.                                                  |
+| 완료된 배달  | Delivered Order  | 고객에게 배달이 완료된 것을 의미한다.                                               |
+| 완료된 주문  | Completed Order    | 배달 주문이 완료된 것을 의미한다.                                                 |
 
 ### 주문테이블(OrderTable)
 
@@ -333,3 +336,40 @@ docker compose -p kitchenpos up -d
   * `포장주문(TakeoutOrder)`의 주문상태가 `준비됨(PREPARED)`일 경우에만 완료할 수 있다.
   * `포장주문(TakeoutOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
 * `포장주문(TakeoutOrder)`을 조회할 수 있다.
+
+### 배달주문(DeliveryOrder)
+#### 속성
+* `배달주문(DeliveryOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `배달주문(DeliveryOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
+  * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `배달 중(DELIVERING)`, `배달완료(DELIVERED)`, `주문완료(COMPLETED)`가 있다.
+* `배달주문(DeliveryOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
+* `배달주문(DeliveryOrder)`은 `배송지주소(Delivery Address)`를 가진다.
+* `배달주문(DeliveryOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
+  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
+  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
+    * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+
+#### 행위
+* `배달주문(DeliveryOrder)`을 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 등록할 수 있다.
+  * `배달주문(DeliveryOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`이 접수되면 `배달 대행사(Delivery Agency)`에게 `배달요청(Request Delivery)`한다.
+  * `배달주문(DeliveryOrder)`이 접수되면 `접수된 주문(Accepted Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 준비할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`이 준비되면 `준비된 주문(Prepared Order)`이 된다.
+* `배달주문(DeliveryOrder)`의 배달을 시작할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `준비됨(PREPARED)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 배달이 시작되면 `배달 중인 주문(Delivering Order)`이 된다.
+* `배달주문(DeliveryOrder)`의 배달을 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `배달 중(DELIVERING)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 배달이 시작되면 `완료된 배달(Delivered Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `배달완료(DELIVERED)`일 경우에만 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 조회할 수 있다.
