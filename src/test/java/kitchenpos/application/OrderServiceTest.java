@@ -8,7 +8,7 @@ import kitchenpos.eatinorder.domain.OrderStatus;
 import kitchenpos.eatinorder.domain.OrderTable;
 import kitchenpos.eatinorder.domain.OrderTableRepository;
 import kitchenpos.eatinorder.domain.OrderType;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
