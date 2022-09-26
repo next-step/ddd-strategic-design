@@ -1,4 +1,4 @@
-package kitchenpos.eatinorder.domain;
+package kitchenpos.eatinorder.order.domain;
 
 @Deprecated
 public enum OrderType {

@@ -1,4 +1,4 @@
-package kitchenpos.eatinorder.domain;
+package kitchenpos.eatinorder.ordertable.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
