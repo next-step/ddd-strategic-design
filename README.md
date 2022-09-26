@@ -151,20 +151,20 @@ docker compose -p kitchenpos up -d
 
 ### 포장주문(TakeoutOrder)
 
-| 한글명   | 영문명             | 설명                                                   |  
-|-------|-----------------|------------------------------------------------------|  
-| 주문    | Order           | 포장 주문은 고객이 매장 외부에서 음식을 소비하기위해 음식 포장을 요구하는 것을 의미한다.   |
-| 주문ID  | ID              | 포장 주문을 유일하게 식별할 수 있는 식별자이다.                          |
-| 주문상태  | Order Status    | 포장 주문의 주문 진행 상태이다. '대기 중', '접수됨', '제공됨', '주문완료'가 있다. |
-| 주문시간  | Order Date Time | 포장 주문이 들어온 시간이다.                                     |
-| 주문상품  | Order Line Item | 포장 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.       |
-| 대기 주문 | Waiting Order   | 포장 주문이 접수된 주문을 의미한다.                                 |
-| 주문접수  | Accept          | 포장 고객의 주문을 접수하는 것이다.                                 |
-| 접수된 주문 | Accepted Order  | 포장 주문이 접수된 주문을 의미한다.                                 |
-| 포장준비  | Serve           | 포장 주문 음식을 준비하는 것이다.                                  |
-| 준비된 주문 | Served Order    | 포장 주문 음식이 준비된 주문을 의미한다.                              |
-| 주문완료  | Complete        | 포장 주문을 완료하는 것이다.                                     |
-| 완료된 주문 | Completed Order | 포장 주문이 완료된 주문을 의미한다.                                 |
+| 한글명   | 영문명                   | 설명                                                   |  
+|-------|-----------------------|------------------------------------------------------|  
+| 주문    | Order                 | 포장 주문은 고객이 매장 외부에서 음식을 소비하기위해 음식 포장을 요구하는 것을 의미한다.   |
+| 주문ID  | ID                    | 포장 주문을 유일하게 식별할 수 있는 식별자이다.                          |
+| 주문상태  | Order Status          | 포장 주문의 주문 진행 상태이다. '대기 중', '접수됨', '준비됨', '주문완료'가 있다. |
+| 주문시간  | Order Date Time       | 포장 주문이 들어온 시간이다.                                     |
+| 주문상품  | Order Line Item       | 포장 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.       |
+| 대기 주문 | Waiting Order         | 포장 주문이 접수된 주문을 의미한다.                                 |
+| 주문접수  | Accept                | 포장 고객의 주문을 접수하는 것이다.                                 |
+| 접수된 주문 | Accepted Order        | 포장 주문이 접수된 주문을 의미한다.                                 |
+| 포장준비  | Prepare                 | 포장 주문 음식을 준비하는 것이다.                                  |
+| 준비된 주문 | Prepared Order | 포장 주문 음식이 준비된 주문을 의미한다.                              |
+| 주문완료  | Complete              | 포장 주문을 완료하는 것이다.                                     |
+| 완료된 주문 | Completed Order       | 포장 주문이 완료된 주문을 의미한다.                                 |
 
 ### 배달주문(DeliveryOrder)
 
@@ -260,11 +260,11 @@ docker compose -p kitchenpos up -d
 * `매장주문(EatInOrder)`은 주문한 테이블인 `주문테이블(OrderTable)`을 가진다.
   * `주문테이블(OrderTable)`은 반드시 포함되어야 한다.
 * `매장주문(EatInOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
-  * `매장주문(EatInOrder)`는 `일련번호(Seq)`를 가진다.
-  * `매장주문(EatInOrder)`은 `메뉴(Menu)`를 가진다.
-  * `매장주문(EatInOrder)`은 `주문상품수량(Quantity)`을 가진다.
+  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
+  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
     * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
-  * `매장주문(EatInOrder)` 반드시 한 개 이상 포함되어야 한다.
+  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
 
 #### 행위
 * `매장주문(EatInOrder)`을 등록할 수 있다.
@@ -280,8 +280,8 @@ docker compose -p kitchenpos up -d
   * `매장주문(EatInOrder)`이 서빙되면 `서빙된 주문(Served Order)`이 된다.
 * `매장주문(EatInOrder)`을 완료할 수 있다.
   * `매장주문(EatInOrder)`의 주문상태가 `서빙됨(SERVED)`일 경우에만 완료할 수 있다.
-  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Served Order)`이 된다.
-  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Served Order)`이벤트를 발행한다.
+  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Completed Order)`이벤트를 발행한다.
 * `매장주문(EatInOrder)`을 조회할 수 있다.
 
 ### 주문테이블(OrderTable)
@@ -304,3 +304,32 @@ docker compose -p kitchenpos up -d
   * `주문테이블(OrderTable)`의 모든 `매장주문(EatInOrder)`이 `완료된 주문(Served Order)`인 경우인 경우에만 `정리(Clear)`할 수 있다.
   * `주문테이블(OrderTable)`이 `정리(Clear)`되면 `비어있는 테이블(Unoccupied Table)`이 된다.
 * `주문테이블(OrderTable)`을 조회할 수 있다.
+
+### 포장주문(TakeoutOrder)
+#### 속성
+* `포장주문(TakeoutOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `포장주문(TakeoutOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
+  * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `주문완료(COMPLETED)`가 있다.
+* `포장주문(TakeoutOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
+* `포장주문(TakeoutOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
+  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
+  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
+    * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+
+#### 행위
+* `포장주문(TakeoutOrder)`을 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 등록할 수 있다.
+  * `포장주문(TakeoutOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`이 접수되면 `접수된 주문(Accepted Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 준비할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`이 준비되면 `준비된 주문(Prepared Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 완료할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `준비됨(PREPARED)`일 경우에만 완료할 수 있다.
+  * `포장주문(TakeoutOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 조회할 수 있다.
