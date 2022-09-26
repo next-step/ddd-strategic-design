@@ -186,12 +186,15 @@ docker compose -p kitchenpos up -d
 
 ### 주문테이블(OrderTable)
 
-| 한글명   | 영문명              | 설명 |  
-|-------|------------------| --- |  
-| 주문테이블 | Order Table      | 매장 손님들이 앉아서 식사 가능한 매장 테이블이다. |
-| 주문테이블명 | Name             | 주문테이블의 이름이다. |
-| 손님 수  | Number Of Guests | 주문테이블에 앉은 손님들의 수다. |
-| 사용 여부 | Occupied         | 주문테이블 사용 여부를 나타낸다. |
+| 한글명      | 영문명              | 설명                                               |  
+|----------|------------------|--------------------------------------------------|  
+| 주문테이블    | Order Table      | 매장 손님들이 앉아서 식사 가능한 매장 테이블이다.                     |
+| 주문테이블명   | Name             | 주문테이블의 이름이다.                                     |
+| 손님 수     | Number Of Guests | 주문테이블에 앉은 손님들의 수다.                               |
+| 사용 여부    | Occupied         | 주문테이블 사용 여부를 나타낸다.                               |
+| 사용 중인 테이블 | Occupied Table   | 사용 중인 주문테이블이다. 손님이 사용하고 있는 테이블이다.                |
+| 비어있는 테이블 | Unoccupied Table | 비어있는 주문테이블이다. 손님이 사용하고 있지 않은 테이블을 의미한다. |
+| 정리       | Clear            | 주문테이블을 정리하는 것이다.                                 |
 
 ## 모델링
 
@@ -266,8 +269,8 @@ docker compose -p kitchenpos up -d
 #### 행위
 * `매장주문(EatInOrder)`을 등록할 수 있다.
   * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
-  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 등록할 수 있다.
-  * `주문테이블(OrderTable)`이 사용 중일 경우에만 등록가능하다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 한다.
+  * `주문테이블(OrderTable)`이 `사용 중인 테이블(Occupied Table)`일 경우에만 등록할 수 있다.
   * `매장주문(EatInOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
 * `매장주문(EatInOrder)`을 접수할 수 있다.
   * `매장주문(EatInOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
@@ -275,8 +278,29 @@ docker compose -p kitchenpos up -d
 * `매장주문(EatInOrder)`을 서빙할 수 있다.
   * `매장주문(EatInOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
   * `매장주문(EatInOrder)`이 서빙되면 `서빙된 주문(Served Order)`이 된다.
-  * `매장주문(EatInOrder)`을 완료할 수 있다.
-  * `매장주문(EatInOrder)`의 주문상태가 `서빙됨(SERVED`일 경우에만 완료할 수 있다.
+* `매장주문(EatInOrder)`을 완료할 수 있다.
+  * `매장주문(EatInOrder)`의 주문상태가 `서빙됨(SERVED)`일 경우에만 완료할 수 있다.
   * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Served Order)`이 된다.
   * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Served Order)`이벤트를 발행한다.
 * `매장주문(EatInOrder)`을 조회할 수 있다.
+
+### 주문테이블(OrderTable)
+#### 속성
+* `주문테이블(OrderTable)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `주문테이블(OrderTable)`은 테이블의 이름인 `주문테이블명(Name)`을 가진다.
+  * `주문테이블명(Name)`은 없거나 비어있을 수 없다.
+* `주문테이블(OrderTable)`은 테이블의 앉은 `손님 수(Number Of Guests)`를 가진다.
+  * `손님 수(Number Of Guests)`는 0보다 작을 수 없다.
+* `주문테이블(OrderTable)`은 사용 중을 나타내는 `사용여부(Occupied)`을 가진다.
+
+#### 행위
+* `주문테이블(OrderTable)`은 등록할 수 있다.
+  * `주문테이블(OrderTable)` 등록되면 `비어있는 테이블(Unoccupied Table)`이 된다.
+* `주문테이블(OrderTable)`은 손님이 앉을 수 있다.
+  * 손님이 앉으면 `사용 중인 테이블(Occupied Table)`이 된다.
+* `주문테이블(OrderTable)`은 `손님 수(Number Of Guests)`를 변경할 수 있다.
+  * `사용 중인 테이블(Occupied Table)`인 경우에만 손님 수를 변경할 수 있다.
+* `주문테이블(OrderTable)`은 `정리(Clear)`할 수 있다.
+  * `주문테이블(OrderTable)`의 모든 `매장주문(EatInOrder)`이 `완료된 주문(Served Order)`인 경우인 경우에만 `정리(Clear)`할 수 있다.
+  * `주문테이블(OrderTable)`이 `정리(Clear)`되면 `비어있는 테이블(Unoccupied Table)`이 된다.
+* `주문테이블(OrderTable)`을 조회할 수 있다.
