@@ -163,3 +163,124 @@ docker compose -p kitchenpos up -d
 | 배달기사를 요청하다        | Request rider              | 배달대행사에게 배달기사를 매장에 배정해주기를 요청하는 행위.                                                                    |                                             |
 
 ## 모델링
+- 상품 `Product`
+  - 상품(`Product`)을 등록할 수 있다.
+    - 상품(`Product`)은 이름을 가진다.
+      - 비속어검사기( `ProfanityChecker`)를 통과한 이름만을 가질 수 있다.
+      - 이름은 비울 수 없다.
+    - 상품(`Product`)은 가격을 가진다.
+      - `price`는 0 이상이어야 한다.
+  - 상품(`Product`)의 가격을 변경할 수 있다.
+    - 가격(`price`)은 0 이상이어야 한다.
+  - 상품(`Product`)의 목록을 조회할 수 있다.
+- 메뉴 그룹 `MenuGroup`
+  - 메뉴 그룹(`MenuGroup`)을 등록할 수 있다.
+  - 메뉴 그룹(`MenuGroup`)은 이름을 가진다.
+    - 이름은 비울 수 없다.
+  - 메뉴 그룹(`MenuGroup`)의 목록을 조회할 수 있다.
+- 메뉴 `Menu`
+  - 1개 이상의 상품(`Product`)로 메뉴( `Menu`)를 등록할 수 있다.
+    - 메뉴(`Menu`)는 메뉴에 속한 상품(`MenuProduct`) 목록을 가진다.
+      - 메뉴(`Menu`)는 메뉴에 속한 상품(`MenuProduct`)을 하나 이상 가지고 있어야 한다.
+      - 메뉴에 속한 상품(`MenuProduct`)은 상품(`Product`)을 가진다.
+      - 메뉴에 속한 상품(`MenuProduct`)은 수량을 가진다
+        - 수량은 0 이상이어야 한다.
+    - 메뉴(`Menu`)는 가격을 가진다.
+      - 가격은 0 이상이어야 한다.
+      - 메뉴에 속한 상품(`MenuProduct`)의 (상품(`Product`)가격 * 수량)의 총합보다 크거나 같아야 한다.
+    - 메뉴(`Menu`)는 이름을 가진다.
+      - 비속어검사기(`ProfanityChecker`)를 통과한 이름만을 가져야 한다.
+      - 이름은 비울 수 없다.
+    - 메뉴(`Menu`)는 특정 메뉴 그룹(`MenuGroup`)에 속해야 한다.
+      - 여러 메뉴 그룹(`MenuGroup`)에 동시에 속할 수 없다.
+    - 메뉴(`Menu`)는 공개 여부를 정할 수 있다.
+  - 메뉴(`Menu`)의 가격을 변경할 수 있다.
+    - 가격은 0 이상이어야 한다.
+    - 메뉴에 속한 상품(`MenuProduct`)의 (상품(`Product`)가격 * 수량)의 총합보다 크거나 같아야 한다.
+  - 메뉴(`Menu`)는 공개할 수 있다.
+    - 메뉴에 속한 상품(`MenuProduct`)의 (상품(`Product`)가격 * 수량)의 총합보다 크거나 같아야 한다.
+  - 메뉴(`Menu`)는 비공개할 수 있다.
+  - 메뉴(`Menu`)의 목록을 조회할 수 있다.
+- 주문테이블 `OrderTable`
+  - 주문테이블(`OrderTable`)을 등록할 수 있다.
+    - 주문테이블(`OrderTable`)은 이름을 가진다.
+      - 이름은 비울 수 없다.
+    - 주문테이블(`OrderTable`)은 차지 여부`occupied`를 가진다.
+    - 주문테이블(`OrderTable`)은 손님 수`numberOfGuests`를 가진다.
+  - 주문테이블(`OrderTable`)은 비울 수 있다.
+    - 주문테이블(`OrderTable`)에 완료되지 않은 주문(`Order`)이 하나라도 있다면 비울 수 없다.
+    - 주문테이블(`OrderTable`)을 비우면 손님 수가 0이 된다.
+  - 주문테이블(`OrderTable`)은 채울 수 있다.
+  - 주문테이블(`OrderTable`)의 손님 수를 변경할 수 있다.
+    - 손님 수는 0 이상이어야 한다.
+    - 차지되지 않은 주문테이블(`OrderTable`)은 손님 수를 변경할 수 없다.
+  - 주문테이블(`OrderTable`)의 목록을 조회할 수 있다.
+- 주문 `Order`
+  - 배달 주문(`DeliveryOrder`)
+    - 1개 이상의 메뉴(`Menu`)로 배달 주문(`DeliveryOrder`)을 생성할 수 있다.
+      - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
+        - 주문 항목(`OrderLineItem`)은 선택된 메뉴(`Menu`) 하나를 가진다.
+          - 비공개된 메뉴(`Menu`)가 아니어야 한다.
+        - 주문 항목(`OrderLineItem`)은 수량을 가진다.
+          - 수량은 0 이상이어야 한다.
+      - 배달주소(`deliveryAddress`)를 가진다.
+        - 배달주소(`deliveryAddress`)는 비어 있지 않아야 한다.
+      - 주문일시(`orderDateTime`)를 가진다.
+      - 생성된 배달 주문(`DeliveryOrder`)의 주문상태(`status`)는 대기중(`WAITING`)이다.
+    - 대기중인 배달 주문(`DeliveryOrder`)을 접수할 수 있다.
+      - 대기중(`WAITING`) 상태여야 한다.
+      - 배달대행사(`RiderAgency`)에 배달기사를 요청한다.
+      - 주문상태(`status`)는 접수됨(`ACCEPTED`)으로 바뀐다.
+    - 접수된 배달 주문(`DeliveryOrder`)을 제공할수 있다.
+      - 접수됨(`ACCEPTED`) 상태여야 한다.
+      - 주문상태(`status`)는 제공됨(`SERVED`)으로 바뀐다.
+    - 제공된 배달 주문(`DeliveryOrder`)를 배달 시작할 수 있다.
+      - 제공된(`SERVED`) 상태여야 한다.
+      - 배달 주문이어야 한다.
+      - 주문상태(`status`)는 배달중(`DELIVERING`)으로 바뀐다.
+    - 배달중인 배달 주문(`DeliveryOrder`)를 배달 완료할 수 있다.
+      - 배달중(`DELIVERING`)인 상태여야 한다.
+      - 주문상태(`status`)는 배달완료(`DELIVERED`)로 바뀐다.
+    - 배달완료된 배달 주문은(`DeliveryOrder`) 주문 완료할 수 있다.
+      - 배달완료(`DELIVERED`)인 상태여야 한다.
+      - 주문상태(`status`)는 주문완료(`COMPLETED`)로 바뀐다.
+  - 포장 주문(`TakeoutOrder`)
+    - 1개 이상의 메뉴(`Menu`)로 포장 주문(`TakeoutOrder`)을 생성할 수 있다.
+      - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
+        - 주문 항목(`OrderLineItem`)은 선택된 메뉴(`Menu`) 하나를 가진다.
+          - 비공개된 메뉴(`Menu`)가 아니어야 한다.
+        - 주문 항목(`OrderLineItem`)은 수량을 가진다.
+          - 수량은 0 이상이어야 한다.
+      - 주문일시(`orderDateTime`)를 가진다.
+      - 생성된 포장 주문(`TakeoutOrder`)의 주문상태(`status`)는 대기중(`WAITING`)이다.
+    - 대기중인 포장 주문(`TakeoutOrder`)을 접수할 수 있다.
+      - 대기중(`WAITING`) 상태여야 한다.
+      - 주문상태(`status`)는 접수됨(`ACCEPTED`)으로 바뀐다.
+    - 접수된 포장 주문(`TakeoutOrder`)을 제공할수 있다.
+      - 접수됨(`ACCEPTED`) 상태여야 한다.
+      - 주문상태(`status`)는 제공됨(`SERVED`)으로 바뀐다.
+    - 제공된 포장 주문은(`TakeoutOrder`) 주문 완료할 수 있다.
+      - 제공된(`DELIVERED`) 상태여야 한다.
+      - 주문상태(`status`)는 주문완료(`COMPLETED`)로 바뀐다.
+  - 매장 주문(`EatInOrder`)
+    - 1개 이상의 메뉴(`Menu`)로 매장 주문(`EatInOrder`)을 생성할 수 있다.
+      - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
+        - 주문 항목(`OrderLineItem`)은 선택된 메뉴(`Menu`) 하나를 가진다.
+          - 비공개된 메뉴(`Menu`)가 아니어야 한다.
+        - 주문 항목(`OrderLineItem`)은 수량을 가진다.
+          - 수량은 음수도 가능하다.
+      - 매장테이블(`OrderTable`) 하나를 선택해야 한다.
+        - 차지된(`occupied`) 상태여야 한다.
+      - 주문일시(`orderDateTime`)를 가진다.
+      - 생성된 매장 주문(`EatInOrder`)의 주문상태(`status`)는 대기중(`WAITING`)이다.
+    - 대기중인 매장 주문(`EatInOrder`)을 접수할 수 있다.
+      - 대기중(`WAITING`) 상태여야 한다.
+      - 주문상태(`status`)는 접수됨(`ACCEPTED`)으로 바뀐다.
+    - 접수된 매장 주문(`EatInOrder`)을 제공할수 있다.
+      - 접수됨(`ACCEPTED`) 상태여야 한다.
+      - 주문상태(`status`)는 제공됨(`SERVED`)으로 바뀐다.
+    - 제공된 매장 주문은(`EatInOrder`) 주문 완료할 수 있다.
+      - 제공된(`DELIVERED`) 상태여야 한다.
+      - 주문상태(`status`)는 주문완료(`COMPLETED`)로 바뀐다.
+      - 생성 당시 선택한 매장테이블(`OrderTable`)을 비운다.
+      - 생성 당시 선택한 매장테이블(`OrderTable`)의 손님 수를 0으로 설정한다.
