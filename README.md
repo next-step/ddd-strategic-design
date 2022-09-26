@@ -131,7 +131,7 @@ docker compose -p kitchenpos up -d
 | 주문 항목  | Order Line Item  | 주문시 선택한 메뉴와 수량을 나타낸다. |
 | 주문 유형  | Order Type       | 주문시 반드시 선택해야 하는 유형, <br>  배달주문, 포장주문, 매장 주문이 있다.|
 | 주문 상태  | Order Status     | 현재 주문의 진행 상태, <br> 접수대기, 주문접수, 주문서빙, 배달중, 배달 완료, 주문 완료가 있다.|
-| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻며,배달 주문에서만 사용 한다.         |
+| 배달 주소  | Delivery Address | 배달을 받는 장소를 뜻하며,배달 주문에서만 사용 한다.         |
 | 배달 대행사 | Kitchen Riders   | 배달 주문에 대해서 배달을 하는 대행사, 배달 주문에서만 사용 한다.  |
 
 
@@ -188,7 +188,7 @@ docker compose -p kitchenpos up -d
 ### 메뉴 그룹(`MenuGroup`)
 
 #### 속성
-*  속성은 이름을 포함한다.
+*  메뉴그룹은 이름을 포함한다.
 
 #### 행위 
 * **메뉴 그룹(`MenuGroup`)을 등록 한다.**
