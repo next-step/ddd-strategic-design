@@ -1,4 +1,4 @@
-package kitchenpos.application;
+package kitchenpos.menu.repository.fake;
 
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.repository.MenuGroupRepository;
