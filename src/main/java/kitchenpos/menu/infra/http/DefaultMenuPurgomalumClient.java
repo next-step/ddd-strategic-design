@@ -1,12 +1,11 @@
 package kitchenpos.menu.infra.http;
 
+import java.net.URI;
 import kitchenpos.menu.infra.PurgomalumClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
 
 @Component
 public class DefaultMenuPurgomalumClient implements PurgomalumClient {
@@ -18,7 +17,8 @@ public class DefaultMenuPurgomalumClient implements PurgomalumClient {
 
     @Override
     public boolean containsProfanity(final String text) {
-        final URI url = UriComponentsBuilder.fromUriString("https://www.purgomalum.com/service/containsprofanity")
+        final URI url = UriComponentsBuilder.fromUriString(
+                "https://www.purgomalum.com/service/containsprofanity")
             .queryParam("text", text)
             .build()
             .toUri();

@@ -1,9 +1,9 @@
 package kitchenpos.order.repository.fake;
 
 import kitchenpos.order.domain.Order;
-import kitchenpos.order.repository.OrderRepository;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderTable;
+import kitchenpos.order.repository.OrderRepository;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public boolean existsByOrderTableAndStatusNot(final OrderTable orderTable, final OrderStatus status) {
         return orders.values()
-            .stream()
-            .anyMatch(order -> order.getOrderTable().equals(orderTable) && order.getStatus() != status);
+                .stream()
+                .anyMatch(order -> order.getOrderTable().equals(orderTable) && order.getStatus() != status);
     }
 }
