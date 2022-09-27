@@ -235,16 +235,29 @@ docker compose -p kitchenpos up -d
 ### 주문(`Order`)
 
 #### 배달 주문(`DeliveryOrder`)
-- 1개 이상의 메뉴(`Menu`)로 배달 주문을 생성할 수 있다.
+- 배달주소(`deliveryAddress`)를 가진다.
+  - 배달주소는 비어 있지 않아야 한다.
+- 주문 항목(`OrderLineItem`) 목록을 가진다.
   - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
-    - 주문 항목은 선택된 메뉴 하나를 가진다.
-      - 비공개된 메뉴가 아니어야 한다.
-    - 주문 항목은 수량을 가진다.
-      - 수량은 0 이상이어야 한다.
-  - 배달주소(`deliveryAddress`)를 가진다.
-    - 배달주소는 비어 있지 않아야 한다.
-  - 주문일시(`orderDateTime`)를 가진다.
-  - 생성된 배달 주문의 주문상태(`status`)는 대기중(`WAITING`)이다.
+  - 주문 항목은 선택된 메뉴(`Menu`) 하나를 가진다.
+    - 비공개된 메뉴가 아니어야 한다.
+  - 주문 항목은 수량(`quantity`)을 가진다.
+    - 수량은 0 이상이어야 한다.
+- 주문일시(`orderDateTime`)를 가진다.
+- 주문상태(`status`)를 가진다.
+```mermaid
+flowchart LR
+  WAITING[대기중]-->|접수하기|ACCEPTED[접수됨]
+  ACCEPTED[접수됨]-->|제공하기|SERVED[제공됨]
+  SERVED[제공됨]-->|배달시작하기|DELIVERING[배달중]
+  DELIVERING[배달중]-->|배달완료하기|DELIVERED[배달완료됨]
+  DELIVERED[배달완료됨]-->|주문완료하기|COMPLETED[주문완료됨]
+```
+
+- 배달 주문을 생성할 수 있다.
+  - 주문항목, 배달주소를 받는다.
+  - 주문일시는 생성된 일시를 기준으로 설정된다.
+  - 생성된 배달 주문의 주문상태는 대기중(`WAITING`)이다.
 - 대기중인 배달 주문을 접수할 수 있다.
   - 대기중(`WAITING`) 상태여야 한다.
   - 배달대행사(`RiderAgency`)에 배달기사를 요청한다.
