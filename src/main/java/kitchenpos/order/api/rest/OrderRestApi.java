@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.order.api.rest;
 
-import kitchenpos.application.OrderService;
-import kitchenpos.domain.Order;
+import kitchenpos.order.application.OrderService;
+import kitchenpos.order.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.UUID;
 
 @RequestMapping("/api/orders")
 @RestController
-public class OrderRestController {
+public class OrderRestApi {
     private final OrderService orderService;
 
-    public OrderRestController(final OrderService orderService) {
+    public OrderRestApi(final OrderService orderService) {
         this.orderService = orderService;
     }
 

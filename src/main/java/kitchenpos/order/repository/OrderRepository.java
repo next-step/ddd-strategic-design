@@ -1,4 +1,8 @@
-package kitchenpos.domain;
+package kitchenpos.order.repository;
+
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.order.domain.OrderTable;
 
 import java.util.List;
 import java.util.Optional;
