@@ -1,6 +1,6 @@
 package kitchenpos.order.application;
 
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.order.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.repository.MenuRepository;
 import kitchenpos.order.domain.*;

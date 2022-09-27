@@ -5,7 +5,7 @@ import kitchenpos.menu.repository.MenuRepository;
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.repository.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.product.infra.PurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class ProductServiceTest {
     void setUp() {
         productRepository = new InMemoryProductRepository();
         menuRepository = new InMemoryMenuRepository();
-        purgomalumClient = new FakePurgomalumClient();
+        purgomalumClient = new FakeProductPurgomalumClient();
         productService = new ProductService(productRepository, menuRepository, purgomalumClient);
     }
 
