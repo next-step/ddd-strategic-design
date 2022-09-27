@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.menu.api.rest;
 
-import kitchenpos.application.MenuGroupService;
-import kitchenpos.domain.MenuGroup;
+import kitchenpos.menu.application.MenuGroupService;
+import kitchenpos.menu.domain.MenuGroup;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import java.util.List;
 
 @RequestMapping("/api/menu-groups")
 @RestController
-public class MenuGroupRestController {
+public class MenuGroupRestApi {
     private final MenuGroupService menuGroupService;
 
-    public MenuGroupRestController(final MenuGroupService menuGroupService) {
+    public MenuGroupRestApi(final MenuGroupService menuGroupService) {
         this.menuGroupService = menuGroupService;
     }
 

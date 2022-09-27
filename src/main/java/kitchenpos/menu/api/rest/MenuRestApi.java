@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.menu.api.rest;
 
-import kitchenpos.application.MenuService;
-import kitchenpos.domain.Menu;
+import kitchenpos.menu.application.MenuService;
+import kitchenpos.menu.domain.Menu;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.UUID;
 
 @RequestMapping("/api/menus")
 @RestController
-public class MenuRestController {
+public class MenuRestApi {
     private final MenuService menuService;
 
-    public MenuRestController(final MenuService menuService) {
+    public MenuRestApi(final MenuService menuService) {
         this.menuService = menuService;
     }
 
