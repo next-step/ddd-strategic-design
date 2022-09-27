@@ -232,10 +232,7 @@ docker compose -p kitchenpos up -d
   - 차지되지 않은 주문테이블은 손님 수를 변경할 수 없다.
 - 주문테이블의 목록을 조회할 수 있다.
 
-
-### 주문(`Order`)
-
-#### 배달 주문(`DeliveryOrder`)
+### 배달 주문(`DeliveryOrder`)
 - 배달주소(`deliveryAddress`)를 가진다.
   - 배달주소는 비어 있지 않아야 한다.
 - 주문 항목(`OrderLineItem`) 목록을 가진다.
@@ -276,7 +273,7 @@ flowchart LR
   - 배달완료(`DELIVERED`)인 상태여야 한다.
   - 주문상태는 주문완료(`COMPLETED`)로 바뀐다.
 
-#### 포장 주문(`TakeoutOrder`)
+### 포장 주문(`TakeoutOrder`)
 - 주문 항목(`OrderLineItem`) 목록을 가진다.
   - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
   - 주문 항목은 선택된 메뉴(`Menu`) 하나를 가진다.
@@ -306,7 +303,7 @@ flowchart LR
   - 제공된(`DELIVERED`) 상태여야 한다.
   - 주문상태는 주문완료(`COMPLETED`)로 바뀐다.
 
-#### 매장 주문(`EatInOrder`)
+### 매장 주문(`EatInOrder`)
 - 선택된 주문테이블(`OrderTable`) 하나를 가진다.
 - 주문 항목(`OrderLineItem`) 목록을 가진다.
   - 하나 이상의 주문 항목(`OrderLineItem`) 이 있어야 한다.
