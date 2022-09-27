@@ -1,4 +1,4 @@
-package kitchenpos.product.api.rest;
+package kitchenpos.product.presentation.rest;
 
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;

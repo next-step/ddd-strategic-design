@@ -1,4 +1,4 @@
-package kitchenpos.order.api.rest;
+package kitchenpos.order.presentation.rest;
 
 import kitchenpos.order.application.OrderTableService;
 import kitchenpos.order.domain.OrderTable;
