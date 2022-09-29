@@ -240,7 +240,8 @@ docker compose -p kitchenpos up -d
   * `메뉴그룹(MenuGroup)`은 반드시 포함되어야 한다.
 * `메뉴(Menu)`는 한 개 이상의 `메뉴상품(Menu Product)`을 가진다.
   * `메뉴상품(Menu Product)`는 `일련번호(Seq)`를 가진다.
-  * `메뉴상품(Menu Product)`은 `상품(Product)`을 가진다.
+  * `메뉴상품(Menu Product)`은 `상품식별자(Product ID)`를 가진다.
+  * `메뉴상품(Menu Product)`은 `상품가격(Product Price)`를 가진다.
   * `메뉴상품(Menu Product)`은 `메뉴상품수량(Quantity)`을 가진다.
     * `메뉴상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
   * `메뉴상품(Menu Product)` 반드시 한 개 이상 포함되어야 한다.
@@ -257,6 +258,8 @@ docker compose -p kitchenpos up -d
 ### 주문상품(OrderLineItem)
 * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
 * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴식별자(Menu ID)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴가격(Menu Price)`를 가진다.
 * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
   * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
 * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
