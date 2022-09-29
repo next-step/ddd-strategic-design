@@ -1,4 +1,4 @@
-package kitchenpos.ordertable.domain;
+package kitchenpos.ordertable.infra;
 
 import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.ordertable.domain.OrderTableRepository;
