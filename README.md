@@ -254,6 +254,13 @@ docker compose -p kitchenpos up -d
   * `메뉴(Menu)`를 `비공개(Hide)`하면 `비공개된 메뉴(Hidden Menu)`가 된다.
 * `메뉴(Menu)`를 조회할 수 있다.
 
+### 주문상품(OrderLineItem)
+* `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+* `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
+  * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+* `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+  
 ### 매장주문(EatInOrder)
 #### 속성
 * `매장주문(EatInOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
@@ -262,12 +269,7 @@ docker compose -p kitchenpos up -d
 * `매장주문(EatInOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
 * `매장주문(EatInOrder)`은 주문한 테이블인 `주문테이블(OrderTable)`을 가진다.
   * `주문테이블(OrderTable)`은 반드시 포함되어야 한다.
-* `매장주문(EatInOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
-  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
-  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
-  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
-    * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
-  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+* `매장주문(EatInOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
 
 #### 행위
 * `매장주문(EatInOrder)`을 등록할 수 있다.
@@ -314,12 +316,7 @@ docker compose -p kitchenpos up -d
 * `포장주문(TakeoutOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
   * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `주문완료(COMPLETED)`가 있다.
 * `포장주문(TakeoutOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
-* `포장주문(TakeoutOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
-  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
-  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
-  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
-    * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
-  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+* `포장주문(TakeoutOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
 
 #### 행위
 * `포장주문(TakeoutOrder)`을 등록할 수 있다.
@@ -344,12 +341,7 @@ docker compose -p kitchenpos up -d
   * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `배달 중(DELIVERING)`, `배달완료(DELIVERED)`, `주문완료(COMPLETED)`가 있다.
 * `배달주문(DeliveryOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
 * `배달주문(DeliveryOrder)`은 `배송지주소(Delivery Address)`를 가진다.
-* `배달주문(DeliveryOrder)`은 한 개 이상의 `주문상품(Order Line Item)`를 가진다.
-  * `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
-  * `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
-  * `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
-    * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
-  * `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+* `배달주문(DeliveryOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
 
 #### 행위
 * `배달주문(DeliveryOrder)`을 등록할 수 있다.
