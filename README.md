@@ -151,45 +151,220 @@ docker compose -p kitchenpos up -d
 
 ### 포장주문(TakeoutOrder)
 
-| 한글명   | 영문명             | 설명                                                   |  
-|-------|-----------------|------------------------------------------------------|  
-| 주문    | Order           | 포장 주문은 고객이 매장 외부에서 음식을 소비하기위해 음식 포장을 요구하는 것을 의미한다.   |
-| 주문ID  | ID              | 포장 주문을 유일하게 식별할 수 있는 식별자이다.                          |
-| 주문상태  | Order Status    | 포장 주문의 주문 진행 상태이다. '대기 중', '접수됨', '제공됨', '주문완료'가 있다. |
-| 주문시간  | Order Date Time | 포장 주문이 들어온 시간이다.                                     |
-| 주문상품  | Order Line Item | 포장 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.       |
-| 주문접수  | Accept          | 포장 고객의 주문을 접수하는 것이다.                                 |
-| 접수된 주문 | Accepted Order  | 포장 주문이 접수된 주문을 의미한다.                                 |
-| 포장준비  | Serve           | 포장 주문 음식을 준비하는 것이다.                                  |
-| 준비된 주문 | Served Order         | 포장 주문 음식이 준비된 주문을 의미한다.                              |
-| 주문완료  | Complete        | 포장 주문을 완료하는 것이다.                                     |
-| 완료된 주문 | Completed Order      | 포장 주문이 완료된 주문을 의미한다.                                 |
+| 한글명   | 영문명                   | 설명                                                   |  
+|-------|-----------------------|------------------------------------------------------|  
+| 주문    | Order                 | 포장 주문은 고객이 매장 외부에서 음식을 소비하기위해 음식 포장을 요구하는 것을 의미한다.   |
+| 주문ID  | ID                    | 포장 주문을 유일하게 식별할 수 있는 식별자이다.                          |
+| 주문상태  | Order Status          | 포장 주문의 주문 진행 상태이다. '대기 중', '접수됨', '준비됨', '주문완료'가 있다. |
+| 주문시간  | Order Date Time       | 포장 주문이 들어온 시간이다.                                     |
+| 주문상품  | Order Line Item       | 포장 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.       |
+| 대기 주문 | Waiting Order         | 포장 주문이 접수된 주문을 의미한다.                                 |
+| 주문접수  | Accept                | 포장 고객의 주문을 접수하는 것이다.                                 |
+| 접수된 주문 | Accepted Order        | 포장 주문이 접수된 주문을 의미한다.                                 |
+| 포장준비  | Prepare                 | 포장 주문 음식을 준비하는 것이다.                                  |
+| 준비된 주문 | Prepared Order | 포장 주문 음식이 준비된 주문을 의미한다.                              |
+| 주문완료  | Complete              | 포장 주문을 완료하는 것이다.                                     |
+| 완료된 주문 | Completed Order       | 포장 주문이 완료된 주문을 의미한다.                                 |
 
 ### 배달주문(DeliveryOrder)
 
-| 한글명    | 영문명                | 설명                                                                   |
-|--------|--------------------|----------------------------------------------------------------------|  
-| 주문     | Order              | 배달 주문은 고객이 고객의 배송지로 음식 배달을 요구하는 것을 의미한다.                             |
-| 주문ID   | ID                 | 배달 주문을 유일하게 식별할 수 있는 식별자이다.                                          |
-| 주문상태   | Order Status       | 배달 주문의 주문 진행 상태이다. '대기 중', '접수됨', '제공됨', '배달 중', '배달완료', '주문완료'가 있다. |
-| 주문시간   | Order Date Time    | 배달 주문이 들어온 시간이다.                                                     |
-| 주문상품   | Order Line Item    | 배달 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.                       |
-| 주문접수   | Accept             | 배달 주문 고객의 주문을 접수하는 것이다.                                              |
-| 접수된 주문 | Accepted Order     | 배달 주문이 접수된 주문을 의미한다.                                                 |
-| 배달 대행사 | Delivery Agency    | 배달 주문을 배달해주는 배달 대행사이다.                                               | 
-| 요청된 배달 | Requested Delivery | 배달 대행사에게 요청된 배달을 의미한다.                                               |
-| 준비된 주문 | Served Order       | 배달 주문에 대한 음식이 준비된 것을 의미한다.                                           |
-| 배달시작   | Delivering Order   | 배달 중인 주문을 의미한다.                                                      |
-| 배달완료   | Complete Delivery  | 고객에게 배달이 완료된 것을 의믜한다.                                                |
-| 완료된 주문 | Completed Order    | 배달 주문이 완료된 것을 의미한다.                                                  |
+| 한글명     | 영문명                | 설명                                                                  |
+|---------|--------------------|---------------------------------------------------------------------|  
+| 주문      | Order              | 배달 주문은 고객이 고객의 배송지로 음식 배달을 요구하는 것을 의미한다.                            |
+| 주문ID    | ID                 | 배달 주문을 유일하게 식별할 수 있는 식별자이다.                                         |
+| 주문상태    | Order Status       | 배달 주문의 주문 진행 상태이다. '대기 중', '접수됨', '준비됨', '배달 중', '배달완료', '주문완료'가 있다. |
+| 주문시간    | Order Date Time    | 배달 주문이 들어온 시간이다.                                                    |
+| 주문상품    | Order Line Item    | 배달 주문한 메뉴와 수량에 대한 정보이다. 주문은 하나 이상의 주문상품을 포함한다.                      |
+| 주문접수    | Accept             | 배달 주문 고객의 주문을 접수하는 것이다.                                             |
+| 접수된 주문  | Accepted Order     | 배달 주문이 접수된 주문을 의미한다.                                                |
+| 배달 대행사  | Delivery Agency    | 배달 주문을 배달해주는 배달 대행사이다.                                              |
+| 배달요청    | Request Delivery   | 배달 대행사에게 배달을 요청하는 것이다.                                              |
+| 주문준비    | Prepare            | 배달 주문 음식을 준비하는 것이다.                                                 |
+| 준비된 주문  | Prepared Order     | 배달 주문에 대한 음식이 준비된 것을 의미한다.                                          |
+| 배달 시작   | Start Delivery     | 배달을 시작하는 것이다.                                                       |
+| 배달 중인 주문 | Delivering Order   | 배달 중인 주문을 의미한다.                                                     |
+| 배달완료    | complete Delivery  | 고객에게 배달이 완료하는 것이다.                                                  |
+| 완료된 배달  | Delivered Order  | 고객에게 배달이 완료된 것을 의미한다.                                               |
+| 완료된 주문  | Completed Order    | 배달 주문이 완료된 것을 의미한다.                                                 |
 
 ### 주문테이블(OrderTable)
 
-| 한글명   | 영문명              | 설명 |  
-|-------|------------------| --- |  
-| 주문테이블 | Order Table      | 매장 손님들이 앉아서 식사 가능한 매장 테이블이다. |
-| 주문테이블명 | Name             | 주문테이블의 이름이다. |
-| 손님 수  | Number Of Guests | 주문테이블에 앉은 손님들의 수다. |
-| 사용 여부 | Occupied         | 주문테이블 사용 여부를 나타낸다. |
+| 한글명      | 영문명              | 설명                                               |  
+|----------|------------------|--------------------------------------------------|  
+| 주문테이블    | Order Table      | 매장 손님들이 앉아서 식사 가능한 매장 테이블이다.                     |
+| 주문테이블명   | Name             | 주문테이블의 이름이다.                                     |
+| 손님 수     | Number Of Guests | 주문테이블에 앉은 손님들의 수다.                               |
+| 사용 여부    | Occupied         | 주문테이블 사용 여부를 나타낸다.                               |
+| 사용 중인 테이블 | Occupied Table   | 사용 중인 주문테이블이다. 손님이 사용하고 있는 테이블이다.                |
+| 비어있는 테이블 | Unoccupied Table | 비어있는 주문테이블이다. 손님이 사용하고 있지 않은 테이블을 의미한다. |
+| 정리       | Clear            | 주문테이블을 정리하는 것이다.                                 |
 
 ## 모델링
+
+### 상품(Product)
+#### 속성
+* `상품(Product)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `상품(Product)`은 상품의 이름인 `상품명(Name)`을 가진다.
+  * `상품명(Name)`은 없거나 비어있을 수 없다.
+  * `상품명(Name)`은 `비속어(Profanity)`를 포함할 수 없다.
+* `상품(Product)`은 상품의 가격인 `상품가격(Price)`을 가진다.
+  * `상품가격(Price)`은 0보다 큰 값을 가져야 한다.
+  
+#### 행위
+* `상품(Product)`을 등록 할 수 있다. 
+* `상품(Product)`의 `상품가격(Price)`을 변경할 수 있다.
+  * `상품가격(Price)`이 변경되면 상품가격변경 이벤트를 발행한다.
+* `상품(Product)`을 조회할 수 있다.
+
+### 메뉴그룹(MenuGroup)
+#### 속성
+* `메뉴그룹(MenuGroup)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `메뉴그룹(MenuGroup)`은 메뉴그룹의 이름인 `메뉴그룹명(Name)`을 가진다.
+  * `메뉴그룹명(Name)`은 없거나 비어있을 수 없다.
+
+#### 행위
+* `메뉴그룹(MenuGroup)`을 등록할 수 있다.
+* `메뉴그룹(MenuGroup)`을 조회할 수 있다.
+
+### 메뉴(Menu)
+#### 속성
+* `메뉴(Menu)`는 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `메뉴(Menu)`은 메뉴의 이름인 `메뉴명(Name)`을 가진다.
+  * `메뉴명(Name)`은 없거나 비어있을 수 없다.
+  * `메뉴명(Name)`은 `비속어(Profanity)`를 포함할 수 없다.
+* `메뉴(Menu)`는 메뉴의 가격인 `메뉴가격(Price)`을 가진다.
+  * `메뉴가격(Price)`은 0보다 큰 값을 가져야 한다.
+  * `메뉴가격(Price)`은 `메뉴상품(Menu Product)`의 가격의 합보다 작거나 같아야 한다.
+* `메뉴(Menu)`는 `공개여부(displayed)`를 가진다.
+* `메뉴(Menu)`는 메뉴의 그룹인 `메뉴그룹(MenuGroup)`을 가진다.
+  * `메뉴그룹(MenuGroup)`은 반드시 포함되어야 한다.
+* `메뉴(Menu)`는 한 개 이상의 `메뉴상품(Menu Product)`을 가진다.
+  * `메뉴상품(Menu Product)`는 `일련번호(Seq)`를 가진다.
+  * `메뉴상품(Menu Product)`은 `상품식별자(Product ID)`를 가진다.
+  * `메뉴상품(Menu Product)`은 `상품가격(Product Price)`를 가진다.
+  * `메뉴상품(Menu Product)`은 `메뉴상품수량(Quantity)`을 가진다.
+    * `메뉴상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+  * `메뉴상품(Menu Product)` 반드시 한 개 이상 포함되어야 한다.
+
+#### 행위
+* `메뉴(Menu)`를 등록할 수 있다.
+* `메뉴(Menu)`의 `메뉴가격(Price)`을 변경할 수 있다.
+* `메뉴(Menu)`를 `공개(Display)`할 수 있다.
+  * `메뉴(Menu)`를 `공개(Display)`하면 `공개된 메뉴(Displayed Menu)`가 된다.
+* `메뉴(Menu)`를 `비공개(Hide)`할 수 있다.
+  * `메뉴(Menu)`를 `비공개(Hide)`하면 `비공개된 메뉴(Hidden Menu)`가 된다.
+* `메뉴(Menu)`를 조회할 수 있다.
+
+### 주문상품(OrderLineItem)
+* `주문상품(Order Line Item)`는 `일련번호(Seq)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴(Menu)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴식별자(Menu ID)`를 가진다.
+* `주문상품(Order Line Item)`은 `메뉴가격(Menu Price)`를 가진다.
+* `주문상품(Order Line Item)`은 `주문상품수량(Quantity)`을 가진다.
+  * `주문상품수량(Quantity)`은 0보다 큰 값을 가져야 한다.
+* `주문상품(Order Line Item)` 반드시 한 개 이상 포함되어야 한다.
+  
+### 매장주문(EatInOrder)
+#### 속성
+* `매장주문(EatInOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `매장주문(EatInOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
+  * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `서빙됨(SERVED)`, `주문완료(COMPLETED)`가 있다.
+* `매장주문(EatInOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
+* `매장주문(EatInOrder)`은 주문한 테이블인 `주문테이블(OrderTable)`을 가진다.
+  * `주문테이블(OrderTable)`은 반드시 포함되어야 한다.
+* `매장주문(EatInOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
+
+#### 행위
+* `매장주문(EatInOrder)`을 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 한다.
+  * `주문테이블(OrderTable)`이 `사용 중인 테이블(Occupied Table)`일 경우에만 등록할 수 있다.
+  * `매장주문(EatInOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
+* `매장주문(EatInOrder)`을 접수할 수 있다.
+  * `매장주문(EatInOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
+  * `매장주문(EatInOrder)`이 접수되면 `접수된 주문(Accepted Order)`이 된다.
+* `매장주문(EatInOrder)`을 서빙할 수 있다.
+  * `매장주문(EatInOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
+  * `매장주문(EatInOrder)`이 서빙되면 `서빙된 주문(Served Order)`이 된다.
+* `매장주문(EatInOrder)`을 완료할 수 있다.
+  * `매장주문(EatInOrder)`의 주문상태가 `서빙됨(SERVED)`일 경우에만 완료할 수 있다.
+  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+  * `매장주문(EatInOrder)`이 완료되면 `완료된 주문(Completed Order)`이벤트를 발행한다.
+* `매장주문(EatInOrder)`을 조회할 수 있다.
+
+### 주문테이블(OrderTable)
+#### 속성
+* `주문테이블(OrderTable)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `주문테이블(OrderTable)`은 테이블의 이름인 `주문테이블명(Name)`을 가진다.
+  * `주문테이블명(Name)`은 없거나 비어있을 수 없다.
+* `주문테이블(OrderTable)`은 테이블의 앉은 `손님 수(Number Of Guests)`를 가진다.
+  * `손님 수(Number Of Guests)`는 0보다 작을 수 없다.
+* `주문테이블(OrderTable)`은 사용 중을 나타내는 `사용여부(Occupied)`을 가진다.
+
+#### 행위
+* `주문테이블(OrderTable)`은 등록할 수 있다.
+  * `주문테이블(OrderTable)` 등록되면 `비어있는 테이블(Unoccupied Table)`이 된다.
+* `주문테이블(OrderTable)`은 손님이 앉을 수 있다.
+  * 손님이 앉으면 `사용 중인 테이블(Occupied Table)`이 된다.
+* `주문테이블(OrderTable)`은 `손님 수(Number Of Guests)`를 변경할 수 있다.
+  * `사용 중인 테이블(Occupied Table)`인 경우에만 손님 수를 변경할 수 있다.
+* `주문테이블(OrderTable)`은 `정리(Clear)`할 수 있다.
+  * `주문테이블(OrderTable)`의 모든 `매장주문(EatInOrder)`이 `완료된 주문(Served Order)`인 경우인 경우에만 `정리(Clear)`할 수 있다.
+  * `주문테이블(OrderTable)`이 `정리(Clear)`되면 `비어있는 테이블(Unoccupied Table)`이 된다.
+* `주문테이블(OrderTable)`을 조회할 수 있다.
+
+### 포장주문(TakeoutOrder)
+#### 속성
+* `포장주문(TakeoutOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `포장주문(TakeoutOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
+  * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `주문완료(COMPLETED)`가 있다.
+* `포장주문(TakeoutOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
+* `포장주문(TakeoutOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
+
+#### 행위
+* `포장주문(TakeoutOrder)`을 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 등록할 수 있다.
+  * `포장주문(TakeoutOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`이 접수되면 `접수된 주문(Accepted Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 준비할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
+  * `포장주문(TakeoutOrder)`이 준비되면 `준비된 주문(Prepared Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 완료할 수 있다.
+  * `포장주문(TakeoutOrder)`의 주문상태가 `준비됨(PREPARED)`일 경우에만 완료할 수 있다.
+  * `포장주문(TakeoutOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+* `포장주문(TakeoutOrder)`을 조회할 수 있다.
+
+### 배달주문(DeliveryOrder)
+#### 속성
+* `배달주문(DeliveryOrder)`은 유일하게 식별 가능한 `식별자(ID)`를 가진다.
+* `배달주문(DeliveryOrder)`은 주문의 상태인 `주문상태(Order Status)`를 가진다.
+  * `주문상태(Order Status)`는 `대기 중(WAITING)`, `접수됨(ACCEPTED)`, `준비됨(PREPARED)`, `배달 중(DELIVERING)`, `배달완료(DELIVERED)`, `주문완료(COMPLETED)`가 있다.
+* `배달주문(DeliveryOrder)`은 주문일시인 `주문시간(Order Date Time)`를 가진다.
+* `배달주문(DeliveryOrder)`은 `배송지주소(Delivery Address)`를 가진다.
+* `배달주문(DeliveryOrder)`은 [주문상품(OrderLineItem)](###주문상품(OrderLineItem))을 가진다.
+
+#### 행위
+* `배달주문(DeliveryOrder)`을 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`가 `공개된 메뉴(Displayed Menu)`일 경우에만 등록할 수 있다.
+  * `주문상품(Order Line Item)`의 `메뉴(Menu)`의 `메뉴가격(Price)`이 요청한 주문상품가격과 같아야 등록할 수 있다.
+  * `배달주문(DeliveryOrder)`이 등록되면 `대기주문(Waiting Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `대기 중(WAITING)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`이 접수되면 `배달 대행사(Delivery Agency)`에게 `배달요청(Request Delivery)`한다.
+  * `배달주문(DeliveryOrder)`이 접수되면 `접수된 주문(Accepted Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 준비할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `접수됨(ACCEPTED)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`이 준비되면 `준비된 주문(Prepared Order)`이 된다.
+* `배달주문(DeliveryOrder)`의 배달을 시작할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `준비됨(PREPARED)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 배달이 시작되면 `배달 중인 주문(Delivering Order)`이 된다.
+* `배달주문(DeliveryOrder)`의 배달을 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `배달 중(DELIVERING)`일 경우에만 접수할 수 있다.
+  * `배달주문(DeliveryOrder)`의 배달이 시작되면 `완료된 배달(Delivered Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`의 주문상태가 `배달완료(DELIVERED)`일 경우에만 완료할 수 있다.
+  * `배달주문(DeliveryOrder)`이 완료되면 `완료된 주문(Completed Order)`이 된다.
+* `배달주문(DeliveryOrder)`을 조회할 수 있다.
