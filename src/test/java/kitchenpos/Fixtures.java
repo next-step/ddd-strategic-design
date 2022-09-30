@@ -1,7 +1,5 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -10,6 +8,11 @@ import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.orders.eatin.domain.Order;
+import kitchenpos.orders.eatin.domain.OrderLineItem;
+import kitchenpos.orders.eatin.domain.OrderStatus;
+import kitchenpos.orders.eatin.domain.OrderTable;
+import kitchenpos.orders.eatin.domain.OrderType;
 import kitchenpos.products.domain.Product;
 
 public class Fixtures {

@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.orders.eatin.domain;
 
 public enum OrderType {
     DELIVERY, TAKEOUT, EAT_IN

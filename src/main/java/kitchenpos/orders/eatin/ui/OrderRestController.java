@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.orders.eatin.ui;
 
-import kitchenpos.application.OrderService;
-import kitchenpos.domain.Order;
+import kitchenpos.orders.eatin.application.OrderService;
+import kitchenpos.orders.eatin.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
