@@ -2,6 +2,7 @@ package kitchenpos.domain;
 
 import javax.persistence.*;
 import java.util.UUID;
+import kitchenpos.products.domain.Product;
 
 @Table(name = "menu_product")
 @Entity
