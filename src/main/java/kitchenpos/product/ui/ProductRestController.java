@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.product.ui;
 
-import kitchenpos.application.ProductService;
-import kitchenpos.domain.Product;
+import kitchenpos.product.application.ProductService;
+import kitchenpos.product.domain.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ public class ProductRestController {
     public ResponseEntity<Product> create(@RequestBody final Product request) {
         final Product response = productService.create(request);
         return ResponseEntity.created(URI.create("/api/products/" + response.getId()))
-            .body(response);
+                .body(response);
     }
 
     @PutMapping("/{productId}/price")
