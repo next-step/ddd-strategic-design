@@ -229,6 +229,7 @@ docker compose -p kitchenpos up -d
 - `menuGroup`을 등록 할 수 있다.
     - `name`이 없으면 `menuGroup` 을 등록할 수 없다.
 - `menuProduct`는 `seq`, `product`, `quantity`를 가진다.
+
 - `menu`를 조회할 수 있다.
 - `menu`를 등록 할 수 있다.
     - `price`가 없거나, 0원 이하면 등록할 수 없다.
@@ -264,43 +265,72 @@ docker compose -p kitchenpos up -d
     - `orderTable`이 존재하지 않으면 `change number of guests` 할 수 없다.
     - `guests`가 0 미만이면 `change number of guests` 할 수 없다.
     - `orderTable`에 `sit`한 상태가 아니라면 `change number of guests` 할 수 없다.
+
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`, `orderTable`을 가지고 있다.
 - 매장 주문의  `order type`은 `eat in`이다.
+- `order`를 조회할 수 있다.
 - `order`를 `create` 할 수 있다.
     - `orderTable`이 존재하지 않으면 `create` 할 수 없다.
     - `orderTable`이 상태가 `clear`면 `create` 할 수 없다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
+    - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
 - `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
 - `order`를 `complete` 할 수 있다.
     - `status`가 `served`가 아니라면 `complete` 할 수 없다.
     - `orderTable`의 `guests`를 0명으로 만들고, 상태를 `clear`로 변경한다.
+
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
 
 ### 포장 주문
 
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`을 가지고 있다.
 - 포장 주문의  `order type`은 `takeout`이다.
+- `order`를 조회할 수 있다.
 - `order`를 `create` 할 수 있다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
     - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
 - `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
 - `order`를 `complete` 할 수 있다.
     - `status`가 `served`가 아니면 `complete` 할 수 없다.
+
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
 
 ### 배달 주문
 
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `deliveryAddress`, `orderLineItems`을 가지고 있다.
 - 배달 주문의  `order type`은 `delivery`이다.
+- `order`를 조회할 수 있다.
 - `order`를 `create` 할 수 있다.
     - `orderLineItem`의 `quantity`가 0이라면 `create` 할 수 없다.
     - `deliveryAddress`가 없으면 `create` 할 수 없다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
+    - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `delivering` -> `delivered` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
     - `order`를 `accept`하면 `kitchen rider`는 `order`에 대한 정보를 받을 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
 - `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
 - `order`를 `start delivery` 할 수 있다.
     - `order`가 존재하지 않으면 `start delivery` 할 수 없다.
     - `orderType`이 `delivering`이 아닌 경우 `start delivery` 할 수 없다.
@@ -310,4 +340,5 @@ docker compose -p kitchenpos up -d
     - `status`가 `delivering`가 아닌 경우 `complete delivery` 할 수 없다.
 - `order`를 `complete` 할 수 있다.
     - `status`가 `delivered`가 아닌 경우 `complete` 할 수 없다.
+
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
