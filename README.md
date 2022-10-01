@@ -261,7 +261,6 @@ docker compose -p kitchenpos up -d
     - `orderTable`에 `order`의 `status`가 `completed`가 아니면 `clear` 할 수 없다.
 - `orderTable`을 `occupied` 할 수 있다.
 - `orderTable`의 손님을 `change number of guests` 할 수 있다.
--
     - `orderTable`이 존재하지 않으면 `change number of guests` 할 수 없다.
     - `guests`가 0 미만이면 `change number of guests` 할 수 없다.
     - `orderTable`에 `sit`한 상태가 아니라면 `change number of guests` 할 수 없다.
@@ -274,6 +273,7 @@ docker compose -p kitchenpos up -d
 - `order`를 `accept` 할 수 있다.
 - `order`를 `serve` 할 수 있다.
 - `order`를 `complete` 할 수 있다.
+    - `status`가 `served`가 아니라면 `complete` 할 수 없다.   
     - `orderTable`의 `guests`를 0명으로 만들고, 상태를 `clear`로 변경한다.
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
 
