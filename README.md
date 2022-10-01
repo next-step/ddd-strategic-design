@@ -214,26 +214,39 @@ docker compose -p kitchenpos up -d
     - `product`의 `price`는 0보다 커야한다.
     - `product`의 `name`에는 `profanity`가 속할 수 없다.
 - `product`를 등록할 수 있다.
-  - `price`가 없거나, 0원 이하이면 등록할 수 없다.
-  - `name`이 없거나, `profanity`가 들어가 있으면 상품을 등록할 수 없다.
+    - `price`가 없거나, 0원 이하이면 등록할 수 없다.
+    - `name`이 없거나, `profanity`가 들어가 있으면 상품을 등록할 수 없다.
 - `product`는 `priceChange`를 할 수 있다.
-  - `price`가 없거나, 0원 이하이면 `priceChange` 할 수 없다.
-  - `product`가 존재하지 않으면 `priceChange` 할 수 없다.
-  - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+    - `price`가 없거나, 0원 이하이면 `priceChange` 할 수 없다.
+    - `product`가 존재하지 않으면 `priceChange` 할 수 없다.
+    - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
 
 ### 메뉴
 
 - `menu`는 `id`, `name`, `price`, `menuGroup`, `displayed`, `menuProducts`을 가진다.
     - `menu`의 `price`는 0보다 커야한다.
-- `menu`를 등록 할 수 있다.
-    - `menu` 등록시, `price`가 `menuProduct`들의 금액의 합보다 작거나 같아야 한다.
-- `menu`는 `priceChange`를 할 수 있다.
-    - `menu`의 `price` 변경 시, `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
-- `menu`를 `display` 할 수 있다.
-- `menu`를 `hide` 할 수 있다.
 - `menuGroup`는 `id`, `name`을 가진다.
 - `menuGroup`을 등록 할 수 있다.
+    - `name`이 없으면 `menuGroup` 을 등록할 수 없다.
 - `menuProduct`는 `seq`, `product`, `quantity`를 가진다.
+- `menu`를 조회할 수 있다.
+- `menu`를 등록 할 수 있다.
+    - `price`가 없거나, 0원 이하면 등록할 수 없다.
+    - `menuGroup`이 없다면 등록할 수 없다.
+    - `menuProducts`가 비어있으면 등록할 수 없다.
+    - `product`와 `menuProduct`의 갯수가 일치하지 않으면 등록할 수 없다.
+    - `menuProducts`에 `quantity`가 0이 있으면 등록할 수 없다.
+    - `price`가 `menuProduct`들의 금액의 합보다 작거나 같아야 한다.
+    - `name`이 없거나, `profanity`가 들어가 있으면 `menu` 을 등록할 수 없다.
+- `menu`는 `priceChange`를 할 수 있다.
+    - `menu`의 `price` 변경 시, `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+    - `menu`가 존재하지 않으면 `priceChange`를 할 수 없다.
+    - `menuProducts`의 `price` 합이 `menu`의 `price` 보다 작으면 `priceChange`를 할 수 없다.
+- `menu`를 `display` 할 수 있다.
+    - `menu`가 존재하지 않으면 `display` 할 수 없다.
+    - `menuProducts`의 `price` 합이 `menu`의 `price` 보다 작으면 `priceChange`를 할 수 없다.
+- `menu`를 `hide` 할 수 있다.
+    - `menu`가 존재하지 않으면 `hide` 할 수 없다.
 
 ### 매장 주문
 
