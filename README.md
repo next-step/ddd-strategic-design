@@ -294,12 +294,20 @@ docker compose -p kitchenpos up -d
 
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `deliveryAddress`, `orderLineItems`을 가지고 있다.
 - 배달 주문의  `order type`은 `delivery`이다.
-- `order`를 등록 할 수 있다.
+- `order`를 `create` 할 수 있다.
+  - `orderLineItem`의 `quantity`가 0이라면 `create` 할 수 없다.
+  - `deliveryAddress`가 없으면 `create` 할 수 없다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `delivering` -> `delivered` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
-    - `order`를 `accpte`하면 `kitchen rider`는 `order`에 대한 정보를 받을 수 있다.
+    - `order`를 `accept`하면 `kitchen rider`는 `order`에 대한 정보를 받을 수 있다.
 - `order`를 `serve` 할 수 있다.
 - `order`를 `start delivery` 할 수 있다.
+  - `order`가 존재하지 않으면 `start delivery` 할 수 없다.
+  - `orderType`이 `delivering`이 아닌 경우 `start delivery` 할 수 없다.
+  - `status`가 `served`가 아닌 경우 `start delivery` 할 수 없다.
 - `order`를 `complete delivery` 할 수 있다.
+  - `order`가 존재하지 않으면 `complete delivery` 할 수 없다.
+  - `status`가 `delivering`가 아닌 경우 `complete delivery` 할 수 없다.
 - `order`를 `complete` 할 수 있다.
+  - `status`가 `delivered`가 아닌 경우 `complete` 할 수 없다.
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
