@@ -251,18 +251,30 @@ docker compose -p kitchenpos up -d
 ### 매장 주문
 
 - `orderTable`는 `id`, `name`, `numberOfGuests`, `occupied`를 가진다.
-- `orderTable`를 생성 할 수 있다.
+- `orderTable`을 조회할 수 있다.
+- `orderTable`를 등록 할 수 있다.
+    - `name`이 없으면 등록 할 수 없다.
 - `orderTable`에 `sit` 할 수 있다.
+    - `orderTalbe`이 존재하지 않으면 `sit` 할 수 없다.
 - `orderTable`을 `clear` 할 수 있다.
+    - `orderTable`이 존재하지 않으면 `clear` 할 수 없다.
+    - `orderTable`에 `order`의 `status`가 `completed`가 아니면 `clear` 할 수 없다.
 - `orderTable`을 `occupied` 할 수 있다.
 - `orderTable`의 손님을 `change number of guests` 할 수 있다.
+-
+    - `orderTable`이 존재하지 않으면 `change number of guests` 할 수 없다.
+    - `guests`가 0 미만이면 `change number of guests` 할 수 없다.
+    - `orderTable`에 `sit`한 상태가 아니라면 `change number of guests` 할 수 없다.
 - `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`, `orderTable`을 가지고 있다.
 - 매장 주문의  `order type`은 `eat in`이다.
-- `order`를 등록 할 수 있다.
+- `order`를 `create` 할 수 있다.
+    - `orderTable`이 존재하지 않으면 `create` 할 수 없다.
+    - `orderTable`이 상태가 `clear`면 `create` 할 수 없다.
 - `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
 - `order`를 `accept` 할 수 있다.
 - `order`를 `serve` 할 수 있다.
 - `order`를 `complete` 할 수 있다.
+    - `orderTable`의 `guests`를 0명으로 만들고, 상태를 `clear`로 변경한다.
 - `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
 
 ### 포장 주문
