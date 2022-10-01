@@ -214,8 +214,12 @@ docker compose -p kitchenpos up -d
     - `product`의 `price`는 0보다 커야한다.
     - `product`의 `name`에는 `profanity`가 속할 수 없다.
 - `product`를 등록할 수 있다.
+  - `price`가 없거나, 0원 이하이면 등록할 수 없다.
+  - `name`이 없거나, `profanity`가 들어가 있으면 상품을 등록할 수 없다.
 - `product`는 `priceChange`를 할 수 있다.
-    - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+  - `price`가 없거나, 0원 이하이면 `priceChange` 할 수 없다.
+  - `product`가 존재하지 않으면 `priceChange` 할 수 없다.
+  - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
 
 ### 메뉴
 
