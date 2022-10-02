@@ -153,4 +153,136 @@ docker compose -p kitchenpos up -d
 |-----------|----------------|------------------------------------------------------|
 | 주문아이템     | OrderLineItem  | 주문에 들어있는 메뉴의 종류별 갯수와 주문 당시의 가격을 기록하는 역할              |
 
+
 ## 모델링
+
+
+### 가게 관리
+
+> 사장님이 가게에서 판매할 메뉴/상품을 관리하는 context
+
+#### 메뉴
+
+ - 메뉴는 n가지 종류의 상품이 각 n개로 이루어져 있다.
+ - 메뉴에는 이름과 가격이 존재한다.
+ - 메뉴 이름에는 비속어를 쓸 수 없다.
+ - 메뉴 가격은 상품 가격 * 상품 수량의 합보다 클 수 없다.
+ - 메뉴는 노출 여부를 변경할 수 있다.
+ - 노출 여부에 때라 손님에게 보이거나 보이지 않을 수 있으며, 주문 역시 되지 않는다.
+ - 메뉴는 메뉴 그룹으로 묶을 수 있다.
+
+#### 상품
+
+ - 상품은 이름과 가격이 있다.
+ - 상품 이름에는 비속어를 쓸 수 없다.
+ - 상품의 이름이나 가격을 변경할 수 있다.
+ - 상품의 가격이 변경될 때, 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 노출 해제된다.
+
+
+### 상품 주문
+
+> 손님이 가게에서 메뉴를 골라서 주문하는 context
+
+#### 메뉴
+
+ - 주문 가능한 최소 단위로, 이름과 가격을 가진다.
+ - 노출 되지 않는 메뉴는 주문할 수 없다.
+
+#### 주문
+
+ - 주문은 n개의 주문아이템으로 이루어진다.
+ - 주문의 가격은 주문 아이템 가격의 합이다.
+
+#### 주문아이템
+
+ - 주문 아이템은 주문 메뉴와 갯수, 주문 당시의 가격을 기록한다.
+ - 주문 당시의 가격은 당시 주문 메뉴 가격 * 주문 메뉴 갯수 이다.
+
+
+### 배달 주문 관리
+
+> 생성된 배달 주문이 손님에게 배달 완료되기까지 관리하는 context
+
+#### 배달 주문
+
+ - 배달 주문은 유효한 배달 주소가 필요하다.
+
+![image](https://user-images.githubusercontent.com/37537207/193435880-7567e912-0a6b-4fe8-b65c-618041dc5e66.png)
+
+```puml
+@startuml
+
+WAITING : 유저가 주문을 한 상태
+ACCEPTED : 유저의 주문이 사장님에게 확인되고 조리에 들어감
+ACCEPTED : 배달 대행사 서비스에 배달기사 요청
+SERVED : 배달 준비가 된 상태
+DELIVERING : 음식이 배달 기사에 의해 배송중 
+DELIVERED : 배송이 완료됨 
+COMPLETED : 손님이 음식을 받고 주문이 완료됨
+
+[*] -> WAITING
+WAITING -> ACCEPTED
+ACCEPTED -> SERVED
+SERVED -> DELIVERING
+DELIVERING -> DELIVERED
+DELIVERED -> COMPLETED
+
+@enduml
+```
+
+
+### 홀 주문 관리
+
+> 생성된 홀 주문이 손님에게 서빙되고 손님이 떠나기까지 관리하는 context
+
+#### 홀 주문
+
+ - 홀 주문은 점유되지 않는 테이블이 필요하다.
+
+![image](https://user-images.githubusercontent.com/37537207/193435979-f70ae941-1753-4b79-8618-bd242a8bf3d6.png)
+
+```puml
+@startuml
+
+WAITING : 유저가 주문을 한 상태
+ACCEPTED : 유저의 주문이 사장님에게 확인되고 조리에 들어감
+SERVED : 조리가 완료되어 테이블에 손님들 음식이 나감
+COMPLETED : 손님이 음식을 다 먹고 테이블에서 떠남
+
+[*] -> WAITING
+WAITING -> ACCEPTED
+ACCEPTED -> SERVED
+SERVED -> COMPLETED
+
+@enduml
+```
+
+#### 주문 테이블
+
+ - 테이블은 앉은 손님 숫자와 점유 여부를 가진다.
+ - 처음 주문이 생성될 때 테이블을 점유한다.
+ - 주문이 COMPLETED 가 되면 테이블 점유를 해제한다.
+
+### 포장 주문 관리
+
+> 생성된 포장 주문이 손님에게 전달 완료되기까지 관리하는 context
+
+#### 포장 주문
+
+![image](https://user-images.githubusercontent.com/37537207/193436003-7c1d6b01-e61e-453e-b7aa-ddcb46e58fb9.png)
+
+```puml
+@startuml
+
+WAITING : 유저가 주문을 한 상태
+ACCEPTED : 유저의 주문이 사장님에게 확인되고 조리에 들어감
+SERVED : 조리가 완료되어 요리가 전달 준비됨
+COMPLETED : 손님이 음식을 전달 받음
+
+[*] -> WAITING
+WAITING -> ACCEPTED
+ACCEPTED -> SERVED
+SERVED -> COMPLETED
+
+@enduml
+```
