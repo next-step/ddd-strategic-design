@@ -1,9 +1,10 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
+import kitchenpos.eatinorder.application.OrderTableService;
+import kitchenpos.eatinorder.domain.OrderRepository;
+import kitchenpos.eatinorder.domain.OrderStatus;
+import kitchenpos.eatinorder.domain.OrderTable;
+import kitchenpos.eatinorder.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,10 +40,10 @@ class OrderTableServiceTest {
         final OrderTable actual = orderTableService.create(expected);
         assertThat(actual).isNotNull();
         assertAll(
-            () -> assertThat(actual.getId()).isNotNull(),
-            () -> assertThat(actual.getName()).isEqualTo(expected.getName()),
-            () -> assertThat(actual.getNumberOfGuests()).isZero(),
-            () -> assertThat(actual.isOccupied()).isFalse()
+                () -> assertThat(actual.getId()).isNotNull(),
+                () -> assertThat(actual.getName()).isEqualTo(expected.getName()),
+                () -> assertThat(actual.getNumberOfGuests()).isZero(),
+                () -> assertThat(actual.isOccupied()).isFalse()
         );
     }
 
@@ -52,7 +53,7 @@ class OrderTableServiceTest {
     void create(final String name) {
         final OrderTable expected = createOrderTableRequest(name);
         assertThatThrownBy(() -> orderTableService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("빈 테이블을 해지할 수 있다.")
@@ -69,8 +70,8 @@ class OrderTableServiceTest {
         final UUID orderTableId = orderTableRepository.save(orderTable(true, 4)).getId();
         final OrderTable actual = orderTableService.clear(orderTableId);
         assertAll(
-            () -> assertThat(actual.getNumberOfGuests()).isZero(),
-            () -> assertThat(actual.isOccupied()).isFalse()
+                () -> assertThat(actual.getNumberOfGuests()).isZero(),
+                () -> assertThat(actual.isOccupied()).isFalse()
         );
     }
 
@@ -81,7 +82,7 @@ class OrderTableServiceTest {
         final UUID orderTableId = orderTable.getId();
         orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
         assertThatThrownBy(() -> orderTableService.clear(orderTableId))
-            .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("방문한 손님 수를 변경할 수 있다.")
@@ -100,7 +101,7 @@ class OrderTableServiceTest {
         final UUID orderTableId = orderTableRepository.save(orderTable(true, 0)).getId();
         final OrderTable expected = changeNumberOfGuestsRequest(numberOfGuests);
         assertThatThrownBy(() -> orderTableService.changeNumberOfGuests(orderTableId, expected))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("빈 테이블은 방문한 손님 수를 변경할 수 없다.")
@@ -109,7 +110,7 @@ class OrderTableServiceTest {
         final UUID orderTableId = orderTableRepository.save(orderTable(false, 0)).getId();
         final OrderTable expected = changeNumberOfGuestsRequest(4);
         assertThatThrownBy(() -> orderTableService.changeNumberOfGuests(orderTableId, expected))
-            .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("주문 테이블의 목록을 조회할 수 있다.")
