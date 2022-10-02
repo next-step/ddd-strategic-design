@@ -1,9 +1,9 @@
-package kitchenpos.order.application;
+package kitchenpos.eatinorder.application;
 
-import kitchenpos.order.infra.KitchenridersClient;
+import kitchenpos.deliveryorder.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.domain.*;
+import kitchenpos.eatinorder.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
