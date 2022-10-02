@@ -207,7 +207,7 @@ docker compose -p kitchenpos up -d
 
  - 배달 주문은 유효한 배달 주소가 필요하다.
 
-![image](https://user-images.githubusercontent.com/37537207/193435880-7567e912-0a6b-4fe8-b65c-618041dc5e66.png)
+![README](https://user-images.githubusercontent.com/37537207/193436195-a04c15d6-f2c1-45c3-b224-06afa082ff15.png)
 
 ```puml
 @startuml
@@ -239,7 +239,7 @@ DELIVERED -> COMPLETED
 
  - 홀 주문은 점유되지 않는 테이블이 필요하다.
 
-![image](https://user-images.githubusercontent.com/37537207/193435979-f70ae941-1753-4b79-8618-bd242a8bf3d6.png)
+![README](https://user-images.githubusercontent.com/37537207/193436218-1824a49e-cdc5-4fba-8189-485775721873.png)
 
 ```puml
 @startuml
@@ -269,7 +269,7 @@ SERVED -> COMPLETED
 
 #### 포장 주문
 
-![image](https://user-images.githubusercontent.com/37537207/193436003-7c1d6b01-e61e-453e-b7aa-ddcb46e58fb9.png)
+![README](https://user-images.githubusercontent.com/37537207/193436236-072079a0-cb27-4563-b3d9-5242f8e39296.png)
 
 ```puml
 @startuml
