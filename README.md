@@ -207,3 +207,138 @@ docker compose -p kitchenpos up -d
 | 가격   | price           | 주문에 속한 메뉴의 가격과 수량을 곱한 값. 0 이상이어야 한다.                                                  |
 
 ## 모델링
+
+### 상품
+
+- `product`는 `id`, `name`, `price`를 가진다.
+    - `product`의 `price`는 0보다 커야한다.
+    - `product`의 `name`에는 `profanity`가 속할 수 없다.
+- `product`를 등록할 수 있다.
+    - `price`가 없거나, 0원 이하이면 등록할 수 없다.
+    - `name`이 없거나, `profanity`가 들어가 있으면 상품을 등록할 수 없다.
+- `product`는 `priceChange`를 할 수 있다.
+    - `price`가 없거나, 0원 이하이면 `priceChange` 할 수 없다.
+    - `product`가 존재하지 않으면 `priceChange` 할 수 없다.
+    - `priceChange` 시에 변경 된 `price`가 `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+
+### 메뉴
+
+- `menu`는 `id`, `name`, `price`, `menuGroup`, `displayed`, `menuProducts`을 가진다.
+    - `menu`의 `price`는 0보다 커야한다.
+- `menuGroup`는 `id`, `name`을 가진다.
+- `menuGroup`을 등록 할 수 있다.
+    - `name`이 없으면 `menuGroup` 을 등록할 수 없다.
+- `menuProduct`는 `seq`, `product`, `quantity`를 가진다.
+
+- `menu`를 조회할 수 있다.
+- `menu`를 등록 할 수 있다.
+    - `price`가 없거나, 0원 이하면 등록할 수 없다.
+    - `menuGroup`이 없다면 등록할 수 없다.
+    - `menuProducts`가 비어있으면 등록할 수 없다.
+    - `product`와 `menuProduct`의 갯수가 일치하지 않으면 등록할 수 없다.
+    - `menuProducts`에 `quantity`가 0이 있으면 등록할 수 없다.
+    - `price`가 `menuProduct`들의 금액의 합보다 작거나 같아야 한다.
+    - `name`이 없거나, `profanity`가 들어가 있으면 `menu` 을 등록할 수 없다.
+- `menu`는 `priceChange`를 할 수 있다.
+    - `menu`의 `price` 변경 시, `menuProduct`의 금액의 합보다 크면 상품이 숨겨진다.
+    - `menu`가 존재하지 않으면 `priceChange`를 할 수 없다.
+    - `menuProducts`의 `price` 합이 `menu`의 `price` 보다 작으면 `priceChange`를 할 수 없다.
+- `menu`를 `display` 할 수 있다.
+    - `menu`가 존재하지 않으면 `display` 할 수 없다.
+    - `menuProducts`의 `price` 합이 `menu`의 `price` 보다 작으면 `priceChange`를 할 수 없다.
+- `menu`를 `hide` 할 수 있다.
+    - `menu`가 존재하지 않으면 `hide` 할 수 없다.
+
+### 매장 주문
+
+- `orderTable`는 `id`, `name`, `numberOfGuests`, `occupied`를 가진다.
+- `orderTable`을 조회할 수 있다.
+- `orderTable`를 등록 할 수 있다.
+    - `name`이 없으면 등록 할 수 없다.
+- `orderTable`에 `sit` 할 수 있다.
+    - `orderTalbe`이 존재하지 않으면 `sit` 할 수 없다.
+- `orderTable`을 `clear` 할 수 있다.
+    - `orderTable`이 존재하지 않으면 `clear` 할 수 없다.
+    - `orderTable`에 `order`의 `status`가 `completed`가 아니면 `clear` 할 수 없다.
+- `orderTable`을 `occupied` 할 수 있다.
+- `orderTable`의 손님을 `change number of guests` 할 수 있다.
+    - `orderTable`이 존재하지 않으면 `change number of guests` 할 수 없다.
+    - `guests`가 0 미만이면 `change number of guests` 할 수 없다.
+    - `orderTable`에 `sit`한 상태가 아니라면 `change number of guests` 할 수 없다.
+
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`, `orderTable`을 가지고 있다.
+- 매장 주문의  `order type`은 `eat in`이다.
+- `order`를 조회할 수 있다.
+- `order`를 `create` 할 수 있다.
+    - `orderTable`이 존재하지 않으면 `create` 할 수 없다.
+    - `orderTable`이 상태가 `clear`면 `create` 할 수 없다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
+    - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
+- `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
+- `order`를 `complete` 할 수 있다.
+    - `status`가 `served`가 아니라면 `complete` 할 수 없다.
+    - `orderTable`의 `guests`를 0명으로 만들고, 상태를 `clear`로 변경한다.
+
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
+
+### 포장 주문
+
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `orderLineItems`을 가지고 있다.
+- 포장 주문의  `order type`은 `takeout`이다.
+- `order`를 조회할 수 있다.
+- `order`를 `create` 할 수 있다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
+    - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
+- `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
+- `order`를 `complete` 할 수 있다.
+    - `status`가 `served`가 아니면 `complete` 할 수 없다.
+
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
+
+### 배달 주문
+
+- `order`는 `id`, `type`, `status`, `orderDateTime`, `deliveryAddress`, `orderLineItems`을 가지고 있다.
+- 배달 주문의  `order type`은 `delivery`이다.
+- `order`를 조회할 수 있다.
+- `order`를 `create` 할 수 있다.
+    - `orderLineItem`의 `quantity`가 0이라면 `create` 할 수 없다.
+    - `deliveryAddress`가 없으면 `create` 할 수 없다.
+    - `menu`가 없으면 `create` 할 수 없다.
+    - `orderLineItems`의 `price`가 `menu`의 `price`와 다른 경우 `create` 할 수 없다.
+    - `menu`가 `hide`되어 있다면 `create` 할 수 없다.
+    - `menu`와 `orderLineItem`이 일치하지 않으면 `create` 할 수 없다.
+    - `orderLineItems`의 `quantity`가 0인 경우에는 `create` 할 수 없다.
+- `order`의 `status`는 `wating` -> `accpted` -> `served` -> `delivering` -> `delivered` -> `completed` 순으로 진행 된다.
+- `order`를 `accept` 할 수 있다.
+    - `order`를 `accept`하면 `kitchen rider`는 `order`에 대한 정보를 받을 수 있다.
+    - `order`가 존재하지 않으면 `accept`  할 수 없다.
+    - `status`가 `wating`가 아니면 `accept`  할 수 없다.
+- `order`를 `serve` 할 수 있다.
+    - `status`가 `accept`가 아니면 `serve`  할 수 없다.
+- `order`를 `start delivery` 할 수 있다.
+    - `order`가 존재하지 않으면 `start delivery` 할 수 없다.
+    - `orderType`이 `delivering`이 아닌 경우 `start delivery` 할 수 없다.
+    - `status`가 `served`가 아닌 경우 `start delivery` 할 수 없다.
+- `order`를 `complete delivery` 할 수 있다.
+    - `order`가 존재하지 않으면 `complete delivery` 할 수 없다.
+    - `status`가 `delivering`가 아닌 경우 `complete delivery` 할 수 없다.
+- `order`를 `complete` 할 수 있다.
+    - `status`가 `delivered`가 아닌 경우 `complete` 할 수 없다.
+
+- `orderLineItem`은 `seq`, `menu`, `quantity`, `price`를 가진다.
