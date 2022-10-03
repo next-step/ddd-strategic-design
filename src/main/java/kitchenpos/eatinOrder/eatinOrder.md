@@ -1,1 +1,1 @@
-deliveryOrder package
+eatinOrder package
