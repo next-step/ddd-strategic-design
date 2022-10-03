@@ -8,11 +8,11 @@ import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderType;
+import kitchenpos.eatinorder.domain.Order;
+import kitchenpos.eatinorder.domain.OrderLineItem;
+import kitchenpos.eatinorder.domain.OrderStatus;
+import kitchenpos.eatinorder.domain.OrderTable;
+import kitchenpos.eatinorder.domain.OrderType;
 import kitchenpos.product.domain.Product;
 
 public class Fixtures {
