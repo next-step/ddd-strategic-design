@@ -139,7 +139,6 @@ docker compose -p kitchenpos up -d
 | 빈 테이블      | empty table       | 손님이 앉아있지 않은 테이블.                      |
 | 빈 테이블 설정   | table unuse       | 손님이 식사를 마치고 가계를 나가서 테이블이 비어있는 상태를 의미. |
 | 빈 테이블 해지   | table use         | 손님이 자리에 앉아 있는 상태                      |
-| 빈 테이블 해지   | table use         | 손님이 자리에 앉아 있는 상태                      |
 | 방문한 손님 수   | number of guests  | 하나의 테이블에 앉아있는 손님 수                    |
 | 주문 테이블 목록  | order table list  | 주문 테이블의 전체 목록.                        |
 | 완료되지 않은 주문 | uncompleted order | 완료되지 않은 매장 주문                         |
