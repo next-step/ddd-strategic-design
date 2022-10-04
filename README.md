@@ -103,6 +103,7 @@ docker compose -p kitchenpos up -d
 - 주문 항목의 수량은 0 이상이어야 한다.
 - 숨겨진 메뉴는 주문할 수 없다.
 - 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
+- 배달주소가 없으면 등록할 수 없다.
 - 주문을 접수한다.
 - 접수 대기 중인 주문만 접수할 수 있다.
 - 접수되면 배달 대행사를 호출한다.
@@ -216,6 +217,9 @@ docker compose -p kitchenpos up -d
 ### ContextMap
 ![이미지](./kitchenpos_context_map.png)
 
+### ClassDiagram
+![이미지](./kitchenpos_class_diagram.png)
+
 ### 상품
 - `Product`는 상품이름과 상품가격을 갖는다.
 - `Product`를 등록할 수 있다.
@@ -239,7 +243,7 @@ docker compose -p kitchenpos up -d
     - `MenuProduct`를 1개 이상 등록해야한다.
     - `MenuProduct`는 `Product`와 수량을 갖는다.
       - `Product`는 등록된 상품을 사용해야한다. 
-      - `MenuProduct`의 수량은 0 이상이어야 한다.
+      - `MenuProduct`의 수량은 0 이상이어야 한다.₩
   - `MenuPrice`는 0원 이상이어야 한다.
   - `MenuPrice`는 `TotalProductPrice` 보다 낮거나 같아야한다.
   - `MenuGroup`정보를 입력해야한다.
@@ -247,14 +251,15 @@ docker compose -p kitchenpos up -d
   - `MenuName`은 공백 또는 비속어를 입력할 수 없다.
 - `MenuPrice`를 변경할 수 있다.
   - `MenuPrice`는 0원 이상이어야 한다.
+  - `MenuProducts`에서 `TotalProductPrice`를 계산하여 `MenuPrice`와 비교한다.
   - `MenuPrice`는 `TotalProductPrice` 보다 낮거나 같아야한다.
+  - `MenuDisplayCondition`은 `MenuPrice`와 `TotalProductPrice`를 비교하여 `Menu`노출 여부를 결정한다.
+    - `MenuPrice`가 `TotalProductPrice`보다 높으면 숨김상태를 반환한다.
+    - `MenuPrice`가 `TotalProductPrice`보다 낮거나 같으면 노출상태를 반환한다.
 - `Menu`를 노출할 수 있다.
+  - `MenuProducts`에서 `TotalProductPrice`를 계산하여 `MenuPrice`와 비교한다.
   - `MenuPrice`가 `TotalProductPrice` 보다 높을경우 노출할 수 없다.
 - `Menu`를 숨길 수 있다.
-- `MenuProducts`에서 `TotalProductPrice`를 계산한다.
-- `MenuDisplayCondition`은 `Menu`노출 여부를 결정한다.
-  - `MenuPrice`가 `TotalProductPrice`보다 높으면 숨김상태를 반환한다.
-  - `MenuPrice`가 `TotalProductPrice`보다 낮거나 같으면 노출상태를 반환한다.
 - 등록된 `Menu` 목록을 조회할 수 있다.
 
 ### 주문테이블
@@ -285,6 +290,7 @@ docker compose -p kitchenpos up -d
     - 빈 테이블은 등록할 수 없다.
   - `EatInOrderStatus`는 접수대기 상태로 등록한다.
   - `EatInOrderPrice`를 입력해야한다.
+    - 입력한 `EatInOrderPrice`와 `EatInOrderMenus`에서 계산한 `TotalMenuPrice`를 비교한다.
     - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
 - `EatInOrderStatus`를 변경할 수 있다.
   - `EatInOrderStatus`가 주문완료 상태가 되면 `OrderTable`을 빈테이블로 변경한다. 
@@ -301,13 +307,13 @@ docker compose -p kitchenpos up -d
       - 수량은 0, 양의 정수를 입력할 수 있다.
   - `TakeoutOrderStatus`는 접수대기 상태로 등록한다.
   - `TakeoutOrderPrice`를 입력해야한다.
+    - 입력한 `TakeoutOrderPrice`와 `TakeoutOrderMenus`에서 계산한 `TotalMenuPrice`를 비교한다.
     - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
 - `TakeoutOrderStatus`를 변경할 수 있다.`
-- `TakeoutOrderMenus`에서 `TotalMenuPrice`를 계산한다.
 - 등록된 `TakeoutOrder`목록을 조회할 수 있다.
 
 ### 배달주문
-- `DeliveryOrder`는 주문상태, 주문항목, 주문가격을 갖는다.
+- `DeliveryOrder`는 주문상태, 주문항목, 주문가격, 배달주소를 갖는다.
 - `DeliveryOrder`를 등록할 수 있다.
   - `DeliveryOrderMenus`를 입력해야한다.
     - `DeliveryOrderMenu`를 1개 이상 입력해야한다.
@@ -316,8 +322,8 @@ docker compose -p kitchenpos up -d
       - 수량은 0, 양의 정수를 입력할 수 있다.
   - `DeliveryOrderStatus`는 접수대기 상태로 등록한다.
   - `DeliveryOrderPrice`를 입력해야한다.
+    - 입력한 `DeliveryOrderPrice`와 `DeliveryOrderMenus`에서 계산한 `TotalMenuPrice`를 비교한다.
     - `TotalMenuPrice`와 다르면 주문을 등록할 수 없다.
   - `DeliveryAddress`는 공백이면 안된다.
 - `DeliveryOrderStatus`를 변경할 수 있다.
-- `DeliveryOrderMenus`에서 `TotalMenuPrice`를 계산한다.
 - 등록된 `DeliveryOrder`목록을 조회할 수 있다.
