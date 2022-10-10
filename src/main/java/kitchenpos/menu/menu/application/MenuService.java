@@ -1,11 +1,11 @@
-package kitchenpos.menu.application;
+package kitchenpos.menu.menu.application;
 
-import kitchenpos.menu.domain.ProfanityClient;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuGroup;
-import kitchenpos.menu.domain.MenuGroupRepository;
-import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menu.domain.ProfanityClient;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menugroup.domain.MenuGroup;
+import kitchenpos.menu.menugroup.domain.MenuGroupRepository;
+import kitchenpos.menu.menu.domain.MenuProduct;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import kitchenpos.products.domain.Product;
 import kitchenpos.products.domain.ProductRepository;
 import org.springframework.stereotype.Service;

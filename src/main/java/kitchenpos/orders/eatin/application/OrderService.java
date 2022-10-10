@@ -1,8 +1,8 @@
 package kitchenpos.orders.eatin.application;
 
 import kitchenpos.orders.delivery.domain.KitchenridersClient;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import kitchenpos.orders.eatin.domain.EatInOrder;
 import kitchenpos.orders.eatin.domain.OrderLineItem;
 import kitchenpos.orders.eatin.domain.OrderRepository;

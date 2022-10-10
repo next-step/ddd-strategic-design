@@ -1,9 +1,9 @@
 package kitchenpos.products.application;
 
 import kitchenpos.products.domain.PurgomalumClient;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.MenuProduct;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import kitchenpos.products.domain.Product;
 import kitchenpos.products.domain.ProductRepository;
 import org.springframework.stereotype.Service;

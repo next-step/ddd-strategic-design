@@ -1,9 +1,9 @@
 package kitchenpos.products.application;
 
 import kitchenpos.products.infra.FakePurgomalumClient;
-import kitchenpos.menu.application.InMemoryMenuRepository;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.menugroup.infra.InMemoryMenuRepository;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.MenuRepository;
 import kitchenpos.products.domain.Product;
 import kitchenpos.products.domain.ProductRepository;
 import kitchenpos.products.domain.PurgomalumClient;

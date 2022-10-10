@@ -1,9 +1,10 @@
-package kitchenpos.menu.domain;
+package kitchenpos.menu.menu.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import kitchenpos.menu.menugroup.domain.MenuGroup;
 
 @Table(name = "menu")
 @Entity

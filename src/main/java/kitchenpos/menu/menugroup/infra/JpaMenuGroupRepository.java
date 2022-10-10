@@ -1,5 +1,7 @@
-package kitchenpos.menu.domain;
+package kitchenpos.menu.menugroup.infra;
 
+import kitchenpos.menu.menugroup.domain.MenuGroup;
+import kitchenpos.menu.menugroup.domain.MenuGroupRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

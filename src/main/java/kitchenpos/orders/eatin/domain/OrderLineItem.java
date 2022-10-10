@@ -3,7 +3,7 @@ package kitchenpos.orders.eatin.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
-import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.menu.domain.Menu;
 
 @Table(name = "order_line_item")
 @Entity

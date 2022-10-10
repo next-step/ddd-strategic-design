@@ -1,7 +1,7 @@
-package kitchenpos.menu.infra;
+package kitchenpos.menu.menu.infra;
 
 import java.net.URI;
-import kitchenpos.menu.domain.ProfanityClient;
+import kitchenpos.menu.menu.domain.ProfanityClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
