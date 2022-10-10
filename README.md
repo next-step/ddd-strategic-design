@@ -135,3 +135,75 @@ docker compose -p kitchenpos up -d
 | 포장 주문  | 포장 (주문)         | Takeout          | 손님이 매장에 방문하여 메뉴를 직접 전달받지만 매장 내에서 주문 테이블을 점유하지는 않는 유형.                                 |
 
 ## 모델링
+
+### 공통
+
+* `Price`는 항상 `0` 이상이다.
+* `Name`은 비어있을 수 없으며 비속어를 포함할 수 없다.
+
+### 상품
+
+* `Product`는 `Name`을 갖는다.
+* `Product`는 `Price`를 갖는다.
+  * `Product`의 `Price`를 변경할 수 있다.
+  * `Product`의 `Price`가 변경되면 `MenuPricePolicy`에 따라 `Menu`의 상태가 변경될 수 있다.
+
+### 메뉴
+
+* `Menu`는 `Name`을 갖는다.
+* `Menu`는 하나의 `MenuGroup`을 갖는다(`Menu`는 하나의 `MenuGroup`에 속한다).
+* `Menu`는 노출 여부 상태를 갖는다.
+* `Menu`는 `Price`를 갖는다.
+  * `Menu`의 `Price`는 메뉴 가격 정책을 따라야 한다.
+* `Menu`에는 하나 이상의 `Product`가 포함된다.
+* `Menu`에 포함된 각 `Product`의 `Quantity`는 `1` 이상이다.
+
+#### 메뉴 그룹
+
+* `MenuGroup`은 `Name`을 갖는다.
+
+#### 메뉴 가격 정책
+
+* `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price` 합보다 작아야 한다.
+* 메뉴 가격 정책을 만족하지 않는 `Menu`는 노출할 수 없다.
+  * 이미 노출된 상태라면 숨겨진다.
+
+### 주문
+
+* `Order`는 상태를 갖는다.
+* `Order`는 주문 시각을 갖는다.
+* `Order`는 하나 이상의 `OrderLineItem`을 갖는다.
+* `OrerLineItem`는 하나의 `Menu`와 수량, `Price`를 갖는다.
+  * `OrderLineItem`의 `Price`는 주문 시점 `Menu`의 `Price`와 같다.
+
+#### 매장 주문
+
+* `Order`는 `OrderTable`을 갖는다.
+  * 이미 점유된 `OrderTable`을 가질 수는 없다.
+* `Order`의 상태는 `Waiting`, `Accepted`, `Serving`, `Served`, `Completed` 순서로 변화한다.
+* `OrderLineItem`이 갖는 수량은 모든 정수가 될 수 있다.
+
+##### 주문 테이블
+
+* `OrderTable`은 `Name`을 갖는다.
+* `OrderTable`은 점유 상태를 갖는다.
+  * 점유 상태를 변경할 수 있다.
+  * 완료되지 않은 주문이 있는 `OrderTable`은 빈 상태로 변경할 수 없다.
+* `OrderTable`은 손님 수를 갖는다.
+  * 손님 수를 변경할 수 있다.
+  * 손님 수는 음수일 수 없다.
+  * 점유되어 있지 않은 테이블의 손님 수는 항상 `0`이다.
+* * `OrderTable`의 모든 `Order`가 완료되면 `OrderTable`은 비워지고 손님 수는 `0`이 된다.
+
+#### 배달 주문
+
+* `Order`는 `DeliveryAddress`를 갖는다.
+  * `DeliveryAddress`는 비어있을 수 없다.
+* `Order`의 상태는 `Waiting`, `Accepted`, `Serving`, `Served`, `Delivering`, `Delivered`, `Completed` 순서로 변화한다.
+* `Order`가 접수되면 `Delivery Agency`에 배달이 요청된다.
+* `OrderLineItem`이 갖는 수량은 양의 정수다.
+
+#### 포장 주문
+
+* `Order`의 상태는 `Waiting`, `Accepted`, `Serving`, `Served`, `Completed` 순서로 변화한다.
+* `OrderLineItem`이 갖는 수량은 양의 정수다.
