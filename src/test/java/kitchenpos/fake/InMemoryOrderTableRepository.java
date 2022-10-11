@@ -1,7 +1,7 @@
 package kitchenpos.fake;
 
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderTableRepository;
+import kitchenpos.eatInOrder.domain.OrderTable;
+import kitchenpos.eatInOrder.domain.OrderTableRepository;
 
 import java.util.*;
 

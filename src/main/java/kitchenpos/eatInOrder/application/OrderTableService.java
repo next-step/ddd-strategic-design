@@ -1,9 +1,9 @@
-package kitchenpos.order.application;
+package kitchenpos.eatInOrder.application;
 
-import kitchenpos.order.domain.OrderRepository;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderTableRepository;
+import kitchenpos.takeOutOrder.domain.OrderRepository;
+import kitchenpos.takeOutOrder.domain.OrderStatus;
+import kitchenpos.eatInOrder.domain.OrderTable;
+import kitchenpos.eatInOrder.domain.OrderTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

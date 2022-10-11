@@ -1,17 +1,17 @@
-package kitchenpos.order;
+package kitchenpos.takeOutOrder;
 
 import kitchenpos.fake.FakeKitchenridersClient;
 import kitchenpos.fake.InMemoryMenuRepository;
 import kitchenpos.fake.InMemoryOrderRepository;
 import kitchenpos.fake.InMemoryOrderTableRepository;
-import kitchenpos.order.application.OrderService;
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderRepository;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderTableRepository;
-import kitchenpos.order.domain.OrderType;
+import kitchenpos.takeOutOrder.application.OrderService;
+import kitchenpos.takeOutOrder.domain.Order;
+import kitchenpos.takeOutOrder.domain.OrderLineItem;
+import kitchenpos.takeOutOrder.domain.OrderRepository;
+import kitchenpos.takeOutOrder.domain.OrderStatus;
+import kitchenpos.eatInOrder.domain.OrderTable;
+import kitchenpos.eatInOrder.domain.OrderTableRepository;
+import kitchenpos.takeOutOrder.domain.OrderType;
 import kitchenpos.menu.domain.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

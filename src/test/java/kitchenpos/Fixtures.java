@@ -1,10 +1,10 @@
 package kitchenpos;
 
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderType;
+import kitchenpos.takeOutOrder.domain.Order;
+import kitchenpos.takeOutOrder.domain.OrderLineItem;
+import kitchenpos.takeOutOrder.domain.OrderStatus;
+import kitchenpos.eatInOrder.domain.OrderTable;
+import kitchenpos.takeOutOrder.domain.OrderType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
