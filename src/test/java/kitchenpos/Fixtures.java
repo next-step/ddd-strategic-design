@@ -1,12 +1,19 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menugroup.domain.MenuGroup;
+import kitchenpos.menu.menu.domain.MenuProduct;
+import kitchenpos.orders.eatin.domain.EatInOrder;
+import kitchenpos.orders.eatin.domain.OrderLineItem;
+import kitchenpos.orders.eatin.domain.OrderStatus;
+import kitchenpos.orders.eatin.domain.OrderTable;
+import kitchenpos.orders.eatin.domain.OrderType;
+import kitchenpos.products.domain.Product;
 
 public class Fixtures {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
@@ -57,8 +64,8 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static Order order(final OrderStatus status, final String deliveryAddress) {
-        final Order order = new Order();
+    public static EatInOrder order(final OrderStatus status, final String deliveryAddress) {
+        final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setType(OrderType.DELIVERY);
         order.setStatus(status);
@@ -68,8 +75,8 @@ public class Fixtures {
         return order;
     }
 
-    public static Order order(final OrderStatus status) {
-        final Order order = new Order();
+    public static EatInOrder order(final OrderStatus status) {
+        final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setType(OrderType.TAKEOUT);
         order.setStatus(status);
@@ -78,8 +85,8 @@ public class Fixtures {
         return order;
     }
 
-    public static Order order(final OrderStatus status, final OrderTable orderTable) {
-        final Order order = new Order();
+    public static EatInOrder order(final OrderStatus status, final OrderTable orderTable) {
+        final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setType(OrderType.EAT_IN);
         order.setStatus(status);
