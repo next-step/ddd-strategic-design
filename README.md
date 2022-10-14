@@ -107,6 +107,7 @@ docker compose -p kitchenpos up -d
 | 메뉴     | 메뉴              | Menu             | 하나 이상의 상품으로 구성된 실제로 손님에게 판매 가능한 단위.                                                   |
 | 메뉴     | (메뉴) 노출         | Display          | 메뉴를 목록 또는 화면에 보여지게 함.                                                                 |
 | 메뉴     | (메뉴) 숨김         | Hide             | 메뉴를 목록 또는 화면에 보여지지 않게 함.                                                              |
+| 메뉴     | 메뉴 상품           | Menu product     | 메뉴에 포함되는 상품의 정보로 상품의 식별자와 수량을 갖는다.                                                    |
 | 메뉴 그룹  | 메뉴 그룹           | Menu group       | 메뉴의 집합으로 모든 메뉴는 하나의 메뉴 그룹에 속해야 한다.                                                    |
 | 주문 테이블 | 빈 테이블           | Empty table      | 손님이 없는 주문 테이블.                                                                        |
 | 주문 테이블 | 점유된 테이블         | Occupied table   | 손님이 앉은 주문 테이블.                                                                        |
@@ -155,12 +156,17 @@ docker compose -p kitchenpos up -d
 * `Menu`는 노출 여부 상태를 갖는다.
 * `Menu`는 `Price`를 갖는다.
   * `Menu`의 `Price`는 메뉴 가격 정책을 따라야 한다.
-* `Menu`에는 하나 이상의 `Product`가 포함된다.
-* `Menu`에 포함된 각 `Product`의 `Quantity`는 `1` 이상이다.
+* `Menu`는 `Menu`에 포함되는 하나 이상의 `MenuProduct`를 갖는다.
 
 #### 메뉴 그룹
 
 * `MenuGroup`은 `Name`을 갖는다.
+* 
+#### 메뉴 상품
+
+* `MenuProduct`는 `Product`의 식별자를 갖는다.
+* `MenuProduct`는 상품의 수량을 갖는다.
+  * 상품의 수량은 `1` 이상이다.
 
 #### 메뉴 노출 정책
 
