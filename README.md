@@ -146,7 +146,7 @@ docker compose -p kitchenpos up -d
 * `Product`는 `Name`을 갖는다.
 * `Product`는 `Price`를 갖는다.
   * `Product`의 `Price`를 변경할 수 있다.
-  * `Product`의 `Price`가 변경되면 `MenuPricePolicy`에 따라 `Menu`의 상태가 변경될 수 있다.
+  * `Product`의 `Price`가 변경되면 메뉴 노출 정책에 따라 `Menu`의 상태가 변경될 수 있다.
 
 ### 메뉴
 
@@ -162,10 +162,10 @@ docker compose -p kitchenpos up -d
 
 * `MenuGroup`은 `Name`을 갖는다.
 
-#### 메뉴 가격 정책
+#### 메뉴 노출 정책
 
-* `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price` 합보다 작아야 한다.
-* 메뉴 가격 정책을 만족하지 않는 `Menu`는 노출할 수 없다.
+* 메뉴를 노출시키기 위해서는 `Menu`의 `Price`가 `Menu`에 속한 `Product`의 `Price` 합보다 작아야 한다.
+* 메뉴 노출 정책을 만족하지 않는 `Menu`는 노출할 수 없다.
   * 이미 노출된 상태라면 숨겨진다.
 
 ### 매장 주문
