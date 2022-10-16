@@ -136,7 +136,8 @@ docker compose -p kitchenpos up -d
 | 주문 테이블 등록 |  Order Table Create   | 키친포스 시스템에 주문 테이블을 등록하는 것을 의미한다. |
 | 빈 테이블 설정 |  Order Table Clear   | 주문 테이블을 비어있는 상태로 설정하는 것을 의미한다. |
 | 빈 테이블 해지 |  Order Table Occupied   | 주문 테이블을 비어있지 않은 상태로 설정하는 것으로, 손님이 앉는 것을 의미한다. |
-| 손님 수 |  Guest Number   | 주문 테이블에 앉아있는 손님 수를 의미한. |
+| 손님 수 |  Guest Number   | 주문 테이블에 앉아있는 손님 수를 의미한다. |
+| 테이블 점유 상태 | Occupied | 주문 테이블이 점유되어있는 상태를 의미한다. |
 
 #### 주문
 | 한글명 | 영문명         | 설명                                                |
@@ -146,6 +147,9 @@ docker compose -p kitchenpos up -d
 | 주문 접수 | Order Accepted | 손님이 등록한 주문을 매장에서 확인한 것을 의미한다. |
 | 서빙 | Serving | 주문을 손님에게 전달하는 것을 의미한다. |
 | 주문 완료 | Order Completed | 주문에 대해 추가적으로 해야될 과정이 없는 상태를 의미한다. |
+| 주문 유형 | Order Type | 주문이 배달인지, 포장인지, 매장주문인지 나타내는 것을 의미한다. |
+| 주문 항목 | Order Line Item | 주문안에 포함되어있는 항목을 나타낸다. |
+| 주문 접수 대기 | Order Waiting | 주문이 접수되기를 기다리는 상태를 나타낸다. |
 
 ##### 배달 주문
 | 한글명 | 영문명         | 설명                                                |
@@ -154,6 +158,7 @@ docker compose -p kitchenpos up -d
 | 배달 주소 | Delivery Address | 주문 유형이 배달 주문시, 손님에게 주문을 배달해야하는 주소를 의미한다. |
 | 배달 대행사 | Delivery Riders | 배달을 손님에게 해주는 업체를 의미한다. |
 | 배달 완료 | Delivery Completed | 배달 주문이 손님에게 도착한 상태를 의미한다. |
+| 배달 중 | Delivering | 배달중인 상태를 의미한다. |
 
 ##### 포장 주문
 | 한글명 | 영문명         | 설명                                                |
@@ -188,14 +193,40 @@ docker compose -p kitchenpos up -d
 - `Menu Product`의 `Quantity`는 0 이상이다.
 - `Menu` 의 `Display`와 `Price`는 수정이 가능하다.
 
-### 주문테이블
-
 ### 배달 주문
+- `Delivery` 에는 `ID`, `Order Line Item`들, `OrderStatus`, `Delivery Address`가 존재한다.
+  - `Delivery`에는 한개 이상의 `Order Line Item`이 존재한다.
+  - `Delivery Address` 는 항상 존재한다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+  - `Order Statuts`가 `Order Accepted` 가 되면 `Delivery Riders`를 호출한다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+  - `Delivering` 상태에서만 `Delivery Completed `가 될 수 있다. 
+- `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
+  - `Menu`는 `Display` 상태여야한다.
 
 ### 포장 주문
+- `Takeout` 에는 `ID`, `Order Line Item`들, `OrderStatus`가 존재한다.
+  - `Takeout`에는 한개 이상의 `Order Line Item`이 존재한다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+- `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
+  - `Menu`는 `Display` 상태여야한다.
 
 ### 매장 주문
-
+- `Eat in` 에는 `ID`, `Order Line Item`들, `Order Table`, `OrderStatus`가 존재한다.
+  - `Eat in`에는 한개 이상의 `Order Line Item`이 존재한다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+  - `Order Table`이 `Occupied`이어야 `Order Create`가 가능하다.
+- `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
+  - `Quantity`는 0 이상이다.
+  - `Menu`는 `Display` 상태여야한다.
+- `Order Table`에는 `ID`, `Name`, `Occupied`, `Guest Number`가 존재한다.
+- `Order Table`의 `Name`은 반드시 존재해야한다.
+- `Order Table`의 `Occupied`, `Guest Number` 는 변경이 가능하다.
+  - `Order Table`의 `Order` 상태가 `Order Completed`가 아닐 경우 `Occupied` 를 해제할 수 없다.
+  - `Order Table`이 `Occupied`가 아닐 경우, `Guest Number`를 변경할 수 없다.
+  - `Order Table`의 `Guest Number`는 0 이상이어야한다.
 
 
 메뉴 메뉴그룹 노출하다 점유하다 매장 주문을 요청하다(나머지는 등록)
