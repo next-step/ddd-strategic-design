@@ -1,13 +1,13 @@
 package kitchenpos.product.application;
 
-import kitchenpos.application.FakePurgomalumClient;
+import kitchenpos.common.profanity.FakePurgomalumClient;
+import kitchenpos.common.profanity_detect.infra.PurgomalumClient;
 import kitchenpos.menu.InMemoryMenuRepository;
 import kitchenpos.product.InMemoryProductRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
