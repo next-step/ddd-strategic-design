@@ -1,12 +1,15 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
+import kitchenpos.eat_in_order.domain.Order;
+import kitchenpos.eat_in_order.domain.OrderLineItem;
+import kitchenpos.eat_in_order.domain.OrderStatus;
+import kitchenpos.eat_in_order.domain.OrderTable;
+import kitchenpos.eat_in_order.domain.OrderType;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;

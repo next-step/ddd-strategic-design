@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.eat_in_order.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

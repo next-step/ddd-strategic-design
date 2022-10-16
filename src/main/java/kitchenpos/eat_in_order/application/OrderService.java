@@ -1,6 +1,12 @@
-package kitchenpos.application;
+package kitchenpos.eat_in_order.application;
 
-import kitchenpos.domain.*;
+import kitchenpos.eat_in_order.domain.Order;
+import kitchenpos.eat_in_order.domain.OrderLineItem;
+import kitchenpos.eat_in_order.domain.OrderRepository;
+import kitchenpos.eat_in_order.domain.OrderStatus;
+import kitchenpos.eat_in_order.domain.OrderTable;
+import kitchenpos.eat_in_order.domain.OrderTableRepository;
+import kitchenpos.eat_in_order.domain.OrderType;
 import kitchenpos.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
