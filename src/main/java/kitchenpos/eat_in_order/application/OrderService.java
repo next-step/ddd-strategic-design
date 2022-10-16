@@ -7,7 +7,7 @@ import kitchenpos.eat_in_order.domain.OrderStatus;
 import kitchenpos.eat_in_order.domain.OrderTable;
 import kitchenpos.eat_in_order.domain.OrderTableRepository;
 import kitchenpos.eat_in_order.domain.OrderType;
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.delivery_order.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import org.springframework.stereotype.Service;
