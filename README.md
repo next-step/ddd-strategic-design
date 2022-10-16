@@ -202,8 +202,11 @@ docker compose -p kitchenpos up -d
 
 #### 배달 주문
 
+> 주문 시각 / 배달 주소 / 주문 상태
+
  - 배달 주문은 유효한 배달 주소가 필요하다.
  - 배달 대행사 서비스와 협력하여 배달기사를 요청한다.
+ - 주문 상태가 아래 상태표와 같이 변화한다.
 
 ![README](https://user-images.githubusercontent.com/37537207/193436195-a04c15d6-f2c1-45c3-b224-06afa082ff15.png)
 
@@ -230,8 +233,11 @@ DELIVERED -> COMPLETED
 
 #### 홀 주문
 
+> 주문 시각 / 점유한 주문 테이블 / 주문 상태
+
  - 홀 주문은 점유되지 않는 테이블이 필요하다.
- - 홀 주문이 완료되면 테이블 점유가 해제된다.
+ - 홀 주문이 완료되면 테이블 점유가 해제된다. 
+ - 주문 상태가 아래 상태표와 같이 변화한다.
 
 ![README](https://user-images.githubusercontent.com/37537207/193436218-1824a49e-cdc5-4fba-8189-485775721873.png)
 
@@ -258,8 +264,11 @@ SERVED -> COMPLETED
  - 처음 주문이 생성될 때 테이블을 점유한다.
  - 주문이 COMPLETED 가 되면 테이블 점유를 해제한다.
  - 점유되지 않은 테이블만 점유가 가능하다.
+ - 주문 상태가 아래 상태표와 같이 변화한다.
 
 #### 포장 주문
+
+> 주문 시각 / 주문 상태
 
 ![README](https://user-images.githubusercontent.com/37537207/193436236-072079a0-cb27-4563-b3d9-5242f8e39296.png)
 
