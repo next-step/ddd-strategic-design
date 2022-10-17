@@ -1,13 +1,23 @@
 package kitchenpos.eat_in_order.domain;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import kitchenpos.menu.domain.Menu;
 
 @Table(name = "order_line_item")
 @Entity
-public class OrderLineItem {
+public class EatInOrderLineItem {
+
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -30,7 +40,7 @@ public class OrderLineItem {
     @Transient
     private BigDecimal price;
 
-    public OrderLineItem() {
+    public EatInOrderLineItem() {
     }
 
     public Long getSeq() {

@@ -1,24 +1,36 @@
 package kitchenpos.eat_in_order.domain;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class EatInOrder {
+
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderType type;
+    private EatInOrderType type;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private EatInOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -30,7 +42,7 @@ public class Order {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<EatInOrderLineItem> eatInOrderLineItems;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
@@ -41,12 +53,12 @@ public class Order {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
     )
-    private OrderTable orderTable;
+    private EatInOrderTable eatInOrderTable;
 
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public EatInOrder() {
     }
 
     public UUID getId() {
@@ -57,19 +69,19 @@ public class Order {
         this.id = id;
     }
 
-    public OrderType getType() {
+    public EatInOrderType getType() {
         return type;
     }
 
-    public void setType(final OrderType type) {
+    public void setType(final EatInOrderType type) {
         this.type = type;
     }
 
-    public OrderStatus getStatus() {
+    public EatInOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final EatInOrderStatus status) {
         this.status = status;
     }
 
@@ -81,12 +93,12 @@ public class Order {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
-        return orderLineItems;
+    public List<EatInOrderLineItem> getOrderLineItems() {
+        return eatInOrderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
-        this.orderLineItems = orderLineItems;
+    public void setOrderLineItems(final List<EatInOrderLineItem> eatInOrderLineItems) {
+        this.eatInOrderLineItems = eatInOrderLineItems;
     }
 
     public String getDeliveryAddress() {
@@ -97,12 +109,12 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public OrderTable getOrderTable() {
-        return orderTable;
+    public EatInOrderTable getOrderTable() {
+        return eatInOrderTable;
     }
 
-    public void setOrderTable(final OrderTable orderTable) {
-        this.orderTable = orderTable;
+    public void setOrderTable(final EatInOrderTable eatInOrderTable) {
+        this.eatInOrderTable = eatInOrderTable;
     }
 
     public UUID getOrderTableId() {
