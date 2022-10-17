@@ -181,7 +181,7 @@ public class Fixtures {
     public static TakeoutOrder takeoutOrder(final TakeoutOrderStatus status, final String deliveryAddress) {
         final TakeoutOrder takeoutOrder = new TakeoutOrder();
         takeoutOrder.setId(UUID.randomUUID());
-        takeoutOrder.setType(TakeoutOrderType.DELIVERY);
+        takeoutOrder.setType(TakeoutOrderType.TAKEOUT);
         takeoutOrder.setStatus(status);
         takeoutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
         takeoutOrder.setOrderLineItems(Arrays.asList(takeoutOrderLineItem()));
@@ -202,7 +202,7 @@ public class Fixtures {
     public static TakeoutOrder takeoutOrder(final TakeoutOrderStatus status, final TakeoutOrderTable takeoutOrderTable) {
         final TakeoutOrder takeoutOrder = new TakeoutOrder();
         takeoutOrder.setId(UUID.randomUUID());
-        takeoutOrder.setType(TakeoutOrderType.EAT_IN);
+        takeoutOrder.setType(TakeoutOrderType.TAKEOUT);
         takeoutOrder.setStatus(status);
         takeoutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
         takeoutOrder.setOrderLineItems(Arrays.asList(takeoutOrderLineItem()));
