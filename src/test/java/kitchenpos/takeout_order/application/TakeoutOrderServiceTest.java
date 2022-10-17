@@ -29,7 +29,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class TakeoutOrderServiceTest {
@@ -47,8 +46,12 @@ class TakeoutOrderServiceTest {
     @DisplayName("1개 이상의 등록된 메뉴로 포장 주문을 등록할 수 있다.")
     @Test
     void createTakeoutOrder() {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final TakeoutOrder expected = createTakeoutOrder(TakeoutOrderType.TAKEOUT, createTakeoutOrderLineItem(menuId, 19_000L, 3L));
+        final UUID menuId = menuRepository.save(
+            menu(19_000L, true, menuProduct())
+        ).getId();
+        final TakeoutOrder expected = createTakeoutOrder(
+            createTakeoutOrderLineItem(menuId, 19_000L, 3L)
+        );
         final TakeoutOrder actual = takeoutOrderService.create(expected);
         assertThat(actual).isNotNull();
         assertAll(
@@ -60,21 +63,11 @@ class TakeoutOrderServiceTest {
         );
     }
 
-    @DisplayName("주문 유형이 올바르지 않으면 등록할 수 없다.")
-    @NullSource
-    @ParameterizedTest
-    void create(final TakeoutOrderType type) {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final TakeoutOrder expected = createTakeoutOrder(type, createTakeoutOrderLineItem(menuId, 19_000L, 3L));
-        assertThatThrownBy(() -> takeoutOrderService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("메뉴가 없으면 등록할 수 없다.")
     @MethodSource("takeoutOrderLineItems")
     @ParameterizedTest
     void create(final List<TakeoutOrderLineItem> takeoutOrderLineItems) {
-        final TakeoutOrder expected = createTakeoutOrder(TakeoutOrderType.TAKEOUT, takeoutOrderLineItems);
+        final TakeoutOrder expected = createTakeoutOrder(takeoutOrderLineItems);
         assertThatThrownBy(() -> takeoutOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -83,7 +76,7 @@ class TakeoutOrderServiceTest {
         return Arrays.asList(
             null,
             Arguments.of(Collections.emptyList()),
-            Arguments.of(Arrays.asList(createTakeoutOrderLineItem(INVALID_ID, 19_000L, 3L)))
+            Arguments.of(List.of(createTakeoutOrderLineItem(INVALID_ID, 19_000L, 3L)))
         );
     }
 
@@ -91,9 +84,11 @@ class TakeoutOrderServiceTest {
     @ValueSource(longs = -1L)
     @ParameterizedTest
     void createWithoutTakeoutOrder(final long quantity) {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
+        final UUID menuId = menuRepository.save(
+            menu(19_000L, true, menuProduct())
+        ).getId();
         final TakeoutOrder expected = createTakeoutOrder(
-            TakeoutOrderType.TAKEOUT, createTakeoutOrderLineItem(menuId, 19_000L, quantity)
+            createTakeoutOrderLineItem(menuId, 19_000L, quantity)
         );
         assertThatThrownBy(() -> takeoutOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
@@ -102,8 +97,12 @@ class TakeoutOrderServiceTest {
     @DisplayName("숨겨진 메뉴는 주문할 수 없다.")
     @Test
     void createNotDisplayedMenuOrder() {
-        final UUID menuId = menuRepository.save(menu(19_000L, false, menuProduct())).getId();
-        final TakeoutOrder expected = createTakeoutOrder(TakeoutOrderType.TAKEOUT, createTakeoutOrderLineItem(menuId, 19_000L, 3L));
+        final UUID menuId = menuRepository.save(
+            menu(19_000L, false, menuProduct())
+        ).getId();
+        final TakeoutOrder expected = createTakeoutOrder(
+            createTakeoutOrderLineItem(menuId, 19_000L, 3L)
+        );
         assertThatThrownBy(() -> takeoutOrderService.create(expected))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -111,8 +110,12 @@ class TakeoutOrderServiceTest {
     @DisplayName("주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.")
     @Test
     void createNotMatchedMenuPriceOrder() {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final TakeoutOrder expected = createTakeoutOrder(TakeoutOrderType.TAKEOUT, createTakeoutOrderLineItem(menuId, 16_000L, 3L));
+        final UUID menuId = menuRepository.save(
+            menu(19_000L, true, menuProduct())
+        ).getId();
+        final TakeoutOrder expected = createTakeoutOrder(
+            createTakeoutOrderLineItem(menuId, 16_000L, 3L)
+        );
         assertThatThrownBy(() -> takeoutOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -120,7 +123,8 @@ class TakeoutOrderServiceTest {
     @DisplayName("포장 주문을 접수한다.")
     @Test
     void accept() {
-        final UUID orderId = takeoutOrderRepository.save(takeoutOrder(TakeoutOrderStatus.WAITING)).getId();
+        final UUID orderId = takeoutOrderRepository.save(takeoutOrder(TakeoutOrderStatus.WAITING))
+            .getId();
         final TakeoutOrder actual = takeoutOrderService.accept(orderId);
         assertThat(actual.getStatus()).isEqualTo(TakeoutOrderStatus.ACCEPTED);
     }
@@ -137,7 +141,8 @@ class TakeoutOrderServiceTest {
     @DisplayName("포장 주문을 서빙한다.")
     @Test
     void serve() {
-        final UUID orderId = takeoutOrderRepository.save(takeoutOrder(TakeoutOrderStatus.ACCEPTED)).getId();
+        final UUID orderId = takeoutOrderRepository.save(takeoutOrder(TakeoutOrderStatus.ACCEPTED))
+            .getId();
         final TakeoutOrder actual = takeoutOrderService.serve(orderId);
         assertThat(actual.getStatus()).isEqualTo(TakeoutOrderStatus.SERVED);
     }
@@ -154,7 +159,9 @@ class TakeoutOrderServiceTest {
     @DisplayName("포장 주문을 완료한다.")
     @Test
     void complete() {
-        final TakeoutOrder expected = takeoutOrderRepository.save(takeoutOrder(TakeoutOrderStatus.SERVED));
+        final TakeoutOrder expected = takeoutOrderRepository.save(
+            takeoutOrder(TakeoutOrderStatus.SERVED)
+        );
         final TakeoutOrder actual = takeoutOrderService.complete(expected.getId());
         assertThat(actual.getStatus()).isEqualTo(TakeoutOrderStatus.COMPLETED);
     }
@@ -177,18 +184,24 @@ class TakeoutOrderServiceTest {
         assertThat(actual).hasSize(2);
     }
 
-    private TakeoutOrder createTakeoutOrder(final TakeoutOrderType takeoutOrderType, final TakeoutOrderLineItem... takeoutOrderLineItems) {
-        return createTakeoutOrder(takeoutOrderType, Arrays.asList(takeoutOrderLineItems));
+    private TakeoutOrder createTakeoutOrder(final TakeoutOrderLineItem... takeoutOrderLineItems) {
+        return createTakeoutOrder(Arrays.asList(takeoutOrderLineItems));
     }
 
-    private TakeoutOrder createTakeoutOrder(final TakeoutOrderType takeoutOrderType, final List<TakeoutOrderLineItem> takeoutOrderLineItems) {
+    private TakeoutOrder createTakeoutOrder(
+        final List<TakeoutOrderLineItem> takeoutOrderLineItems
+    ) {
         final TakeoutOrder takeoutOrder = new TakeoutOrder();
-        takeoutOrder.setType(takeoutOrderType);
+        takeoutOrder.setType(TakeoutOrderType.TAKEOUT);
         takeoutOrder.setOrderLineItems(takeoutOrderLineItems);
         return takeoutOrder;
     }
 
-    private static TakeoutOrderLineItem createTakeoutOrderLineItem(final UUID menuId, final long price, final long quantity) {
+    private static TakeoutOrderLineItem createTakeoutOrderLineItem(
+        final UUID menuId,
+        final long price,
+        final long quantity
+    ) {
         final TakeoutOrderLineItem takeoutOrderLineItem = new TakeoutOrderLineItem();
         takeoutOrderLineItem.setSeq(new Random().nextLong());
         takeoutOrderLineItem.setMenuId(menuId);
