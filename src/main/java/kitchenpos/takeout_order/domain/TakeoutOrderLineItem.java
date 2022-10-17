@@ -16,7 +16,7 @@ import kitchenpos.menu.domain.Menu;
 
 @Table(name = "order_line_item")
 @Entity
-public class OrderLineItem {
+public class TakeoutOrderLineItem {
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -39,7 +39,7 @@ public class OrderLineItem {
     @Transient
     private BigDecimal price;
 
-    public OrderLineItem() {
+    public TakeoutOrderLineItem() {
     }
 
     public Long getSeq() {
