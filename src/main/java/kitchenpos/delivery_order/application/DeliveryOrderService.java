@@ -12,8 +12,6 @@ import kitchenpos.delivery_order.domain.DeliveryOrder;
 import kitchenpos.delivery_order.domain.DeliveryOrderLineItem;
 import kitchenpos.delivery_order.domain.DeliveryOrderRepository;
 import kitchenpos.delivery_order.domain.DeliveryOrderStatus;
-import kitchenpos.delivery_order.domain.DeliveryOrderTable;
-import kitchenpos.delivery_order.domain.DeliveryOrderTableRepository;
 import kitchenpos.delivery_order.domain.DeliveryOrderType;
 import kitchenpos.delivery_order.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
@@ -25,18 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeliveryOrderService {
     private final DeliveryOrderRepository deliveryOrderRepository;
     private final MenuRepository menuRepository;
-    private final DeliveryOrderTableRepository deliveryOrderTableRepository;
     private final KitchenridersClient kitchenridersClient;
 
     public DeliveryOrderService(
         final DeliveryOrderRepository deliveryOrderRepository,
         final MenuRepository menuRepository,
-        final DeliveryOrderTableRepository deliveryOrderTableRepository,
         final KitchenridersClient kitchenridersClient
     ) {
         this.deliveryOrderRepository = deliveryOrderRepository;
         this.menuRepository = menuRepository;
-        this.deliveryOrderTableRepository = deliveryOrderTableRepository;
         this.kitchenridersClient = kitchenridersClient;
     }
 
@@ -47,7 +42,8 @@ public class DeliveryOrderService {
             throw new IllegalArgumentException();
         }
         final List<DeliveryOrderLineItem> deliveryOrderLineItemRequests = request.getOrderLineItems();
-        if (Objects.isNull(deliveryOrderLineItemRequests) || deliveryOrderLineItemRequests.isEmpty()) {
+        if (Objects.isNull(deliveryOrderLineItemRequests)
+            || deliveryOrderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
         final List<Menu> menus = menuRepository.findAllByIdIn(
@@ -61,10 +57,8 @@ public class DeliveryOrderService {
         final List<DeliveryOrderLineItem> deliveryOrderLineItems = new ArrayList<>();
         for (final DeliveryOrderLineItem deliveryOrderLineItemRequest : deliveryOrderLineItemRequests) {
             final long quantity = deliveryOrderLineItemRequest.getQuantity();
-            if (type != DeliveryOrderType.EAT_IN) {
-                if (quantity < 0) {
-                    throw new IllegalArgumentException();
-                }
+            if (quantity < 0) {
+                throw new IllegalArgumentException();
             }
             final Menu menu = menuRepository.findById(deliveryOrderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
@@ -85,21 +79,11 @@ public class DeliveryOrderService {
         deliveryOrder.setStatus(DeliveryOrderStatus.WAITING);
         deliveryOrder.setOrderDateTime(LocalDateTime.now());
         deliveryOrder.setOrderLineItems(deliveryOrderLineItems);
-        if (type == DeliveryOrderType.DELIVERY) {
-            final String deliveryAddress = request.getDeliveryAddress();
-            if (Objects.isNull(deliveryAddress) || deliveryAddress.isEmpty()) {
-                throw new IllegalArgumentException();
-            }
-            deliveryOrder.setDeliveryAddress(deliveryAddress);
+        final String deliveryAddress = request.getDeliveryAddress();
+        if (Objects.isNull(deliveryAddress) || deliveryAddress.isEmpty()) {
+            throw new IllegalArgumentException();
         }
-        if (type == DeliveryOrderType.EAT_IN) {
-            final DeliveryOrderTable deliveryOrderTable = deliveryOrderTableRepository.findById(request.getOrderTableId())
-                .orElseThrow(NoSuchElementException::new);
-            if (!deliveryOrderTable.isOccupied()) {
-                throw new IllegalStateException();
-            }
-            deliveryOrder.setOrderTable(deliveryOrderTable);
-        }
+        deliveryOrder.setDeliveryAddress(deliveryAddress);
         return deliveryOrderRepository.save(deliveryOrder);
     }
 
@@ -110,15 +94,13 @@ public class DeliveryOrderService {
         if (deliveryOrder.getStatus() != DeliveryOrderStatus.WAITING) {
             throw new IllegalStateException();
         }
-        if (deliveryOrder.getType() == DeliveryOrderType.DELIVERY) {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final DeliveryOrderLineItem deliveryOrderLineItem : deliveryOrder.getOrderLineItems()) {
-                sum = deliveryOrderLineItem.getMenu()
-                    .getPrice()
-                    .multiply(BigDecimal.valueOf(deliveryOrderLineItem.getQuantity()));
-            }
-            kitchenridersClient.requestDelivery(orderId, sum, deliveryOrder.getDeliveryAddress());
+        BigDecimal sum = BigDecimal.ZERO;
+        for (final DeliveryOrderLineItem deliveryOrderLineItem : deliveryOrder.getOrderLineItems()) {
+            sum = deliveryOrderLineItem.getMenu()
+                .getPrice()
+                .multiply(BigDecimal.valueOf(deliveryOrderLineItem.getQuantity()));
         }
+        kitchenridersClient.requestDelivery(orderId, sum, deliveryOrder.getDeliveryAddress());
         deliveryOrder.setStatus(DeliveryOrderStatus.ACCEPTED);
         return deliveryOrder;
     }
@@ -138,9 +120,6 @@ public class DeliveryOrderService {
     public DeliveryOrder startDelivery(final UUID orderId) {
         final DeliveryOrder deliveryOrder = deliveryOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (deliveryOrder.getType() != DeliveryOrderType.DELIVERY) {
-            throw new IllegalStateException();
-        }
         if (deliveryOrder.getStatus() != DeliveryOrderStatus.SERVED) {
             throw new IllegalStateException();
         }
@@ -163,26 +142,11 @@ public class DeliveryOrderService {
     public DeliveryOrder complete(final UUID orderId) {
         final DeliveryOrder deliveryOrder = deliveryOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        final DeliveryOrderType type = deliveryOrder.getType();
         final DeliveryOrderStatus status = deliveryOrder.getStatus();
-        if (type == DeliveryOrderType.DELIVERY) {
-            if (status != DeliveryOrderStatus.DELIVERED) {
-                throw new IllegalStateException();
-            }
-        }
-        if (type == DeliveryOrderType.TAKEOUT || type == DeliveryOrderType.EAT_IN) {
-            if (status != DeliveryOrderStatus.SERVED) {
-                throw new IllegalStateException();
-            }
+        if (status != DeliveryOrderStatus.DELIVERED) {
+            throw new IllegalStateException();
         }
         deliveryOrder.setStatus(DeliveryOrderStatus.COMPLETED);
-        if (type == DeliveryOrderType.EAT_IN) {
-            final DeliveryOrderTable deliveryOrderTable = deliveryOrder.getOrderTable();
-            if (!deliveryOrderRepository.existsByOrderTableAndStatusNot(deliveryOrderTable, DeliveryOrderStatus.COMPLETED)) {
-                deliveryOrderTable.setNumberOfGuests(0);
-                deliveryOrderTable.setOccupied(false);
-            }
-        }
         return deliveryOrder;
     }
 

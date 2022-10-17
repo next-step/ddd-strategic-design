@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 import kitchenpos.delivery_order.domain.DeliveryOrder;
 import kitchenpos.delivery_order.domain.DeliveryOrderRepository;
-import kitchenpos.delivery_order.domain.DeliveryOrderStatus;
-import kitchenpos.delivery_order.domain.DeliveryOrderTable;
 
 public class InMemoryDeliveryOrderRepository implements DeliveryOrderRepository {
     private final Map<UUID, DeliveryOrder> orders = new HashMap<>();
@@ -28,12 +26,5 @@ public class InMemoryDeliveryOrderRepository implements DeliveryOrderRepository 
     @Override
     public List<DeliveryOrder> findAll() {
         return new ArrayList<>(orders.values());
-    }
-
-    @Override
-    public boolean existsByOrderTableAndStatusNot(final DeliveryOrderTable deliveryOrderTable, final DeliveryOrderStatus status) {
-        return orders.values()
-            .stream()
-            .anyMatch(order -> order.getOrderTable().equals(deliveryOrderTable) && order.getStatus() != status);
     }
 }
