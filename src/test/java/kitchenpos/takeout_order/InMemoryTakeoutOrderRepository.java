@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 import kitchenpos.takeout_order.domain.TakeoutOrder;
 import kitchenpos.takeout_order.domain.TakeoutOrderRepository;
-import kitchenpos.takeout_order.domain.TakeoutOrderStatus;
-import kitchenpos.takeout_order.domain.TakeoutOrderTable;
 
 public class InMemoryTakeoutOrderRepository implements TakeoutOrderRepository {
     private final Map<UUID, TakeoutOrder> orders = new HashMap<>();
@@ -28,12 +26,5 @@ public class InMemoryTakeoutOrderRepository implements TakeoutOrderRepository {
     @Override
     public List<TakeoutOrder> findAll() {
         return new ArrayList<>(orders.values());
-    }
-
-    @Override
-    public boolean existsByOrderTableAndStatusNot(final TakeoutOrderTable takeoutOrderTable, final TakeoutOrderStatus status) {
-        return orders.values()
-            .stream()
-            .anyMatch(order -> order.getOrderTable().equals(takeoutOrderTable) && order.getStatus() != status);
     }
 }

@@ -10,7 +10,5 @@ public interface TakeoutOrderRepository {
     Optional<TakeoutOrder> findById(UUID id);
 
     List<TakeoutOrder> findAll();
-
-    boolean existsByOrderTableAndStatusNot(TakeoutOrderTable takeoutOrderTable, TakeoutOrderStatus status);
 }
 

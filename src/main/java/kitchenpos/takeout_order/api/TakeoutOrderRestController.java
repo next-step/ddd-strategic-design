@@ -40,16 +40,6 @@ public class TakeoutOrderRestController {
         return ResponseEntity.ok(takeoutOrderService.serve(orderId));
     }
 
-    @PutMapping("/{orderId}/start-delivery")
-    public ResponseEntity<TakeoutOrder> startDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(takeoutOrderService.startDelivery(orderId));
-    }
-
-    @PutMapping("/{orderId}/complete-delivery")
-    public ResponseEntity<TakeoutOrder> completeDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(takeoutOrderService.completeDelivery(orderId));
-    }
-
     @PutMapping("/{orderId}/complete")
     public ResponseEntity<TakeoutOrder> complete(@PathVariable final UUID orderId) {
         return ResponseEntity.ok(takeoutOrderService.complete(orderId));

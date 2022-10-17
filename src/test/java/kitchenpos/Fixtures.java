@@ -22,7 +22,6 @@ import kitchenpos.product.domain.Product;
 import kitchenpos.takeout_order.domain.TakeoutOrder;
 import kitchenpos.takeout_order.domain.TakeoutOrderLineItem;
 import kitchenpos.takeout_order.domain.TakeoutOrderStatus;
-import kitchenpos.takeout_order.domain.TakeoutOrderTable;
 import kitchenpos.takeout_order.domain.TakeoutOrderType;
 
 public class Fixtures {
@@ -178,17 +177,6 @@ public class Fixtures {
         return eatInOrderTable;
     }
 
-    public static TakeoutOrder takeoutOrder(final TakeoutOrderStatus status, final String deliveryAddress) {
-        final TakeoutOrder takeoutOrder = new TakeoutOrder();
-        takeoutOrder.setId(UUID.randomUUID());
-        takeoutOrder.setType(TakeoutOrderType.TAKEOUT);
-        takeoutOrder.setStatus(status);
-        takeoutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        takeoutOrder.setOrderLineItems(Arrays.asList(takeoutOrderLineItem()));
-        takeoutOrder.setDeliveryAddress(deliveryAddress);
-        return takeoutOrder;
-    }
-
     public static TakeoutOrder takeoutOrder(final TakeoutOrderStatus status) {
         final TakeoutOrder takeoutOrder = new TakeoutOrder();
         takeoutOrder.setId(UUID.randomUUID());
@@ -199,35 +187,11 @@ public class Fixtures {
         return takeoutOrder;
     }
 
-    public static TakeoutOrder takeoutOrder(final TakeoutOrderStatus status, final TakeoutOrderTable takeoutOrderTable) {
-        final TakeoutOrder takeoutOrder = new TakeoutOrder();
-        takeoutOrder.setId(UUID.randomUUID());
-        takeoutOrder.setType(TakeoutOrderType.TAKEOUT);
-        takeoutOrder.setStatus(status);
-        takeoutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        takeoutOrder.setOrderLineItems(Arrays.asList(takeoutOrderLineItem()));
-        takeoutOrder.setOrderTable(takeoutOrderTable);
-        return takeoutOrder;
-    }
-
     public static TakeoutOrderLineItem takeoutOrderLineItem() {
         final TakeoutOrderLineItem takeoutOrderLineItem = new TakeoutOrderLineItem();
         takeoutOrderLineItem.setSeq(new Random().nextLong());
         takeoutOrderLineItem.setMenu(menu());
         return takeoutOrderLineItem;
-    }
-
-    public static TakeoutOrderTable takeoutOrderTable() {
-        return takeoutOrderTable(false, 0);
-    }
-
-    public static TakeoutOrderTable takeoutOrderTable(final boolean occupied, final int numberOfGuests) {
-        final TakeoutOrderTable takeoutOrderTable = new TakeoutOrderTable();
-        takeoutOrderTable.setId(UUID.randomUUID());
-        takeoutOrderTable.setName("1번");
-        takeoutOrderTable.setNumberOfGuests(numberOfGuests);
-        takeoutOrderTable.setOccupied(occupied);
-        return takeoutOrderTable;
     }
 
     public static Product product() {
