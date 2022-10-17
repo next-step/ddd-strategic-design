@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class EatInEatInOrderServiceTest {
+class EatInOrderServiceTest {
     private EatInOrderRepository eatInOrderRepository;
     private MenuRepository menuRepository;
     private EatInOrderTableRepository eatInOrderTableRepository;
