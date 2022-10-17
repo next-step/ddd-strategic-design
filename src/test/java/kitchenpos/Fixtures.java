@@ -94,28 +94,6 @@ public class Fixtures {
     }
 
     public static EatInOrder eatInOrder(final EatInOrderStatus status,
-        final String deliveryAddress) {
-        final EatInOrder eatInOrder = new EatInOrder();
-        eatInOrder.setId(UUID.randomUUID());
-        eatInOrder.setType(EatInOrderType.DELIVERY);
-        eatInOrder.setStatus(status);
-        eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        eatInOrder.setOrderLineItems(List.of(eatInOrderLineItem()));
-        eatInOrder.setDeliveryAddress(deliveryAddress);
-        return eatInOrder;
-    }
-
-    public static EatInOrder eatInOrder(final EatInOrderStatus status) {
-        final EatInOrder eatInOrder = new EatInOrder();
-        eatInOrder.setId(UUID.randomUUID());
-        eatInOrder.setType(EatInOrderType.TAKEOUT);
-        eatInOrder.setStatus(status);
-        eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        eatInOrder.setOrderLineItems(List.of(eatInOrderLineItem()));
-        return eatInOrder;
-    }
-
-    public static EatInOrder eatInOrder(final EatInOrderStatus status,
         final EatInOrderTable eatInOrderTable) {
         final EatInOrder eatInOrder = new EatInOrder();
         eatInOrder.setId(UUID.randomUUID());

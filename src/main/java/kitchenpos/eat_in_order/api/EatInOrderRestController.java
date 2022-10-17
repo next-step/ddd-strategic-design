@@ -41,16 +41,6 @@ public class EatInOrderRestController {
         return ResponseEntity.ok(eatInOrderService.serve(orderId));
     }
 
-    @PutMapping("/{orderId}/start-delivery")
-    public ResponseEntity<EatInOrder> startDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(eatInOrderService.startDelivery(orderId));
-    }
-
-    @PutMapping("/{orderId}/complete-delivery")
-    public ResponseEntity<EatInOrder> completeDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(eatInOrderService.completeDelivery(orderId));
-    }
-
     @PutMapping("/{orderId}/complete")
     public ResponseEntity<EatInOrder> complete(@PathVariable final UUID orderId) {
         return ResponseEntity.ok(eatInOrderService.complete(orderId));
