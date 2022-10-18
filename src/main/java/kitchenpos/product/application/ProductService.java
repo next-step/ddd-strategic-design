@@ -1,6 +1,6 @@
 package kitchenpos.product.application;
 
-import kitchenpos.common.profanity_detect.infra.PurgomalumClient;
+import kitchenpos.common.profanitydetect.infra.PurgomalumClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menu.domain.MenuRepository;

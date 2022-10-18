@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import kitchenpos.common.profanity.FakePurgomalumClient;
-import kitchenpos.common.profanity_detect.infra.PurgomalumClient;
+import kitchenpos.common.profanitydetect.infra.PurgomalumClient;
 import kitchenpos.menu.InMemoryMenuGroupRepository;
 import kitchenpos.menu.InMemoryMenuRepository;
 import kitchenpos.menu.domain.Menu;
