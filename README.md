@@ -183,8 +183,8 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴
 - `Menu`에는 `ID`, `Menu Product`들, `Price`, `Menu Group`, `Name`, `Display`이 존재한다.
-- `Menu`에 `Menu Product`는 반드시 하나 이상있어야한다.
 - `Menu Product`에는 `Quantity`, `Product`의 `ID`가 존재한다.
+- `Menu`에 `Menu Product`는 반드시 하나 이상있어야한다.
 - `Menu`에 `Menu Group`은 반드시 존재해야한다.
 - `Menu`의 `Price` 는 0원 이상이어야 한다.
 - `Menu`의 `Name`에는 `Profanity`가 들어갈 수 없다.
@@ -192,31 +192,47 @@ docker compose -p kitchenpos up -d
   - `Menu`의 `Price`가 구성하는 `Menu Product`들의 `Price`* `Quantity` 합보다 클 경우 `Display`가 불가능하다.
 - `Menu Product`의 `Quantity`는 0 이상이다.
 - `Menu` 의 `Display`와 `Price`는 수정이 가능하다.
+  - `Price`는 0 이상이어야 한다.
+- `Menu Create`는 `Menu Product`가 하나 이상인 `Menu`에 대해 수행할 수 있다.
+  - 없으면 불가능하다.
+- `Menu` 에 대한 조회가 가능하다.
 
 ### 배달 주문
 - `Delivery` 에는 `ID`, `Order Line Item`들, `OrderStatus`, `Delivery Address`가 존재한다.
   - `Delivery`에는 한개 이상의 `Order Line Item`이 존재한다.
   - `Delivery Address` 는 항상 존재한다.
-  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
-  - `Order Statuts`가 `Order Accepted` 가 되면 `Delivery Riders`를 호출한다.
-  - `Order Accepted`일때만 `Serving` 할 수 있다.
   - `Delivering` 상태에서만 `Delivery Completed `가 될 수 있다. 
 - `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
   - `Menu`는 `Display` 상태여야한다.
+- `Delivery`의 `Order Create`는 한개 이상의 `Order Line Item`가 존재할 때 가능하다.
+  - `Order Line Item`의 `Menu`가 시스템에 등록된 것이 아니면 `Order Create`가 불가능하다.
+- `Order Accepted`가 가능하다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+- `Order Statuts`가 `Order Accepted` 가 되면 `Delivery Riders`를 호출한다.
+- `Delivery` 목록을 조회할 수 있다.
+- `Serving` 할 수 있다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+- `Order Completed` 할 수 있다.
+  - `Delivery Completed`된 `Delivery` 만 가능하다.
 
 ### 포장 주문
 - `Takeout` 에는 `ID`, `Order Line Item`들, `OrderStatus`가 존재한다.
   - `Takeout`에는 한개 이상의 `Order Line Item`이 존재한다.
-  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
-  - `Order Accepted`일때만 `Serving` 할 수 있다.
 - `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
   - `Menu`는 `Display` 상태여야한다.
+- `Takeout`의 `Order Create`는 한개 이상의 `Order Line Item`가 존재할 때 가능하다.
+  - `Order Line Item`의 `Menu`가 시스템에 등록된 것이 아니면 `Order Create`가 불가능하다.
+- `Order Accepted`가 가능하다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+- `Takeout` 목록을 조회할 수 있다.
+- `Serving` 할 수 있다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+- `Order Completed` 할 수 있다.
+  - `Serving`된 `Takeout`만 가능하다.
 
 ### 매장 주문
 - `Eat in` 에는 `ID`, `Order Line Item`들, `Order Table`, `OrderStatus`가 존재한다.
   - `Eat in`에는 한개 이상의 `Order Line Item`이 존재한다.
-  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
-  - `Order Accepted`일때만 `Serving` 할 수 있다.
   - `Order Table`이 `Occupied`이어야 `Order Create`가 가능하다.
 - `Order Line Item`에는 `ID`, `Quantity`, `Menu` 가 존재한다.
   - `Quantity`는 0 이상이다.
@@ -227,7 +243,19 @@ docker compose -p kitchenpos up -d
   - `Order Table`의 `Order` 상태가 `Order Completed`가 아닐 경우 `Occupied` 를 해제할 수 없다.
   - `Order Table`이 `Occupied`가 아닐 경우, `Guest Number`를 변경할 수 없다.
   - `Order Table`의 `Guest Number`는 0 이상이어야한다.
+- `Eat in`의 `Order Create`는 한개 이상의 `Order Line Item`가 존재할 때 가능하다.
+  - `Order Line Item`의 `Menu`가 시스템에 등록된 것이 아니면 `Order Create`가 불가능하다.
+- `Order Accepted`가 가능하다.
+  - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
+- `Eat in` 목록을 조회할 수 있다.
+- `Serving` 할 수 있다.
+  - `Order Accepted`일때만 `Serving` 할 수 있다.
+- `Order Completed` 할 수 있다.
+  - `Serving`된 `Eat in`만 가능하다.
 
+
+
+  
 
 메뉴 메뉴그룹 노출하다 점유하다 매장 주문을 요청하다(나머지는 등록)
 배달
