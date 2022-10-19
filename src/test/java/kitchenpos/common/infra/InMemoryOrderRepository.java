@@ -1,4 +1,4 @@
-package kitchenpos.application;
+package kitchenpos.common.infra;
 
 import kitchenpos.eatin.domain.Order;
 import kitchenpos.eatin.domain.OrderRepository;

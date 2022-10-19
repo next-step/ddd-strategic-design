@@ -1,6 +1,8 @@
 package kitchenpos.ui;
 
-import kitchenpos.eatin.application.OrderService;
+import kitchenpos.common.application.OrderService;
+import kitchenpos.delivery.application.DeliveryService;
+import kitchenpos.eatin.application.EatInService;
 import kitchenpos.eatin.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,14 @@ import java.util.UUID;
 @RestController
 public class OrderRestController {
     private final OrderService orderService;
+    private final DeliveryService deliveryService;
 
-    public OrderRestController(final OrderService orderService) {
+    public OrderRestController(
+            final OrderService orderService,
+            final DeliveryService deliveryService
+    ) {
         this.orderService = orderService;
+        this.deliveryService = deliveryService;
     }
 
     @PostMapping
@@ -37,12 +44,12 @@ public class OrderRestController {
 
     @PutMapping("/{orderId}/start-delivery")
     public ResponseEntity<Order> startDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(orderService.startDelivery(orderId));
+        return ResponseEntity.ok(deliveryService.startDelivery(orderId));
     }
 
     @PutMapping("/{orderId}/complete-delivery")
     public ResponseEntity<Order> completeDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(orderService.completeDelivery(orderId));
+        return ResponseEntity.ok(deliveryService.completeDelivery(orderId));
     }
 
     @PutMapping("/{orderId}/complete")

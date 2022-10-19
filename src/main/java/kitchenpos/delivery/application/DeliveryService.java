@@ -1,7 +1,8 @@
-package kitchenpos.eatin.application;
+package kitchenpos.delivery.application;
 
+import kitchenpos.common.code.OrderType;
+import kitchenpos.common.infra.KitchenridersClient;
 import kitchenpos.eatin.domain.*;
-import kitchenpos.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import org.springframework.stereotype.Service;
@@ -13,30 +14,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderService {
+public class DeliveryService {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
-    private final OrderTableRepository orderTableRepository;
     private final KitchenridersClient kitchenridersClient;
 
-    public OrderService(
+    public DeliveryService(
         final OrderRepository orderRepository,
         final MenuRepository menuRepository,
-        final OrderTableRepository orderTableRepository,
         final KitchenridersClient kitchenridersClient
     ) {
         this.orderRepository = orderRepository;
         this.menuRepository = menuRepository;
-        this.orderTableRepository = orderTableRepository;
         this.kitchenridersClient = kitchenridersClient;
     }
 
     @Transactional
     public Order create(final Order request) {
-        final OrderType type = request.getType();
-        if (Objects.isNull(type)) {
-            throw new IllegalArgumentException();
-        }
         final List<OrderLineItem> orderLineItemRequests = request.getOrderLineItems();
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
@@ -52,11 +46,10 @@ public class OrderService {
         final List<OrderLineItem> orderLineItems = new ArrayList<>();
         for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
             final long quantity = orderLineItemRequest.getQuantity();
-            if (type != OrderType.EAT_IN) {
-                if (quantity < 0) {
-                    throw new IllegalArgumentException();
-                }
+            if (quantity < 0) {
+                throw new IllegalArgumentException();
             }
+
             final Menu menu = menuRepository.findById(orderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
             if (!menu.isDisplayed()) {
@@ -72,25 +65,15 @@ public class OrderService {
         }
         Order order = new Order();
         order.setId(UUID.randomUUID());
-        order.setType(type);
+        order.setType(OrderType.DELIVERY);
         order.setStatus(OrderStatus.WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);
-        if (type == OrderType.DELIVERY) {
-            final String deliveryAddress = request.getDeliveryAddress();
-            if (Objects.isNull(deliveryAddress) || deliveryAddress.isEmpty()) {
-                throw new IllegalArgumentException();
-            }
-            order.setDeliveryAddress(deliveryAddress);
+        final String deliveryAddress = request.getDeliveryAddress();
+        if (Objects.isNull(deliveryAddress) || deliveryAddress.isEmpty()) {
+            throw new IllegalArgumentException();
         }
-        if (type == OrderType.EAT_IN) {
-            final OrderTable orderTable = orderTableRepository.findById(request.getOrderTableId())
-                .orElseThrow(NoSuchElementException::new);
-            if (!orderTable.isOccupied()) {
-                throw new IllegalStateException();
-            }
-            order.setOrderTable(orderTable);
-        }
+        order.setDeliveryAddress(deliveryAddress);
         return orderRepository.save(order);
     }
 
@@ -101,15 +84,14 @@ public class OrderService {
         if (order.getStatus() != OrderStatus.WAITING) {
             throw new IllegalStateException();
         }
-        if (order.getType() == OrderType.DELIVERY) {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final OrderLineItem orderLineItem : order.getOrderLineItems()) {
-                sum = orderLineItem.getMenu()
-                    .getPrice()
-                    .multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));
-            }
-            kitchenridersClient.requestDelivery(orderId, sum, order.getDeliveryAddress());
+        BigDecimal sum = BigDecimal.ZERO;
+        for (final OrderLineItem orderLineItem : order.getOrderLineItems()) {
+            sum = orderLineItem.getMenu()
+                .getPrice()
+                .multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));
         }
+        kitchenridersClient.requestDelivery(orderId, sum, order.getDeliveryAddress());
+
         order.setStatus(OrderStatus.ACCEPTED);
         return order;
     }
@@ -175,10 +157,5 @@ public class OrderService {
             }
         }
         return order;
-    }
-
-    @Transactional(readOnly = true)
-    public List<Order> findAll() {
-        return orderRepository.findAll();
     }
 }
