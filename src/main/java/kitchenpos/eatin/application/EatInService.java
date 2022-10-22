@@ -1,14 +1,12 @@
 package kitchenpos.eatin.application;
 
-import kitchenpos.common.code.OrderType;
+import kitchenpos.eatin.domain.OrderType;
 import kitchenpos.eatin.domain.*;
-import kitchenpos.common.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;

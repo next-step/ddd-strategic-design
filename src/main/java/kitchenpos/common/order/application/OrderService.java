@@ -1,9 +1,9 @@
-package kitchenpos.common.application;
+package kitchenpos.common.order.application;
 
 import kitchenpos.delivery.application.DeliveryService;
 import kitchenpos.eatin.application.EatInService;
 import kitchenpos.eatin.domain.Order;
-import kitchenpos.common.code.OrderType;
+import kitchenpos.eatin.domain.OrderType;
 import kitchenpos.eatin.domain.OrderRepository;
 import kitchenpos.takeout.application.TakeOutService;
 import org.springframework.stereotype.Service;

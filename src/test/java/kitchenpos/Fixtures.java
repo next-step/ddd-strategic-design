@@ -1,9 +1,9 @@
 package kitchenpos;
 
-import kitchenpos.common.code.OrderType;
+import kitchenpos.eatin.domain.OrderType;
 import kitchenpos.eatin.domain.*;
 import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuGroup;
+import kitchenpos.menugroup.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.product.domain.Product;
 

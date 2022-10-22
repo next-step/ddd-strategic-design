@@ -2,7 +2,8 @@ package kitchenpos.common.application;
 
 import kitchenpos.common.infra.FakeKitchenridersClient;
 import kitchenpos.common.infra.InMemoryOrderRepository;
-import kitchenpos.common.code.OrderType;
+import kitchenpos.eatin.domain.OrderType;
+import kitchenpos.common.order.application.OrderService;
 import kitchenpos.delivery.application.DeliveryService;
 import kitchenpos.eatin.application.EatInService;
 import kitchenpos.eatin.domain.*;

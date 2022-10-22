@@ -1,6 +1,6 @@
 package kitchenpos.takeout.application;
 
-import kitchenpos.common.code.OrderType;
+import kitchenpos.eatin.domain.OrderType;
 import kitchenpos.eatin.domain.Order;
 import kitchenpos.eatin.domain.OrderLineItem;
 import kitchenpos.eatin.domain.OrderRepository;

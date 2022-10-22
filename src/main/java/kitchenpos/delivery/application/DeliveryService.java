@@ -1,7 +1,7 @@
 package kitchenpos.delivery.application;
 
-import kitchenpos.common.code.OrderType;
-import kitchenpos.common.infra.KitchenridersClient;
+import kitchenpos.eatin.domain.OrderType;
+import kitchenpos.delivery.infra.KitchenridersClient;
 import kitchenpos.eatin.domain.*;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
