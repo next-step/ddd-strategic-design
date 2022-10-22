@@ -206,6 +206,7 @@ docker compose -p kitchenpos up -d
   - `Menu`는 `Display` 상태여야한다.
 - `Delivery`의 `Order Create`는 한개 이상의 `Order Line Item`가 존재할 때 가능하다.
   - `Order Line Item`의 `Menu`가 시스템에 등록된 것이 아니면 `Order Create`가 불가능하다.
+  - `Delivery Address` 가 존재해야 한다.
 - `Order Accepted`가 가능하다.
   - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
 - `Order Statuts`가 `Order Accepted` 가 되면 `Delivery Riders`를 호출한다.
@@ -245,6 +246,7 @@ docker compose -p kitchenpos up -d
   - `Order Table`의 `Guest Number`는 0 이상이어야한다.
 - `Eat in`의 `Order Create`는 한개 이상의 `Order Line Item`가 존재할 때 가능하다.
   - `Order Line Item`의 `Menu`가 시스템에 등록된 것이 아니면 `Order Create`가 불가능하다.
+  - `Order Table`이 존재해야한다.
 - `Order Accepted`가 가능하다.
   - `Order Status`는 `Order Waiting`일 때만 `Order Accepted` 가 될 수 있다.
 - `Eat in` 목록을 조회할 수 있다.
