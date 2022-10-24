@@ -1,6 +1,13 @@
 package kitchenpos;
 
 import kitchenpos.domain.*;
+import kitchenpos.menu.menu.domain.Menu;
+import kitchenpos.menu.menugroup.domain.MenuGroup;
+import kitchenpos.menu.menu.domain.MenuProduct;
+import kitchenpos.order.delivery.domain.*;
+import kitchenpos.order.domain.*;
+import kitchenpos.order.eatin.domain.*;
+import kitchenpos.product.domain.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -228,7 +228,7 @@ docker compose -p kitchenpos up -d
 - `menuGroup`는 `id`, `name`을 가진다.
 - `menuGroup`을 등록 할 수 있다.
     - `name`이 없으면 `menuGroup` 을 등록할 수 없다.
-- `menuProduct`는 `seq`, `product`, `quantity`를 가진다.
+- `menuProduct`는 `seq`, `product_id`, `quantity`를 가진다.
 
 - `menu`를 조회할 수 있다.
 - `menu`를 등록 할 수 있다.
