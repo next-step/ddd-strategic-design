@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Table(name = "order_line_item")
 @Entity
-public class OrderLineItem {
+public class EatInOrderLineItem {
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,7 +31,7 @@ public class OrderLineItem {
     @Transient
     private BigDecimal price;
 
-    public OrderLineItem() {
+    public EatInOrderLineItem() {
     }
 
     public Long getSeq() {

@@ -1,15 +1,13 @@
-package kitchenpos.eatinorder.domain;
-
-import kitchenpos.deliveryorder.domain.OrderStatus;
+package kitchenpos.deliveryorder.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Table(name = "orders")
+@Table(name = "delivery_orders")
 @Entity
-public class Order {
+public class DeliveryOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -27,28 +25,17 @@ public class Order {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
-        name = "order_id",
-        nullable = false,
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
+            name = "order_id",
+            nullable = false,
+            columnDefinition = "binary(16)",
+            foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<DeliveryOrderLineItem> deliveryOrderLineItems;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
-    @ManyToOne
-    @JoinColumn(
-        name = "order_table_id",
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
-    )
-    private OrderTable orderTable;
-
-    @Transient
-    private UUID orderTableId;
-
-    public Order() {
+    public DeliveryOrder() {
     }
 
     public UUID getId() {
@@ -83,12 +70,12 @@ public class Order {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
-        return orderLineItems;
+    public List<DeliveryOrderLineItem> getOrderLineItems() {
+        return deliveryOrderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
-        this.orderLineItems = orderLineItems;
+    public void setOrderLineItems(final List<DeliveryOrderLineItem> deliveryOrderLineItems) {
+        this.deliveryOrderLineItems = deliveryOrderLineItems;
     }
 
     public String getDeliveryAddress() {
@@ -99,19 +86,4 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public OrderTable getOrderTable() {
-        return orderTable;
-    }
-
-    public void setOrderTable(final OrderTable orderTable) {
-        this.orderTable = orderTable;
-    }
-
-    public UUID getOrderTableId() {
-        return orderTableId;
-    }
-
-    public void setOrderTableId(final UUID orderTableId) {
-        this.orderTableId = orderTableId;
-    }
 }
