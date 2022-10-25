@@ -97,7 +97,8 @@ class ProductServiceTest {
         final Product product = productRepository.save(product("후라이드", 16_000L));
         final Menu menu = menuRepository.save(menu(19_000L, true, menuProduct(product, 2L)));
         productService.changePrice(product.getId(), changePriceRequest(8_000L));
-        assertThat(menuRepository.findById(menu.getId()).get().isDisplayed()).isFalse();
+        Menu saveMenu = menuRepository.findById(menu.getId()).get();
+        assertThat(saveMenu.isDisplayed() && saveMenu.isMenuPriceOverProductsSum()).isFalse();
     }
 
     @DisplayName("상품의 목록을 조회할 수 있다.")
