@@ -96,8 +96,33 @@ docker compose -p kitchenpos up -d
 
 ## 용어 사전
 
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-|  |  |  |
+| 한글명       | 영문명                      | 설명                                                                |
+|-----------|--------------------------|-------------------------------------------------------------------|
+| 상품        | food                     | 먹을 수 있는 음식을 의미한다.                                                 |
+| 상품가격      | foodPrice                | 음식의 가격을 의미한다.                                                     |
+| 상품이름      | foodName                 | 음식의 명칭을 의미한다.                                                     |
+| 상품수량      | foodQuantity             | 음식의 수량을 의미한다.                                                     |
+| 메뉴        | menu                     | 음식의 조합으로 이뤄져 있다.                                                  |
+| 메뉴가격      | menuPrice                | 메뉴의 가격을 의미한다.                                                     |
+| 메뉴이름      | menuName                 | 메뉴의 명칭 의미한다.                                                      |
+| 메뉴수량      | menuQuantity             | 메뉴의 수량을 의미한다.                                                     |
+| 메뉴전시여부    | isDisplayed              | 메뉴의 정보를 전시할지 여부를 의미한다.                                            |
+| 메뉴그룹      | menuGroup                | 메뉴의 조합으로 이뤄져 있다.                                                  |
+| 주문        | order                    | 메뉴를 소비하기 위한 행위를 의미한다.                                             |
+| 테이블       | cookTable                | 주문을 받는 매장 테이블을 의미한다.                                              |
+| 손님        | customer                 | 주문을 하는 사람을 의미한다.                                                  |
+| 손님수       | customerCount            | 손님 수를 의미한다.                                                       |
+| 테이블손님존재여부 | isCookTableExistCustomer | 테이블에 손님이 존재하는지를 의미한다..                                            |
+| 주문상태      | orderStatus              | 주문의 상태를 의미한다. (대기:WAITING, 접수:ACCEPTED, 서빙:SERVING, 완료:COMPLETED) |
+| 주문수량      | orderQuantity            | 주문의 수량을 의미한다.                                                     |
+| 주문유형      | orderType                | 주문의 유형을 의미한다(배달: DELIVERY, 포장: PICK_UP, 매장: EAT_IN).              |
+| 배달주문      | deliveryOrder            | 배달 주문을 의미한다.                                                      |
+| 포장주문      | pickUpOrder              | 포장 주문을 의미한다.                                                      |
+| 매장주문      | eatInOrder               | 매장 주문을 의미한다.                                                      |
+| 포장주문      | pickUpOrder              | 포장 주문을 의미한다.                                                      |
+| 배달주소      | deliveryAddress          | 배달 주소를 의미한다.                                                      |
+| 배달유형      | deliveryType             | 배달 유형을 (배달중:DELIVERING, 배달완료: DELIVERED)                          |
+| 배달중       | DELIVERING               | 배달 대행사를 의미한다.                                                     |
+| 주문목록      | orderDetails             | 주문 목록을 의미한다.                                                      |
 
 ## 모델링
