@@ -130,7 +130,7 @@ docker compose -p kitchenpos up -d
 | 주문 테이블명 | name             | 식탁 이름                       |
 | 착석 여부   | occupied         | 식탁에 고객이 있는지 여부              |
 | 착석      | sit              | 고객이 식탁에 앉는다                 |
-| ?       | clear            | 고객이 식탁을 비운다                 |
+| 비움      | clear            | 고객이 식탁을 비운다                 |
 | 고객수     | number of guests | 식탁에 착석한 고객수                 |
 
 ### 주문
