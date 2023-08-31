@@ -97,6 +97,8 @@ docker compose -p kitchenpos up -d
 ## 용어 사전
 
 | 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+| 한글명 | 영문명 | 설명 |
 | 상품 | product | 매장에서 등록된 요리를 뜻한다. |
 | 상품 가격 | product price | 한 상품의 가격을 의미한다. |
 | 상품 이름 | product name | 한 상품의 상품명을 의미한다. |
