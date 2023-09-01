@@ -162,12 +162,15 @@ docker compose -p kitchenpos up -d
 | 전달 | serve | 매장에서 고객이 주문한 구성품을 전달한다 |
 | 배달 시작 | start delivery | 라이더가 배달을 시작한다 |
 | 배달 완료 | complete delivery | 배달을 종료한다 |
-| 완료 | complete | 매장이 주문을 종료한다 |
+| 완료 | complete | 매장이 주문을 완료한다 |
 
 ### 공통
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 비속어 |  profanity | 욕설이나 부적절한 언어 |
+| 라이더 |  kitchen rider | 주문을 배달하는 사람 |
+| 라이더 부서 |  kitchen riders | 배달을 총괄하는 외부 부서 |
+
 
 ## 모델링
