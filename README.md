@@ -161,7 +161,7 @@ docker compose -p kitchenpos up -d
 | 수락 | accept | 매장이 고객의 주문을 수락한다 | 
 | 전달 | serve | 매장에서 고객이 주문한 구성품을 전달한다 |
 | 배달 시작 | start delivery | 라이더가 배달을 시작한다 |
-| 배달 완료 | complete delivery | 배달을 종료한다 |
+| 배달 완료 | complete delivery | 라이더가 고객에게 주문을 전달하고 배달을 완료한다 |
 | 완료 | complete | 매장이 주문을 완료한다 |
 
 ### 공통
