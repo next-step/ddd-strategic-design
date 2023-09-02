@@ -113,14 +113,15 @@ docker compose -p kitchenpos up -d
 | 숨겨진 메뉴   | hidden menu     | 매장에 등록된 메뉴지만 포스기 화면에서 볼 수 없는 메뉴다. |
 
 ### 주문 - 공용
-| 한글명 | 영문명 | 설명                                                                   |
-| --- | --- |----------------------------------------------------------------------|
-| 주문 | order | 손님이 원하는 음식을 정해서 매장에 시킨다.                                             |
-| 주문 유형 | order type | 손님이 주문하면 완성된 음식을 전달 받는 방식이다. <br/>종류로는 배달 주문, 포장 주문, 매장 주문이 있다.      |
-| 주문 상태 | order status | 주문에서 배달까지의 현 상황을 표현한다. <br/>종류로는 대기 중, 주문 받음, 배달 중, 배달 완료, 서빙 완료, 완료가 있다. |
-| 대기 중 | waiting | 주문을 받기 전 초기 상태다.                          |
-| 주문 받음 | accepted | 손님에게 주문을 받은 상태다.                          |
-| 완료 | completed | 모든 주문 과정이 완료된 상태다.                        |
+| 한글명   | 영문명             | 설명                                                                        |
+|-------|-----------------|---------------------------------------------------------------------------|
+| 주문    | order           | 손님이 원하는 음식을 정해서 매장에 시킨다.                                                  |
+| 주문 라인 | order line item | 손님이 주문한 메뉴. 메뉴는 1개 이상이 될 수 있다.                                            |
+| 주문 유형 | order type      | 손님이 주문하면 완성된 음식을 전달 받는 방식이다. <br/>종류로는 배달 주문, 포장 주문, 매장 주문이 있다.           |
+| 주문 상태 | order status    | 주문에서 배달까지의 현 상황을 표현한다. <br/>종류로는 대기 중, 주문 받음, 배달 중, 배달 완료, 서빙 완료, 완료가 있다. |
+| 대기 중  | waiting         | 주문을 받기 전 초기 상태다.                                                          |
+| 주문 받음 | accepted        | 손님에게 주문을 받은 상태다.                                                          |
+| 완료    | completed       | 모든 주문 과정이 완료된 상태다.                                                        |
 
 ### 배달 주문
 | 한글명 | 영문명 | 설명                                        |
@@ -147,3 +148,105 @@ docker compose -p kitchenpos up -d
 | 서빙 완료     | served           | 포장이나 매장 주문한 손님에게 음식을 전달한 상태다.             |
 
 ## 모델링
+
+### 상품
+#### 상품 등록을 구현한다.
+- price는 0원 이상이어야 한다.
+- name은 purgomalumClient로 비속어가 있는지 확인한다.
+
+#### 상품의 가격을 변경한다.
+- price는 0원 이상이어야 한다.
+- proudct가 포함된 menu의 가격을 비교한다.
+  - 바뀐 총합이 작은 경우 menu의 display를 false로 변경한다.
+
+#### 모든 상품을 조회한다.
+- 모든 product의 목록을 가져온다.
+
+### 메뉴
+#### 메뉴 등록을 구현한다.
+- price는 0원 이상이어야 한다.
+- menu에 1개 이상의 menuproduct 를 등록한다.
+  - 기존에 등록된 menuProduct가 있어야 한다.
+  - 각 menuProduct의 quantity는 1개 이상이어야 한다.
+  - menu의 product와 quantity를 곱한 총합이ㅣ menu 가격과 다르면 안 된다.
+- name은 purgomalumClient로 비속어가 있는지 확인한다.
+
+#### 메뉴 가격을 변경한다.
+- price는 0원 이상이어야 한다.
+- 바뀐 price는 기존 price보다 크면 안 된다.
+
+#### 메뉴를 화면에 노출한다.
+- menu의 price가 product의 quantity와 price의 총합보다 크면 안 된다.
+- display를 true로 변경한다.
+
+#### 메뉴를 화면에서 감춘다.
+- display를 false로 변경한다.
+
+#### 모든 메뉴를 조회한다.
+- 모든 menu의 목록을 가져온다.
+
+#### 메뉴 그룹 등록을 구현한다.
+- name은 비어있으면 안된다.
+
+#### 모든 메뉴 그룹을 조회한다.
+- 모든 menuGroup의 목록을 가져온다.
+
+### 주문
+#### 주문 등록을 구현한다.
+- 주문한 여러 menu(orderLineItem)가 있는지 확인한다.
+  - 등록된 menu여야 한다.
+  - orderType이 EAT_IN면 order quantity가 0개 이상이어야 한다.
+  - menu는 키오스크에 노출된 상태여야 한다.
+  - order price와 등록된 menu의 총 값이 같아야 한다.
+- orderType이 DELIVERY면 deliveryAddress로 주소를 등록한다.
+- orderType이 EAT_IN면 orderTable을 지정한다.
+  - 해당 orderTable은 비어 있으면 안 된다. 
+
+#### 주문 접수를 구현한다.
+- order status가 WAITING이면 안된다.
+- order type이 DELIVERY인 경우 kichenridersClient로 배달 기사를 지정한다.
+- order status를 ACCEPTED로 변경한다.
+
+#### 음식을 서빙한다.
+- order status가 ACCEPTED면 안된다.
+- order status를 SERVED로 변경한다.
+
+#### 배달을 시작한다.
+- order type이 DELIVERY여야 한다.
+- order status가 SERVED면 안된다.
+- order status를 DELIVERING로 변경한다.
+
+#### 배달을 종료한다.
+- order status가 DELIVERING면 안된다.
+- order status를 DELIVERED로 변경한다.
+
+#### 주문을 종료한다.
+- order type이 DELIVERY인 경우 
+  - status가 DELIVERED여야 한다.
+- order type이 TAKEOUT이나 EAT_IN인 경우
+  - status가 SERVED여야 한다.
+- order status를 COMPLETED로 변경한다.
+- order type이 EAT_IN이고 orderTable도 status가 COMPLETED여야 한다.
+
+#### 모든 주문을 조회한다.
+- 모든 order의 목록을 가져온다.
+
+### 주문 테이블
+#### 테이블 등록을 구현한다.
+- name이 비어 있으면 안 된다.
+
+#### 테이블에 고객을 앉힌다.
+- occupied를 true로 변경한다.
+
+#### 테이블을 정리한다.
+- order status가 COMPLETED여야 정리할 수 있다.
+- 손님 수를 0으로 변경한다.
+- occupied를 false로 변경한다.
+
+### 테이블에 앉은 고객 수를 변경한다.
+- 손님 수는 0명 이상이어야 한다.
+- 이미 차있는 테이블이면 안 된다.
+- numberOfGuests를 새로운 손님 숫자로 변경한다.
+
+#### 모든 주문 테이블을 조회한다.
+- 모든 order table의 목록을 가져온다.
