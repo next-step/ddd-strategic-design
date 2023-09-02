@@ -183,3 +183,75 @@ docker compose -p kitchenpos up -d
 | 매장주문완료 | completed        | 주문이 완료 상태.                        |
 
 ## 모델링
+
+
+### 음식
+* 음식(Product)은 포스기에서 등록한다.
+* 음식(Product)은 ProductName을 갖는다.
+* 음식(Product)은 ProductPrice를 갖는다.
+* 음식이름(ProductName)은 비속어(Profanity)를 포함하지 않는다.
+* 음식가격(ProductPrice)는 0원 이상이다. 
+
+### 메뉴그룹
+* 메뉴그룹(MenuGroup)은 MenuGroupName을 갖는다.
+
+### 메뉴구성음식
+* 메뉴구성음식(MenuProduct) 음식(Product)와 MenuProductQuantity(메뉴구성음식수량)을 갖는다.
+* 메뉴구성음식(MenuProduct)는 메뉴구성음식가격(MenuProductPrice)을 계산한다.
+
+### 메뉴
+* 메뉴(Menu)는 포스기에서 등록한다. 
+* 포스기로 메뉴(Menu)를 노출, 숨기기 할 수 있다.
+* 포스기로 메뉴(Menu)의 메뉴가격(MenuPrice)를 변경할 수 있다.
+* 메뉴(Menu)는 메뉴구성음식(MenuProduct)를 가진다. 
+* 메뉴는(Menu)는 MenuName을 갖는다.
+* MenuName은 Profanity를 포함하지 않는다
+* 메뉴는(Menu)는 MenuPrice를 갖는다. 
+* MenuPrice는 0원 이상이다.
+* MenuPrice는 MenuProductPrices 클 수 없다. 
+* 메뉴(Menu)는 메뉴가격정책(MenuPricePolicy)에 의해 자신의 노출을 결정할 수 있다.
+* 메뉴가격정책(MenuPricePolicy)은 `MenuPrice는 MenuProductPrices 클 수 없다`를 의미한다.
+* 메뉴는 메뉴그룹을 갖는다.
+
+### 매장테이블
+* 포스기로 매장테이블(RestaurantTable)을 생성할 수 있다.
+* 포스기로 매장테이블(RestaurantTable)을 사용중으로 바꿀 수 있다.
+* 매장테이블(RestaurantTable)은 손님을 받을 수 있다.
+* 매장테이블(RestaurantTable)은 자신을 치울 수 있다. 
+* 매장테이블(RestaurantTable)은 RestaurantTableName을 갖는다. 
+
+### 주문금액(OrderLineAmount)
+* 주문금액은 0원 이상이어야 한다.
+* 주문금액은 메뉴의 가격과 같아야 한다. 
+
+### 주문메뉴(OrderLine) 
+* 주문메뉴는 Menu, OrderLineQuantity, OrderLineAmount를 갖는다. 
+* 숨겨진 메뉴는 주문메뉴에 포함될 수 없다. 
+
+### 주문수량(OrderLineQuantity)
+* EatInOrder일 때 음수일 수 있다
+* DeliveryOrder, TakeOutOrder일 때는 0 이상이어야 한다.
+
+### 매장주문(EatInOrder) 
+* 매장주문은 포스기에서 등록한다.
+* 매장주문은 사용중인 매장테이블(RestaurantTable)을 갖는다.
+* 매장주문은 주문메뉴(OrderLine)를 갖는다. 
+* 매장주문은 접수중(WAITING), 접수완료(ACCEPTED), 서빙완료(SERVED), 매장주문완료(COMPLETED) 상태를 갖는다. 
+* 매장주문은 자신의 상태를 변경할 수 있다.
+* 매장주문이 매장주문완료(COMPLETED)될 때 매장테이블의 다른 매장주문들을 확인한다. 모든 주문이 완료되었다면 매장테이블을 치운다.
+
+### 포장주문(TakeOutOrder)
+* 포장주문은 포스기에서 등록한다. 
+* 포장주문은 주문메뉴(OrderLine) 갖는다.
+* 포장주문은 접수중(WAITING), 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 포장주문완료(COMPLETED) 상태를 갖는다.
+* 포장주문은 자신의 상태를 변경할 수 있다.
+
+### 배달주문(DeliveryOrder)
+* 배달주문은 포스기에서 등록한다.
+* 배달주문은 주문메뉴(OrderLine) 갖는다.
+* 배달주문은 접수중(WAITING), 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 배달중(DELIVERING), 배달완료(DEIEVERED), 배달주문완료(COMPLETED) 상태를 갖는다.
+* 배달주문은 자신의 상태를 변경할 수 있다.
+* 배달주문은 배달정보를 가지고 배달기사(Rider)에게 배달요청을 한다. 
+* 배달정보는 주문번호, 주문금액(OrderLineAmount), 배달주소(DeliveryAddress)를 갖는다. 
+
+
