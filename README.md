@@ -142,8 +142,8 @@ docker compose -p kitchenpos up -d
 | 테이블 사용 여부 | occupied                | 고객의 테이블 사용 여부        |
 | 사용 테이블	   | occupied order table	   | 사용 테이블               |
 | 미사용 테이블	  | unoccupied order table	 | 미사용 테이블              |
-| 사용        | sit                     | 테이블의 상태를 사용으로 변경     |
-| 미사용       | clear                   | 테이블의 상태를 미사용으로 변경    |
+| 앉음        | sit                     | 고객이 테이블에 앉음          |
+| 비움        | clear                   | 고객이 테이블을 비움          |
 | 고객수       | number of guests        | 테이블을 사용중인 고객수        |
 | 주문 테이블 목록 | list                    | 주문 테이블의 목록           |
 
