@@ -136,7 +136,7 @@ docker compose -p kitchenpos up -d
 | 고객 수 | number of guest | 매장 테이블을 이용 중인 인원 수 |
 | 이용 중 | occupied | 매장 테이블이 이용 중인 상태 |
 | 등록 | create | 포스기에 신규로 매장 테이블을 등록한다 |
-| 안내 | sit | 고객이 매장테이블을 이용할수 있게 안내한다 |  
+| 이용 | mark occupied | 매장테이블의 상태를 이용 중으로 변경한다. |  
 | 정리 | clear | 매장 테이블을 비운다 |
 | 고객 수 변경 | change number of guests | 매장 테이블을 이용중인 인원 수를 변경한다 |
 
