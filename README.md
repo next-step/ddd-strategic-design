@@ -174,3 +174,100 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+### 상품
+
+- `Product`은 0원 이상의 `price`을 가진다.
+- `Product`은 `name`은 `profanity`를 포함할 수 없다.
+- `Product`은 `name`은 필수 값이다.
+- `Product`은 0원 이상의 `price`을 가진다.
+
+
+- `Product Service`에서 `Product`를 등록한다.
+  - `Product Service`에서 `name`과 `price`를 검증 한다.
+- `Product Service`에서 `Product`의 `price`를 변경한다.
+
+###  메뉴 그룹
+
+- `MenuGroup`은 `name`은 필수 값이다.
+
+
+- `MenuGroup Service`에서 `MenuGroup`를 등록한다.
+
+### 메뉴
+
+- `Menu`의 `name`은 `profanity`를 포함할 수 없다.
+- `Menu`는 `Menu Group`을 가진다.
+- `Menu`는 `Product`으로 이루어진 1개 이상의 `menu products`를 가진다.
+- `Menu`은 0원 이상의 `price`을 가진다.
+  - `Menu`의 `price`는 `menu products`의 `price`의 총합 보다 높을 수 없다.
+- `Menu`는 고객이 구매 가능한가를 구별할 수 있는 `displayed`를 가진다.
+
+
+- `Menu Service`에서 `Menu`를 등록한다.
+  - `Menu Service`에서 `name`과 `price` 그리고 `menu products`를 검증 한다.
+- `Menu Service`에서 `Menu`의 `price`를 변경한다.
+  - 변경할 `Menu`의 `price`는 `menu products`의 `price`의 총합 보다 높을 수 없다.
+- `Menu Service`는 고객이 구매 가능하도록 `display`한다.
+- `Menu Service`는 고객이 구매 불가능하도록 `hide`한다.
+
+### 매장 테이블
+
+- `OrderTable`은 `name`을 가진다.
+- `OrderTable`은 고객의 인원 수를 보여주는 `number Of Guests`을 가진다.
+- `OrderTable`은 고객이 이용 중 인지를 구별하는 `occupied`를 가진다.
+
+
+- `OrderTable Service`에서 `OrderTable`를 등록한다.
+- `OrderTable Service`에서 `OrderTable`를 이용 중으로 표시한다.
+- `OrderTable Service`에서 `OrderTable`를 정리하여 이용 가능하도록 변경한다.
+- `OrderTable Service`에서 `OrderTable`의 고객 수 변경를 변경한다.
+
+### 주문
+
+- `Order`는 주문의 상태를 보여주는 `Order Status`를 가진다.
+- `Order`는 고객이 요청한 메뉴들을 확인 가능한 `Order Line Item`을 가진다.
+- `Order`는 주문한 시간을 확인할 수 있는 `order Date Time`을 갖는다.
+- `Order`는 주문의 종류를 구별하는 `OrderType`을 가진다.
+  - `OrderType`이 `DELIVERY`인 경우 `Delivery Address`를 가진다.
+  - `OrderType`이 `EAT_IN`인 경우 `Order Table`과 `orderTableId`를 갖는다.
+
+- `Order Service`에서 `Order`를 등록한다.
+  - `Order`의 `Order Line Item`의 각 `quantity`는 0개 이상이어야 한다.
+- `Order Service`에서 `Order`를 수락한다.
+  - `Order Status`가 `ACCEPTED`로 변경한다.
+- `Order Service`에서 `Order`를 전달한다.
+  - `Order Status`가 `SERVED`로 변경한다.
+- `Order Service`에서 `Order`를 완료한다.
+  - `Order Status`가 `COMPLETED`로 변경한다.
+
+### 포장 주문 프로세스
+
+1. 고객이 주문을 하면 `Order Status`는 `WAITING`으로 표시된다.
+2. 매장에서 주문을 확인하고 수락하면 `Order Status`는 `ACCEPTED`로 변경한다.
+3. 매장에서 고객의 주문을 포장하고 제공하면 `Order Status`는 `SERVED`로 변경한다.
+4. 매장에서 고객의 주문을 모두 처리하면 `Order Status`는 `COMPLETED`로 변경한다.
+  
+### 배달 주문 프로세스
+
+1. 고객이 주문을 하면 `Order Status`는 `WAITING`으로 표시된다.
+2. 매장에서 주문을 확인하고 수락하면 `Order Status`는 `ACCEPTED`로 변경한다.\
+  2-1. 배달 주문을 수락하면 `kitchen riders`에게 `kitchen rider`을 요청한다.
+3. 매장에서 고객의 주문을 포장하면 `Order Status`는 `SERVED`로 변경한다.
+4. `kitchen rider`가 배달을 시작하면 `Order Status`는 `DELIVERING`로 변경한다.
+5. `kitchen rider`가 배달을 완료하면 `Order Status`는 `DELIVERED`로 변경한다.
+6. 배달 주문이 완료되면 `Order Status`는 `COMPLETED`로 변경한다.
+### 매장 주문 프로세스
+
+1. 고객이 주문을 하면 `Order Status`는 `WAITING`으로 표시된다.
+2. 매장에서 주문을 확인하고 수락하면 `Order Status`는 `ACCEPTED`로 변경한다.
+3. 매장에서 고객의 주문을 `Order Table`에 제공하면 `Order Status`는 `SERVED`로 변경한다.
+4. 매장에서 고객의 주문을 모두 처리하면 `Order Status`는 `COMPLETED`로 변경한다.\
+  4-1. `Order Table`을 `clear`한다.
+
+### 공통
+
+- 모든 `도메인`은 식별가능한 `ID`를 갖는다.
+- `kitchen riders`에서 `kitchen rider`에 배달을 할당한다.
+- `PurgomalumClient`에서 `profanity`를 검사한다.
+
