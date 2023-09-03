@@ -260,8 +260,7 @@ docker compose -p kitchenpos up -d
 
 ### 매장주문(EatInOrder)
 
-* 매장주문(EatInOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 매장테이블(RestaurantTable), 주문상태(
-  OrderStatus)을 갖는다.
+* 매장주문(EatInOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 매장테이블(RestaurantTable), 주문상태(OrderStatus)을 갖는다.
     * 주문상태는 매장주문(EatInOrder) 은 매장주문 접수중(WAITING), 매장주문 접수완료(ACCEPTED), 서빙완료(SERVED), 매장주문완료(COMPLETED)가 있다.
 * 매장주문(EatInOrder)을 등록(create)한다.
     * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
@@ -271,24 +270,40 @@ docker compose -p kitchenpos up -d
     * 등록된 매장테이블여야 한다. 매장테이블은 사용중 테이블이어야 한다.
     * `매장주문 접수중(WAITING)` 상태로 등록된다.
 * 매장주문(EatInOrder)을 접수한다(accept).
-    * 등록된 매장주문이어야 한다.
-    * 매장주문은 매장주문 접수중(WAITING) 상태여야 한다.
-    * 매장주문의 상태를 `매장주문 접수중(WAITING)`로 바꾼다.
+  * 등록된 매장주문이어야 한다.
+  * 매장주문은 매장주문 접수중(WAITING) 상태여야 한다.
+  * 매장주문의 상태를 `매장주문 접수완료(ACCEPTED)`로 바꾼다.
 * 매장주문을 서빙한다(serve).
-    * 등록된 매장주문이어야 한다.
-    * 매장주문은 `매장주문 접수완료(ACCEPTED)` 상태여야 한다.
+  * 등록된 매장주문이어야 한다.
+  * 매장주문은 `매장주문 접수완료(ACCEPTED)` 상태여야 한다.
+  * 매장주문의 상태를 `서빙완료(SERVED)`로 바꾼다.
 * 매장주문을 완료(complete)한다.
     * 등록된 매장주문이어야 한다.
-    * 매장주문은 `서빙완료(ACCEPTED)` 상태여야 한다.
-    * 매장주문을 `매장주문완료(ACCEPTED)` 상태로 바꾼다.
-    * 매장테이블의 모든 매장주문이 `매장주문완료(ACCEPTED)` 상태라면, 매장테이블을 치운다(clear).
+    * 매장주문은 `서빙완료(SERVED)` 상태여야 한다.
+    * 매장주문을 `매장주문완료(COMPLETED)` 상태로 바꾼다.
+    * 매장테이블의 모든 매장주문이 `매장주문완료(COMPLETED)` 상태면, 매장테이블을 치운다(clear).
 
 ### 포장주문(TakeOutOrder)
-
-* 포장주문(TakeOutOrder)은 포스기에서 등록한다.
-* 포장주문(TakeOutOrder)은 주문메뉴(OrderLine) 갖는다.
-* 포장주문(TakeOutOrder)은 포장주문 접수중(WAITING), 포장주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 포장주문완료(COMPLETED) 상태를 갖는다.
-* 포장주문(TakeOutOrder)은 자신의 상태를 변경할 수 있다.
+* 포장주문(TakeOutOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 주문상태(OrderStatus)을 갖는다.
+  * 주문상태는 포장주문 접수중(WAITING), 포장주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 포장주문완료(COMPLETED)가 있다.
+* 포장주문(TakeOutOrder)을 등록(create)한다.
+  * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
+  * 주문메뉴는 1개 이상이어야 한다.
+  * 주문수량은 0 이상이어야 한다.
+  * 메뉴(Menu)의 가격(price)과 주문금액(OrderLineAmount)은 같아야 한다.
+  * `포장주문 접수중(WAITING)` 상태로 등록된다.
+* 포장주문(TakeOutOrder)을 접수한다(accept).
+  * 등록된 포장주문이어야 한다.
+  * 포장주문은 포장주문 접수중(WAITING) 상태여야 한다.
+  * 포장주문의 상태를 `포장주문 접수완료(ACCEPTED)`로 바꾼다.
+* 포장주문을 서빙한다(serve).
+  * 등록된 포장주문이어야 한다.
+  * 포장주문은 `포장주문 접수완료(ACCEPTED)` 상태여야 한다.
+  * 포장주문의 상태를 `픽업완료(PICKEDUP)`로 바꾼다.
+* 포장주문을 완료(complete)한다.
+  * 등록된 포장주문이어야 한다.
+  * 포장주문은 `서빙완료(ACCEPTED)` 상태여야 한다.
+  * 포장주문을 `포장주문완료(ACCEPTED)` 상태로 바꾼다.
 
 ### 배달주문(DeliveryOrder)
 
