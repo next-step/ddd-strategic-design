@@ -96,7 +96,7 @@ docker compose -p kitchenpos up -d
 
 ## 용어 사전
 
-### 음식(Product)
+### 음식(`Product`)
 
 | 한글명   | 영문명           | 설명                         |
 |-------|---------------|----------------------------|
@@ -114,7 +114,7 @@ docker compose -p kitchenpos up -d
 | 메뉴 그룹 이름 | menu group name | 메뉴 그룹 이름. 공백이면 안 된다.                 |
 |          |                 |                                      |
 
-### 메뉴(Menu)
+### 메뉴(`Menu`)
 
 | 한글명      | 영문명            | 설명                                                                 |
 |----------|----------------|--------------------------------------------------------------------|
@@ -139,7 +139,7 @@ docker compose -p kitchenpos up -d
 | 손님 수     | number of guests            | 테이블에 방문한 손님 수                                                |
 | 매장테이블 이름 | restaurant table name       | 매장테이블의 이름.                                                   |
 
-### 주문(Order)
+### 주문(`Order`)
 
 | 한글명   | 영문명                 | 설명                                                       |
 |-------|---------------------|----------------------------------------------------------|
@@ -187,156 +187,137 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
-### 음식(Product)
+### 음식(`Product`)
+* 음식(`Product`)은 이름(`name`), 가격(`price`)를 갖는다.
+* 음식(`Product`)을 등록(`create`)한다.
+    * 음식(`Product`)의 가격은 0원 이상이어야 한다.
+    * 음식(`Product`)의 이름(`name`)에는 비속어(`profanity`)가 포함될 수 없다.
+* 음식을 전체조회(`findAll`)한다.
 
-* 음식(Product)은 이름(name), 가격(price)를 갖는다.
-* 음식(Product)을 등록(create)한다.
-    * 음식(Product)의 가격은 0원 이상이어야 한다.
-    * 음식(Product)의 이름(name)에는 비속어(profanity)가 포함될 수 없다.
-* 음식을 전체조회(findAll)한다.
+### 메뉴그룹(`MenuGroup`)
+* 메뉴그룹(`MenuGroup`)은 이름(`name`)을 갖는다.
+* 메뉴그룹(`MenuGroup`)을 등록(`create`)한다.
+    * 메뉴그룹(`MenuGroup`)의 이름은 공백일 수 없다.
+* 메뉴그룹(`MenuGroup`)을 전체조회(`findAll`)한다.
 
-### 메뉴그룹(MenuGroup)
+### 메뉴(`Menu`)
+* 메뉴(`Menu`)는 가격(`price`), 이름(`name`), 메뉴구성음식(`MenuProduct`), 메뉴 노츌 상태(`displayed`), 메뉴그룹(`MenuGroup`)을 갖는다.
+    * 메뉴구성음식(`MenuProduct`) 음식(`Product`)과 수량(`quantity`)을 갖는다.
+* 메뉴(`Menu`)를 등록(`create`)한다.
+    * 메뉴(`Menu`)의 이름(`name`)에는 비속어(`Profanity`)가 포함될 수 없다.
+    * 등록된 음식(`Product`)으로만 메뉴를 등록할 수 있다.
+    * 메뉴구성음식(`MenuProduct`)의 수량(`quantity`)은 0보다 커야 한다.
+    * 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다.
+    * 메뉴(`Menu`)의 가격(`price`)은 메뉴구성음식(`MenuProduct`) 가격(`price`)의 합보다 작아야 한다.
+    * 등록된 메뉴그룹(`MenuGroup`)으로 메뉴를 등록할 수 있다.
+* 메뉴(`Menu`)의 가격(`price`)을 바꾼다(`changePrice`).
+    * 등록된 메뉴(`Menu`)여야 한다.
+    * 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다.
+* 메뉴(`Menu`)를 노출한다(`display`).
+    * 등록된 메뉴(`Menu`)여야 한다.
+    * 메뉴(`Menu`)의 가격(`price`)은 메뉴구성음식(`MenuProduct`) 가격(`price`)의 합보다 같거나 크면 노출할 수 없다.
+* 메뉴(`Menu`)를 숨긴다(`display`).
+    * 등록된 메뉴(`Menu`)여야 한다.
+* 메뉴(`Menu`)를 전체조회(`findAll`)한다.
 
-* 메뉴그룹(MenuGroup)은 이름(name)을 갖는다.
-* 메뉴그룹(MenuGroup)을 등록(create)한다.
-    * 메뉴그룹(MenuGroup)의 이름은 공백일 수 없다.
-* 메뉴그룹(MenuGroup)을 전체조회(findAll)한다.
+### 매장테이블(`RestaurantTable`)
 
-### 메뉴(Menu)
-
-* 메뉴(Menu)는 가격(price), 이름(name), 메뉴구성음식(MenuProduct), 메뉴 노츌 상태(displayed), 메뉴그룹(MenuGroup)을 갖는다.
-    * 메뉴구성음식(MenuProduct) 음식(Product)과 수량(quantity)을 갖는다.
-* 메뉴(Menu)를 등록(create)한다.
-    * 메뉴(Menu)의 이름(name)에는 비속어(Profanity)가 포함될 수 없다.
-    * 등록된 음식(Product)으로만 메뉴를 등록할 수 있다.
-    * 메뉴구성음식(MenuProduct)의 수량(quantity)은 0보다 커야 한다.
-    * 메뉴(Menu)의 가격(price)은 0원 이상이어야 한다.
-    * 메뉴(Menu)의 가격(price)은 메뉴구성음식(MenuProduct) 가격(price)의 합보다 작아야 한다.
-    * 등록된 메뉴그룹(MenuGroup)으로 메뉴를 등록할 수 있다.
-* 메뉴(Menu)의 가격(price)을 바꾼다(changePrice).
-    * 등록된 메뉴(Menu)여야 한다.
-    * 메뉴(Menu)의 가격(price)은 0원 이상이어야 한다.
-* 메뉴(Menu)를 노출한다(display).
-    * 등록된 메뉴(Menu)여야 한다.
-    * 메뉴(Menu)의 가격(price)은 메뉴구성음식(MenuProduct) 가격(price)의 합보다 같거나 크면 노출할 수 없다.
-* 메뉴(Menu)를 숨긴다(display).
-    * 등록된 메뉴(Menu)여야 한다.
-* 메뉴(Menu)를 전체조회(findAll)한다.
-
-### 매장테이블(RestaurantTable)
-
-* 매장테이블(RestaurantTable)은 이름(Name)과 손님수(numberOfGuests), 사용여부(occupied)를 갖는다.
-* 매장테이블(RestaurantTable)을 등록(create)한다.
-    * 매장테이블(RestaurantTable)의 이름(name)은 공백일 수 없다.
+* 매장테이블(`RestaurantTable`)은 이름(`Name`)과 손님수(`numberOfGuests`), 사용여부(`occupied`)를 갖는다.
+* 매장테이블(`RestaurantTable`)을 등록(`create`)한다.
+    * 매장테이블(`RestaurantTable`)의 이름(`name`)은 공백일 수 없다.
     * 빈 테이블로 등록한다.
     * 손님수는 0으로 등록한다.
-* 매장테이블(RestaurantTable)을 사용중 테이블로 바꾼다(sit).
+* 매장테이블(`RestaurantTable`)을 사용중 테이블로 바꾼다(`sit`).
     * 등록된 매장테이블이어야 한다.
-* 매장테이블(RestaurantTable)을 치운다(clear).
+* 매장테이블(`RestaurantTable`)을 치운다(`clear`).
     * 등록된 매장테이블이어야 한다.
-    * 매장테이블과 연관된 매장주문(EatInOrder)은 모두 주문완료(COMPLETED) 상태여야 한다.
+    * 매장테이블과 연관된 매장주문(`EatInOrder`)은 모두 주문완료(`COMPLETED`) 상태여야 한다.
     * 빈 테이블(unoccupied restaurantTable)로 수정한다.
     * 손님수는 0으로 수정한다.
-* 매장테이블(RestaurantTable)의 손님수를 바꾼다(changeNumberOfGuests).
+* 매장테이블(`RestaurantTable`)의 손님수를 바꾼다(`changeNumberOfGuests`).
     * 등록된 매장테이블이어야 한다.
     * 손님수는 0 이상이어야 한다.
     * 사용중 테이블(occupied restaurantTable)이어야 한다.
-* 매장테이블(RestaurantTable)을 전체조회(findAll)한다.
+* 매장테이블(`RestaurantTable`)을 전체조회(`findAll`)한다.
 
-### 주문금액(OrderLineAmount)
 
-* 주문금액은 0원 이상이어야 한다.
-* 주문금액은 메뉴의 가격과 같아야 한다.
-
-### 주문메뉴(OrderLine)
-
-* 주문메뉴는 메뉴(Menu), 주문수량(OrderLineQuantity), 주문금액(OrderLineAmount)을 갖는다.
-* 숨겨진 메뉴는 주문메뉴에 포함될 수 없다.
-
-### 주문수량(OrderLineQuantity)
-
-* 매장주문(EatInOrder)일 때 음수일 수 있다
-* 배달주문(DeliveryOrder), 포장주문(TakeOutOrder)일 때는 0 이상이어야 한다.
-
-### 매장주문(EatInOrder)
-
-* 매장주문(EatInOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 매장테이블(RestaurantTable), 주문상태(OrderStatus)을 갖는다.
-    * 주문상태는 매장주문(EatInOrder) 은 매장주문 접수중(WAITING), 매장주문 접수완료(ACCEPTED), 서빙완료(SERVED), 매장주문완료(COMPLETED)가 있다.
-* 매장주문(EatInOrder)을 등록(create)한다.
+### 매장주문(`EatInOrder`)
+* 매장주문(`EatInOrder`)은 주문금액(`OrderLineAmount`), 주문메뉴(`OrderLine`), 주문수량(`OrderLineQuantity`), 매장테이블(`RestaurantTable`), 주문상태(`OrderStatus`)을 갖는다.
+    * 주문상태는 매장주문(`EatInOrder`) 은 `매장주문 접수중(WAITING)`, `매장주문 접수완료(ACCEPTED)`, `서빙완료(SERVED)`, `매장주문완료(COMPLETED)`가 있다.
+* 매장주문(`EatInOrder`)을 등록(`create`)한다.
     * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
     * 주문메뉴는 1개 이상이어야 한다.
     * 주문수량은 음수일 수 있다.
     * 메뉴의 가격과 주문금액은 같아야 한다.
     * 등록된 매장테이블여야 한다. 매장테이블은 사용중 테이블이어야 한다.
     * `매장주문 접수중(WAITING)` 상태로 등록된다.
-* 매장주문(EatInOrder)을 접수한다(accept).
+* 매장주문(`EatInOrder`)을 접수한다(`accept`).
   * 등록된 매장주문이어야 한다.
-  * 매장주문은 매장주문 접수중(WAITING) 상태여야 한다.
+  * 매장주문은 `매장주문 접수중(WAITING)` 상태여야 한다.
   * 매장주문의 상태를 `매장주문 접수완료(ACCEPTED)`로 바꾼다.
-* 매장주문을 서빙한다(serve).
+* 매장주문(`EatInOrder`)을 서빙한다(`serve`).
   * 등록된 매장주문이어야 한다.
   * 매장주문은 `매장주문 접수완료(ACCEPTED)` 상태여야 한다.
   * 매장주문의 상태를 `서빙완료(SERVED)`로 바꾼다.
-* 매장주문을 완료(complete)한다.
+* 매장주문(`EatInOrder`)을 완료(`complete`)한다.
     * 등록된 매장주문이어야 한다.
     * 매장주문은 `서빙완료(SERVED)` 상태여야 한다.
     * 매장주문을 `매장주문완료(COMPLETED)` 상태로 바꾼다.
-    * 매장테이블의 모든 매장주문이 `매장주문완료(COMPLETED)` 상태면, 매장테이블을 치운다(clear).
+    * 매장테이블의 모든 매장주문이 `매장주문완료(COMPLETED)` 상태면, 매장테이블을 치운다(`clear`).
 
-### 포장주문(TakeOutOrder)
-* 포장주문(TakeOutOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 주문상태(OrderStatus)을 갖는다.
-  * 주문상태는 포장주문 접수중(WAITING), 포장주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 포장주문완료(COMPLETED)가 있다.
-* 포장주문(TakeOutOrder)을 등록(create)한다.
+### 포장주문(`TakeOutOrder`)
+* 포장주문(`TakeOutOrder`)은 주문금액(`OrderLineAmount`), 주문메뉴(`OrderLine`), 주문수량(`OrderLineQuantity`), 주문상태(`OrderStatus`)을 갖는다.
+  * 주문상태는 `포장주문 접수중(WAITING)`, `포장주문 접수완료(ACCEPTED)`, `픽업완료(PICKEDUP)`, `포장주문완료(COMPLETED)`가 있다.
+* 포장주문(`TakeOutOrder`)을 등록(`create`)한다.
   * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
   * 주문메뉴는 1개 이상이어야 한다.
   * 주문수량은 0 이상이어야 한다.
-  * 메뉴(Menu)의 가격(price)과 주문금액(OrderLineAmount)은 같아야 한다.
-  * `포장주문 접수중(WAITING)` 상태로 등록된다.
-* 포장주문(TakeOutOrder)을 접수한다(accept).
+  * 메뉴(`Menu`)의 가격(`price`)과 주문금액(`OrderLineAmount`)은 같아야 한다.
+  * `포장주문 접수중(`WAITING`)` 상태로 등록된다.
+* 포장주문(`TakeOutOrder`)을 접수한다(`accept`).
   * 등록된 포장주문이어야 한다.
-  * 포장주문은 포장주문 접수중(WAITING) 상태여야 한다.
+  * 포장주문은 `포장주문 접수중(WAITING)` 상태여야 한다.
   * 포장주문의 상태를 `포장주문 접수완료(ACCEPTED)`로 바꾼다.
-* 포장주문을 서빙한다(serve).
+* 포장주문을 서빙한다(`serve`).
   * 등록된 포장주문이어야 한다.
   * 포장주문은 `포장주문 접수완료(ACCEPTED)` 상태여야 한다.
   * 포장주문의 상태를 `픽업완료(PICKEDUP)`로 바꾼다.
-* 포장주문을 완료(complete)한다.
+* 포장주문을 완료(`complete`)한다.
   * 등록된 포장주문이어야 한다.
   * 포장주문은 `픽업완료(PICKEDUP)` 상태여야 한다.
   * 포장주문을 `포장주문완료(ACCEPTED)` 상태로 바꾼다.
 
-### 배달주문(DeliveryOrder)
-* 배달주문(DeliveryOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 주문상태(OrderStatus), 배달정보(DeliveryInfo)를 갖는다.
-  * 배달정보(DeliveryInfo)는 주문번호, 배달금액(DeliveryAmount), 배달주소(DeliveryAddress)를 갖는다.
-  * 배달금액(Delivery)은 주문메뉴금액(OrderLineAmounts)의 합이다.
-  * 주문상태는 배달주문 접수중(WAITING), 배달주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 배달중(DELIVERING), 배달완료(DEIEVERED), 배달주문완료(
-    COMPLETED)가 있다.
-* 배달주문(DeliveryOrder)을 등록(create)한다.
+### 배달주문(`DeliveryOrder`)
+* 배달주문(`DeliveryOrder`)은 주문금액(`OrderLineAmount`), 주문메뉴(`OrderLine`), 주문수량(`OrderLineQuantity`), 주문상태(`OrderStatus`), 배달정보(`DeliveryInfo`)를 갖는다.
+  * 배달정보(`DeliveryInfo`)는 주문번호, 배달금액(`DeliveryAmount`), 배달주소(`DeliveryAddress`)를 갖는다.
+  * 배달금액(`DeliveryAmount`)은 주문메뉴금액(`OrderLineAmounts`)의 합이다.
+  * 주문상태는 `배달주문 접수중(WAITING)`, `배달주문 접수완료(ACCEPTED)`, `픽업완료(PICKEDUP)`, `배달중(DELIVERING)`, `배달완료(DEIEVERED)`, `배달주문완료(COMPLETED)`가 있다.
+* 배달주문(`DeliveryOrder`)을 등록(`create`)한다.
   * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
   * 주문메뉴는 1개 이상이어야 한다.
   * 주문수량은 0 이상이어야 한다.
-  * 배달주소(DeliveryAddress)는 공백일 수 없다. 
-  * 메뉴(Menu)의 가격(price)과 주문금액(OrderLineAmount)은 같아야 한다.
+  * 배달주소(`DeliveryAddress`)는 공백일 수 없다. 
+  * 메뉴(`Menu`)의 가격(`price`)과 주문금액(`OrderLineAmount`)은 같아야 한다.
   * `배달주문 접수중(WAITING)` 상태로 등록된다.
-* 배달주문(DeliveryOrder)을 접수한다(accept).
+* 배달주문(`DeliveryOrder`)을 접수한다(`accept`).
   * 등록된 배달주문이어야 한다.
-  * 배달주문은 배달주문 접수중(WAITING) 상태여야 한다.
-  * 배달주문의 배달금액(DeliveryAmount)을 계산한다. 
-  * 배달정보(deliveryInfo)로 라이더(rider)에게 배달을 요청(requestDelivery)한다.
+  * 배달주문은 `배달주문 접수중(WAITING)` 상태여야 한다.
+  * 배달주문의 배달금액(`DeliveryAmount`)을 계산한다. 
+  * 배달정보(`deliveryInfo`)로 라이더(`rider`)에게 배달을 요청(`requestDelivery`)한다.
   * 배달주문의 상태를 `배달주문 접수완료(ACCEPTED)`로 바꾼다.
-* 배달주문(DeliveryOrder)을 서빙한다(serve).
+* 배달주문(`DeliveryOrder`)을 서빙한다(`serve`).
   * 등록된 배달주문이어야 한다.
   * 배달주문은 `배달주문 접수완료(ACCEPTED)` 상태여야 한다.
   * 배달주문의 상태를 `픽업완료(PICKEDUP)`로 바꾼다.
-* 배달주문(DeliveryOrder)을 배달한다(startDelivery).
+* 배달주문(`DeliveryOrder`)을 배달한다(`startDelivery`).
   * 등록된 배달주문이어야 한다.
   * 배달주문은 `픽업완료(PICKEDUP)` 상태여야 한다.
   * 배달주문을 `배달중(DELIVERING)` 상태로 바꾼다.
-* 배달을 완료한다(completeDelivery).
+* 배달을 완료한다(`completeDelivery`).
   * 등록된 배달주문이어야 한다.
   * 배달주문은 `배달중(DELIVERING)` 상태여야 한다.
   * 배달주문을 `배달완료(DELIVERED)` 상태로 바꾼다.  
-* 배달주문(DeliveryOrder)을 완료(complete)한다.
+* 배달주문(`DeliveryOrder`)을 완료(`complete`)한다.
   * 등록된 배달주문이어야 한다.
   * 배달주문은 `배달완료(DELIVERED)` 상태여야 한다.
   * 배달주문을 `배달주문완료(ACCEPTED)` 상태로 바꾼다.
