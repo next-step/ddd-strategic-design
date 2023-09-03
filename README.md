@@ -96,8 +96,66 @@ docker compose -p kitchenpos up -d
 
 ## 용어 사전
 
+
+### Product (상품)
+
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-|  |  |  |
+| 상품 | Product | 판매될 상품 |
+| 이름 | Name | 상품의 이름 |
+| 비속어 | Profanity | 욕설등의 부적절한 언어 |
+| 가격 | Price | 상품의 가격 |
+
+### MenuGroup (메뉴그룹)
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+| 메뉴그룹 | Menu Group | 메뉴를 모아놓은 그룹 |
+| 이름 | Name | 메뉴그룹의 이름 |
+
+### Menu (메뉴)
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+| 메뉴 | Menu |  |
+| 가격 | Price | 메뉴의 가격 |
+| 메뉴상품 | Menu Product | 메뉴에 포함된 상품 |
+| 이름 | Name | 메뉴의 이름 |
+| 비속어 | Profanity | 욕설등의 부적절한 언어 |
+| 노출 | Display | 메뉴를 노출 |
+| 비노출 | Hide | 메뉴를 비노출 |
+
+### OrderTable (매장테이블)
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+| 매장테이블 | OrderTable |  |
+| 이름 | Name | 매장 테이블의 이름 |
+| 손님 수 | Number Of Guests | 매장 테이블에 앉은 손님 수 |
+| 사용 여부 | Occupied | 매장 테이블의 사용 여부 |
+| 사용 | Sit | 매장 테이블 사용 상태 |
+| 미사용 | Clear | 매장 테이블 미사용 상태 |
+
+### Order (주문)
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
+| 주문 | Order |  |
+| 주문 유형 | Order Type | 주문의 유형 |
+| 배달 주문 | Delivery Order | 배달을 이용하는 주문 |
+| 포장 주문 | Take-Out Order | 포장을 이용하는 주문 |
+| 매장 주문 | Eat-In Order | 매장에서 식사한는 주문 |
+| 주문 상태 | Order Status | 주문의 상태 |
+| 주문 품목 | Order Line Item | 주문안에 포함된 품목 |
+| 주문 일시 | Order DateTime | 주문이 요청 시간 |
+| 배달 주소 | Delivery Address | 배달 요청 주소지 |
+| 배달 기사 | Kitchen Rider | 배달하는 기사 |
+| 승인 대기 중 | Waiting | 주문 승인 대기 중인 상태 |
+| 승인 | Accepted | 주문 승인 상태 |
+| 조리 완료 | Served | 조리 완료 상태 |
+| 배달 중 | Delivering | 배달 중 상태 |
+| 배달 완료 | Delivered | 배달 완료 상태 |
+| 주문 완료 | Completed | 주문 완료 상태 |
+
 
 ## 모델링
