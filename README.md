@@ -240,6 +240,9 @@ docker compose -p kitchenpos up -d
     * 사용중 테이블(occupied restaurantTable)이어야 한다.
 * 매장테이블(`RestaurantTable`)을 전체조회(`findAll`)한다.
 
+### 주문('Order')
+* 주문에는 매장주문(`EatInOrder`), 배달주문(`DeliveryOrder`), 포장주문(`TakeOutOrder`)이 있다. 
+* 주문을 전체조회(`findAll`)할 수 있다.
 
 ### 매장주문(`EatInOrder`)
 * 매장주문(`EatInOrder`)은 주문금액(`OrderLineAmount`), 주문메뉴(`OrderLine`), 주문수량(`OrderLineQuantity`), 매장테이블(`RestaurantTable`), 주문상태(`OrderStatus`)을 갖는다.
