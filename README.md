@@ -97,10 +97,12 @@ docker compose -p kitchenpos up -d
 ## 용어 사전
 
 ### 공통
+
 | 한글명 | 영문명       | 설명        |
 |-----|-----------|-----------|
 | 비속어 | profanity | 비속어       |
 | 목록  | list      | 각 항목들의 목록 |
+
 ### 상품
 
 | 한글명    | 영문명       | 설명              |
@@ -191,4 +193,143 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
+### 상품
 
+- product는 id, name, price를 가진다
+- product를 등록 한다.
+  - name은 필수 값이며 profanity가 포함될 수 없다.
+  - price는 필수 값이며 0원 이상이여야 한다.
+- product는 changePrice를 통해 price를 변경할 수 있다.
+  - price는 필수 값이며 0원 이상이여야 한다.
+  - 등록되어있는 product의 가격만 변경할 수 있다.
+  - product가 등록되어 있는 menu의 price가 menuProduct에 등록되어 있는 product들의 price보다 높을 경우 menu를 hide 상태로 변경한다.
+- product를 조회 한다.
+  
+
+### 메뉴 그룹
+
+- menu group은 id, name을 가진다.
+- menu group을 등록 한다.
+  - name은 필수 값이다.
+- menu group을 조회 한다.
+
+### 메뉴
+
+- menu는 id, name, price, menu_group_id, menuProducts, displayed를 가진다.
+- menu를 등록 한다.
+  - name은 필수 값이며 profanity가 포함될 수 없다.
+  - price는 필수 값이며 0원 이상이여야 한다.
+  - menu_group_id는 필수 값이며 등록되어 있는 menu group의 id여야 한다.
+  - menuProduct에 product가 1개 이상 등록되어 있어야 한다.
+  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높으면 안된다.
+  - menuProduct에 quantity는 1 이상이여야 한다.
+  - displayed는 필수 값이며 true, false만 가능하다. 
+- menu는 changePrice로 가격을 변경할 수 있다.
+  - price는 필수 값이며 0원 이상이여야 한다.
+  - 등록 되어있는 menu의 가격만 변경할 수 있다.
+  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높을 경우 price가 변경되지 않는다.
+- menu는 display 상태로 변경할 수 있다.
+  - 등록 되어있는 menu만 display 상태로 변경할 수 있다.
+  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높을 경우 display 상태로 변경되지 않는다.
+- menu는 hide 상태로 변경할 수 있다.
+  - 등록 되어있는 menu만 hide 상태로 변경할 수 있다.
+
+### 주문 테이블
+
+- order table은 id, name, numberOfGuests, occupied를 가진다.
+- order table을 등록한다.
+  - name은 필수 값이다.
+- order table을 사용상태로 변경할 수 있다.
+  - order table이 등록되어 있어야 한다. 
+- order table을 미사용 상태로 변경할 수 있다. 
+  - order table이 등록되어 있어야 한다.
+  - order table에 등록되어 있는 주문이 존재할 경우 미사용 상태로 변경할 수 없다.
+- order table을 사용하는 고객 수를 changeNumberOfGuests를 통해 변경할 수 있다.
+  - numberOfGuests는 0 이상이여야 한다.
+  - order table이 등록되어 있어야 한다.
+  - order table이 사용중인 상태여야 한다.
+- order table을 조회한다.
+
+### 배달 주문
+
+- order는 id, type, status, orderDateTime, orderLineItems, deliveryAddress를 가진다.
+- order의 type은 DELIVERY.
+- order를 등록한다.
+  - order를 등록할 때 주문 상태는 WAITING이다.
+  - menu가 1개 이상 등록되어 있어야 한다.
+  - orderDateTime은 현재시간이 들어간다.
+  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
+  - orderLineItem의 quantity는 1 이상이여야 한다.
+  - menu가 hide 상태일 경우 order를 등록할 수 없다.
+  - menu의 price와 orderLineItem의 price는 같아야 한다.
+- order를 승인한다.
+  - order가 등록되어 있어야 한다. 
+  - order의 status가 WAITING이여야 한다.
+  - order의 id,price,deliveryAddress를 배달 기사에게 전달한다.
+  - order의 status를 ACCEPTED로 변경한다.
+- order의 menu를 제공한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 ACCEPTED여야 한다.
+- order를 배달 시작한다.
+  - order가 등록되어 있어야 한다. 
+  - order의 status가 SERVED여야 한다.
+  - order의 status를 DELIVERING으로 변경한다.
+- order를 배달 완료한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 DELIVERING여야 한다.
+  - order의 status를 DELIVERD로 변경한다.
+- order를 완료한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 DELIVERED여야 한다.
+  - order의 status를 COMPLETED로 변경한다.
+- order를 조회한다.
+
+### 포장 주문
+- order는 id, type, status, orderDateTime, orderLineItems 가진다.
+- order의 type은 TAKE OUT.
+- order를 등록한다.
+  - order를 등록할 때 주문 상태는 WAITING이다.
+  - menu가 1개 이상 등록되어 있어야 한다.
+  - orderDateTime은 현재시간이 들어간다.
+  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
+  - orderLineItem의 quantity는 1 이상이여야 한다.
+  - menu가 hide 상태일 경우 order를 등록할 수 없다.
+  - menu의 price와 orderLineItem의 price는 같아야 한다.
+- order를 승인한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 WAITING이여야 한다.
+  - order의 status를 ACCEPTED로 변경한다.
+- order의 menu를 제공한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 ACCEPTED여야 한다.
+- order를 완료한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 SERVED여야 한다.
+  - order의 status를 COMPLETED로 변경한다.
+- order를 조회한다.
+
+### 매장 주문
+
+- order는 id, type, status, orderDateTime, orderLineItems, orderTable을 가진다.
+- order의 type은 EAT IN.
+- order를 등록한다.
+  - order를 등록할 때 주문 상태는 WAITING이다.
+  - menu가 1개 이상 등록되어 있어야 한다.
+  - orderDateTime은 현재시간이 들어간다.
+  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
+  - menu가 hide 상태일 경우 order를 등록할 수 없다.
+  - menu의 price와 orderLineItem의 price는 같아야 한다.
+  - ordertable이 배정되어 있어야 한다.
+- order를 승인한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 WAITING이여야 한다.
+  - order의 status를 ACCEPTED로 변경한다.
+- order의 menu를 제공한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 ACCEPTED여야 한다.
+- order를 완료한다.
+  - order가 등록되어 있어야 한다.
+  - order의 status가 SERVED여야 한다.
+  - order의 status를 COMPLETED로 변경한다.
+  - orderTable의 occupied를 미사용 상태로 변경한다.
+- order를 조회한다.
