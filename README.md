@@ -182,52 +182,42 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
-### 음식(Product)
-* 음식(Product)은 포스기에서 등록한다.
-* 음식(Product)은 음식가격(ProductPrice)를 갖는다.
-* 음식(Product)은 음식이름(ProductName)을 갖는다.
-#### 음식가격(ProdcutPrice)
-* 음식가격(ProductPrice)는 0원 이상이다.
-#### 음식이름(ProductName)
-* 음식이름(ProductName)은 비속어(Profanity)를 포함하지 않는다.
+### 음식(`Product`)
+* 음식(Product)은 이름(`name`), 가격(`price`)를 갖는다.
+* 음식(`Product`)을 등록(create)한다.
+  * 음식(Product)의 가격은 0원 이상이어야 한다.
+  * 음식(Product)의 이름(`name`)에는 비속어(`profanity`)가 포함될 수 없다.
 
 ### 메뉴그룹(MenuGroup)
 * 메뉴그룹(MenuGroup)은 메뉴그룹이름(MenuGroupName)을 갖는다.
-#### 메뉴그룹이름(MenuGroupName)
 
 ### 메뉴구성음식
 * 메뉴구성음식(MenuProduct) 음식(Product)와 메뉴구성음식수량(MenuProductQuantity)을 갖는다.
 * 메뉴구성음식(MenuProduct)는 메뉴구성음식가격(MenuProductPrice)을 계산한다.
-#### 메뉴구성음식 수량 (MenuProductQuantity)
 * 메뉴구성음식 수량은 0보다 크다.
-#### 메뉴구성음식 가격 (MenuProductPrice)
 
 ### 메뉴(Menu)
 * 메뉴(Menu)는 포스기에서 등록한다. 
 * 포스기로 메뉴(Menu)를 노출, 숨기기 할 수 있다.
 * 포스기로 메뉴(Menu)의 메뉴가격(MenuPrice)를 변경할 수 있다.
+  * 메뉴가격(MenuPrice)은 0원 이상이다.
+  * 메뉴가격(MenuPrice)은 메뉴구성음식 가격의 합(MenuProductPrices)보다 클 수 없다. 
 * 메뉴(Menu)는 메뉴구성음식(MenuProduct)를 가진다. 
-* 메뉴는(Menu)는 메뉴 이름(MenuName)을 갖는다.
+* 메뉴는(Menu)는 메뉴이름(MenuName)을 갖는다.
+  * 메뉴이름(MenuName)은 비속어(Profanity)를 포함하지 않는다
 * 메뉴는(Menu)는 메뉴가격(MenuPrice)를 갖는다. 
 * 메뉴(Menu)는 메뉴가격 정책(MenuPricePolicy)에 의해 자신의 노출을 결정할 수 있다.
+  * 메뉴가격정책(MenuPricePolicy)은 `MenuPrice는 MenuProductPrices 클 수 없다`를 의미한다.
 * 메뉴(Menu)는 메뉴 그룹(MenuGroup)을 갖는다.
-#### 메뉴가격(MenuPrice)
-* 메뉴가격(MenuPrice)은 0원 이상이다.
-* 메뉴가격(MenuPrice)은 메뉴구성음식 가격의 합(MenuProductPrices)보다 클 수 없다. 
-#### 메뉴이름(MenuName)
-* 메뉴이름(MenuName)은 비속어(Profanity)를 포함하지 않는다
-#### 메뉴가격정책 (MenuPricePolicy)
-* 메뉴가격정책(MenuPricePolicy)은 `MenuPrice는 MenuProductPrices 클 수 없다`를 의미한다.
+* 
 ### 매장테이블(RestaurantTable)
 * 포스기로 매장테이블(RestaurantTable)을 생성할 수 있다.
 * 포스기로 매장테이블(RestaurantTable)을 사용중으로 바꿀 수 있다.
 * 매장테이블(RestaurantTable)은 손님 수(NumberOfGuests)를 갖는다.
+  * 손님수는 음수일 수 없다.
 * 매장테이블(RestaurantTable)은 손님을 받을 수 있다. 
 * 매장테이블(RestaurantTable)은 자신을 치울 수 있다. 
-* 매장테이블(RestaurantTable)은 RestaurantTableName을 갖는다. 
-#### 매장테이블 이름(RestaurantTableName)
-#### 손님수(NumberOfGuests)
-* 손님수는 음수일 수 없다.
+* 매장테이블(RestaurantTable)은 매장테이블 이름(RestaurantTableName)을 갖는다. 
 
 ### 주문금액(OrderLineAmount)
 * 주문금액은 0원 이상이어야 한다.
