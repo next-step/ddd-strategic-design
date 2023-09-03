@@ -182,34 +182,40 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
-### 음식(`Product`)
-* 음식(Product)은 이름(`name`), 가격(`price`)를 갖는다.
-* 음식(`Product`)을 등록(create)한다.
+### 음식(Product)
+* 음식(Product)은 이름(name), 가격(price)를 갖는다.
+* 음식(Product)을 등록(create)한다.
   * 음식(Product)의 가격은 0원 이상이어야 한다.
-  * 음식(Product)의 이름(`name`)에는 비속어(`profanity`)가 포함될 수 없다.
+  * 음식(Product)의 이름(name)에는 비속어(profanity)가 포함될 수 없다.
+* 음식을 전체조회(findAll)한다.
 
 ### 메뉴그룹(MenuGroup)
-* 메뉴그룹(MenuGroup)은 메뉴그룹이름(MenuGroupName)을 갖는다.
-
-### 메뉴구성음식
-* 메뉴구성음식(MenuProduct) 음식(Product)와 메뉴구성음식수량(MenuProductQuantity)을 갖는다.
-* 메뉴구성음식(MenuProduct)는 메뉴구성음식가격(MenuProductPrice)을 계산한다.
-* 메뉴구성음식 수량은 0보다 크다.
+* 메뉴그룹(MenuGroup)은 이름(name)을 갖는다.
+* 메뉴그룹(MenuGroup)을 등록(create)한다.
+  * 메뉴그룹(MenuGroup)의 이름은 공백일 수 없다.
+* 메뉴그룹(MenuGroup)을 전체조회(findAll)한다.
 
 ### 메뉴(Menu)
-* 메뉴(Menu)는 포스기에서 등록한다. 
-* 포스기로 메뉴(Menu)를 노출, 숨기기 할 수 있다.
-* 포스기로 메뉴(Menu)의 메뉴가격(MenuPrice)를 변경할 수 있다.
-  * 메뉴가격(MenuPrice)은 0원 이상이다.
-  * 메뉴가격(MenuPrice)은 메뉴구성음식 가격의 합(MenuProductPrices)보다 클 수 없다. 
-* 메뉴(Menu)는 메뉴구성음식(MenuProduct)를 가진다. 
-* 메뉴는(Menu)는 메뉴이름(MenuName)을 갖는다.
-  * 메뉴이름(MenuName)은 비속어(Profanity)를 포함하지 않는다
-* 메뉴는(Menu)는 메뉴가격(MenuPrice)를 갖는다. 
-* 메뉴(Menu)는 메뉴가격 정책(MenuPricePolicy)에 의해 자신의 노출을 결정할 수 있다.
-  * 메뉴가격정책(MenuPricePolicy)은 `MenuPrice는 MenuProductPrices 클 수 없다`를 의미한다.
-* 메뉴(Menu)는 메뉴 그룹(MenuGroup)을 갖는다.
-* 
+* 메뉴(Menu)는 가격(price), 이름(name), 메뉴구성음식(MenuProduct), 메뉴 노츌 상태(displayed), 메뉴그룹(MenuGroup)을 갖는다.
+  * 메뉴구성음식(MenuProduct) 음식(Product)과 수량(quantity)을 갖는다.
+* 메뉴(Menu)를 등록(create)한다.
+  * 메뉴(Menu)의 이름(name)에는 비속어(Profanity)가 포함될 수 없다.
+  * 등록된 음식(Product)으로만 메뉴를 등록할 수 있다.
+  * 메뉴구성음식(MenuProduct)의 수량(quantity)은 0보다 커야 한다.
+  * 메뉴(Menu)의 가격(price)은 0원 이상이어야 한다. 
+  * 메뉴(Menu)의 가격(price)은 메뉴구성음식(MenuProduct) 가격(price)의 합보다 작아야 한다. 
+  * 등록된 메뉴그룹(MenuGroup)으로 메뉴를 등록할 수 있다. 
+* 메뉴(Menu)의 가격(price)을 바꾼다(changePrice). 
+  * 등록된 메뉴(Menu)여야 한다.
+  * 메뉴(Menu)의 가격(price)은 0원 이상이어야 한다.
+* 메뉴(Menu)를 노출한다(display).
+  * 등록된 메뉴(Menu)여야 한다.
+  * 메뉴(Menu)의 가격(price)은 메뉴구성음식(MenuProduct) 가격(price)의 합보다 같거나 크면 노출할 수 없다.
+* 메뉴(Menu)를 숨긴다(display).
+  * 등록된 메뉴(Menu)여야 한다.
+ 
+
+
 ### 매장테이블(RestaurantTable)
 * 포스기로 매장테이블(RestaurantTable)을 생성할 수 있다.
 * 포스기로 매장테이블(RestaurantTable)을 사용중으로 바꿀 수 있다.
