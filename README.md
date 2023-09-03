@@ -302,30 +302,41 @@ docker compose -p kitchenpos up -d
   * 포장주문의 상태를 `픽업완료(PICKEDUP)`로 바꾼다.
 * 포장주문을 완료(complete)한다.
   * 등록된 포장주문이어야 한다.
-  * 포장주문은 `서빙완료(ACCEPTED)` 상태여야 한다.
+  * 포장주문은 `픽업완료(PICKEDUP)` 상태여야 한다.
   * 포장주문을 `포장주문완료(ACCEPTED)` 상태로 바꾼다.
 
 ### 배달주문(DeliveryOrder)
-
-* 배달주문(DeliveryOrder)은 포스기에서 등록한다.
-* 배달주문(DeliveryOrder)은 주문메뉴(OrderLine) 갖는다.
-* 배달주문(DeliveryOrder)은 배달주문 접수중(WAITING), 배달주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 배달중(DELIVERING), 배달완료(DEIEVERED), 배달주문완료(
-  COMPLETED) 상태를 갖는다.
-* 배달주문(DeliveryOrder)은 자신의 상태를 변경할 수 있다.
-* 배달주문(DeliveryOrder)은 배달정보를 가지고 라이더(Rider)에게 배달요청을 한다.
-
-#### 배달주소(DeliveryAddress)
-
-* 배달주소(DeliveryAddress)은 공백일 수 없다.
-
-#### 라이더(Rider)
-
-* 라이더(Rider)는 배달정보와 음식를 가지고 배달한다.
-
-#### 배달정보(DeliveryInfo)
-
-* 배달정보(DeliveryInfo)는 주문번호, 배달금액(DeliveryAmount), 배달주소(DeliveryAddress)를 갖는다.
-
-#### 배달금액(DeliveryAmount)
-
-* 배달금액(Delivery)은 주문메뉴금액(OrderLineAmounts)의 합이다.
+* 배달주문(DeliveryOrder)은 주문금액(OrderLineAmount), 주문메뉴(OrderLine), 주문수량(OrderLineQuantity), 주문상태(OrderStatus), 배달정보(DeliveryInfo)를 갖는다.
+  * 배달정보(DeliveryInfo)는 주문번호, 배달금액(DeliveryAmount), 배달주소(DeliveryAddress)를 갖는다.
+  * 배달금액(Delivery)은 주문메뉴금액(OrderLineAmounts)의 합이다.
+  * 주문상태는 배달주문 접수중(WAITING), 배달주문 접수완료(ACCEPTED), 픽업완료(PICKEDUP), 배달중(DELIVERING), 배달완료(DEIEVERED), 배달주문완료(
+    COMPLETED)가 있다.
+* 배달주문(DeliveryOrder)을 등록(create)한다.
+  * 주문메뉴는 등록되고, 노출된 메뉴여야 한다.
+  * 주문메뉴는 1개 이상이어야 한다.
+  * 주문수량은 0 이상이어야 한다.
+  * 배달주소(DeliveryAddress)는 공백일 수 없다. 
+  * 메뉴(Menu)의 가격(price)과 주문금액(OrderLineAmount)은 같아야 한다.
+  * `배달주문 접수중(WAITING)` 상태로 등록된다.
+* 배달주문(DeliveryOrder)을 접수한다(accept).
+  * 등록된 배달주문이어야 한다.
+  * 배달주문은 배달주문 접수중(WAITING) 상태여야 한다.
+  * 배달주문의 배달금액(DeliveryAmount)을 계산한다. 
+  * 배달정보(deliveryInfo)로 라이더(rider)에게 배달을 요청(requestDelivery)한다.
+  * 배달주문의 상태를 `배달주문 접수완료(ACCEPTED)`로 바꾼다.
+* 배달주문(DeliveryOrder)을 서빙한다(serve).
+  * 등록된 배달주문이어야 한다.
+  * 배달주문은 `배달주문 접수완료(ACCEPTED)` 상태여야 한다.
+  * 배달주문의 상태를 `픽업완료(PICKEDUP)`로 바꾼다.
+* 배달주문(DeliveryOrder)을 배달한다(startDelivery).
+  * 등록된 배달주문이어야 한다.
+  * 배달주문은 `픽업완료(PICKEDUP)` 상태여야 한다.
+  * 배달주문을 `배달중(DELIVERING)` 상태로 바꾼다.
+* 배달을 완료한다(completeDelivery).
+  * 등록된 배달주문이어야 한다.
+  * 배달주문은 `배달중(DELIVERING)` 상태여야 한다.
+  * 배달주문을 `배달완료(DELIVERED)` 상태로 바꾼다.  
+* 배달주문(DeliveryOrder)을 완료(complete)한다.
+  * 등록된 배달주문이어야 한다.
+  * 배달주문은 `배달완료(DELIVERED)` 상태여야 한다.
+  * 배달주문을 `배달주문완료(ACCEPTED)` 상태로 바꾼다.
