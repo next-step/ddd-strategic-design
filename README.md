@@ -232,15 +232,15 @@ docker compose -p kitchenpos up -d
 * 매장테이블(`RestaurantTable`)을 치운다(`clear`).
     * 등록된 매장테이블이어야 한다.
     * 매장테이블과 연관된 매장주문(`EatInOrder`)은 모두 주문완료(`COMPLETED`) 상태여야 한다.
-    * 빈 테이블(unoccupied restaurantTable)로 수정한다.
+    * 빈 테이블(`unoccupied restaurantTable`)로 수정한다.
     * 손님수는 0으로 수정한다.
 * 매장테이블(`RestaurantTable`)의 손님수를 바꾼다(`changeNumberOfGuests`).
     * 등록된 매장테이블이어야 한다.
     * 손님수는 0 이상이어야 한다.
-    * 사용중 테이블(occupied restaurantTable)이어야 한다.
+    * 사용중 테이블(`occupied restaurantTable`)이어야 한다.
 * 매장테이블(`RestaurantTable`)을 전체조회(`findAll`)한다.
 
-### 주문('Order')
+### 주문(`Order`)
 * 주문에는 매장주문(`EatInOrder`), 배달주문(`DeliveryOrder`), 포장주문(`TakeOutOrder`)이 있다. 
 * 주문을 전체조회(`findAll`)할 수 있다.
 
