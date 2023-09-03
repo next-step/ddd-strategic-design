@@ -117,7 +117,7 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 메뉴 | Menu |  |
+| 메뉴 | Menu | 메뉴 상품과 가격 |
 | 가격 | Price | 메뉴의 가격 |
 | 메뉴상품 | Menu Product | 메뉴에 포함된 상품 |
 | 이름 | Name | 메뉴의 이름 |
@@ -129,7 +129,7 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 매장테이블 | OrderTable |  |
+| 매장테이블 | OrderTable | 매장 내 사용할 수 있는 테이블 |
 | 이름 | Name | 매장 테이블의 이름 |
 | 손님 수 | Number Of Guests | 매장 테이블에 앉은 손님 수 |
 | 사용 여부 | Occupied | 매장 테이블의 사용 여부 |
@@ -140,7 +140,7 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 주문 | Order |  |
+| 주문 | Order | 손님이 주문한 메뉴 정보 |
 | 주문 유형 | Order Type | 주문의 유형 |
 | 배달 주문 | Delivery Order | 배달을 이용하는 주문 |
 | 포장 주문 | Take-Out Order | 포장을 이용하는 주문 |
