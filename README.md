@@ -213,17 +213,26 @@ docker compose -p kitchenpos up -d
   * 메뉴(Menu)의 가격(price)은 메뉴구성음식(MenuProduct) 가격(price)의 합보다 같거나 크면 노출할 수 없다.
 * 메뉴(Menu)를 숨긴다(display).
   * 등록된 메뉴(Menu)여야 한다.
- 
-
+* 메뉴(Menu)를 전체조회(findAll)한다.
 
 ### 매장테이블(RestaurantTable)
-* 포스기로 매장테이블(RestaurantTable)을 생성할 수 있다.
-* 포스기로 매장테이블(RestaurantTable)을 사용중으로 바꿀 수 있다.
-* 매장테이블(RestaurantTable)은 손님 수(NumberOfGuests)를 갖는다.
-  * 손님수는 음수일 수 없다.
-* 매장테이블(RestaurantTable)은 손님을 받을 수 있다. 
-* 매장테이블(RestaurantTable)은 자신을 치울 수 있다. 
-* 매장테이블(RestaurantTable)은 매장테이블 이름(RestaurantTableName)을 갖는다. 
+* 매장테이블(RestaurantTable)은 이름(Name)과 손님수(numberOfGuests), 사용여부(occupied)를 갖는다.  
+* 매장테이블(RestaurantTable)을 등록(create)한다. 
+  * 매장테이블(RestaurantTable)의 이름(name)은 공백일 수 없다.
+  * 빈 테이블로 등록한다. 
+  * 손님수는 0으로 등록한다.
+* 매장테이블(RestaurantTable)을 사용중 테이블로 바꾼다(sit).
+  * 등록된 매장테이블이어야 한다. 
+* 매장테이블(RestaurantTable)을 치운다(clear).
+  * 등록된 매장테이블이어야 한다.
+  * 매장테이블과 연관된 매장주문(EatInOrder)은 모두 주문완료(COMPLETED) 상태여야 한다.
+  * 빈 테이블(unoccupied restaurantTable)로 수정한다.
+  * 손님수는 0으로 수정한다.
+* 매장테이블(RestaurantTable)의 손님수를 바꾼다(changeNumberOfGuests).
+  * 등록된 매장테이블이어야 한다.
+  * 손님수는 0 이상이어야 한다.
+  * 사용중 테이블(occupied restaurantTable)이어야 한다.
+* 매장테이블(RestaurantTable)을 전체조회(findAll)한다.
 
 ### 주문금액(OrderLineAmount)
 * 주문금액은 0원 이상이어야 한다.
