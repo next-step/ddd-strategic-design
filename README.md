@@ -159,3 +159,37 @@ docker compose -p kitchenpos up -d
 | 주문 완료 | completed    | 고객이 실제로 상품을 수령하여 더 이상 진행될 절차가 없는 주문 상태                         |
 
 ## 모델링
+
+### 메뉴
+- Menu는 상품의 가격과 이름을 표현하는 Product와 메뉴가 속해있는 MenuGroup을 가진다.
+- Menu는 메뉴의 노출 여부를 결정하는 displayed를 가진다.
+- Product는 상품의 가격을 표현하는 ProductPrice와 상품의 이름을 표현하는 ProductName을 가진다.
+- Menu는 메뉴의 가격을 표현하는 MenuPrice와 메뉴의 이름을 표현하는 MenuName을 가진다.
+- Menu는 메뉴에 포함된 상품 정보를 나타내는 MenuProduct을 생성한다.
+- MenuProduct는 수량을 표현하는 Quantity를 가진다.
+- ProductPrice와 MenuPrice는 MenuPrice가 MenuProduct의 price의 합보다 크면 메뉴를 숨긴다.
+- ProductName과 MenuName은 비속어를 포함할 수 없다.
+
+### 주문 테이블
+- OrderTable은 테이블 이름을 나타내는 orderTableName과 사용하고 있는 손님의 수인 NumberOfGuests, 테이블이 사용되고 있는 여부를 나타낸 Occupied를 가진다.
+- numberOfGuests는 Occupied가 true일 때만 변경 가능하다. 
+
+### 주문
+- Order의 하위 타입에는 DeliveryOrder, TakeoutOrder, EatInOrder가 있다.
+- Order는 주문 내역을 저장하는 OrderLineItem을 생성한다.
+- OrderLineItem은 상품 정보가 담긴 Menu와 수량을 나타낸 Quantity를 가진다.
+
+### 배달 주문
+- DeliveryOrder는 배달 주소를 표현하는 DeliveryAddress를 가진다.
+- DeliveryOrder는 배달 주문 상태를 표현하는 DeliveryOrderStatus를 가진다.
+- DeliveryOrderStatus에는 WAITING, ACCEPTED, DELIVERING, DELIVERED, COMPLETED가 포함된다.
+
+### 포장 주문
+- TakeoutOrder는 포장 주문 상태를 표현하는 TakeoutOrderStatus를 가진다.
+- TakeoutOrderStatus에는 WAITING, ACCEPTED, SERVED, COMPLETED가 포함된다.
+
+### 매장 주문 
+- EatInOrder는 OrderTable를 가진다.
+- EatInOrder는 매장 주문 상태를 표현하는 EatInOrderStatus를 가진다.
+- EatInOrderStatus에는 WATING, ACCEPTED, SERVED, COMPLETED가 포함된다.
+- Order에서 OrderStatus가 COMPLETED가 아니면 빈 테이블로 변경이 불가능하다.
