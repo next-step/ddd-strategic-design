@@ -174,6 +174,17 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
+### 이름(Name)
+- `Name`은 1자 이상의 문자를 가진다
+  - `Name`은 `PurgomalumClient`을 통해 비속어 여부를 검사를 한다
+
+### 가격(Price)
+- `Price`는 0원 이상의 정수를 가진다
+- `Product`나 `Menu`의 `Price`를 변경하면 `MenuPriceValidator`를 통해 `Menu`의 `DisplayStatus`를 변경한다
+
+### 메뉴 가격 검증기(MenuPriceValidator)
+- `Menu`의 `Price`가 `Menu`가 포함한 `MenuProduct`들의 `Price` 합보다 높은지 확인한다
+
 ### 상품(Product)
 - Product는 Price를 가진다
 - Product는 Name을 가진다
