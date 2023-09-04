@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.order.takeout.domain;
 
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderType;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class TakeOutOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -21,35 +21,21 @@ public class Order {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private TakeOutOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
-        name = "order_id",
-        nullable = false,
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
+            name = "order_id",
+            nullable = false,
+            columnDefinition = "binary(16)",
+            foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
     )
     private List<OrderLineItem> orderLineItems;
 
-    @Column(name = "delivery_address")
-    private String deliveryAddress;
-
-    @ManyToOne
-    @JoinColumn(
-        name = "order_table_id",
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
-    )
-    private OrderTable orderTable;
-
-    @Transient
-    private UUID orderTableId;
-
-    public Order() {
+    public TakeOutOrder() {
     }
 
     public UUID getId() {
@@ -68,11 +54,11 @@ public class Order {
         this.type = type;
     }
 
-    public OrderStatus getStatus() {
+    public TakeOutOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final TakeOutOrderStatus status) {
         this.status = status;
     }
 
@@ -90,29 +76,5 @@ public class Order {
 
     public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(final String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public OrderTable getOrderTable() {
-        return orderTable;
-    }
-
-    public void setOrderTable(final OrderTable orderTable) {
-        this.orderTable = orderTable;
-    }
-
-    public UUID getOrderTableId() {
-        return orderTableId;
-    }
-
-    public void setOrderTableId(final UUID orderTableId) {
-        this.orderTableId = orderTableId;
     }
 }
