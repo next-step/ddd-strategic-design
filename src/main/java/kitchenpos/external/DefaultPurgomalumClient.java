@@ -1,4 +1,4 @@
-package kitchenpos.infra;
+package kitchenpos.external;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
@@ -7,8 +7,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+import kitchenpos.menu.application.MenuPurgomalumClient;
+import kitchenpos.product.application.ProductPurgomalClient;
+
 @Component
-public class DefaultPurgomalumClient implements PurgomalumClient {
+public class DefaultPurgomalumClient implements PurgomalumClient, ProductPurgomalClient, MenuPurgomalumClient {
     private final RestTemplate restTemplate;
 
     public DefaultPurgomalumClient(final RestTemplateBuilder restTemplateBuilder) {
