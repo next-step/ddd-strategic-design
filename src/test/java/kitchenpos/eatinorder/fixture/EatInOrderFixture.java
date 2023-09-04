@@ -9,10 +9,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class EatInOrderFixture {
-    public static final UUID INVALID_ID = new UUID(0L, 0L);
+import static kitchenpos.eatinorder.fixture.RestaurantTableFixture.restaurantTable;
+import static kitchenpos.order.fixture.OrderLineItemFixture.orderLineItem;
 
-    public static EatInOrder order(final EatInOrderStatus status, final RestaurantTable orderTable) {
+public class EatInOrderFixture {
+
+    public static EatInOrder eatInOrder(final EatInOrderStatus status, final RestaurantTable orderTable) {
         final EatInOrder eatInOrder = new EatInOrder();
         eatInOrder.setId(UUID.randomUUID());
         eatInOrder.setType(OrderType.EAT_IN);
@@ -21,20 +23,6 @@ public class EatInOrderFixture {
         eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
         eatInOrder.setRestaurantTable(restaurantTable());
         return eatInOrder;
-    }
-
-
-    public static RestaurantTable restaurantTable() {
-        return restaurantTable(false, 0);
-    }
-
-    public static RestaurantTable restaurantTable(final boolean occupied, final int numberOfGuests) {
-        final RestaurantTable restaurantTable = new RestaurantTable();
-        restaurantTable.setId(UUID.randomUUID());
-        restaurantTable.setName("1번");
-        restaurantTable.setNumberOfGuests(numberOfGuests);
-        restaurantTable.setOccupied(occupied);
-        return restaurantTable;
     }
 
 }

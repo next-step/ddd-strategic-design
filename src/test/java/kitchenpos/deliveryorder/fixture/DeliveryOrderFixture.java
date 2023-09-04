@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static kitchenpos.order.fixture.OrderLineItemFixture.orderLineItem;
+
 public class DeliveryOrderFixture {
 
     public static DeliveryOrder deliveryOrder(final DeliveryOrderStatus status, final String deliveryAddress) {
