@@ -186,37 +186,34 @@ docker compose -p kitchenpos up -d
 - `Menu`의 `Price`가 `Menu`가 포함한 `MenuProduct`들의 `Price` 합보다 높은지 확인한다
 
 ### 상품(Product)
-- Product는 Price를 가진다
-- Product는 Name을 가진다
-  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
+- `Product`는 `Price`를 가진다
+- `Product`는 `Name`을 가진다
 
 ### 메뉴 그룹(MenuGroup)
-- MenuGroup은 Name을 가진다
+- `MenuGroup`은 `Name`을 가진다
 
 ### 메뉴(Menu)
-- Menu는 Name을 가진다
-  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
-- Menu는 MenuGroup을 가진다
-- Menu는 Price를 가진다
-- Menu는 MenuProduct 여러개를 가진다
-- Menu는 (노출 여부를 표현하는 / 구매 가능 여부를 표현하는) DisplayStatus를 가진다
--
+- `Menu`는 `Name`을 가진다
+- `Menu`는 `MenuGroup`을 가진다
+- `Menu`는 `Price`를 가진다
+- `Menu`는 `MenuProduct` 여러개를 가진다
+- `Menu`는 구매 가능 여부를 표현하는 `DisplayStatus`를 가진다
 
 ### 구성품 (MenuProduct)
-- MenuProduct는 Product를 가진다
-- MenuProduct는 구매할 수량인 Quantity를 가진다
-- MenuProduct는 자신이 포함될 Menu를 가진다
+- `MenuProduct`는 `Product`를 가진다
+- `MenuProduct`는 구매할 수량인 `Quantity`를 가진다
+- `MenuProduct`는 자신이 포함될 `Menu`를 가진다
 
 ### 매장 테이블(OrderTable)
-- OrderTable은 Name을 가지고 있다
-- OrderTable은 NumberOfGuest 을 가지고 있다
-- OrderTable은 이용 여부를 표현하는 OccupiedStatus를 가진다
+- `OrderTable`은 `Name`을 가지고 있다
+- `OrderTable`은 고객의 수를 표현하는 `NumberOfGuest` 을 가지고 있다
+- `OrderTable`은 이용 여부를 표현하는 `OccupiedStatus`를 가진다
 
 ### 주문(Order)
-- Order는 주문의 상태를 표현하는 OrderStatus를 가진다
-- Order는 주문내역을 표현하는 OrderLineItem들을 가진다
-- Order는 주문한 시간을 표현하는 OrderDateTime을 갖는다
-- Order는 주문의 종류를 표현하는 OrderType을 가진다
+- `Order`는 주문의 상태를 표현하는 `OrderStatus`를 가진다
+- `Order`는 주문내역을 표현하는 `OrderLineItem`들을 가진다
+- `Order`는 주문한 시간을 표현하는 `OrderDateTime`을 갖는다
+- `Order`는 주문의 종류를 표현하는 `OrderType`을 가진다
 
 ### 주문내역(OrderLineItem)
 - `OrderLineItem`은 주문한 `Menu`를 가진다
