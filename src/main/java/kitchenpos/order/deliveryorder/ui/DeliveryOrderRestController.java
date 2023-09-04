@@ -1,6 +1,5 @@
 package kitchenpos.order.deliveryorder.ui;
 
-import kitchenpos.domain.Order;
 import kitchenpos.order.deliveryorder.application.DeliveryOrderService;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class DeliveryOrderRestController {
     }
 
     @PostMapping
-    public ResponseEntity<DeliveryOrder> create(@RequestBody final Order request) {
+    public ResponseEntity<DeliveryOrder> create(@RequestBody final DeliveryOrder request) {
         final DeliveryOrder response = deliveryOrderService.create(request);
         return ResponseEntity.created(URI.create("/api/delivery-orders/" + response.getId()))
                 .body(response);
