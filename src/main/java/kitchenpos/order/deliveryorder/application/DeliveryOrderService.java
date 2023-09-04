@@ -34,7 +34,7 @@ public class DeliveryOrderService {
     }
 
     @Transactional
-    public DeliveryOrder create(final Order request) {
+    public DeliveryOrder create(final DeliveryOrder request) {
         final OrderType type = request.getType();
         if (Objects.isNull(type)) {
             throw new IllegalArgumentException();

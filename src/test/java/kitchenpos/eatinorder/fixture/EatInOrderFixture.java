@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 
-public class EatInOrderFixtures {
+public class EatInOrderFixture {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
 
     public static Menu menu() {
