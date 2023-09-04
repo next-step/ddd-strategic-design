@@ -29,7 +29,6 @@ class EatInOrderServiceTest {
     private EatInOrderRepository eatInOrderRepository;
     private MenuRepository menuRepository;
     private RestaurantTableRepository restaurantTableRepository;
-    private FakeKitchenridersClient kitchenridersClient;
     private EatInOrderService eatInOrderService;
 
     @BeforeEach
@@ -37,8 +36,7 @@ class EatInOrderServiceTest {
         eatInOrderRepository = new InMemoryEatInOrderRepository();
         menuRepository = new InMemoryMenuRepository();
         restaurantTableRepository = new InMemoryRestaurantTableRepository();
-        kitchenridersClient = new FakeKitchenridersClient();
-        eatInOrderService = new EatInOrderService(eatInOrderRepository, menuRepository, restaurantTableRepository, kitchenridersClient);
+        eatInOrderService = new EatInOrderService(eatInOrderRepository, menuRepository, restaurantTableRepository);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 매장 주문을 등록할 수 있다.")

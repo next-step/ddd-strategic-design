@@ -1,8 +1,5 @@
 package kitchenpos.order.eatinorder.application;
 
-import kitchenpos.domain.Order;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
@@ -11,7 +8,6 @@ import kitchenpos.order.eatinorder.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,18 +17,15 @@ public class EatInOrderService {
     private final EatInOrderRepository eatInOrderRepository;
     private final MenuRepository menuRepository;
     private final RestaurantTableRepository restaurantTableRepository;
-    private final KitchenridersClient kitchenridersClient;
 
     public EatInOrderService(
             final EatInOrderRepository eatInOrderRepository,
             final MenuRepository menuRepository,
-            final RestaurantTableRepository restaurantTableRepository,
-            final KitchenridersClient kitchenridersClient
+            final RestaurantTableRepository restaurantTableRepository
     ) {
         this.eatInOrderRepository = eatInOrderRepository;
         this.menuRepository = menuRepository;
         this.restaurantTableRepository = restaurantTableRepository;
-        this.kitchenridersClient = kitchenridersClient;
     }
 
     @Transactional
@@ -116,23 +109,22 @@ public class EatInOrderService {
     }
 
 
-
     @Transactional
     public EatInOrder complete(final UUID eatInOrderId) {
         final EatInOrder eatInOrder = eatInOrderRepository.findById(eatInOrderId)
                 .orElseThrow(NoSuchElementException::new);
         final OrderType type = eatInOrder.getType();
-        final  EatInOrderStatus status = eatInOrder.getStatus();
+        final EatInOrderStatus status = eatInOrder.getStatus();
 
         if (type == OrderType.EAT_IN) {
-            if (status !=  EatInOrderStatus.SERVED) {
+            if (status != EatInOrderStatus.SERVED) {
                 throw new IllegalStateException();
             }
         }
-        eatInOrder.setStatus( EatInOrderStatus.COMPLETED);
+        eatInOrder.setStatus(EatInOrderStatus.COMPLETED);
         if (type == OrderType.EAT_IN) {
             final RestaurantTable restaurantTable = eatInOrder.getRestaurantTable();
-            if (!eatInOrderRepository.existsByRestaruantTableAndStatusNot(restaurantTable,  EatInOrderStatus.COMPLETED)) {
+            if (!eatInOrderRepository.existsByRestaruantTableAndStatusNot(restaurantTable, EatInOrderStatus.COMPLETED)) {
                 restaurantTable.setNumberOfGuests(0);
                 restaurantTable.setOccupied(false);
             }

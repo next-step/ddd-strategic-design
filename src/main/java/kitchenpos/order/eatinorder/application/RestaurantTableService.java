@@ -1,7 +1,5 @@
 package kitchenpos.order.eatinorder.application;
 
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.domain.RestaurantTable;
