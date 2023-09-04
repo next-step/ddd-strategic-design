@@ -1,6 +1,6 @@
 package kitchenpos.takeoutorder.application;
 
-import kitchenpos.application.InMemoryMenuRepository;
+import kitchenpos.menu.domain.InMemoryMenuRepository;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderType;
@@ -18,7 +18,9 @@ import org.junit.jupiter.params.provider.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static kitchenpos.Fixtures.*;
+import static kitchenpos.menu.fixture.MenuFixture.menu;
+import static kitchenpos.menu.fixture.MenuFixture.menuProduct;
+import static kitchenpos.order.fixture.OrderLineItemFixture.INVALID_ID;
 import static kitchenpos.takeoutorder.fixture.TakeOutOrderFixture.takeOutOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

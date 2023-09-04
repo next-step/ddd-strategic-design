@@ -1,15 +1,14 @@
 package kitchenpos.deliveryorder.application;
 
-import kitchenpos.application.InMemoryMenuRepository;
-import kitchenpos.application.InMemoryOrderRepository;
+import kitchenpos.deliveryorder.domain.InMemoryDeliveryOrderRepository;
 import kitchenpos.deliveryorder.infra.FakeKitchenridersClient;
-import kitchenpos.domain.DeliveryOrderRepository;
-import kitchenpos.domain.OrderStatus;
+import kitchenpos.menu.domain.InMemoryMenuRepository;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.deliveryorder.application.DeliveryOrderService;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderRepository;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +19,10 @@ import org.junit.jupiter.params.provider.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static kitchenpos.Fixtures.eatInOrder;
-import static kitchenpos.deliveryorder.fixture.DeliveryOrderFixture.*;
+import static kitchenpos.deliveryorder.fixture.DeliveryOrderFixture.deliveryOrder;
+import static kitchenpos.menu.fixture.MenuFixture.menu;
+import static kitchenpos.menu.fixture.MenuFixture.menuProduct;
+import static kitchenpos.order.fixture.OrderLineItemFixture.INVALID_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -34,7 +35,7 @@ class DeliveryOrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        deliveryOrderRepository = new InMemoryOrderRepository();
+        deliveryOrderRepository = new InMemoryDeliveryOrderRepository();
         menuRepository = new InMemoryMenuRepository();
         kitchenridersClient = new FakeKitchenridersClient();
         deliveryOrderService = new DeliveryOrderService(deliveryOrderRepository, menuRepository, kitchenridersClient);
@@ -52,7 +53,7 @@ class DeliveryOrderServiceTest {
         assertAll(
                 () -> assertThat(actual.getId()).isNotNull(),
                 () -> assertThat(actual.getType()).isEqualTo(expected.getType()),
-                () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.WAITING),
+                () -> assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.WAITING),
                 () -> assertThat(actual.getOrderDateTime()).isNotNull(),
                 () -> assertThat(actual.getOrderLineItems()).hasSize(1),
                 () -> assertThat(actual.getDeliveryAddress()).isEqualTo(expected.getDeliveryAddress())
@@ -150,20 +151,20 @@ class DeliveryOrderServiceTest {
                 .getId();
         final DeliveryOrder actual = deliveryOrderService.accept(orderId);
         assertAll(
-                () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED),
+                () -> assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.ACCEPTED),
                 () -> assertThat(kitchenridersClient.getOrderId()).isEqualTo(orderId),
                 () -> assertThat(kitchenridersClient.getDeliveryAddress()).isEqualTo("서울시 송파구 위례성대로 2")
         );
     }
 
-    @DisplayName("주문을 서빙한다.")
+    @DisplayName("주문을 픽업한다.")
     @Test
     void serve() {
         final UUID orderId = deliveryOrderRepository.save(
                         deliveryOrder(DeliveryOrderStatus.WAITING, "서울시 송파구 위례성대로 2"))
                 .getId();
-        final DeliveryOrder actual = deliveryOrderService.serve(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.SERVED);
+        final DeliveryOrder actual = deliveryOrderService.pickup(orderId);
+        assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.PICKEDUP);
     }
 
     @DisplayName("접수된 주문만 서빙할 수 있다.")
@@ -171,7 +172,7 @@ class DeliveryOrderServiceTest {
     @ParameterizedTest
     void serve(final DeliveryOrderStatus status) {
         final UUID orderId = deliveryOrderRepository.save(deliveryOrder(status, "서울시 송파구 위례성대로 2")).getId();
-        assertThatThrownBy(() -> deliveryOrderService.serve(orderId))
+        assertThatThrownBy(() -> deliveryOrderService.pickup(orderId))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -180,7 +181,7 @@ class DeliveryOrderServiceTest {
     void startDelivery() {
         final UUID orderId = deliveryOrderRepository.save(deliveryOrder(DeliveryOrderStatus.PICKEDUP, "서울시 송파구 위례성대로 2")).getId();
         final DeliveryOrder actual = deliveryOrderService.startDelivery(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERING);
+        assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.DELIVERING);
     }
 
     @DisplayName("배달 주문만 배달할 수 있다.")
@@ -211,7 +212,7 @@ class DeliveryOrderServiceTest {
                         deliveryOrder(DeliveryOrderStatus.DELIVERING, "서울시 송파구 위례성대로 2"))
                 .getId();
         final DeliveryOrder actual = deliveryOrderService.completeDelivery(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERED);
+        assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.DELIVERED);
     }
 
     @DisplayName("배달 중인 주문만 배달 완료할 수 있다.")
@@ -229,9 +230,9 @@ class DeliveryOrderServiceTest {
     @Test
     void complete() {
         final DeliveryOrder expected = deliveryOrderRepository.save(
-                        deliveryOrder(DeliveryOrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
+                deliveryOrder(DeliveryOrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
         final DeliveryOrder actual = deliveryOrderService.complete(expected.getId());
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED);
+        assertThat(actual.getStatus()).isEqualTo(DeliveryOrderStatus.COMPLETED);
     }
 
     @DisplayName("배달 주문의 경우 배달 완료된 주문만 완료할 수 있다.")
@@ -239,7 +240,7 @@ class DeliveryOrderServiceTest {
     @ParameterizedTest
     void completeDeliveryOrder(final DeliveryOrderStatus status) {
         final UUID orderId = deliveryOrderRepository.save(
-                deliveryOrder(status, "서울시 송파구 위례성대로 2"))
+                        deliveryOrder(status, "서울시 송파구 위례성대로 2"))
                 .getId();
         assertThatThrownBy(() -> deliveryOrderService.complete(orderId))
                 .isInstanceOf(IllegalStateException.class);
