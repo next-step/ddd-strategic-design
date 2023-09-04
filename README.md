@@ -333,7 +333,7 @@ docker compose -p kitchenpos up -d
 - eat in order 는 order type 이 eat in 이다.
 - eat in order 의 order status 에는 waiting, accept, serve, complete 가 있다.
 - 매장 주문 정책
-  - eat in order 의 order line quantity 는 0 미만 일 수 있다.
+  - eat in order 의 order line quantity 는 0 미만 일 수 있다. (주문한 메뉴를 취소할 수 있다.)
 
 #### 행위
 - eat in order 는 매장 주문 정책에 따라 접수(order status: waiting) 할 수 있다.
