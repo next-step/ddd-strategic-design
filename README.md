@@ -176,7 +176,7 @@ docker compose -p kitchenpos up -d
 
 ### 이름(Name)
 - `Name`은 1자 이상의 문자를 가진다
-  - `Name`은 `PurgomalumClient`을 통해 비속어 여부를 검사를 한다
+  - `Product`와 `Menu`의 `Name`은 `PurgomalumClient`을 통해 비속어 여부를 검사를 한다
 
 ### 가격(Price)
 - `Price`는 0원 이상의 정수를 가진다
