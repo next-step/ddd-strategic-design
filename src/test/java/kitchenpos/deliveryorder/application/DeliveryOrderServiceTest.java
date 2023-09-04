@@ -1,10 +1,9 @@
-package kitchenpos.deliverorder.application;
+package kitchenpos.deliveryorder.application;
 
 import kitchenpos.application.InMemoryMenuRepository;
 import kitchenpos.application.InMemoryOrderRepository;
-import kitchenpos.deliverorder.infra.FakeKitchenridersClient;
+import kitchenpos.deliveryorder.infra.FakeKitchenridersClient;
 import kitchenpos.domain.DeliveryOrderRepository;
-import kitchenpos.domain.Order;
 import kitchenpos.domain.OrderStatus;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
@@ -22,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static kitchenpos.Fixtures.eatInOrder;
-import static kitchenpos.deliverorder.fixture.DeliveryOrderFixture.*;
+import static kitchenpos.deliveryorder.fixture.DeliveryOrderFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
