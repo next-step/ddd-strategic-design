@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/orders")
+@RequestMapping("/api/eatinorders")
 @RestController
 public class OrderRestController {
     private final OrderService orderService;
@@ -21,7 +21,7 @@ public class OrderRestController {
     @PostMapping
     public ResponseEntity<Order> create(@RequestBody final Order request) {
         final Order response = orderService.create(request);
-        return ResponseEntity.created(URI.create("/api/orders/" + response.getId()))
+        return ResponseEntity.created(URI.create("/api/eatinorders/" + response.getId()))
             .body(response);
     }
 
