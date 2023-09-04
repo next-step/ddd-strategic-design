@@ -19,9 +19,9 @@ public class RestaurantTableService {
     private final RestaurantTableRepository restaurantTableRepository;
     private final EatInOrderRepository eatInOrderRepository;
 
-    public RestaurantTableService(final RestaurantTableRepository restaurantTableRepository, final OrderRepository orderRepository) {
+    public RestaurantTableService(final RestaurantTableRepository restaurantTableRepository, final EatInOrderRepository eatInOrderRepository) {
         this.restaurantTableRepository = restaurantTableRepository;
-        this.orderRepository = orderRepository;
+        this.eatInOrderRepository = eatInOrderRepository;
     }
 
     @Transactional
