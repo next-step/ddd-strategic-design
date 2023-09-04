@@ -296,7 +296,7 @@ docker compose -p kitchenpos up -d
 #### 속성
 
 - delivery order 는 order type 이 delivery 이다.
-- delivery order 의 order status 는 waiting -> accept -> serve -> delivering -> delivered -> complete 순으로 변경된다.
+- delivery order 의 order status 에는 waiting, accept, serve, delivering, delivered, complete 가 있다.
 - 배달 주문 정책
   - delivery address 가 올바르지 않으면 delivery order 를 등록할 수 없다.
   - delivery order 의 order line quantity 는 0 이상 이어야 한다.
@@ -316,7 +316,7 @@ docker compose -p kitchenpos up -d
 #### 속성
 
 - takeout order 는 order type 이 takeout 이다.
-- takeout order 의 order status 는 waiting -> accept -> serve -> complete 순으로 변경된다.
+- takeout order 의 order status 에는 waiting, accept, serve, complete 가 있다.
 - 포장 주문 정책
   - takeout order 의 order line quantity 는 0 이상 이어야 한다.
 
@@ -331,7 +331,7 @@ docker compose -p kitchenpos up -d
 #### 속성
 
 - eat in order 는 order type 이 eat in 이다.
-- eat in order 의 order status 는 waiting -> accept -> serve -> complete 순으로 변경된다.
+- eat in order 의 order status 에는 waiting, accept, serve, complete 가 있다.
 - 매장 주문 정책
   - eat in order 의 order line quantity 는 0 미만 일 수 있다.
 
