@@ -74,7 +74,7 @@ class OrderServiceTest {
     @Test
     void createEatInOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final UUID orderTableId = orderTableRepository.save(orderTable(true, 4)).getId();
+        final UUID orderTableId = orderTableRepository.save(restaurantTable(true, 4)).getId();
         final Order expected = createOrderRequest(OrderType.EAT_IN, orderTableId, createOrderLineItemRequest(menuId, 19_000L, 3L));
         final Order actual = orderService.create(expected);
         assertThat(actual).isNotNull();
@@ -120,7 +120,7 @@ class OrderServiceTest {
     @ParameterizedTest
     void createEatInOrder(final long quantity) {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final UUID orderTableId = orderTableRepository.save(orderTable(true, 4)).getId();
+        final UUID orderTableId = orderTableRepository.save(restaurantTable(true, 4)).getId();
         final Order expected = createOrderRequest(
             OrderType.EAT_IN, orderTableId, createOrderLineItemRequest(menuId, 19_000L, quantity)
         );
@@ -155,7 +155,7 @@ class OrderServiceTest {
     @Test
     void createEmptyTableEatInOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final UUID orderTableId = orderTableRepository.save(orderTable(false, 0)).getId();
+        final UUID orderTableId = orderTableRepository.save(restaurantTable(false, 0)).getId();
         final Order expected = createOrderRequest(
             OrderType.EAT_IN, orderTableId, createOrderLineItemRequest(menuId, 19_000L, 3L)
         );
@@ -184,7 +184,7 @@ class OrderServiceTest {
     @DisplayName("주문을 접수한다.")
     @Test
     void accept() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, orderTable(true, 4))).getId();
+        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, restaurantTable(true, 4))).getId();
         final Order actual = orderService.accept(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
     }
@@ -193,7 +193,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void accept(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, orderTable(true, 4))).getId();
+        final UUID orderId = orderRepository.save(order(status, restaurantTable(true, 4))).getId();
         assertThatThrownBy(() -> orderService.accept(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -201,7 +201,7 @@ class OrderServiceTest {
     @DisplayName("배달 주문을 접수되면 배달 대행사를 호출한다.")
     @Test
     void acceptDeliveryOrder() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.WAITING, "서울시 송파구 위례성대로 2")).getId();
         final Order actual = orderService.accept(orderId);
         assertAll(
             () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED),
@@ -213,7 +213,7 @@ class OrderServiceTest {
     @DisplayName("주문을 서빙한다.")
     @Test
     void serve() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.ACCEPTED)).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.ACCEPTED)).getId();
         final Order actual = orderService.serve(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.SERVED);
     }
@@ -222,7 +222,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "ACCEPTED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void serve(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status)).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(status)).getId();
         assertThatThrownBy(() -> orderService.serve(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -230,7 +230,7 @@ class OrderServiceTest {
     @DisplayName("주문을 배달한다.")
     @Test
     void startDelivery() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.SERVED, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.SERVED, "서울시 송파구 위례성대로 2")).getId();
         final Order actual = orderService.startDelivery(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERING);
     }
@@ -238,7 +238,7 @@ class OrderServiceTest {
     @DisplayName("배달 주문만 배달할 수 있다.")
     @Test
     void startDeliveryWithoutDeliveryOrder() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.SERVED)).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.SERVED)).getId();
         assertThatThrownBy(() -> orderService.startDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -247,7 +247,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void startDelivery(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(status, "서울시 송파구 위례성대로 2")).getId();
         assertThatThrownBy(() -> orderService.startDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -255,7 +255,7 @@ class OrderServiceTest {
     @DisplayName("주문을 배달 완료한다.")
     @Test
     void completeDelivery() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.DELIVERING, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.DELIVERING, "서울시 송파구 위례성대로 2")).getId();
         final Order actual = orderService.completeDelivery(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERED);
     }
@@ -264,7 +264,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "DELIVERING", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void completeDelivery(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(status, "서울시 송파구 위례성대로 2")).getId();
         assertThatThrownBy(() -> orderService.completeDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -272,7 +272,7 @@ class OrderServiceTest {
     @DisplayName("주문을 완료한다.")
     @Test
     void complete() {
-        final Order expected = orderRepository.save(order(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
+        final Order expected = orderRepository.save(eatInOrder(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
         final Order actual = orderService.complete(expected.getId());
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED);
     }
@@ -281,7 +281,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "DELIVERED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void completeDeliveryOrder(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(status, "서울시 송파구 위례성대로 2")).getId();
         assertThatThrownBy(() -> orderService.complete(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -290,7 +290,7 @@ class OrderServiceTest {
     @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
     void completeTakeoutAndEatInOrder(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status)).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(status)).getId();
         assertThatThrownBy(() -> orderService.complete(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -298,7 +298,7 @@ class OrderServiceTest {
     @DisplayName("주문 테이블의 모든 매장 주문이 완료되면 빈 테이블로 설정한다.")
     @Test
     void completeEatInOrder() {
-        final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
+        final OrderTable orderTable = orderTableRepository.save(restaurantTable(true, 4));
         final Order expected = orderRepository.save(order(OrderStatus.SERVED, orderTable));
         final Order actual = orderService.complete(expected.getId());
         assertAll(
@@ -311,7 +311,7 @@ class OrderServiceTest {
     @DisplayName("완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.")
     @Test
     void completeNotTable() {
-        final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
+        final OrderTable orderTable = orderTableRepository.save(restaurantTable(true, 4));
         orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
         final Order expected = orderRepository.save(order(OrderStatus.SERVED, orderTable));
         final Order actual = orderService.complete(expected.getId());
@@ -325,9 +325,9 @@ class OrderServiceTest {
     @DisplayName("주문의 목록을 조회할 수 있다.")
     @Test
     void findAll() {
-        final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
+        final OrderTable orderTable = orderTableRepository.save(restaurantTable(true, 4));
         orderRepository.save(order(OrderStatus.SERVED, orderTable));
-        orderRepository.save(order(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
+        orderRepository.save(eatInOrder(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
         final List<Order> actual = orderService.findAll();
         assertThat(actual).hasSize(2);
     }

@@ -1,6 +1,7 @@
-package kitchenpos;
+package kitchenpos.eatinorder.fixture;
 
-import kitchenpos.domain.*;
+import kitchenpos.domain.Order;
+import kitchenpos.domain.OrderStatus;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 
-public class Fixtures {
+public class EatInOrderFixtures {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
 
     public static Menu menu() {
@@ -66,7 +67,7 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static Order eatInOrder(final OrderStatus status, final String deliveryAddress) {
+    public static Order order(final OrderStatus status, final String deliveryAddress) {
         final Order order = new Order();
         order.setId(UUID.randomUUID());
         order.setType(OrderType.DELIVERY);
@@ -77,17 +78,17 @@ public class Fixtures {
         return order;
     }
 
-    public static EatInOrder eatInOrder(final EatInOrderStatus status) {
-        final EatInOrder eatInOrder = new EatInOrder();
-        eatInOrder.setId(UUID.randomUUID());
-        eatInOrder.setType(OrderType.TAKEOUT);
-        eatInOrder.setStatus(status);
-        eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
-        return eatInOrder;
+    public static Order order(final OrderStatus status) {
+        final Order order = new Order();
+        order.setId(UUID.randomUUID());
+        order.setType(OrderType.TAKEOUT);
+        order.setStatus(status);
+        order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        order.setOrderLineItems(Arrays.asList(orderLineItem()));
+        return order;
     }
 
-    public static EatInOrder eatInOrder(final EatInOrderStatus status, final RestaurantTable orderTable) {
+    public static EatInOrder order(final EatInOrderStatus status, final RestaurantTable orderTable) {
         final EatInOrder eatInOrder = new EatInOrder();
         eatInOrder.setId(UUID.randomUUID());
         eatInOrder.setType(OrderType.EAT_IN);

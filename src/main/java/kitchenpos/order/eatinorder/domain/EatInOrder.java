@@ -89,7 +89,7 @@ public class EatInOrder {
         this.orderLineItems = orderLineItems;
     }
 
-x
+
     public RestaurantTable getRestaurantTable() {
         return restaurantTable;
     }
