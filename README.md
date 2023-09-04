@@ -208,13 +208,19 @@ docker compose -p kitchenpos up -d
 - Order는 주문의 종류를 표현하는 OrderType을 가진다
 
 ### 주문내역(OrderLineItem)
-- OrderLineItem은 주문한 Menu를 가진다
-- OrderLineItem은 주문한 Menu의 Quantity를 가진다
-- OrderLineItem은 주문 내역의 Price를 가진다
+- `OrderLineItem`은 주문한 `Menu`를 가진다
+- `OrderLineItem`은 주문한 `Menu`의 `Quantity`를 가진다
+- `OrderLineItem`은 주문 내역의 `Price`를 가진다
+
+### 포장 주문(TakeOutOrder)
+- `TakeOutOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `포장 후 전달됨` -> `완료됨` 이다
+- `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
 
 ### 배달 주문(DeliveryOrder)
-- DeliveryOrder은 DeliveryAddress를 갖는다
-- KitchenridersClient에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+- `DeliveryOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `배달 기사에게 전달됨` -> `배달 중` -> `배달 완료` -> `완료됨` 이다
+- `DeliveryOrder`는 `DeliveryAddress`를 갖는다
+- `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
 
 ### 매장 식사 주문(EatInOrder)
-- EatInOrder는 손님이 앉을수 있는 OrderTable을 갖는다
+- `EatInOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `매장 테이블로 전달됨` -> `완료됨` 이다
+- `EatInOrder`는 손님이 앉을수 있는 `OrderTable`을 갖는다
