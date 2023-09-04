@@ -23,7 +23,7 @@ public class DeliveryOrderRestController {
     public ResponseEntity<DeliveryOrder> create(@RequestBody final Order request) {
         final DeliveryOrder response = deliveryOrderService.create(request);
         return ResponseEntity.created(URI.create("/api/delivery-orders/" + response.getId()))
-            .body(response);
+                .body(response);
     }
 
     @PutMapping("/{deliveryOrderId}/accept")
@@ -33,7 +33,7 @@ public class DeliveryOrderRestController {
 
     @PutMapping("/{deliveryOrderId}/serve")
     public ResponseEntity<DeliveryOrder> serve(@PathVariable final UUID deliveryOrderId) {
-        return ResponseEntity.ok(deliveryOrderService.serve(deliveryOrderId));
+        return ResponseEntity.ok(deliveryOrderService.pickup(deliveryOrderId));
     }
 
     @PutMapping("/{deliveryOrderId}/start-delivery")

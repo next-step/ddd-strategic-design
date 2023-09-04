@@ -39,7 +39,7 @@ public class RestaurantTableService {
     @Transactional
     public RestaurantTable sit(final UUID orderTableId) {
         final RestaurantTable restaurantTable = restaurantTableRepository.findById(orderTableId)
-            .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(NoSuchElementException::new);
         restaurantTable.setOccupied(true);
         return restaurantTable;
     }
@@ -47,7 +47,7 @@ public class RestaurantTableService {
     @Transactional
     public RestaurantTable clear(final UUID restaurantTableId) {
         final RestaurantTable restaurantTable = restaurantTableRepository.findById(restaurantTableId)
-            .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(NoSuchElementException::new);
         if (eatInOrderRepository.existsByRestaruantTableAndStatusNot(restaurantTable, EatInOrderStatus.COMPLETED)) {
             throw new IllegalStateException();
         }
@@ -63,7 +63,7 @@ public class RestaurantTableService {
             throw new IllegalArgumentException();
         }
         final RestaurantTable restaurantTable = restaurantTableRepository.findById(restaurantTableId)
-            .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(NoSuchElementException::new);
         if (!restaurantTable.isOccupied()) {
             throw new IllegalStateException();
         }

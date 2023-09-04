@@ -22,7 +22,7 @@ public class RestaurantTableRestController {
     public ResponseEntity<RestaurantTable> create(@RequestBody final RestaurantTable request) {
         final RestaurantTable response = restaurantTableService.create(request);
         return ResponseEntity.created(URI.create("/api/restaurant-tables/" + response.getId()))
-            .body(response);
+                .body(response);
     }
 
     @PutMapping("/{restaurantTableId}/sit")
@@ -37,8 +37,8 @@ public class RestaurantTableRestController {
 
     @PutMapping("/{restaurantTableId}/number-of-guests")
     public ResponseEntity<RestaurantTable> changeNumberOfGuests(
-        @PathVariable final UUID restaurantTableId,
-        @RequestBody final RestaurantTable request
+            @PathVariable final UUID restaurantTableId,
+            @RequestBody final RestaurantTable request
     ) {
         return ResponseEntity.ok(restaurantTableService.changeNumberOfGuests(restaurantTableId, request));
     }

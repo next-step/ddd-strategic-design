@@ -1,12 +1,11 @@
 package kitchenpos.order.deliveryorder.application;
 
-import kitchenpos.domain.DeliveryOrderRepository;
-import kitchenpos.domain.Order;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderRepository;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import kitchenpos.order.deliveryorder.infra.KitchenridersClient;
 import org.springframework.stereotype.Service;
@@ -105,7 +104,7 @@ public class DeliveryOrderService {
     }
 
     @Transactional
-    public DeliveryOrder serve(final UUID orderId) {
+    public DeliveryOrder pickup(final UUID orderId) {
         final DeliveryOrder deliveryOrder = deliveryOrderRepository.findById(orderId)
                 .orElseThrow(NoSuchElementException::new);
         if (deliveryOrder.getStatus() != DeliveryOrderStatus.ACCEPTED) {
