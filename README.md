@@ -149,12 +149,12 @@ docker compose -p kitchenpos up -d
 
 ### 주문 공통
 
-| 한글명    | 영문명              | 설명                 |
-|--------|------------------|--------------------|
-| 주문 타입  | order type       | 주문 타입(배달,포장,매장 주문) |
-| 주문한 메뉴 | order line       | 주문한 메뉴             |
-| 주문 상태  | order status     | 주문 진행 상태           |
-| 주문 가격  | order line price | 주문한 메뉴의 총 가격       |
+| 한글명      | 영문명              | 설명                 |
+|----------|------------------|--------------------|
+| 주문 타입    | order type       | 주문 타입(배달,포장,매장 주문) |
+| 주문 구성 메뉴 | order line       | 주문한 메뉴             |
+| 주문 상태    | order status     | 주문 진행 상태           |
+| 주문 가격    | order line price | 주문한 메뉴의 총 가격       |
 
 ### 배달 주문
 
@@ -195,141 +195,112 @@ docker compose -p kitchenpos up -d
 
 ### 상품
 
-- product는 id, name, price를 가진다
-- product를 등록 한다.
-  - name은 필수 값이며 profanity가 포함될 수 없다.
-  - price는 필수 값이며 0원 이상이여야 한다.
-- product는 changePrice를 통해 price를 변경할 수 있다.
-  - price는 필수 값이며 0원 이상이여야 한다.
-  - 등록되어있는 product의 가격만 변경할 수 있다.
-  - product가 등록되어 있는 menu의 price가 menuProduct에 등록되어 있는 product들의 price보다 높을 경우 menu를 hide 상태로 변경한다.
-- product를 조회 한다.
+- 상품(product)은 이름(name), 가격(price)를 가진다
+- 상품(product)을 생성 한다.
+  - 이름(name)은 비속어(profanity)가 포함될 수 없다.
+  - 가격(price)은 0원 이상이여야 한다.
+- 상품(product)은 가격(price)을 변경할 수 있다.(changePrice)
+  - 가격(price)은 0원 이상이여야 한다.
+  - 메뉴(menu)의 가격(price)은 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)들의 가격(price)의 합보다 높을 경우 메뉴(menu)는 주문 불가능(hide) 상태로 바뀐다.
+- 상품(product)을 조회 한다.
   
 
 ### 메뉴 그룹
 
-- menu group은 id, name을 가진다.
-- menu group을 등록 한다.
-  - name은 필수 값이다.
-- menu group을 조회 한다.
+- 메뉴 그룹(menu group)은 이름(name)을 가진다.
+- 메뉴 그룹(menu group)을 생성 한다.
+- 메뉴 그룹(menu group)을 조회 한다.
 
 ### 메뉴
 
-- menu는 id, name, price, menu_group_id, menuProducts, displayed를 가진다.
-- menu를 등록 한다.
-  - name은 필수 값이며 profanity가 포함될 수 없다.
-  - price는 필수 값이며 0원 이상이여야 한다.
-  - menu_group_id는 필수 값이며 등록되어 있는 menu group의 id여야 한다.
-  - menuProduct에 product가 1개 이상 등록되어 있어야 한다.
-  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높으면 안된다.
-  - menuProduct에 quantity는 1 이상이여야 한다.
-  - displayed는 필수 값이며 true, false만 가능하다. 
-- menu는 changePrice로 가격을 변경할 수 있다.
-  - price는 필수 값이며 0원 이상이여야 한다.
-  - 등록 되어있는 menu의 가격만 변경할 수 있다.
-  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높을 경우 price가 변경되지 않는다.
-- menu는 display 상태로 변경할 수 있다.
-  - 등록 되어있는 menu만 display 상태로 변경할 수 있다.
-  - menuProduct에 등록되어 있는 product들의 price보다 menu의 price가 높을 경우 display 상태로 변경되지 않는다.
-- menu는 hide 상태로 변경할 수 있다.
-  - 등록 되어있는 menu만 hide 상태로 변경할 수 있다.
+- 메뉴(menu)는 이름(name), 가격(price), 메뉴 구성 상품(menuProduct), 메뉴 구성 상품 수량(quantity), 메뉴 주문 가능 여부(displayed)를 가지고  메뉴 그룹(menu_group)에 속한다.
+- 메뉴(menu)를 생성한다.
+  - 이름(name)은 비속어(profanity)가 포함될 수 없다.
+  - 가격(price)은 0원 이상이여야 한다.
+  - 메뉴 구성 상품(menuProduct)은 product가 1개 이상으로 구성되어 있어야 한다.
+  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 매뉴(menu)의 가격(price)이 높으면 안된다. 
+- 메뉴(menu)는 가격(price)을 변경할 수 있다.(changePrice)
+  - 가격(price)은 0원 이상이여야 한다.
+  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합 보다 메뉴(menu)의 가격(price)아 높을 경우 가격(price)이 변경되지 않는다.
+- 메뉴(menu)는 주문 가능(display) 상태로 만들 수 있다.
+  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 메뉴(menu)의 가격(price)아 높을 경우 주문 가능(display) 상태가 되지 않는다.
+- 메뉴(menu)는 주문 불가능(hide) 상태로 변경할 수 있다.
+  
 
 ### 주문 테이블
 
-- order table은 id, name, numberOfGuests, occupied를 가진다.
-- order table을 등록한다.
-  - name은 필수 값이다.
-- order table을 사용상태로 변경할 수 있다.
-  - order table이 등록되어 있어야 한다. 
-- order table을 미사용 상태로 변경할 수 있다. 
-  - order table이 등록되어 있어야 한다.
-  - order table에 등록되어 있는 주문이 존재할 경우 미사용 상태로 변경할 수 없다.
-- order table을 사용하는 고객 수를 changeNumberOfGuests를 통해 변경할 수 있다.
-  - numberOfGuests는 0 이상이여야 한다.
-  - order table이 등록되어 있어야 한다.
-  - order table이 사용중인 상태여야 한다.
-- order table을 조회한다.
+- 주문 테이블(order table)은 이름(name), 고객수(numberOfGuests), 테이블 사용 여부(occupied)를 가진다.
+- 주문 테이블(order table)을 생성한다.
+- 주문 테이블(order table)의 테이블 사용 여부(occupied)를 설정할 수 있다.
+  - 주문 테이블(order table)에 주문(order)이 존재할 경우 테이블 미사용 상태로 설정할 수 없다.
+- 주문 테이블(order table)을 사용하는 고객 수(numberOfGuests)를 수정할 수 있다.(changeNumberOfGuests)
+  - 주문 테이블(order table)이 사용중인 상태여야 한다.
+- 주문 테이블(order table)을 조회한다.
 
 ### 배달 주문
 
-- order는 id, type, status, orderDateTime, orderLineItems, deliveryAddress를 가진다.
-- order의 type은 DELIVERY.
-- order를 등록한다.
-  - order를 등록할 때 주문 상태는 WAITING이다.
-  - menu가 1개 이상 등록되어 있어야 한다.
-  - orderDateTime은 현재시간이 들어간다.
-  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
-  - orderLineItem의 quantity는 1 이상이여야 한다.
-  - menu가 hide 상태일 경우 order를 등록할 수 없다.
-  - menu의 price와 orderLineItem의 price는 같아야 한다.
-- order를 승인한다.
-  - order가 등록되어 있어야 한다. 
-  - order의 status가 WAITING이여야 한다.
-  - order의 id,price,deliveryAddress를 배달 기사에게 전달한다.
-  - order의 status를 ACCEPTED로 변경한다.
-- order의 menu를 제공한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 ACCEPTED여야 한다.
-- order를 배달 시작한다.
-  - order가 등록되어 있어야 한다. 
-  - order의 status가 SERVED여야 한다.
-  - order의 status를 DELIVERING으로 변경한다.
-- order를 배달 완료한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 DELIVERING여야 한다.
-  - order의 status를 DELIVERD로 변경한다.
-- order를 완료한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 DELIVERED여야 한다.
-  - order의 status를 COMPLETED로 변경한다.
-- order를 조회한다.
+- 주문 타입(type)이 배달 주문(DELIVERY)인 주문(order)은 주문 상태(status), 주문 시간(orderDateTime), 주문 메뉴(orderLineItem), 배달 주소(deliveryAddress)를 가진다.
+- 주문(order)을 시작한다.
+  - 주문(order)을 시작할 때 주문 상태는 접수 중(WAITING)이다.
+  - 주문 시간(orderDateTime)은 주문이 시작된 현재시간이 들어간다.
+  - 주문 구성 메뉴(orderLineItem)의 수량(quantity)은 1개 이상이여야 한다.
+  - 메뉴(menu)가 주문 불가능(hide) 상태일 경우 해당 메뉴는 주문(order) 할수 없다.
+  - 메뉴(menu)의 가격(price)과 주문 구성 메뉴(orderLineItem)의 가격(price)이 같아야 한다.
+- 주문(order) 접수 승인(ACCEPT) 한다.
+  - 주문(order)의 상태(status)가 접수 중(WAITING)이여야 한다.
+  - 주문(order)의 가격(price)과 배달주소(deliveryAddress)를 배달 기사에게 전달한다.
+  - 주문(order)의 상태(status)를 접수 승인(ACCEPTED)으로 변경한다.
+- 주문(order)의 메뉴(menu)를 제공(SERVE)한다.
+  - 주문(order)의 상태(status)가 주문 승인(ACCEPTED)이여야 한다.
+  - 주문(order)의 상태(status)를 메뉴 제공(SERVE)으로 변경한다.
+- 주문(order) 배달을 시작한다. 
+  - 주문(order)의 상태(status)가 메뉴 제공(SERVED) 상태여야 한다.
+  - 주문(order)의 상태(status)를 배달중(DELIVERING)으로 변경한다.
+- 주문(order) 배달을 완료한다.
+  - 주문(order)의 상태(status)가 배달중(DELIVERING)이여야 한다.
+  - 주문(order)의 상태(status)를 배달 완료(DELIVERD)로 변경한다.
+- 주문(order)을 완료한다.
+  - 주문(order)의 상태(status)가 배달 완료(DELIVERED)여야 한다.
+  - 주문(order)의 상태(status)를 주문 완료(COMPLETED)로 변경한다.
+- 주문(order)을 조회한다.
 
 ### 포장 주문
-- order는 id, type, status, orderDateTime, orderLineItems 가진다.
-- order의 type은 TAKE OUT.
-- order를 등록한다.
-  - order를 등록할 때 주문 상태는 WAITING이다.
-  - menu가 1개 이상 등록되어 있어야 한다.
-  - orderDateTime은 현재시간이 들어간다.
-  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
-  - orderLineItem의 quantity는 1 이상이여야 한다.
-  - menu가 hide 상태일 경우 order를 등록할 수 없다.
-  - menu의 price와 orderLineItem의 price는 같아야 한다.
-- order를 승인한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 WAITING이여야 한다.
-  - order의 status를 ACCEPTED로 변경한다.
-- order의 menu를 제공한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 ACCEPTED여야 한다.
-- order를 완료한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 SERVED여야 한다.
-  - order의 status를 COMPLETED로 변경한다.
-- order를 조회한다.
+
+- 주문 타입(type)이 포장 주문(TAKE OUT)인 주문(order)은 주문 상태(status), 주문 시간(orderDateTime), 주문 구성 메뉴(orderLineItem)를 가진다.
+- 주문(order)을 시작한다.
+  - 주문(order)을 시작할 때 주문 상태는 접수 중(WAITING)이다.
+  - 주문 시간(orderDateTime)은 주문이 시작된 현재시간이 들어간다.
+  - 주문 구성 메뉴(orderLineItem)의 수량(quantity)은 1개 이상이여야 한다.
+  - 메뉴(menu)가 주문 불가능(hide) 상태일 경우 해당 메뉴는 주문(order) 할수 없다.
+  - 메뉴(menu)의 가격(price)과 주문 구성 메뉴(orderLineItem)의 가격(price)이 같아야 한다.
+- 주문(order) 접수 승인(ACCEPT) 한다.
+  - 주문(order)의 상태(status)가 접수 중(WAITING)이여야 한다.
+  - 주문(order)의 상태(status)를 접수 승인(ACCEPTED)으로 변경한다.
+- 주문(order)의 메뉴(menu)를 제공(SERVE)한다.
+  - 주문(order)의 상태(status)가 주문 승인(ACCEPTED)이여야 한다.
+  - 주문(order)의 상태(status)를 메뉴 제공(SERVE)으로 변경한다.
+- 주문(order)을 완료한다.
+  - 주문(order)의 상태(status)가 메뉴 제공(SERVE)이여야 한다.
+  - 주문(order)의 상태(status)를 주문 완료(COMPLETED)로 변경한다.
+- 주문(order)을 조회한다.
 
 ### 매장 주문
 
-- order는 id, type, status, orderDateTime, orderLineItems, orderTable을 가진다.
-- order의 type은 EAT IN.
-- order를 등록한다.
-  - order를 등록할 때 주문 상태는 WAITING이다.
-  - menu가 1개 이상 등록되어 있어야 한다.
-  - orderDateTime은 현재시간이 들어간다.
-  - orderLineItems에는 1개 이상의 orderLineItem이 등록되어 있어야 한다.
-  - menu가 hide 상태일 경우 order를 등록할 수 없다.
-  - menu의 price와 orderLineItem의 price는 같아야 한다.
-  - ordertable이 배정되어 있어야 한다.
-- order를 승인한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 WAITING이여야 한다.
-  - order의 status를 ACCEPTED로 변경한다.
-- order의 menu를 제공한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 ACCEPTED여야 한다.
-- order를 완료한다.
-  - order가 등록되어 있어야 한다.
-  - order의 status가 SERVED여야 한다.
-  - order의 status를 COMPLETED로 변경한다.
-  - orderTable의 occupied를 미사용 상태로 변경한다.
-- order를 조회한다.
+- 주문 타입(type)이 포장 주문(EAT IN)인 주문(order)은 주문 상태(status), 주문 시간(orderDateTime), 주문 구성 메뉴(orderLineItem)을 가진고 주문 테이블(order table)에 속한다.
+- 주문(order)를 시작한다.
+  - 주문(order)을 시작할 때 주문 상태는 접수 중(WAITING)이다.
+  - 주문 시간(orderDateTime)은 주문이 시작된 현재시간이 들어간다.
+  - 메뉴(menu)가 주문 불가능(hide) 상태일 경우 해당 메뉴는 주문(order) 할수 없다.
+  - 메뉴(menu)의 가격(price)과 주문 구성 메뉴(orderLineItem)의 가격(price)이 같아야 한다.
+  - 주문 테이블(order table)을 사용하고 있어야 한다.
+- 주문(order) 접수 승인(ACCEPT) 한다.
+  - 주문(order)의 상태(status)가 접수 중(WAITING)이여야 한다.
+  - 주문(order)의 상태(status)를 접수 승인(ACCEPTED)으로 변경한다.
+- 주문(order)의 메뉴(menu)를 제공(SERVE)한다.
+  - 주문(order)의 상태(status)가 주문 승인(ACCEPTED)이여야 한다.
+  - 주문(order)의 상태(status)를 메뉴 제공(SERVE)으로 변경한다.
+- 주문(order)을 완료한다.
+  - 주문(order)의 상태(status)가 메뉴 제공(SERVE)이여야 한다.
+  - 주문(order)의 상태(status)를 주문 완료(COMPLETED)로 변경한다.
+  - 주문 테이블(order table)을 청소하고 테이블 사용 여부(occupied)를 미사용 상태로 변경한다.
+- 주문(order)을 조회한다.
