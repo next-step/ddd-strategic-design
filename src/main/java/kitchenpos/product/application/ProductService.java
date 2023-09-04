@@ -1,7 +1,9 @@
 package kitchenpos.product.application;
 
 import kitchenpos.common.infra.PurgomalumClient;
-import kitchenpos.menu.domain.*;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,9 @@ public class ProductService {
     private final PurgomalumClient purgomalumClient;
 
     public ProductService(
-        final ProductRepository productRepository,
-        final MenuRepository menuRepository,
-        final PurgomalumClient purgomalumClient
+            final ProductRepository productRepository,
+            final MenuRepository menuRepository,
+            final PurgomalumClient purgomalumClient
     ) {
         this.productRepository = productRepository;
         this.menuRepository = menuRepository;
@@ -53,16 +55,16 @@ public class ProductService {
             throw new IllegalArgumentException();
         }
         final Product product = productRepository.findById(productId)
-            .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(NoSuchElementException::new);
         product.setPrice(price);
         final List<Menu> menus = menuRepository.findAllByProductId(productId);
         for (final Menu menu : menus) {
             BigDecimal sum = BigDecimal.ZERO;
             for (final MenuProduct menuProduct : menu.getMenuProducts()) {
                 sum = sum.add(
-                    menuProduct.getProduct()
-                        .getPrice()
-                        .multiply(BigDecimal.valueOf(menuProduct.getQuantity()))
+                        menuProduct.getProduct()
+                                .getPrice()
+                                .multiply(BigDecimal.valueOf(menuProduct.getQuantity()))
                 );
             }
             if (menu.getPrice().compareTo(sum) > 0) {
