@@ -176,5 +176,70 @@ docker compose -p kitchenpos up -d
 |-----|------------|---------------------------------|
 | 비속어 | Purgomalum | 욕설 및 상대방에게 불쾌감을 주는 단어(한글 or 영어) |
 
-
 ## 모델링
+
+### 상품(Product)
+
+- ```Product```의 ```name```에는 ```Purgomalum```가 포함될 수 없다.
+- ```Product```는 ```price```가 0원 이상이다.
+
+### 매뉴 그룹(MenuGroup)
+
+- ```MenuGroup```은 ```Menu``` 집합이다.
+
+### 메뉴(Menu)
+
+- ```Menu```는 ```MenuGroup```에 속해야 한다.
+- ```Menu```는 ```Product``` 집합인 ```menuProducts```를 가진다.
+- ```Menu```의 ```name```에는 ```Purgomalum```가 포함될 수 없다.
+- ```Menu```의 ```price```는 변경할 수 있다.
+- ```Menu```의 ```displayed```는 변경할 수 있다.
+- ```Menu```의 ```price```는 ```menuProducts```의 ```price```의 합보다 크거나 같아야 한다.
+- ```Menu```의 ```price```는 ```menuProducts```의 ```price```의 합보다 높은 경우 ```displayed```를 ```false```로 변경한다.
+
+### 주문 테이블(OrderTable)
+
+- ```OrderTable```은 ```numberOfGuests가```를 변경할 수 있다.
+- ```OrderTable```은 ```occupied```를 변경할 수 있다.
+- ```OrderTable```의 ```name```에는 ```Purgomalum```가 포함될 수 없다.
+- ```OrderTable```의 ```numberOfGuests```는 0 이상이다.
+- ```OrderTable```의 ```occupied```는 ```Order```가 ```COMPLETED``` 상태가 아닐 경우 변경할 수 없다.
+
+### 주문(Order)
+
+- ```Order```는 식당에서 ```Menu```를 주문할때 생성한다.
+- ```Order```는 ```Menu``` 집합인 ```OrderLineItem```을 가진다.
+- ```Order```는 주문 유형을 구분하는 ```OrderType```을 가진다.
+    - ```Order```는 ```EAT_IN(매장 내 식사)``` 주문 유형을 생성한다.
+    - ```Order```는 ```TAKEOUT(포장)```주문 유형을 생성한다.
+    - ```Order```는 ```DELIVERY(배달)``` 주문 유형을 생성한다.
+
+#### EAT_IN 주문 유형
+
+- ```EAT_IN``` 주문 유형은 ```OrderTable```를 가진다.
+- ```EAT_IN``` 주문 유형이  ```WAITING``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```true```로 변경한다.
+- ```EAT_IN``` 주문 유형이  ```COMPLETED``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```false```로 변경한다.
+- ```EAT_IN``` 주문 유형은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```SERVED(서빙)```
+    4. ```COMPLETED(완료)```
+
+#### TAKEOUT 주문 유형
+
+- ```TAKEOUT``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```SERVED(서빙)```
+    4. ```COMPLETED(완료)```
+
+#### DELIVERY 주문 유형
+
+- ```DELIVERY``` 주문 유형은 ```DeliveryAddress```를 가진다.
+- ```DELIVERY``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```DELIVERING(배달)```
+    4. ```DELIVERED(배달 완료)```
+    5. ```COMPLETED(완료)```
+
