@@ -246,6 +246,7 @@ docker compose -p kitchenpos up -d
   - menu price 는 0원 이상이어야 한다.
   - menu product 는 1개 이상 등록해야 한다.
     - menu product 가 없으면 menu 를 등록할 수 없다.
+  - displayed 상태에 따라 menu 가 고객에게 노출될지 말지 결정된다.
   - menu 는 특정 menu group 에 속해야 한다.
 - 메뉴 가격 정책
   - menu 가격이 menu product 의 총합보다 클 수 없다.
@@ -254,8 +255,8 @@ docker compose -p kitchenpos up -d
 
 - menu 는 메뉴 정책에 따라 등록할 수 있다.
 - menu 는 메뉴 가격 정책에 따라 가격을 변경할 수 있다.
-- menu 는 메뉴 가격 정책을 만족할 때, display 할 수 있다.
-- menu 를 hide 할 수 있다.
+- menu 는 메뉴 가격 정책을 만족할 때, display(displayed: true) 할 수 있다. (고객이 메뉴를 볼 수 있게 전시 한다.)
+- menu 를 hide(displayed: false) 할 수 있다. (고객이 메뉴를 볼 수 없게 숨긴다.)
 - menu list 를 조회할 수 있다.
 
 ### 주문 테이블(order table)
