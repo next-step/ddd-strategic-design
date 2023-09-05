@@ -120,6 +120,7 @@ docker compose -p kitchenpos up -d
 | 한글명          | 영문명            | 설명                                         |
 |----------------|------------------|--------------------------------------------|
 | 메뉴 구성 상품  | menu product     | 메뉴에 구성되는 여러 상품                    |
+| 가격      | price        | 상품의 가격과 수량의 곱 |
 | 수량           | quantity         | 상품 또는 메뉴의 개수                        |
 
 ### 주문
@@ -174,3 +175,183 @@ docker compose -p kitchenpos up -d
 | 손님 수         | number of guests | 주문 테이블에서 식사하는 손님의 수             |
 
 ## 모델링
+
+### 상품 (`Product`)
+
+#### 속성
+
+- `Product` 는 `name`, `price` 를 가진다.
+  - `name`
+    - `name` 은 반드시 필요하고 비속어를 포함하면 안된다. 
+  - `price`
+    - `price` 는 0 이상이다.
+
+#### use-case
+
+- 사장님이 `Product` 를 생성할 수 있다.
+  - 비속어 검증기로 이름을 확인해야 한다. 
+- 사장님은 `Product`의 `price`를 변경할 수 있다.
+  - 해당 `Product`를 포함한 `Menu`의 모든 `MenuProduct` 가격의 합이 `price`보다 크면 비노출한다.
+
+### 메뉴 (`Menu`)
+
+#### 속성
+
+- `Menu` 는 `name`, `price`, `MenuGroup`, `displayed` 그리고 `MenuProduct` 의 리스트를 가진다.
+  - `name`
+    - `name` 은 반드시 필요하고 비속어를 포함하면 안된다.
+  - `price`
+    - `price` 는 0 이상이다.
+  - `MenuProduct`
+    - `MenuProduct` 1개 이상을 가져야 한다.
+
+#### use-case
+
+- 사장님이 `Menu` 를 생성할 수 있다.
+  - 비속어 검증기로 이름을 확인해야 한다.
+  - `Menu`의 모든 `MenuProduct` 가격의 합이 `price` 이하여야 한다.
+- 사장님은 `Menu`의 `price`를 변경할 수 있다.
+- 사장님은 `Menu`를 노출할 수 있다.
+  - `Menu`의 모든 `MenuProduct` 가격의 합이 `price` 이하여야 한다.
+- 사장님은 `Menu`를 비노출할 수 있다.
+
+### 메뉴 구성 상품 (`MenuProduct`)
+
+#### 속성
+
+- `MenuProduct` 는 `Product` 와 `quantity` 를 가진다.
+  - `MenuProduct` 의 수량은 0 이상이어야 한다.
+  - `MenuProduct` 의 `Product` 는 생성되어 있어야 한다.
+  - `MenuProduct` 의 가격은 `Product` 의 `price` 와 `quantity` 의 곱이다.
+
+### 메뉴 그룹 (`MenuGroup`)
+
+#### 속성
+
+- `MenuGroup` 는 `name` 을 가진다.
+  - `name` 은 반드시 필요하다.
+
+#### use-case
+
+- 사장님은 `MenuGroup` 을 생성할 수 있다.
+
+### 주문 테이블 (`OrderTable`)
+
+#### 속성
+
+- `OrderTable` 는 `name`, `numberOfGuests` 그리고 `occupied` 를 가진다.
+  - `name` 
+    - `name` 은 반드시 필요하다.
+  - `numberOfGuests`
+    - `numberOfGuests` 는 0 이상이어야 한다.
+
+#### use-case
+
+- 사장님이 `OrderTable` 을 생성할 수 있다.
+  - `numberOfGuests` 가 0 이고, `occupied` 가 `false` 이다.
+- 테이블을 점유된 상태로 변경할 수 있다.
+- 테이블을 비울 수 있다.
+  - `numberOfGuests` 가 0 이고, `occupied` 가 `false` 이다.
+- 테이블의 손님 수를 변경할 수 있다.
+  - `occupied` 가 `true` 여야 한다.
+
+### 주문 (`Order`)
+
+#### 배달 주문
+
+##### 속성
+
+- `type`, `status`, `orderDateTime`, `orderLineItems`, `deliveryAddress` 를 가진다
+  - `type` 은 `DELIVERY` 이다.
+  - `status` 는 다음 목록 중 하나이다.
+    - `WAITING`
+    - `ACCEPTED`
+    - `SERVED`
+    - `DELIVERING`
+    - `DELIVERED`
+    - `COMPLETED`
+  - `deliveryAddress` 가 반드시 필요하다. 
+
+##### use-case
+
+- 배달 주문을 생성할 수 있다.
+  - `status`는 `WAITING` 이다.
+- 배달 주문을 수락할 수 있다. 
+  - `status`는 `WAITING` 이어야 한다.
+  - `status`를 `ACCEPTED`로 변경한다.
+  - 배달 대행사에 배달 정보를 전달해야 한다. 
+- 배달 주문을 서빙할 수 있다.
+  - `status`는 `ACCEPTED` 이어야 한다.
+  - `status`를 `SERVED`로 변경한다.
+- 배달을 시작 할 수 있다.
+  - `status`는 `SERVED` 이어야 한다.
+  - `status`를 `DELIVERING`로 변경한다.
+- 배달을 완료 할 수 있다.
+  - `status`는 `DELIVERING` 이어야 한다.
+  - `status`를 `DELIVERED`로 변경한다.
+- 배달 주문을 완료 할 수 있다.
+  - `status`는 `DELIVERED` 이어야 한다.
+  - `status`를 `COMPLETED`로 변경한다.
+
+#### 포장 주문
+
+##### 속성
+
+- `type`, `status`, `orderDateTime`, `orderLineItems` 를 가진다
+  - `type` 은 `TAKEOUT` 이다.
+  - `status` 는 다음 목록 중 하나이다.
+    - `WAITING`
+    - `ACCEPTED`
+    - `SERVED`
+    - `COMPLETED`
+
+##### use-case
+
+- 포장 주문을 생성할 수 있다.
+  - `status`는 `WAITING` 이다.
+- 포장 주문을 수락할 수 있다.
+  - `status`는 `WAITING` 이어야 한다.
+  - `status`를 `ACCEPTED`로 변경한다.
+- 포장 주문을 서빙할 수 있다.
+  - `status`는 `ACCEPTED` 이어야 한다.
+  - `status`를 `SERVED`로 변경한다.
+- 배달 주문을 완료 할 수 있다.
+  - `status`는 `SERVED` 이어야 한다.
+  - `status`를 `COMPLETED`로 변경한다.
+
+#### 매장 주문
+
+##### 속성
+
+- `type`, `status`, `orderDateTime`, `orderLineItems`, `orderTable`  를 가진다
+  - `type` 은 `EAT-IN` 이다.
+  - `status` 는 다음 목록 중 하나이다.
+    - `WAITING`
+    - `ACCEPTED`
+    - `SERVED`
+    - `COMPLETED`
+  - `orderTable`
+    - 테이블이 점유 중이어야 한다.
+    - 테이블은 미리 생성되어 있어야 한다.
+    
+##### use-case
+
+- 매장 주문을 생성할 수 있다.
+  - `status`는 `WAITING` 이다.
+- 매장 주문을 수락할 수 있다.
+  - `status`는 `WAITING` 이어야 한다.
+  - `status`를 `ACCEPTED`로 변경한다.
+- 매장 주문을 서빙할 수 있다.
+  - `status`는 `ACCEPTED` 이어야 한다.
+  - `status`를 `SERVED`로 변경한다.
+- 매장 주문을 완료 할 수 있다.
+  - `status`는 `DELIVERED` 이어야 한다.
+  - `status`를 `COMPLETED`로 변경한다.
+  - 테이블을 비워야 한다.
+
+
+### 주문한 메뉴 (`OrderLineItem`)
+
+- `OrderLineItem` 는 `Menu` 와 `quantity` 를 가진다.
+  - `OrderLineItem` 의 `Menu` 는 생성되어 있어야 한다.
+  - `DELIVERY`, `TAKEOUT` 유형의 `Order` 는 수량이 0 이상이어야 한다.
