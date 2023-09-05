@@ -342,9 +342,9 @@ docker compose -p kitchenpos up -d
 - eat in order 는 메뉴 제공(order status: accept -> serve) 할 수 있다.
 - eat in order 는 매장 주문 완료(order status: serve -> complete) 할 수 있다.
 
-#### 주문 테이블(order table)
+### 주문 테이블(order table)
 
-##### 속성
+#### 속성
 
 - order table 은 order table id, order table name, occupied, number of guests 를 가진다.
 - 주문 테이블 정책
@@ -353,7 +353,7 @@ docker compose -p kitchenpos up -d
   - order table 의 number of guests 는 0명 이상 이여야 한다.
   - order table 의 number of guests 를 변경하기 위해서, unoccupied order table 이여야 한다.
 
-##### 행위
+#### 행위
 
 - order table 은 주문 테이블 정책에 따라 등록할 수 있다.
 - order table 에는 고객이 sit 할 수 있다.
