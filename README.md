@@ -168,3 +168,51 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+### 상품(Product)
+- Product는 Price를 가진다
+- Product는 Name을 가진다
+  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
+
+### 메뉴 그룹(MenuGroup)
+- MenuGroup은 Name을 가진다
+
+### 메뉴(Menu)
+- Menu는 Name을 가진다
+  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
+- Menu는 MenuGroup을 가진다
+- Menu는 Price를 가진다
+- Menu는 MenuProducts를 가진다
+- Menu는 (노출 여부를 표현하는 / 구매 가능 여부를 표현하는) DisplayStatus를 가진다
+
+### 구성품들 (MenuProducts)
+- MenuProduct 들을 가진다 
+- 구성품들의 총 가격을 반환할수 있다
+
+### 구성품 (MenuProduct)
+- MenuProduct는 Product를 가진다
+- MenuProduct는 구매할 수량인 Quantity를 가진다
+- MenuProduct는 자신이 포함될 Menu를 가진다
+
+### 매장 테이블(OrderTable)
+- OrderTable은 Name을 가지고 있다
+- OrderTable은 NumberOfGuest 을 가지고 있다
+- OrderTable은 이용 여부를 표현하는 OccupiedStatus를 가진다
+
+### 주문(Order)
+- Order는 주문의 상태를 표현하는 OrderStatus를 가진다
+- Order는 주문내역을 표현하는 OrderLineItem들을 가진다
+- Order는 주문한 시간을 표현하는 OrderDateTime을 갖는다
+- Order는 주문의 종류를 표현하는 OrderType을 가진다
+
+### 주문내역(OrderLineItem)
+- OrderLineItem은 주문한 Menu를 가진다
+- OrderLineItem은 주문한 Menu의 Quantity를 가진다
+- OrderLineItem은 주문 내역의 Price를 가진다
+
+### 배달 주문(DeliveryOrder)
+- DeliveryOrder은 DeliveryAddress를 갖는다
+- KitchenridersClient에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+
+### 매장 식사 주문(EatInOrder)
+- EatInOrder는 손님이 앉을수 있는 OrderTable을 갖는다
