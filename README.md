@@ -127,10 +127,11 @@ docker compose -p kitchenpos up -d
 | 테이블 사용 여부 | occupied | 테이블 사용 여부                                      |                                                             
 
 ### 주문
-| 한글명    | 영문명             | 설명                                         |
-|--------|-----------------|--------------------------------------------|
-| 주문     | order           | 손님이 주문 하는 행위                               |
-| 주문된 메뉴 | order line item | 주문을 할 때 선택된 메뉴                             |  
+| 한글명    | 영문명             | 설명              |
+|--------|-----------------|-----------------|
+| 주문 유형  | order type      | 주문의 상태          |
+| 주문 상태  | order status    | 손님이 주문할 수 있는 방법 |
+| 주문된 메뉴 | order line item | 주문을 할 때 선택된 메뉴  |  
 
 #### 배달 주문
 | 한글명     | 영문명              | 설명                                  |
@@ -167,3 +168,146 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+### 상품 (*Product*)
+
+#### 속성
+- price (가격)
+  - price 는 0원 이상이어야 한다.
+- name (이름)
+  - name 은 비어있을 수 없으며, 비속어가 포함될 수 없다. 
+
+#### 행위
+- Product 를 등록할 수 있다.
+- Product 의 price 를 변경할 수 있다.
+  - Menu 의 가격이 MenuProduct 들의 가격의 합보다 크면 Menu 가 hide 된다.
+
+### 메뉴 (*Menu*)
+
+#### 속성
+- price (가격)
+  - price 는 0원 이상이어야 한다.
+- name (이름)
+  - name 은 비어있을 수 없으며, 비속어가 포함될 수 없다.
+- menuGroup (메뉴그룹)
+  - menuGroup 의 이름은 비워 둘 수 없다.
+- menuProduct (메뉴 구성 상품)
+  - menuProduct 의 수량은 0 이상이어야 한다.
+  - Menu 의 모든 menuProduct 가격의 합이 price 보다 이하이어야 한다.
+- display (전시)
+- hide (비전시)
+
+#### 행위
+- menuGroup 을 등록할 수 있다.
+- Menu 를 등록할 수 있다.
+  - 특정 menuGroup 에 속해야 한다.
+- Menu 의 price 를 변경할 수 있다.
+- Menu 를 display 할 수 있다.
+- Menu 를 hide 할 수 있다. 
+
+
+### 주문 테이블 (*Order Table*)
+
+#### 속성
+- name (이름)
+  - name 은 비어있을 수 없다.
+- numberOfGuests (손님 수)
+  - numberOfGuests 는 0 이상이어야 한다.
+- clear (테이블 청소)
+  - Order 가 완료되지 않는 경우 clear 할 수 없다.
+- occupied (테이블 사용 여부)
+
+#### 행위
+- OrderTable 을 등록할 수 있다.
+- OrderTable 을 점유 상태로 설정할 수 있다.
+- OrderTable 을 치울 수 있다.
+  - numberOfGuests 를 0으로 변경한다.
+  - occupied 를 false 로 변경한다.
+- OrderTable 의 손님 수를 변경할 수 있다.
+  - occupied 가 true 이어야 한다.
+
+### 주문 (*Order*)
+
+#### 속성
+- orderLineItem
+  - Menu 는 등록이 되어있어야 한다.
+
+#### 배달 주문 (*Delivery Order*)
+
+##### 속성
+- deliveryAddress (배달지 주소)
+  - deliveryAddress 는 비어있을 수 없다.
+- quantity (주문 항목 수량)
+  - 0 미만일 수 없다.
+- orderType (주문 상태)
+  - orderType 은 delivery 이다.
+- orderStatus (주문 상태)
+  - waiting -> accepted -> served -> delivering -> delivered -> completed 의 순서를 가진다.
+- kitchenRider (배달 대행 업체)
+
+##### 행위
+- DeliveryOrder 을 등록할 수 있다.
+  - orderStatus 를 waiting 으로 변경한다.
+- DeliveryOrder 를 수락할 수 있다.
+  - orderStatus 는 waiting 이어야 한다.
+  - orderStatus 를 accepted 로 변경한다.
+  - kitchenRider 에게 정보를 전달한다.
+- DeliveryOrder 의 음식을 다 만들어 완료할 수 있다.
+  - orderStatus 는 accepted 이어야 한다.
+  - orderStatus 를 served 로 변경한다.
+- DeliveryOrder 의 배달을 시작할 수 있다.
+  - orderStatus 는 served 이어야 한다.
+  - orderStatus 를 delivering 로 변경한다.
+- DeliveryOrder 의 배달을 완료할 수 있다. 
+  - orderStatus 는 delivering 이어야 한다.
+  - orderStatus 를 delivered 로 변경한다.
+- DeliveryOrder 를 완료할 수 있다.
+  - orderStatus 는 delivered 이어야 한다.
+  - orderStatus 를 completed 로 변경한다.
+
+#### 포장 주문 (*Takeout Order*)
+
+##### 속성
+- quantity (주문 항목 수량)
+  - 0 미만일 수 없다.
+- orderType (주문 상태)
+  - orderType 은 delivery 이다.
+- orderStatus (주문 상태)
+  - waiting -> accepted -> served -> completed 의 순서를 가진다.
+
+##### 행위
+- TakeoutOrder 을 등록할 수 있다.
+  - orderStatus 를 waiting 으로 변경한다.
+- TakeoutOrder 를 접수 완료할 수 있다.
+  - orderStatus 는 waiting 이어야 한다.
+  - orderStatus 를 accepted 로 변경한다.
+- TakeoutOrder 의 서빙할 수 있다.
+  - orderStatus 는 accepted 이어야 한다.
+  - orderStatus 를 served 로 변경한다.
+- TakeoutOrder 를 완료할 수 있다.
+  - orderStatus 는 served 이어야 한다.
+  - orderStatus 를 completed 로 변경한다.
+
+#### 매장 주문 (*Eat-in Order*)
+
+##### 속성
+- orderTable (주문 테이블)
+  - 점유하고 있어야 한다.
+- orderType (주문 상태)
+  - orderType 은 delivery 이다.
+- orderStatus (주문 상태)
+  - waiting -> accepted -> served -> completed 의 순서를 가진다.
+
+##### 행위
+- EatInOrder 을 등록할 수 있다.
+  - orderStatus 를 waiting 으로 변경한다.
+- EatInOrder 를 접수 완료할 수 있다.
+  - orderStatus 는 waiting 이어야 한다.
+  - orderStatus 를 accepted 로 변경한다.
+- EatInOrder 의 서빙할 수 있다.
+  - orderStatus 는 accepted 이어야 한다.
+  - orderStatus 를 served 로 변경한다.
+- EatInOrder 를 완료할 수 있다.
+  - orderStatus 는 served 이어야 한다.
+  - orderStatus 를 completed 로 변경한다.
+  - orderTable 을 clear 할 수 있다.
