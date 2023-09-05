@@ -1,7 +1,14 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.menu.application.MenuService;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.application.MenuPurgomalumClient;
+import kitchenpos.menuGroup.domain.MenuGroupRepository;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.ProductRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +30,7 @@ class MenuServiceTest {
     private MenuRepository menuRepository;
     private MenuGroupRepository menuGroupRepository;
     private ProductRepository productRepository;
-    private PurgomalumClient purgomalumClient;
+    private MenuPurgomalumClient purgomalumClient;
     private MenuService menuService;
     private UUID menuGroupId;
     private Product product;
