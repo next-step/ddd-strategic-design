@@ -220,7 +220,7 @@ docker compose -p kitchenpos up -d
 
 - product 는 상품 정책에 따라 등록할 수 있다.
 - product price 는 변경할 수 있다.
-  - product price 를 변경할 때, 메뉴 가격 정책에 따라 menu 를 숨길 수 있다.
+  - product price 를 변경할 때, 메뉴 가격 정책에 따라 노출되던 menu 를 숨길 수 있다. 숨겨진 menu 는 고객에게 노출되지 않는다.
 - product list 를 조회할 수 있다.
 
 ### 메뉴 그룹(menu group)
