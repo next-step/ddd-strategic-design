@@ -349,7 +349,7 @@ docker compose -p kitchenpos up -d
 - order table 은 order table id, order table name, occupied, number of guests 를 가진다.
 - 주문 테이블 정책
   - order table name 은 비워둘 수 없다.
-  - order table 을 clear 하기 위해서, order stat[](https://)us 가 complete 이여야 한다.
+  - order table 을 clear 하기 위해서, order status 가 complete 이여야 한다.
   - order table 의 number of guests 는 0명 이상 이여야 한다.
   - order table 의 number of guests 를 변경하기 위해서, unoccupied order table 이여야 한다.
 
