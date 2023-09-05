@@ -146,7 +146,6 @@ docker compose -p kitchenpos up -d
 | 주문 상태 | order status   | 주문의 상태 (ex) 접수중, 접수완료, 서빙완료, 배달중, 배달완료, 완료 |
 | 접수중   | waiting        | 주문 접수가 진행 중인 상태                          |
 | 접수 완료 | accepted       | 주방에 주문이 들어간 상태                           |
-| 서빙 완료 | served         | 접수된 주문이 조리가 완료된 상태                       |
 | 배달 중  | delivering     | 조리가 완료된 음식을 배달업체에서 배달 중인 상태              |
 | 배달 완료 | delivered      | 손님에게 배달이 완료된 상태                          |
 | 완료    | completed      | 각 주문의 상태가 모두 완료된 상태                      |
