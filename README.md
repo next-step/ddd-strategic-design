@@ -306,11 +306,11 @@ docker compose -p kitchenpos up -d
 #### 행위
 
 - delivery order 는 배달 주문 정책에 따라 접수(order status: waiting) 할 수 있다.
-- delivery order 는 배달 주문 정책에 따라 접수 승인(order status: accept) 할 수 있다.
-- delivery order 는 메뉴 제공(order status: serve) 할 수 있다.
-- delivery order 는 배달중 처리(order status: delivering) 할 수 있다.
-- delivery order 는 배달완료 처리(order status: delivering) 할 수 있다.
-- delivery order 는 배달 주문 완료(order status: complete) 할 수 있다.
+- delivery order 는 배달 주문 정책에 따라 접수 승인(order status: waiting -> accept) 할 수 있다.
+- delivery order 는 메뉴 제공(order status: accept -> serve) 할 수 있다.
+- delivery order 는 배달중 처리(order status: serve -> delivering) 할 수 있다.
+- delivery order 는 배달완료 처리(order status: delivering -> delivered) 할 수 있다.
+- delivery order 는 배달 주문 완료(order status: delivered -> complete) 할 수 있다.
 
 ### 포장 주문(takeout order)
 
@@ -323,9 +323,9 @@ docker compose -p kitchenpos up -d
 
 #### 행위
 - takeout order 는 포장 주문 정책에 따라 접수(order status: waiting) 할 수 있다.
-- takeout order 는 접수 승인(order status: accept) 할 수 있다.
-- takeout order 는 메뉴 제공(order status: serve) 할 수 있다.
-- takeout order 는 포장 주문 완료(order status: complete) 할 수 있다.
+- takeout order 는 접수 승인(order status: waiting -> accept) 할 수 있다.
+- takeout order 는 메뉴 제공(order status: accept -> serve) 할 수 있다.
+- takeout order 는 포장 주문 완료(order status: serve -> complete) 할 수 있다.
 
 ### 매장 주문(eat in order)
 
@@ -338,9 +338,9 @@ docker compose -p kitchenpos up -d
 
 #### 행위
 - eat in order 는 매장 주문 정책에 따라 접수(order status: waiting) 할 수 있다.
-- eat in order 는 접수 승인(order status: accept) 할 수 있다.
-- eat in order 는 메뉴 제공(order status: serve) 할 수 있다.
-- eat in order 는 매장 주문 완료(order status: complete) 할 수 있다.
+- eat in order 는 접수 승인(order status: waiting -> accept) 할 수 있다.
+- eat in order 는 메뉴 제공(order status: accept -> serve) 할 수 있다.
+- eat in order 는 매장 주문 완료(order status: serve -> complete) 할 수 있다.
 
 #### 주문 테이블(order table)
 
