@@ -182,9 +182,6 @@ docker compose -p kitchenpos up -d
 - `Price`는 0원 이상의 정수를 가진다
 - `Product`나 `Menu`의 `Price`를 변경하면 `MenuPriceValidator`를 통해 `Menu`의 `DisplayStatus`를 변경한다
 
-### 메뉴 가격 검증기(MenuPriceValidator)
-- `Menu`의 `Price`가 `Menu`가 포함한 `MenuProduct`들의 `Price` 합보다 높은지 확인한다
-
 ### 상품(Product)
 - `Product`는 `Price`를 가진다
 - `Product`는 `Name`을 가진다
@@ -203,6 +200,11 @@ docker compose -p kitchenpos up -d
 - `MenuProduct`는 `Product`를 가진다
 - `MenuProduct`는 구매할 수량인 `Quantity`를 가진다
 - `MenuProduct`는 자신이 포함될 `Menu`를 가진다
+
+### 전체 구성품 (MenuProducts)
+- `MenuProducts`는 `Menu`에 포함된 모든 `MenuProduct` 가진다
+- `Menu`의 `Price`가 `Menu`가 포함한 `MenuProduct`들의 `Price` 합보다 높은지 확인한다
+
 
 ### 매장 테이블(OrderTable)
 - `OrderTable`은 `Name`을 가지고 있다
