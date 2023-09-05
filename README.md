@@ -131,20 +131,114 @@ docker compose -p kitchenpos up -d
 | 빈 테이블  | empty OrderTable    | 비어있는 테이블을 의미한다.                           |
 
 ### 주문
-| 한글명 | 영문명            | 설명                               |
-|-----|----------------|----------------------------------|
-| 주문정보 | OrderLineItem  | 주문을 구성하는 메뉴정보를 의미하며 메뉴, 수량을 가진다. |
-| 주문  | Order          | 고객이 요청한 메뉴를 의미한다.                |
-| 매장주문 | Eatin Order    | 고객이 매장내에서 주문한 경우를 의미한다.          |
-| 포장주문 | Takeout Order  | 고객이 메뉴를 포장요청한 경우를 의미한다.          |
-| 배달주문 | Delivery Order | 고객이 메뉴를 배달요청한 경우를 의미한다.          |
-| 대기  | Waiting        | 요청받은 주문이 접수되기 전에 대기하는 상태를 의미한다.  |
-| 접수  | Accepted       | 대기중인 주문이 접수된 상태를 의미한다.           |
-| 제공  | Served         | 접수된 주문에 메뉴를 제공하는것을 의미한다.         |
-| 키친라이더 | Kitchen Rider  | 배달을 담당하는 업체를 의미한다.               |
-| 라이더 | Rider          | 배달을 담당하는 라이더를 의미한다.              |
-| 배달시작 | Delivering     | 라이더가 배달주문 요청메뉴 배달을 시작하는것을 의미한다.  |
-| 배달완료 | Deliverered    | 라이더가 배달주문 요청메뉴 배달이 완료한것을 의미한다.   |
-| 주문완료 | Completed      | 고객이 요청한 주문이 완료되었음을 의미한다.         |
+| 한글명   | 영문명             | 설명                               |
+|-------|-----------------|----------------------------------|
+| 주문정보  | OrderLineItem   | 주문을 구성하는 메뉴정보를 의미하며 메뉴, 수량을 가진다. |
+| 주문    | Order           | 고객이 요청한 메뉴를 의미한다.                |
+| 매장주문  | Eatin Order     | 고객이 매장내에서 주문한 경우를 의미한다.          |
+| 포장주문  | Takeout Order   | 고객이 메뉴를 포장요청한 경우를 의미한다.          |
+| 배달주문  | Delivery Order  | 고객이 메뉴를 배달요청한 경우를 의미한다.          |
+| 대기    | Waiting         | 요청받은 주문이 접수되기 전에 대기하는 상태를 의미한다.  |
+| 접수    | Accepted        | 대기중인 주문이 접수된 상태를 의미한다.           |
+| 제공    | Served          | 접수된 주문에 메뉴를 제공하는것을 의미한다.         |
+| 키친라이더 | Kitchen Rider   | 배달을 담당하는 업체를 의미한다.               |
+| 라이더   | Rider           | 배달을 담당하는 라이더를 의미한다.              |
+| 배달주소  | DeliveryAddress | 라이더가 배달 할 주소를 의미한다.              |
+| 배달시작  | Delivering      | 라이더가 배달주문 요청메뉴 배달을 시작하는것을 의미한다.  |
+| 배달완료  | Deliverered     | 라이더가 배달주문 요청메뉴 배달이 완료한것을 의미한다.   |
+| 주문완료  | Completed       | 고객이 요청한 주문이 완료되었음을 의미한다.         |
 
 ## 모델링
+
+### 상품
+- Product(상품) 생성한다.
+  - Product Price(상품가격)은 0원 이상이어야 한다.
+  - Product Name(상품이름)은 욕설이 포함될 수 없다.
+- Product Price(상품가격)을 변경한다.
+  - 해당 상품으로 구성된 Menu(메뉴)중 Menu Price(메뉴가격)이
+    MenuProduct Total Price(메뉴상품 총 금액) 보다 큰 메뉴는 Hide Menu(비노출 메뉴)로 변경된다. 
+
+### 메뉴그룹
+- MenuGroup(메뉴그룹) 생성한다.
+  - MenuGroup Name(메뉴그룹 이름)은 공백일 수 없다.
+
+### 메뉴
+- Menu(메뉴) 생성한다.
+  - Menu Price(메뉴가격)은 0원 이상이어야 한다.
+  - Menu Name(메뉴이름)은 욕설이 포함될 수 없다.
+  - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
+  - MenuProduct(메뉴상품)에 메뉴수량은 0이상이어야 한다.
+- Menu Price(메뉴가격)을 변경한다.
+  - Menu Price(메뉴가격)은 0원 이상이어야 한다.
+  - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
+- Display Menu(노출메뉴)로 변경한다.
+  - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
+- Menu(메뉴)는 임의로 Hide Menu(비노출 메뉴)로 변경이 가능하다.
+
+### 테이블
+- OrderTable(테이블) 생성한다.
+  - OrderTable Name(테이블 이름)은 공백일 수 없다.
+- OrderTable(테이블) 착석한다.
+  - empty OrderTable(빈 테이블)에 착석하여 Occupied OrderTable(착석 테이블)로 변경이 가능하다.
+- Number of guests(고객 수)를 변경한다.
+  - Occupied OrderTable(착석 테이블) 고객은 Number of guests(고객 수)를 얘기할 수 있다.
+- OrderTable(테이블) 치운다
+  - Eatin Order(매장주문)이 Completed(주문완료)된 경우 치울 수 있다.
+
+### 주문
+#### 매장주문
+- Order(주문)을 요청한다.
+  - Display Menu(노출메뉴)만 주문이 가능하다.
+  - Menu Price(메뉴가격)은 OrderLineItem(주문정보)의 가격은 같아야 한다.
+  - Eatin Order(매장주문)은 Occupied OrderTable(착석 테이블)에 고객만 가능하다.
+  - Waiting(대기) 상태로 등록된다.
+- Order(주문)을 접수한다.
+  - Waiting(대기) 상태에 주문만 접수가 가능하다.
+  - Accepted(접수) 상태로 변경된다.
+- Order(주문)을 제공한다.
+  - Accepted(접수) 상태에 주문만 제공가능하다.
+  - Served(제공)로 상태로 변경된다.
+- Order(주문)을 완료한다.
+  - Served(제공) 상태에 주문만 완료가능하다.
+  - Occupied OrderTable(착석 테이블)을 치운다.
+  - Completed(주문완료) 상태로 변경된다.
+
+#### 포장주문
+- Order(주문)을 요청한다.
+  - Display Menu(노출메뉴)만 주문이 가능하다.
+  - OrderLineItem(주문정보)의 수량은 음수가 될 수 없다.
+  - Menu Price(메뉴가격)은 OrderLineItem(주문정보)의 가격은 같아야 한다.
+  - Waiting(대기) 상태로 등록된다.
+- Order(주문)을 접수한다.
+  - Waiting(대기) 상태에 주문만 접수가 가능하다.
+  - Accepted(접수) 상태로 변경된다.
+- Order(주문)을 제공한다.
+  - Accepted(접수) 상태에 주문만 제공가능하다.
+  - Served(제공)로 상태로 변경된다.
+- Order(주문)을 완료한다.
+  - Served(제공) 상태에 주문만 완료가능하다.
+  - Completed(주문완료) 상태로 변경된다.
+
+#### 배달주문
+- Order(주문)을 요청한다.
+  - Display Menu(노출메뉴)만 주문이 가능하다.
+  - OrderLineItem(주문정보)의 수량은 음수가 될 수 없다.
+  - Menu Price(메뉴가격)은 OrderLineItem(주문정보)의 가격은 같아야 한다.
+  - DeliveryAddress(배달주소)는 공백일 수 없다.
+  - Waiting(대기) 상태로 등록된다.
+- Order(주문)을 접수한다.
+  - Waiting(대기) 상태에 주문만 접수가 가능하다.
+  - Kitchen Rider(치킨라이더) Rider(라이더)에게 DeliveryAddress(배달주소)로 배달 요청한다.
+  - Accepted(접수) 상태로 변경된다.
+- Order(주문)을 제공한다.
+  - Accepted(접수) 상태에 주문만 제공가능하다.
+  - Served(제공)로 상태로 변경된다.
+- Order(주문)을 배달한다.
+  - Served(제공) 상태에 주문만 배달이 가능하다.
+  - Delivering(배달시작) 상태로 변경된다.
+- Order(주문)을 배달을 완료한다.
+  - Delivering(배달시작) 상태에 주문만 배달완료가 가능하다.
+  - Deliverered(배달완료) 상태로 변경된다.
+- Order(주문)을 완료한다.
+  - Deliverered(배달완료) 상태에 주문만 완료가 가능하다. 
+  - Completed(주문완료) 상태로 변경된다.
