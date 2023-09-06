@@ -1,6 +1,6 @@
-package kitchenpos.menu.infra;
+package kitchenpos.purgomalumclient.infra;
 
-import kitchenpos.menu.domain.PurgomalumClient;
+import kitchenpos.purgomalumclient.domain.PurgomalumClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;

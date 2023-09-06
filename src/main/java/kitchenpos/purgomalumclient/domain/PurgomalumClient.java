@@ -1,4 +1,4 @@
-package kitchenpos.menu.domain;
+package kitchenpos.purgomalumclient.domain;
 
 public interface PurgomalumClient {
     boolean containsProfanity(String text);
