@@ -260,3 +260,6 @@ docker compose -p kitchenpos up -d
   - 주문(`Order`)의 종류(`type`)가 매장(EAT_IN)이면 고객이 앉았던 주문 테이블(`OrderTable`)을 치운다.
 
 - 모든 주문(`Order`)을 가져온다(findAll)
+
+### 모델링
+![kitchenpos modeling](https://github.com/toyablue/ddd-strategic-design/assets/137197778/0516c761-c72c-4a6b-a031-036aaed694cf)
