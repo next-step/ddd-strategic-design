@@ -274,7 +274,7 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 비속어 검사 | Profanity Check | 욕설등의 부적절한 언어가 포함되어있는지 purgomalum contains profanity api를 통해 검사 |
+| 비속어 검사 | Profanity Check | 욕설등의 부적절한 언어가 포함되어있는지 purgomalum 외부 서비스를 통해 contains profanity 검사 |
 
 ---
 
@@ -284,7 +284,7 @@ docker compose -p kitchenpos up -d
 
 - Product를 등록할 수 있다.
 - Name은 필수값이다.
-- Name에 Profanity가 포함될 수 없다.
+- Name에 Profanity Check 한다.
 - Price는 0원 이상이어야 한다.
 - Price는 변경할 수 있다.
 
@@ -301,7 +301,7 @@ docker compose -p kitchenpos up -d
 - Menu Product를 필수로 1개이상 가진다.
 - Menu Product의 Price의 총합보다 클 수 없다.
 - Name은 필수값이다.
-- Name에 Profanity가 포함될 수 없다.
+- Name에 Profanity Check 한다.
 - Price는 변경할 수 있다.
 - Menu를 Display한다.
 - Menu를 Hide한다.
