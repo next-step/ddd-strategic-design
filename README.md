@@ -245,3 +245,22 @@ docker compose -p kitchenpos up -d
 - `MenuProducts`는 `Menu`에 포함된 모든 `MenuProduct` 가진다
 - `MenuProducts`에서 전체 구성품의 `TotalPrice`를 생성한다
 
+## 맵?
+
+```mermaid
+
+stateDiagram-v2
+    상품
+    메뉴 --> 주문
+    메뉴 --> 상품
+    배달_주문 --> 배달
+    매장_주문 --> 매장_테이블
+    손님 --> 메뉴
+    손님 --> 주문
+
+    state 주문 {
+        포장_주문
+        배달_주문
+        매장_주문
+    }
+```
