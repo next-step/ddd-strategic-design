@@ -168,145 +168,112 @@ docker compose -p kitchenpos up -d
 
 ### 상품 컨텍스트
 #### 상품 (Product)
-- 속성
-  - 상품 이름
-    - 비속어가 포함될 수 없다
-  - 상품 가격
-    - 0원 이상이어야 한다.
-- 행위
-  - 상품을 등록할 수 있다.
-  - 상품의 가격을 변경할 수 있다.
+- 상품(`Product`)은 이름(`name`), 가격(`price`)을 가진다
+
+- 상품(`Product`)을 등록(create)한다
+  - 상품(`Product`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다.
+  - 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다
+- 상품(`Product`)의 가격(`price`)을 변경(update)한다
+  - 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다
 
 ### 메뉴 컨텍스트
 #### 메뉴 (Menu)
-- 속성
-  - 메뉴 이름
-    - 비속어가 포함될 수 없다
-  - 메뉴 그룹
-  - 메뉴 상품 목록
-    - 1개 이상의 등록된 상품이 있어야 한다.
-    - 상품 수량은 0 이상이어야 한다.
-  - 메뉴 가격
-    - 0원 이상이어야 한다.
-  - 노출 여부
-- 행위
-  - 메뉴를 등록할 수 있다
-  - 메뉴 가격을 변경할 수 있다
-  - 메뉴를 노출할 수 있다
-- 정책
-  - 메뉴 가격 정책
-    - 메뉴 가격은 메뉴 상품 목록 내 상품 금액의 합보다 작거나 같아야 한다
-    - 메뉴 가격이 메뉴 상품 목록 내 상품 금액의 합보다 크면 메뉴는 숨겨진다
+- 메뉴(`Menu`)는 이름(`name`), 그룹(`group`), 상품 목록(`productList`), 가격(`price`), 노출 여부(`displayed`)를 가진다
+- 메뉴(`Menu`)을 등록(create)한다
+  - 메뉴(`Menu`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다
+  - 메뉴(`Menu`)의 상품 목록(`productList`)에는 1개 이상의 등록된 상품(`Product`)이 있어야 한다.
+  - 메뉴(`Menu`)의 상품 목록(`productList`)의 상품(`Product`) 수량은 0 이상이어야 한다.
+  - 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다
+  - 메뉴 가격(`price`)은 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 작거나 같아야 한다
+- 메뉴(`Menu`)의 가격(`price`)을 변경(update)한다
+  - 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다
+  - 메뉴 가격(`price`)은 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 작거나 같아야 한다
+  - 메뉴 가격(`price`)이 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 크면 메뉴를 숨긴다(hide)
+- 메뉴(`Menu`)를 노출(display)할 수 있다.
 
 #### 메뉴 그룹 (Menu Group)
-- 속성
-  - 메뉴 그룹 이름
-    - 비워둘 수 없다
-- 행위
-  - 메뉴 그룹을 등록할 수 있다
+- 메뉴 그룹(`MenuGroup`)은 이름(`name`)을 가진다
+- 메뉴 그룹(`MenuGroup`)을 등록(create)한다
+  - 메뉴 그룹(`MenuGroup`)의 이름(`name`)은 비워둘 수 없다
+
 
 ### 매장 주문 컨텍스트
 #### 매장 주문 (Eat In)
-- 속성
-  - 주문 상태
-    - 대기 -> 접수 -> 서빙됨 -> 테이블 정리 -> 완료
-  - 주문 항목
-    - 수량이 0 미만일 수 있다
-    - 주문 항목의 메뉴 가격은 실제 메뉴 가격과 일치해야 한다
-  - 주문 테이블
-  - 주문 유형
-    - 매장 주문, 배달 주문, 포장 주문
-- 행위
-  - 매장 주문을 등록할 수 있다
-  - 매장 주문을 접수할 수 있다
-  - 매장 주문을 서빙할 수 있다
-  - 매장 주문을 완료할 수 있다
-- 정책
-  - 주문 항목의 메뉴가 숨겨져있다면 등록할 수 없다
-  - 주문 유형이 올바르지 않으면 등록할 수 없다
-  - 메뉴가 없으면 등록할 수 없다
-  - 대기 중인 주문만 접수할 수 있다
-  - 1개 이상의 등록된 메뉴로만 매장 주문을 등록할 수 있다
-  - 빈 테이블에는 매장 주문을 등록할 수 없다
-  - 주문 테이블의 모든 매장 주문이 완료되면 빈 테이블로 설정한다
-  - 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다
-  - 접수된 주문만 서빙할 수 있다
-  - 서빙된 주문만 완료할 수 있다
+- 매장 주문(`EatInOrder`)은 상태(`status`), 주문 항목(`orderLineItems`), 주문 테이블(`orderTable`), 유형(`type`)을 가진다.
+- 매장 주문(`EatInOrder`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 완료(`COMPLETED`) 순이다.
+
+- 매장 주문(`EatInOrder`)을 등록(create)한다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 미만일 수 있다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 매장 주문(`EatInOrder`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 매장 주문(`EatInOrder`)을 등록(create)할 수 있다
+  - 매장 주문(`EatInOrder`)의 빈 테이블(`orderTable`)에는 매장 주문(`EatInOrder`)을 등록(create)할 수 없다
+- 매장 주문(`EatInOrder`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 매장 주문(`EatInOrder`)만 접수(accept)할 수 있다
+- 매장 주문(`EatInOrder`)을 서빙(serve)한다
+  - 접수된(`ACCEPTED`) 매장 주문(`EatInOrder`)만 서빙(serve)할 수 있다
+- 매장 주문(`EatInOrder`)을 완료(complete)한다
+  - 서빙된(`SERVED`) 매장 주문(`EatInOrder`)만 완료(complete)할 수 있다
+- 테이블 착석(sit)한다
+- 테이블 정리(clear)한다
+  - 매장 주문(`EatInOrder`)의 주문 테이블(`orderTable`)의 모든 매장 주문(`EatInOrder`)이 완료(complete)되면 테이블 정리(clear)한다
+  - 완료(`COMPLETED`)가 아닌 매장 주문(`EatInOrder`)이 있는 주문 테이블(`orderTable`)은 테이블 정리(clear)할 수 없다
 
 #### 주문 테이블 (Order Table)
-- 속성
-  - 주문 테이블 이름
-    - 비워둘 수 없다
-  - 손님 수
-    - 0 이상이어야 한다
-  - 빈 테이블 여부
-- 행위
-  - 주문 테이블을 등록할 수 있다
-  - 손님 수를 변경할 수 있다
-  - 테이블 정리할 수 있다
-  - 테이블 착석할 수 있다
-- 정책
-  - 주문 테이블의 이름이 올바르지 않으면 등록할 수 없다
-  - 손님 수가 올바르지 않으면 변경할 수 있다
-  - 빈 테이블은 손님 수를 변경할 수 없다
-  - 완료되지 않은 주문이 있는 경우, 테이블 정리할 수 없다
+- 주문 테이블(`orderTable`)은 이름(`name`), 손님 수(`numberOfGuests`), 빈 테이블 여부(`occupied`)를 가진다
+- 주문 테이블(`orderTable`)을 등록(create)한다
+  - 주문 테이블(`orderTable`)의 이름(`name`)은 비워둘 수 없다
+  - 주문 테이블(`orderTable`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다
+  - 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)는 0 이상이어야 한다
+- 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)를 변경(update)한다
+  - 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)를 음수로 변경(update)할 수 없다
 
-
+  
 ### 배달 주문 컨텍스트
 #### 배달 주문 (Delivery Order)
-- 속성
-  - 주문 상태
-    - 대기 -> 접수 -> 배달 시작 -> 배달 완료 -> 완료
-  - 주문 항목
-    - 수량이 0 이상이어야 한다
-    - 주문 항목의 메뉴 가격은 실제 메뉴 가격과 일치해야 한다
-  - 배달 주소
-    - 비워둘 수 없다
-  - 주문 유형
-    - 매장 주문, 배달 주문, 포장 주문
-- 행위
-  - 배달 주문을 등록할 수 있다
-  - 배달 주문을 접수할 수 있다
-  - 배달 대행사를 호출할 수 있다
-  - 배달 주문을 서빙할 수 있다
-  - 배달 주문을 배달할 수 있다
-  - 배달 주문을 배달 완료할 수 있다
-  - 배달 주문을 완료할 수 있다
-- 정책
-  - 주문 항목의 메뉴가 숨겨져있다면 등록할 수 없다
-  - 주문 유형이 올바르지 않으면 등록할 수 없다
-  - 메뉴가 없으면 등록할 수 없다
-  - 대기 중인 주문만 접수할 수 있다
-  - 1개 이상의 등록된 메뉴로만 배달 주문을 등록할 수 있다
-  - 배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다
-  - 배달 주문이 접수되면 배달 대행사를 호출한다
-  - 배달 주문만 배달할 수 있다
-  - 서빙된 주문만 배달할 수 있다
-  - 배달 중인 주문만 배달 완료할 수 있다
-  - 배달 완료된 주문만 완료할 수 있다
+- 배달 주문(`DeliveryOrder`)은 상태(`status`), 주문 항목(`orderLineItems`), 배달 주소(`deliveryAddress`), 유형(`type`)을 가진다.
+- 배달 주문(`DeliveryOrder`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 배달 중(`DELIVERING`) -> 배달 완료(`DELIVERED`) -> 완료(`COMPLETED`) 순이다.
+
+- 배달 주문(`DeliveryOrder`)을 등록(create)한다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 이상이어야 한다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 배달 주문(`DeliveryOrder`)의 배달 주소(`deliveryAddress`)는 비워둘 수 없다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 배달 주소(`deliveryAddress`)가 올바르지 않으면 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 배달 주문(`DeliveryOrder`)을 등록(create)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 배달 주문(`DeliveryOrder`)만 접수(accept)할 수 있다
+  - 배달 주문(`DeliveryOrder`)이 접수(accept)되면 배달 대행사를 호출(requestDelivery)한다
+- 배달 대행사를 호출(requestDelivery)한다
+- 배달 주문(`DeliveryOrder`)을 서빙(serve)한다
+- 배달 주문(`DeliveryOrder`)을 배달(startDelivery)한다
+  - 서빙된(`SERVED`) 배달 주문(`DeliveryOrder`)만 배달(startDelivery)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 배달 완료(completeDelivery)한다
+  - 배달 중(`DELIVERING`)인 배달 주문(`DeliveryOrder`)만 배달 완료(completeDelivery)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 완료(complete)한다
+  - 배달 완료(`DELIVERED`)된 배달 주문(`DeliveryOrder`)만 완료(complete)할 수 있다
+
 
 
 ### 포장 주문 컨텍스트
 #### 포장 주문 (Take out)
-- 속성
-  - 주문 상태
-    - 대기 -> 접수 -> 서빙됨 -> 완료
-  - 주문 항목
-    - 수량이 0 이상이어야 한다
-    - 주문 항목의 메뉴 가격은 실제 메뉴 가격과 일치해야 한다
-  - 주문 유형
-    - 매장 주문, 배달 주문, 포장 주문
-- 행위
-  - 포장 주문을 등록할 수 있다
-  - 포장 주문을 접수할 수 있다
-  - 포장 주문을 서빙할 수 있다
-  - 포장 주문을 완료할 수 있다
-- 정책
-  - 주문 항목의 메뉴가 숨겨져있다면 등록할 수 없다
-  - 주문 유형이 올바르지 않으면 등록할 수 없다
-  - 메뉴가 없으면 등록할 수 없다
-  - 대기 중인 주문만 접수할 수 있다
-  - 1개 이상의 등록된 메뉴로만 포장 주문을 등록할 수 있다
-  - 접수 대기 중인 주문만 접수할 수 있다
-  - 접수된 주문만 서빙할 수 있다
-  - 서빙된 주문만 완료할 수 있다
+- 포장 주문(`TakeOut`)은 상태(`status`), 주문 항목(`orderLineItems`), 유형(`type`)을 가진다.
+- 포장 주문(`TakeOut`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 완료(`COMPLETED`) 순이다.
+
+- 포장 주문(`TakeOut`)을 등록(create)한다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 미만일 수 있다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 포장 주문(`TakeOut`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 포장 주문(`TakeOut`)을 등록(create)할 수 있다
+- 포장 주문(`TakeOut`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 포장 주문(`TakeOut`)만 접수(accept)할 수 있다
+- 포장 주문(`TakeOut`)을 서빙(serve)한다
+  - 접수된(`ACCEPTED`) 포장 주문(`TakeOut`)만 서빙(serve)할 수 있다
+- 포장 주문(`TakeOut`)을 완료(complete)한다
+  - 서빙된(`SERVED`) 포장 주문(`TakeOut`)만 완료(complete)할 수 있다
