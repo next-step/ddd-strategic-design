@@ -205,26 +205,25 @@ docker compose -p kitchenpos up -d
 - 상품(product)을 조회 한다.
   
 
-### 메뉴 그룹
+### 메뉴그룹과 메뉴
 
-- 메뉴 그룹(menu group)은 이름(name)을 가진다.
-- 메뉴 그룹(menu group)을 생성 한다.
-- 메뉴 그룹(menu group)을 조회 한다.
-
-### 메뉴
-
-- 메뉴(menu)는 이름(name), 가격(price), 메뉴 구성 상품(menuProduct), 메뉴 구성 상품 수량(quantity), 메뉴 주문 가능 여부(displayed)를 가지고  메뉴 그룹(menu_group)에 속한다.
-- 메뉴(menu)를 생성한다.
-  - 이름(name)은 비속어(profanity)가 포함될 수 없다.
-  - 가격(price)은 0원 이상이여야 한다.
-  - 메뉴 구성 상품(menuProduct)은 product가 1개 이상으로 구성되어 있어야 한다.
-  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 매뉴(menu)의 가격(price)이 높으면 안된다. 
-- 메뉴(menu)는 가격(price)을 변경할 수 있다.(changePrice)
-  - 가격(price)은 0원 이상이여야 한다.
-  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합 보다 메뉴(menu)의 가격(price)아 높을 경우 가격(price)이 변경되지 않는다.
-- 메뉴(menu)는 주문 가능(display) 상태로 만들 수 있다.
-  - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 메뉴(menu)의 가격(price)아 높을 경우 주문 가능(display) 상태가 되지 않는다.
-- 메뉴(menu)는 주문 불가능(hide) 상태로 변경할 수 있다.
+-메뉴그룹
+  - 메뉴 그룹(menu group)은 이름(name)을 가진다.
+  - 메뉴 그룹(menu group)을 생성 한다.
+  - 메뉴 그룹(menu group)을 조회 한다.
+- 메뉴
+  - 메뉴(menu)는 이름(name), 가격(price), 메뉴 구성 상품(menuProduct), 메뉴 주문 가능 여부(displayed)를 가지고  메뉴 그룹(menu_group)에 속한다.
+  - 메뉴(menu)를 생성한다.
+    - 이름(name)은 비속어(profanity)가 포함될 수 없다.
+    - 가격(price)은 0원 이상이여야 한다.
+    - 메뉴 구성 상품(menuProduct)에는 상품(Product)이 1개이상 포함되어야 한다.
+    - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 매뉴(menu)의 가격(price)이 높으면 안된다. 
+  - 메뉴(menu)는 가격(price)을 변경할 수 있다.(changePrice)
+    - 가격(price)은 0원 이상이여야 한다.
+    - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합 보다 메뉴(menu)의 가격(price)아 높을 경우 가격(price)이 변경되지 않는다.
+  - 메뉴(menu)는 주문 가능(display) 상태로 만들 수 있다.
+    - 메뉴 구성 상품(menuProduct)을 구성하는 상품(product)의 가격(price) 합보다 메뉴(menu)의 가격(price)아 높을 경우 주문 가능(display) 상태가 되지 않는다.
+  - 메뉴(menu)는 주문 불가능(hide) 상태로 변경할 수 있다.
   
 
 ### 주문 테이블
