@@ -190,22 +190,22 @@ docker compose -p kitchenpos up -d
 
 #### use-case
 
-- 사장님이 `Product` 를 생성할 수 있다.
+- `Product` 를 생성할 수 있다.
   - 비속어 검증기로 이름을 확인해야 한다. 
-- 사장님은 `Product`의 `price`를 변경할 수 있다.
-  - 해당 `Product`를 포함한 `Menu`의 모든 `MenuProduct` 가격의 합이 `price`보다 크면 비노출한다.
+- `Product`의 `price`를 변경할 수 있다.
+  - `Product`를 포함하고 있는 `Menu`의 모든 `MenuProduct` 가격의 합이 `price`보다 크면 `Menu`를 비노출한다.
 
 ### 메뉴 (`Menu`)
 
 #### 속성
 
-- `Menu` 는 `name`, `price`, `MenuGroup`, `displayed` 그리고 `MenuProduct` 의 리스트를 가진다.
+- `Menu` 는 `name`, `price`, `MenuGroup`, `displayed` 그리고 `menuProducts` 를 가진다.
   - `name`
     - `name` 은 반드시 필요하고 비속어를 포함하면 안된다.
   - `price`
     - `price` 는 0 이상이다.
-  - `MenuProduct`
-    - `MenuProduct` 1개 이상을 가져야 한다.
+  - `menuProducts`
+    - `MenuProduct` 의 리스트로, 1개 이상 있어야 한다.
 
 #### use-case
 
@@ -216,6 +216,7 @@ docker compose -p kitchenpos up -d
 - 사장님은 `Menu`를 노출할 수 있다.
   - `Menu`의 모든 `MenuProduct` 가격의 합이 `price` 이하여야 한다.
 - 사장님은 `Menu`를 비노출할 수 있다.
+  - ※ `Menu`에 포함된 `Product` 의 가격이 변할 때, `Product`를 포함하고 있는 `Menu`의 모든 `MenuProduct` 가격의 합이 `price`보다 클 때에도 비노출한다.
 
 ### 메뉴 구성 상품 (`MenuProduct`)
 
@@ -254,6 +255,7 @@ docker compose -p kitchenpos up -d
 - 테이블을 점유된 상태로 변경할 수 있다.
 - 테이블을 비울 수 있다.
   - `numberOfGuests` 가 0 이고, `occupied` 가 `false` 이다.
+  - `Order`가 `COMPLETED` 일 때만 비울 수 있다.
 - 테이블의 손님 수를 변경할 수 있다.
   - `occupied` 가 `true` 여야 한다.
 
@@ -272,7 +274,13 @@ docker compose -p kitchenpos up -d
     - `DELIVERING`
     - `DELIVERED`
     - `COMPLETED`
+  - `status` 의 상태는 다음 순서로 변경된다.
+    - `WAITING` → `ACCEPTED` → `SERVED` → `DELIVERING` → `DELIVERED` → `COMPLETED`
   - `deliveryAddress` 가 반드시 필요하다. 
+  - `orderLineItems`
+    - `OrderLineItem` 의 리스트로, 1개 이상 있어야 한다.
+    - `OrderLineItem` 에 포함된 `Menu`는 미리 생성되어 있어야 한다.
+    - 비노출 `Menu`가 포함된 `OrderLineItem`은 없어야한다.
 
 ##### use-case
 
@@ -306,6 +314,12 @@ docker compose -p kitchenpos up -d
     - `ACCEPTED`
     - `SERVED`
     - `COMPLETED`
+  - `status` 의 상태는 다음 순서로 변경된다.
+    - `WAITING` → `ACCEPTED` → `SERVED` → `COMPLETED`
+  - `orderLineItems`
+    - `OrderLineItem` 의 리스트로, 1개 이상 있어야 한다.
+    - `OrderLineItem` 에 포함된 `Menu`는 미리 생성되어 있어야 한다.
+    - 비노출 `Menu`가 포함된 `OrderLineItem`은 없어야한다.
 
 ##### use-case
 
@@ -332,6 +346,12 @@ docker compose -p kitchenpos up -d
     - `ACCEPTED`
     - `SERVED`
     - `COMPLETED`
+  - `status` 의 상태는 다음 순서로 변경된다.
+    - `WAITING` → `ACCEPTED` → `SERVED` → `COMPLETED`
+  - `orderLineItems`
+    - `OrderLineItem` 의 리스트로, 1개 이상 있어야 한다.
+    - `OrderLineItem` 에 포함된 `Menu`는 미리 생성되어 있어야 한다.
+    - 비노출 `Menu`가 포함된 `OrderLineItem`은 없어야한다.
   - `orderTable`
     - 테이블이 점유 중이어야 한다.
     - 테이블은 미리 생성되어 있어야 한다.
