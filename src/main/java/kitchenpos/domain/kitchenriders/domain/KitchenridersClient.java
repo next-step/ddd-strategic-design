@@ -1,4 +1,4 @@
-package kitchenpos.domain.order.domain;
+package kitchenpos.domain.kitchenriders.domain;
 
 import java.math.BigDecimal;
 import java.util.UUID;

@@ -5,7 +5,7 @@ import kitchenpos.domain.menu.domain.MenuRepository;
 import kitchenpos.domain.order.domain.*;
 import kitchenpos.domain.ordertable.domain.OrderTable;
 import kitchenpos.domain.ordertable.domain.OrderTableRepository;
-import kitchenpos.domain.order.domain.KitchenridersClient;
+import kitchenpos.domain.kitchenriders.domain.KitchenridersClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
