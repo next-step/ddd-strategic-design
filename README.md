@@ -116,21 +116,21 @@ docker compose -p kitchenpos up -d
 | 메뉴그룹명  | name      | 메뉴그룹의 이름           |             |
 
 ### 메뉴
-| 한글명   | 영문명         | 설명                         | 예시                                     |
-|-------|-------------|----------------------------|----------------------------------------|
-| 메뉴    | menu        | 고객의 구매 단위이며 하나 이상의 상품으로 구성 | 커플 치킨 세트, 치킨 2마리 세트, 치즈치즈 세트, 단짠 치킨 세트 |
-| 메뉴생성  | create      | 메뉴를 새롭게 생성함                |                                        |
-| 가격    | price       | 메뉴에 표기된 상품의 판매 금액          |                                        |
-| 메뉴그룹  | menuGroup   | 메뉴를 기준에 따라 분류한 묶음          | 매운치킨,달콤한 치킨                            |
-| 메뉴 상품 | menuProduct | 메뉴에 포함된 상품                 | 청양치킨, 콜라, 치즈볼, 땡초치킨, 뿌링클치킨, 간장치킨       |
-| 상품    | product     | kitchenPos가 판매하는 물건        | 청양치킨, 콜라, 치즈볼, 땡초치킨, 뿌링클치킨, 간장치킨            |
-| 수량    | quantity    | 구매한 상품의 개수                 |                                        |
-| 상품명   | name        | 상품의 이름                     |                                        |
-| 비속어 | Profanity | 욕설이나 고객이 불편함을 느낄 단어        |                                        |
-| 가격변경  | changePrice | 메뉴에 적힌 상품의 가격을 변경함         |                                        |
-| 메뉴 표기 | displayed   | 메뉴상에 상품의 노출 여부             |                                        |
-| 메뉴노출  | display     | 메뉴상에 상품을 노출함               |                                        |
-| 메뉴숨김  | hide        | 메뉴상에 상품을 숨김                |                                        |
+| 한글명      | 영문명         | 설명                            | 예시                                     |
+|----------|-------------|-------------------------------|----------------------------------------|
+| 메뉴       | menu        | 고객의 구매 단위이며 하나 이상의 메뉴 상품으로 구성 | 커플 치킨 세트, 치킨 2마리 세트, 치즈치즈 세트, 단짠 치킨 세트 |
+| 메뉴생성     | create      | 메뉴를 새롭게 생성함                   |                                        |
+| 가격       | price       | 메뉴에 표기된 상품의 판매 금액             |                                        |
+| 메뉴그룹     | menuGroup   | 메뉴를 기준에 따라 분류한 묶음             | 매운치킨,달콤한 치킨                            |
+| 메뉴 상품    | menuProduct | 메뉴에 포함된 상품                    | 청양치킨, 콜라, 치즈볼, 땡초치킨, 뿌링클치킨, 간장치킨       |
+| 상품       | product     | kitchenPos가 판매하는 물건           | 청양치킨, 콜라, 치즈볼, 땡초치킨, 뿌링클치킨, 간장치킨            |
+| 수량       | quantity    | 구매한 상품의 개수                    |                                        |
+| 상품명      | name        | 상품의 이름                        |                                        |
+| 비속어      | Profanity | 욕설이나 고객이 불편함을 느낄 단어           |                                        |
+| 가격변경     | changePrice | 메뉴에 적힌 상품의 가격을 변경함            |                                        |
+| 메뉴 표기 여부 | displayed   | 메뉴의 노출 여부를 나타냄                |                                        |
+| 메뉴노출     | display     | 해당 메뉴를 노출함                    |                                        |
+| 메뉴숨김     | hide        | 해당 메뉴를 숨김                     |                                        |
 
 ### 주문
 | 한글명      | 영문명                 | 설명                                                            |
@@ -149,19 +149,19 @@ docker compose -p kitchenpos up -d
 | 제공상태확인   | serve               | 상품 준비 상태 확인                                                   |
 
 #### 배달 주문
-| 한글명      | 영문명                  | 설명                  |
-|----------|----------------------|---------------------|
-| 대기중      | WAITING             | 주문 접수 후 주문을 승인하기 전  |
-| 승인       | ACCEPTED            | 주문 접수 후 주문을 확인함     |
-| 제공됨      | SERVED              | 주문 접수 메뉴를 배달원에게 전달함 |
-| 배달중      | DELIVERING          | 상품을 배달하고 있음         |
-| 배달완료      | DELIVERED           | 상품이 배송지에 배달 완료됨     |
-| 완료       | COMPLETED           | 상품이 고객에게 제공됨        |
-| 배달주소     | deliveryAddress     | 주문을 배달할 장소          |
-| 배달원      | KitchenridersClient | 배달하는 상품정보           |
-| 배달출발상태확인 | startDelivery               | 배달중 상태 확인                                                    |
-| 배달도착상태확인 | completeDelivery    | 배달완료 상태 확인                                                   |
-| 완료상태확인   | complete            | 상품이 고객에게 제공된 상태 확인                                           |
+| 한글명 | 영문명                  | 설명                    |
+|----|----------------------|-----------------------|
+| 대기중 | WAITING             | 주문 접수 후 주문을 승인하기 전    |
+| 승인 | ACCEPTED            | 주문 접수 후 주문을 확인함       |
+| 제공됨 | SERVED              | 주문 접수 메뉴를 배달원에게 전달함   |
+| 배달중 | DELIVERING          | 상품을 배달하고 있음           |
+| 배달완료 | DELIVERED           | 상품이 배송지에 배달 완료됨       |
+| 완료 | COMPLETED           | 상품이 고객에게 제공됨          |
+| 배달주소 | deliveryAddress     | 주문을 배달할 장소            |
+| 배달원 | KitchenridersClient | 배달하는 상품정보             |
+| 배달출발 | startDelivery               | 배달이 시작됨               |
+| 배달도착 | completeDelivery    | 배달이 완료됨               |
+| 완료 | complete            | 상품이 고객에게 제공되며 주문이 완료됨 |
 
 #### 포장 주문
 | 한글명       | 영문명                  | 설명                 |
@@ -170,16 +170,16 @@ docker compose -p kitchenpos up -d
 | 승인       | ACCEPTED            | 주문 접수 후 주문을 확인함                                              |
 | 제공됨      | SERVED              | 주문 접수 메뉴를 고객에게 전달함                                           |
 | 완료       | COMPLETED           | 상품이 고객에게 제공됨                                                 |
-| 완료상태확인   | complete            | 상품이 고객에게 제공된 상태 확인                                           |
+| 완료상태  | complete            | 상품이 고객에게 제공되며 주문이 완료됨                                          |
 
 #### 매장식사 주문
-| 한글명       | 영문명                  | 설명                 |
-|-----------|----------------------|--------------------|
-| 대기중      | WAITING             | 주문 접수 후 주문을 승인하기 전 |
-| 승인       | ACCEPTED            | 주문 접수 후 주문을 확인함    |
-| 제공됨      | SERVED              | 주문 접수 메뉴를 고객에게 전달함 |
-| 완료       | COMPLETED           | 고객이 매장을 떠남         |
-| 완료상태확인   | complete            | 고객이 매장을 떠난 상태 확인   |
+| 한글명       | 영문명                  | 설명                    |
+|-----------|----------------------|-----------------------|
+| 대기중      | WAITING             | 주문 접수 후 주문을 승인하기 전    |
+| 승인       | ACCEPTED            | 주문 접수 후 주문을 확인함       |
+| 제공됨      | SERVED              | 주문 접수 메뉴를 고객에게 전달함    |
+| 완료       | COMPLETED           | 고객이 식사를 마침             |
+| 완료상태   | complete            | 상품이 고객에게 제공되며 주문이 완료됨 |
 
 ### 주문 테이블
 | 한글명       | 영문명                  | 설명                 |
@@ -209,97 +209,106 @@ docker compose -p kitchenpos up -d
 ## 모델링
 ### 상품
 #### 속성
-- 판매자가 고객에게 판매할 product는 name과 price로 구성된다.
-  - name은 비속어가 포함되지 않아야한다.
-  - price는 0 이상이어야 한다.
+- 판매자가 고객에게 판매할 상품(product)은 상품명(name)과 상품가격(price)으로 구성된다.
+  - 상품명(name)은 비속어가 포함되지 않아야한다.
+  - 상품가격(price)은 0 이상이어야 한다.
 
 #### 행위
-- product는 create로 생성한다.
-- product는 changePrice를 이용하여 가격을 변경한다.
-  - price는 0 이상으로 변경해야한다.
-  - changePrice 시 Menu의 가격이 메뉴에 속한 상품 금액의 합보다 크면 상품이 숨겨진다.
+- 상품(product)은 상품생성(create)할 수 있다.
+- 상품(product)은 가격 변경(changePrice)을 할 수 있다.
+  - 상품가격(price)은 0 이상으로 변경해야한다.
+  - 메뉴(menu)의 가격이 메뉴에 속한 상품 금액의 합보다 크면 해당 메뉴는 숨겨진다.
 
 ### 메뉴
 #### 속성
-- menu는 id, name, menuGroup, menuProduct, price, quantity, display로 구성된다.
-- menu는 1개이상의 menuProduct로 구성된다.
-- menu는 속성에 맞는 menuGroup을 가진다.
-- menu의 수량은 0개 이상이며, 가격은 0원 이상이다.
-- menu의 이름은 비속어를 포함하지 않아야 한다.
-- menu는 노출 시키거나 숨기는 것을 결정하는 display를 갖는다.
+- 메뉴(menu)는 id, 이름(name), 메뉴그룹(menuGroup), 메뉴상품(menuProduct), 가격(price), 수량(quantity), 메뉴표기여부(displayed)로 구성된다.
+- 메뉴(menu)의 가격은 0원 이상이다.
+- 메뉴(menu)는 속성에 맞는 메뉴그룹(menuGroup)을 가진다.
+- 메뉴(menu)는 1개이상의 메뉴상품(menuProduct)로 구성된다.
+- 각 메뉴상품(menuProduct)의 수량은 0개 이상이다.
+- 메뉴(menu)의 이름은 비속어를 포함하지 않아야 한다.
 
 #### 행위
-- menu는 create로 생성한다.
-- menu는 changePrice를 이용하여 가격을 변경한다.
+- 메뉴(menu)는 메뉴생성(create)할 수 있다.
+- 메뉴(menu)는 가격 변경(changePrice)을 할 수 있다.
   - 가격은 변경 시 0원이상으로 변경해야한다.
   - 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야한다.
-- menu는 hide 할 수 있다.
-- menu가 가격 조건을 만족하는 경우 display 한다.
+- 메뉴(menu)는 메뉴숨김(hide) 할 수 있다.
+- 메뉴(menu)가 가격 조건을 만족하는 경우 메뉴 노출(display) 한다.
   - 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 숨긴다.
 
 
 ### 메뉴그룹
 #### 속성
-- menuGroup은 id와 name으로 구성된다.
-- menuGroup은 필수적으로 name을 가진다.
+- 메뉴그룹(menuGroup)은 id와 메뉴그룹명(name)으로 구성된다.
+- 메뉴그룹(menuGroup)은 필수적으로 메뉴그룹명(name)을 가진다.
 
 #### 행위
-- menuGroup은 create로 생성한다.
+- 메뉴그룹(menuGroup)은 메뉴그룹생성(create)할 수 있다.
 
 
 ### 주문 공통
 #### 속성
-- order는 orderType이 존재하며, 배달, 포장, 매장 식사가 가능하다.
-- order는 1개 이상의 노출된 메뉴로 구성된다.
-- orderType에 따라 order의 구성 요소가 달라진다.
-- orderStatus는 orderType에 따라 단계를 가지며 단계를 건너 뛸수 없다.
+- 주문(order)은 주문유형(orderType)이 존재하며, 배달, 포장, 매장 식사가 가능하다.
+- 주문(order)은 1개 이상의 노출된 메뉴로 구성된다.
+- 주문유형(orderType)에 따라 주문(order)의 구성 요소가 달라진다.
+- 주문상태(orderStatus)는 주문유형(orderType)에 따라 단계를 가지며 단계를 건너 뛸수 없다.
 
 ### 배달
 #### 속성
-- 주문은 id, type, status, orderDateTime, orderLine, delivery address로 구성된다.
-- orderLine의 quantity는 0 이상이다.
-- orderStatus는 대기중, 승인, 제공됨, 배달중, 배달완료, 완료로 구성된다.
+- 주문은 id, 주문유형(orderType), 주문상태(orderStatus), 주문시간(orderDateTime), 주문항목(orderLineItems), 배달주소(delivery address)로 구성된다.
+- 주문항목(orderLineItems)의 수량(quantity)은 0 이상이다.
+- 주문상태(orderStatus)는 대기중, 승인, 제공됨, 배달중, 배달완료, 완료로 구성된다.
 - 배달 시 배송지를 입력해야한다.
 - 배달 주문 시 배달 대행사를 호출한다.
 
 #### 행위
 - 배달은 대기중 > 승인 > 제공됨 > 배달중 > 배달완료 > 완료의 단계로 진행된다.
-  - 각 단계에서 조건을 만족하는 경우 다음단계로 넘어갈 수 있다.
+  - 대기 중인 주문이 있다면 배달 대행사를 호출하고 승인할 수 있다.
+  - 승인된 주문이 있다면 주문 상태를 제공됨으로 변경할 수 있다.
+  - 제공됨 상태의 주문이 있다면, 배달을 시작하며 상태를 배달중으로 변경할 수 있다.
+  - 배달중인 주문은 배달이 도착하면 배달완료 상태로 변경할 수 있다.
+  - 배달 완료된 주문이 있다면 주문 상태를 완료로 변경할 수 있다.
 
 ### 매장 식사
 #### 속성
-- 주문은 id, type, status, orderDateTime, orderLine, orderTable, orderTableId로 구성된다.
-- orderStatus는 대기중, 승인, 제공됨, 완료로 구성된다.
+- 주문은 id, 주문유형(orderType), 주문상태(orderStatus), 주문시간(orderDateTime), 주문항목(orderLineItems), 주문테이블(orderTable), orderTableId로 구성된다.
+- 주문상태(orderStatus)는 대기중, 승인, 제공됨, 완료로 구성된다.
 - 매장 식사 시 테이블이 필요하다.
 
 #### 행위
 - 대기중 > 승인 > 제공됨 > 완료의 단계로 진행된다.
-  - 각 단계에서 조건을 만족하는 경우 다음단계로 넘어갈 수 있다.
+  - 대기 중인 주문이 있다면 승인할 수 있다.
+  - 승인된 주문이 있다면 주문 상태를 제공됨으로 변경할 수 있다.
+  - 고객에게 메뉴가 전달된 주문이 있다면 주문 상태를 완료로 변경할 수 있다.
+  - 완료 상태로 변경시 고객이 차지한 테이블을 정리한다.
 
   
 ### 포장
 #### 속성
-- 주문은 id, type, status, orderDateTime, orderLine으로 구성된다.
-- orderLine의 quantity는 0 이상이다.
-- orderStatus는 대기중, 승인, 제공됨, 완료로 구성된다.
+- 주문은 id, 주문유형(orderType), 주문상태(orderStatus), 주문시간(orderDateTime), 주문항목(orderLineItems)으로 구성된다.
+- 주문항목(orderLineItems)의 수량(quantity)은 0 이상이다.
+- 주문상태(orderStatus)는 대기중, 승인, 제공됨, 완료로 구성된다.
 
 #### 행위
 - 대기중 > 승인 > 제공됨 > 완료의 단계로 진행된다.
-  - 각 단계에서 조건을 만족하는 경우 다음단계로 넘어갈 수 있다.
+  - 대기 중인 주문이 있다면 승인할 수 있다.
+  - 승인된 주문이 있다면 주문 상태를 제공됨으로 변경할 수 있다.
+  - 고객에게 메뉴가 전달된 주문이 있다면 주문 상태를 완료로 변경할 수 있다.
 
 
 ### 주문 테이블
 #### 행위
-- orderTable은 id, name, numberOfGuest, occupied로 구성된다.
-- orderTable은 이름을 필수적으로 가진다.
-- 주문시 orderTable을 차지하며, 모든 주문이 완료되면 테이블을 비운다.
-- 주문이 완료되지 않으면 orderTable을 비울 수 없다.
-- 비어있지 않은 orderTable의 손님수는 변경가능 하다.
+- 주문테이블(orderTable)은 id, 테이블명(name), 테이블손님수(numberOfGuest), 테이블사용여부(occupied)로 구성된다.
+- 주문테이블(orderTable)은 테이블명(name)을 필수적으로 가진다.
+- 주문시 주문테이블(orderTable)을 차지하며, 모든 주문이 완료되면 테이블을 비운다.
+- 주문이 완료되지 않으면 주문테이블(orderTable)을 비울 수 없다.
+- 비어있지 않은 주문테이블(orderTable)의 손님수는 변경가능 하다.
 
 #### 속성
-- orderTable은 create로 생성한다.
-- orderTable에는 고객이 sit한다.
-- 식사 완료후 orderTable을 clear한다.
-- orderTable이 비어있지 않다면, 고객수를 변경할 수 있다. 
+- 주문테이블(orderTable)은 주문테이블생성(create)할 수있다.
+- 주문테이블(orderTable)은 고객이 사용(sit)할 수있다.
+- 식사 완료후 주문테이블(orderTable)을 테이블 정리(clear) 한다.
+- 주문테이블(orderTable)이 비어있지 않다면, 고객수를 변경할 수 있다. 
 
 
