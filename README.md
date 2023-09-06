@@ -279,3 +279,68 @@ docker compose -p kitchenpos up -d
 ---
 
 ## 모델링
+
+### Product (상품)
+
+- Product를 등록할 수 있다.
+- Name은 필수값이다.
+- Name에 Profanity가 포함될 수 없다.
+- Price는 0원 이상이어야 한다.
+- Price는 변경할 수 있다.
+
+### MenuGroup (메뉴 그룹)
+
+- MenuGroup을 등록할 수 있다.
+- Name은 필수값이다.
+
+### Menu (메뉴)
+
+- Menu를 등록할 수 있다.
+- Price는 0원 이상이어야 한다.
+- Menu Group을 필수로 가진다.
+- Menu Product를 필수로 1개이상 가진다.
+- Menu Product의 Price의 총합보다 클 수 없다.
+- Name은 필수값이다.
+- Name에 Profanity가 포함될 수 없다.
+- Price는 변경할 수 있다.
+- Menu를 Display한다.
+- Menu를 Hide한다.
+
+### OrderTable (매장 테이블)
+
+- OrderTable을 등록할 수 있다.
+- Name은 필수값이다.
+- Occupied를 가진다.
+- Number Of Guests를 가진다.
+- Sit 할 수 있다.
+- Clear 될 수 있다.
+- Number Of Guests를 변경할 수 있다.
+- Number Of Guests는 1명 이상이어야 한다.
+
+### Order (주문)
+
+- OrderType을 가진다.
+- OrderStatus를 가진다.
+- DeliveryOrder, TakeOutOrder은 Order Line Item 1개 이상 가진다.
+- OrderDateTime을 가진다.
+- Delivery Order (배달주문)
+    - DeliveryOrder가 들어오면 Order Status는 Waiting이다.
+        - Delivery Address는 필수값이다.
+    - Waiting Order를 Accepted 한다.
+        - Kitchen Rider에게 Delivery Address, Price를 전달한다.
+    - Accepted Order를 Served한다.
+    - Served Order를 Kitchen Rider가 Delivering한다.
+    - Delivering Order를 손님이 받으면 Delivered한다.
+    - Delivered Order를 Completed한다.
+- Take-Out Order (포장주문)
+    - Take-Out Order가 들어오면 Order Status는 Waiting이다.
+    - Waiting Order를 Accepted 한다.
+    - Accepted Order를 Served한다.
+    - Served Order를 Completed한다.
+- Eat-In Order (매장주문)
+    - Eat-In Order가 들어오면 Order Status는 Waiting이다.
+        - Sit OrderTable이 필수다.
+    - Waiting Order를 Accepted 한다.
+    - Accepted Order를 Served한다.
+    - Served Order를 Completed한다.
+        - OrderTable을 Clear한다.
