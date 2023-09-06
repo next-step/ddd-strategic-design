@@ -177,3 +177,117 @@ docker compose -p kitchenpos up -d
 | 비속어 | Purgomalum | 욕설 및 상대방에게 불쾌감을 주는 단어(한글 or 영어) |
 
 ## 모델링
+
+### 상품(Product)
+
+#### 속성
+
+- ```Product```은 ```name```을 가진다.
+    - ```name```은 비워둘 수 없다.
+    - ```name```은 ```Purgomalum```가 포함될 수 없다.
+- ```Product```은 ```price```을 가진다.
+    - ```price```는 0원 이상이다.
+
+#### 기능
+
+- ```Product```의 ```price```를 변경할 수 있다.
+- ```Product```의 목록을 조회할 수 있다.
+
+### 매뉴 그룹(MenuGroup)
+
+#### 속성
+
+- ```MenuGroup```은 ```name```을 가진다.
+    - ```name```은 비워둘 수 없다.
+
+#### 기능
+
+- ```MenuGroup```은 ```Menu``` 집합이다.
+- ```MenuGroup```의 목록을 조회할 수 있다.
+
+### 메뉴(Menu)
+
+#### 속성
+
+- ```Menu```는 ```name```을 가진다.
+    - ```name```에는 ```Purgomalum```가 포함될 수 없다.
+- ```Menu```는 ```price```를 가진다.
+    - ```price```는 0원 이상이다.
+- ```Menu```는 ```displayed```를 가진다.
+    - ```displayed```는 ```true``` 또는 ```false```이다.
+- ```Menu```는 ```MenuGroup```에 속해야 한다.
+- ```Menu```는 ```menuProducts```를 가진다.
+    - ```menuProducts```는 ```Product``` 집합이다.
+
+#### 기능
+
+- ```Menu```의 ```price```는 변경할 수 있다.
+    - ```price```는 ```menuProducts```의 ```price```의 합보다 크거나 같아야 한다.
+    - ```price```는 ```menuProducts```의 ```price```의 합보다 높은 경우 ```displayed```를 ```false```로 변경한다.
+- ```Menu```의 ```displayed```를 통해 숨기거나 노출할 수 있다.
+- ```Menu```의 목록을 조회할 수 있다.
+
+### 주문 테이블(OrderTable)
+
+#### 속성
+
+- ```OrderTable```은 ```name```을 가진다.
+    - ```name```은 비워둘 수 없다.
+- ```OrderTable```은 ```numberOfGuests```를 가진다.
+- ```OrderTable```은 ```occupied```를 가진다.
+    - ```occupied```는 ```true``` 또는 ```false```이다.
+
+#### 기능
+
+- ```OrderTable```은 ```numberOfGuests```를 변경할 수 있다.
+- ```OrderTable```은 ```occupied``` 를 변경할 수 있다.
+    - 비어있는 ```OrderTable```은 ```occupied```를 변경할 수 없다.
+    - ```occupied```가 ```true```일 경우 ```numberOfGuests```를 변경할 수 없다.
+    - ```occupied```는 ```Order```가 ```COMPLETED``` 상태가 아닐 경우 변경할 수 없다.
+- ```OrderTable```의 목록을 조회할 수 있다.
+
+### 주문(Order)
+
+#### 속성
+
+- ```Order```는 ```orderType```을 가진다.
+    - ```orderType```은 ```EAT_IN```, ```TAKEOUT```, ```DELIVERY``` 중 하나이다.
+- ```Order```는 ```orderStatus```를 가진다.
+    - ```orderStatus```는 ```WAITING```, ```ACCEPTED```, ```SERVED```, ```DELIVERING```, ```DELIVERED```, ```COMPLETED```
+      중 하나이다.
+- ```Order```는 ```orderDateTime```를 가진다.
+- ```Order```는 ```orderLineItems```를 가진다.
+    - ```orderLineItems```는 ```Menu``` 집합이다.
+- ```Order```는 ```deliveryAddress```를 가진다.
+    - ```deliveryAddress```는 ```OrderType```이 ```DELIVERY```일 경우 필수이다.
+- ```Order```는 ```orderTable```을 가진다.
+    - ```orderTable```은 ```OrderType```이 ```EAT_IN```일 경우 필수이다.
+
+#### 기능
+
+- ```Order```는 식당에서 ```Menu```를 주문할때 생성한다.
+- ```Order```는 ```orderType```에 따라 ```orderStatus```를 변경한다.
+- EAT_IN 주문 유형
+    - ```EAT_IN``` 주문 유형은 ```OrderTable```를 가진다.
+    - ```EAT_IN``` 주문 유형이  ```WAITING``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```true```로 변경한다.
+    - ```EAT_IN``` 주문 유형이  ```COMPLETED``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```false```로 변경한다.
+    - ```EAT_IN``` 주문 유형은 다음 ```OrderStatus```를 순서대로 변경한다.
+        1. ```WAITING(접수대기)```
+        2. ```ACCEPTED(접수)```
+        3. ```SERVED(서빙)```
+        4. ```COMPLETED(완료)```
+- TAKEOUT 주문 유형
+    - ```TAKEOUT``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
+        1. ```WAITING(접수대기)```
+        2. ```ACCEPTED(접수)```
+        3. ```SERVED(서빙)```
+        4. ```COMPLETED(완료)```
+- DELIVERY 주문 유형
+    - ```DELIVERY``` 주문 유형은 ```DeliveryAddress```를 가진다.
+    - ```DELIVERY``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
+        1. ```WAITING(접수대기)```
+        2. ```ACCEPTED(접수)```
+        3. ```DELIVERING(배달)```
+        4. ```DELIVERED(배달 완료)```
+        5. ```COMPLETED(완료)```
+
