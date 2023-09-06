@@ -194,7 +194,7 @@ docker compose -p kitchenpos up -d
 
 - Product를 등록할 수 있다.
 - Name은 필수값이다.
-- Name에 Profanity가 포함될 수 없다.
+- Name은 Profanity Check한다.
 - Price는 0원 이상이어야 한다.
 - Price는 변경할 수 있다.
 
@@ -211,7 +211,7 @@ docker compose -p kitchenpos up -d
 - Menu Product를 필수로 1개이상 가진다.
 - Menu Product의 Price의 총합보다 클 수 없다.
 - Name은 필수값이다.
-- Name에 Profanity가 포함될 수 없다.
+- Name은 Profanity Check한다.
 - Price는 변경할 수 있다.
 - Menu를 Display한다.
 - Menu를 Hide한다.
