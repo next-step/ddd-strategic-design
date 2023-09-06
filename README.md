@@ -174,63 +174,61 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 
-### 이름(Name)
-- `Name`은 1자 이상의 문자를 가진다
-  - `Product`와 `Menu`의 `Name`은 `PurgomalumClient`을 통해 비속어 여부를 검사를 한다
-
-### 가격(Price)
-- `Price`는 0원 이상의 정수를 가진다
-- `Product`나 `Menu`의 `Price`를 변경하면 `MenuPriceValidator`를 통해 `Menu`의 `DisplayStatus`를 변경한다
 
 ### 상품(Product)
-- `Product`는 `Price`를 가진다
-- `Product`는 `Name`을 가진다
+- `Product`는 `Price`와 `DisplayedName`을 가진다
 
 ### 메뉴 그룹(MenuGroup)
 - `MenuGroup`은 `Name`을 가진다
 
 ### 메뉴(Menu)
-- `Menu`는 `Name`을 가진다
-- `Menu`는 `MenuGroup`을 가진다
-- `Menu`는 `Price`를 가진다
-- `Menu`는 `MenuProduct` 여러개를 가진다
-- `Menu`는 구매 가능 여부를 표현하는 `DisplayStatus`를 가진다
+- `Menu`는 `DisplayedName`, `Price`, `MenuProducts` 그리고 `DisplayStatus`를 가진다
+- `Menu`는 `MenuGroup`에 포함된다
+- `Menu`의 `Price`가 `MenuProducts`의 `TotalPrice`보다 크다면 구매할 수 없는 상태가 된다
 
 ### 구성품 (MenuProduct)
-- `MenuProduct`는 `Product`를 가진다
-- `MenuProduct`는 구매할 수량인 `Quantity`를 가진다
-- `MenuProduct`는 자신이 포함될 `Menu`를 가진다
-
-### 전체 구성품 (MenuProducts)
-- `MenuProducts`는 `Menu`에 포함된 모든 `MenuProduct` 가진다
-- `Menu`의 `Price`가 `Menu`가 포함한 `MenuProduct`들의 `Price` 합보다 높은지 확인한다
-
+- `MenuProduct`는 `Product`, `Quantity`, `Menu`를 가진다
 
 ### 매장 테이블(OrderTable)
-- `OrderTable`은 `Name`을 가지고 있다
-- `OrderTable`은 고객의 수를 표현하는 `NumberOfGuest` 을 가지고 있다
-- `OrderTable`은 이용 여부를 표현하는 `OccupiedStatus`를 가진다
+- `OrderTable`은 `Name`, `NumberOfGuest`, `OccupiedStatus`를 가지고 있다
+- `OrderTable`은 이용 중일 때에만 `NumberOfGuest`를 변경할 수 있다
 
 ### 주문(Order)
-- `Order`는 주문의 상태를 표현하는 `OrderStatus`를 가진다
-- `Order`는 주문내역을 표현하는 `OrderLineItem`들을 가진다
-- `Order`는 주문한 시간을 표현하는 `OrderDateTime`을 갖는다
-- `Order`는 주문의 종류를 표현하는 `OrderType`을 가진다
+- `Order`는 `OrderStatus`, `OrderLineItems`, `OrderDateTime` 그리고 `OrderType`을 가진다
 
-### 주문내역(OrderLineItem)
-- `OrderLineItem`은 주문한 `Menu`를 가진다
-- `OrderLineItem`은 주문한 `Menu`의 `Quantity`를 가진다
-- `OrderLineItem`은 주문 내역의 `Price`를 가진다
+### 주문 내역(OrderLineItem)
+- `OrderLineItem`은 주문한 `Menu`, `Price` 그리고 `Menu`의 `Quantity` 가진다
+- `OrderLineItem`의  활성화 상태인 `Menu`만 주문할 수 있다
+- `OrderLineItem`의 `Menu` 정보와 매장의 `Menu`는 일치하여야 한다
 
 ### 포장 주문(TakeOutOrder)
 - `TakeOutOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `포장 후 전달됨` -> `완료됨` 이다
-- `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+- `TakeOutOrder`의 `OrderLineItem`의 수량은 0보다 커야 한다
 
 ### 배달 주문(DeliveryOrder)
 - `DeliveryOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `배달 기사에게 전달됨` -> `배달 중` -> `배달 완료` -> `완료됨` 이다
-- `DeliveryOrder`는 `DeliveryAddress`를 갖는다
-- `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+- `DeliveryOrder`는 등록 시 `DeliveryAddress`가 있어야 한다
+- `DeliveryOrder`가 수락되면 `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+- `DeliveryOrder`의 `OrderLineItem`의 수량은 0보다 커야 한다
 
 ### 매장 식사 주문(EatInOrder)
 - `EatInOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `매장 테이블로 전달됨` -> `완료됨` 이다
-- `EatInOrder`는 손님이 앉을수 있는 `OrderTable`을 갖는다
+- `EatInOrder`는 등록 시 손님이 앉을수 있는 `OrderTable`가 있어야 한다
+- `EatInOrder`는 취소될 수 있다
+  - `EatInOrder`의 `OrderLineItem`의 수량은 0보다 작을 수 있다
+- `EatInOrder`가 완료되면 `OrderTable`를 정리한다
+
+## Value Objects
+
+### 공개 이름(DisplayedName)
+- `DisplayedName`은 1자 이상의 문자를 가진다
+  - `DisplayedName`은 `PurgomalumClient`을 통해 비속어 여부를 검사를 한다
+
+### 가격(Price)
+- `Price`는 0원 이상의 정수를 가진다
+- `Product`나 `Menu`의 `Price`를 변경하면 `MenuPriceValidator`를 통해 `Menu`의 `DisplayStatus`를 변경한다
+
+### 전체 구성품 (MenuProducts)
+- `MenuProducts`는 `Menu`에 포함된 모든 `MenuProduct` 가진다
+- `MenuProducts`에서 전체 구성품의 `TotalPrice`를 생성한다
+
