@@ -116,14 +116,15 @@ docker compose -p kitchenpos up -d
 
 ### 주문 - 공통
 
-| 한글명    | 영문명              | 설명                                                                      |
-|--------|------------------|-------------------------------------------------------------------------|
-| 주문     | order            | 손님이 원하는 상품을 구매하는 행위                                                     |
-| 주문 유형  | order type       | 손님이 주문 시 상품을 수령하는 방법의 종류. 매장 주문, 배달 주문, 포장 주문이 있다.                      |
-| 주문 상태  | order status     | 주문이 처리되고 있는 상황을 표현한 상태. 주문 상태에는 대기 중, 접수됨, 서빙됨, 배달 중, 배달 완료, 완료가 있다. |
-| 대기  | waiting          | 손님에게 주문 받기 전 상태                                     |
-| 접수  | accepted         | 손님에게 주문을 받은 상태                                                       |
-| 완료  | completed        | 모든 주문 과정이 완료된 상태                                                   |
+| 한글명   | 영문명          | 설명                                                                   |
+|-------|--------------|----------------------------------------------------------------------|
+| 주문    | order        | 손님이 원하는 상품을 구매하는 행위                                                  |
+| 주문 유형 | order type   | 손님이 주문 시 상품을 수령하는 방법의 종류. 매장 주문, 배달 주문, 포장 주문이 있다.                   |
+| 주문 상태 | order status | 주문이 처리되고 있는 상황을 표현한 상태. 주문 상태에는 대기 중, 접수됨, 서빙됨, 배달 중, 배달 완료, 완료가 있다. |
+| 주문 항목 | order line item | 주문한 메뉴들의 정보                                                          |
+| 대기    | waiting      | 손님에게 주문 받기 전 상태                                                      |
+| 접수    | accepted     | 손님에게 주문을 받은 상태                                                       |
+| 완료    | completed    | 모든 주문 과정이 완료된 상태                                                     |
 
 #### 주문 유형 별 상태 흐름
 - 매장 주문
@@ -164,3 +165,115 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+### 상품 컨텍스트
+#### 상품 (Product)
+- 상품(`Product`)은 이름(`name`), 가격(`price`)을 가진다
+
+- 상품(`Product`)을 등록(create)한다
+  - 상품(`Product`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다.
+  - 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다
+- 상품(`Product`)의 가격(`price`)을 변경(update)한다
+  - 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다
+
+### 메뉴 컨텍스트
+#### 메뉴 (Menu)
+- 메뉴(`Menu`)는 이름(`name`), 그룹(`group`), 상품 목록(`productList`), 가격(`price`), 노출 여부(`displayed`)를 가진다
+- 메뉴(`Menu`)을 등록(create)한다
+  - 메뉴(`Menu`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다
+  - 메뉴(`Menu`)의 상품 목록(`productList`)에는 1개 이상의 등록된 상품(`Product`)이 있어야 한다.
+  - 메뉴(`Menu`)의 상품 목록(`productList`)의 상품(`Product`) 수량은 0 이상이어야 한다.
+  - 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다
+  - 메뉴 가격(`price`)은 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 작거나 같아야 한다
+- 메뉴(`Menu`)의 가격(`price`)을 변경(update)한다
+  - 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다
+  - 메뉴 가격(`price`)은 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 작거나 같아야 한다
+  - 메뉴 가격(`price`)이 메뉴 상품 목록(`productList`) 내 상품(`Product`) 금액의 합보다 크면 메뉴를 숨긴다(hide)
+- 메뉴(`Menu`)를 노출(display)할 수 있다.
+
+#### 메뉴 그룹 (Menu Group)
+- 메뉴 그룹(`MenuGroup`)은 이름(`name`)을 가진다
+- 메뉴 그룹(`MenuGroup`)을 등록(create)한다
+  - 메뉴 그룹(`MenuGroup`)의 이름(`name`)은 비워둘 수 없다
+
+
+### 매장 주문 컨텍스트
+#### 매장 주문 (Eat In)
+- 매장 주문(`EatInOrder`)은 상태(`status`), 주문 항목(`orderLineItems`), 주문 테이블(`orderTable`), 유형(`type`)을 가진다.
+- 매장 주문(`EatInOrder`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 완료(`COMPLETED`) 순이다.
+
+- 매장 주문(`EatInOrder`)을 등록(create)한다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 미만일 수 있다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 매장 주문(`EatInOrder`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 매장 주문(`EatInOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 매장 주문(`EatInOrder`)을 등록(create)할 수 있다
+  - 매장 주문(`EatInOrder`)의 빈 테이블(`orderTable`)에는 매장 주문(`EatInOrder`)을 등록(create)할 수 없다
+- 매장 주문(`EatInOrder`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 매장 주문(`EatInOrder`)만 접수(accept)할 수 있다
+- 매장 주문(`EatInOrder`)을 서빙(serve)한다
+  - 접수된(`ACCEPTED`) 매장 주문(`EatInOrder`)만 서빙(serve)할 수 있다
+- 매장 주문(`EatInOrder`)을 완료(complete)한다
+  - 서빙된(`SERVED`) 매장 주문(`EatInOrder`)만 완료(complete)할 수 있다
+- 테이블 착석(sit)한다
+- 테이블 정리(clear)한다
+  - 매장 주문(`EatInOrder`)의 주문 테이블(`orderTable`)의 모든 매장 주문(`EatInOrder`)이 완료(complete)되면 테이블 정리(clear)한다
+  - 완료(`COMPLETED`)가 아닌 매장 주문(`EatInOrder`)이 있는 주문 테이블(`orderTable`)은 테이블 정리(clear)할 수 없다
+
+#### 주문 테이블 (Order Table)
+- 주문 테이블(`orderTable`)은 이름(`name`), 손님 수(`numberOfGuests`), 빈 테이블 여부(`occupied`)를 가진다
+- 주문 테이블(`orderTable`)을 등록(create)한다
+  - 주문 테이블(`orderTable`)의 이름(`name`)은 비워둘 수 없다
+  - 주문 테이블(`orderTable`)의 이름(`name`)에는 비속어(Profanity)가 포함될 수 없다
+  - 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)는 0 이상이어야 한다
+- 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)를 변경(update)한다
+  - 주문 테이블(`orderTable`)의 손님 수(`numberOfGuests`)를 음수로 변경(update)할 수 없다
+
+  
+### 배달 주문 컨텍스트
+#### 배달 주문 (Delivery Order)
+- 배달 주문(`DeliveryOrder`)은 상태(`status`), 주문 항목(`orderLineItems`), 배달 주소(`deliveryAddress`), 유형(`type`)을 가진다.
+- 배달 주문(`DeliveryOrder`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 배달 중(`DELIVERING`) -> 배달 완료(`DELIVERED`) -> 완료(`COMPLETED`) 순이다.
+
+- 배달 주문(`DeliveryOrder`)을 등록(create)한다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 이상이어야 한다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 배달 주문(`DeliveryOrder`)의 배달 주소(`deliveryAddress`)는 비워둘 수 없다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 배달 주소(`deliveryAddress`)가 올바르지 않으면 등록(create)할 수 없다
+  - 배달 주문(`DeliveryOrder`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 배달 주문(`DeliveryOrder`)을 등록(create)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 배달 주문(`DeliveryOrder`)만 접수(accept)할 수 있다
+  - 배달 주문(`DeliveryOrder`)이 접수(accept)되면 배달 대행사를 호출(requestDelivery)한다
+- 배달 대행사를 호출(requestDelivery)한다
+- 배달 주문(`DeliveryOrder`)을 서빙(serve)한다
+- 배달 주문(`DeliveryOrder`)을 배달(startDelivery)한다
+  - 서빙된(`SERVED`) 배달 주문(`DeliveryOrder`)만 배달(startDelivery)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 배달 완료(completeDelivery)한다
+  - 배달 중(`DELIVERING`)인 배달 주문(`DeliveryOrder`)만 배달 완료(completeDelivery)할 수 있다
+- 배달 주문(`DeliveryOrder`)을 완료(complete)한다
+  - 배달 완료(`DELIVERED`)된 배달 주문(`DeliveryOrder`)만 완료(complete)할 수 있다
+
+
+
+### 포장 주문 컨텍스트
+#### 포장 주문 (Take out)
+- 포장 주문(`TakeOut`)은 상태(`status`), 주문 항목(`orderLineItems`), 유형(`type`)을 가진다.
+- 포장 주문(`TakeOut`)의 상태(`status`)는 대기(`WAITING`) -> 접수(`ACCEPTED`) -> 서빙됨(`SERVED`) -> 완료(`COMPLETED`) 순이다.
+
+- 포장 주문(`TakeOut`)을 등록(create)한다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)은 수량(`quantity`)이 0 미만일 수 있다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴 가격(`price`)은 실제 메뉴 가격(`price`)과 일치해야 한다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 숨겨져있다면(`displayed`) 등록(create)할 수 없다
+  - 포장 주문(`TakeOut`)의 유형(`type`)이 올바르지 않으면 등록(create)할 수 없다
+  - 포장 주문(`TakeOut`)의 주문 항목(`orderLineItems`)의 메뉴(`menu`)가 없으면 등록(create)할 수 없다
+  - 1개 이상의 등록된 메뉴(`menu`)로만 포장 주문(`TakeOut`)을 등록(create)할 수 있다
+- 포장 주문(`TakeOut`)을 접수(accept)한다
+  - 대기 중(`WAITING`)인 포장 주문(`TakeOut`)만 접수(accept)할 수 있다
+- 포장 주문(`TakeOut`)을 서빙(serve)한다
+  - 접수된(`ACCEPTED`) 포장 주문(`TakeOut`)만 서빙(serve)할 수 있다
+- 포장 주문(`TakeOut`)을 완료(complete)한다
+  - 서빙된(`SERVED`) 포장 주문(`TakeOut`)만 완료(complete)할 수 있다
