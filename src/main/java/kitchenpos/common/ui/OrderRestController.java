@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.common.ui;
 
-import kitchenpos.application.OrderService;
-import kitchenpos.domain.Order;
+import kitchenpos.common.application.OrderService;
+import kitchenpos.common.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,16 +33,6 @@ public class OrderRestController {
     @PutMapping("/{orderId}/serve")
     public ResponseEntity<Order> serve(@PathVariable final UUID orderId) {
         return ResponseEntity.ok(orderService.serve(orderId));
-    }
-
-    @PutMapping("/{orderId}/start-delivery")
-    public ResponseEntity<Order> startDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(orderService.startDelivery(orderId));
-    }
-
-    @PutMapping("/{orderId}/complete-delivery")
-    public ResponseEntity<Order> completeDelivery(@PathVariable final UUID orderId) {
-        return ResponseEntity.ok(orderService.completeDelivery(orderId));
     }
 
     @PutMapping("/{orderId}/complete")
