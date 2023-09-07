@@ -178,55 +178,113 @@ docker compose -p kitchenpos up -d
 
 - `Product`는 `Price`와 `DisplayedName`을 가진다
 
-### 메뉴 그룹(MenuGroup)
-
-- `MenuGroup`은 `Name`을 가진다
+- `매장점주`는 `Product`를 등록 할 수 있다
+  - `Price`는 0원 이상이어야 한다
+  - `Name`은 비어 있을 수 없다
+  - `Name`은 `profanity`을 포함할 수 없다
+  
+- `매장점주`는 `Product`의 `Price`를 변경할 수 있다
 
 ### 메뉴(Menu)
 
 - `Menu`는 `DisplayedName`, `Price`, `MenuProducts` 그리고 `DisplayStatus`를 가진다
+
 - `Menu`는 `MenuGroup`에 포함된다
-- `Menu`의 `Price`가 `MenuProducts`의 `TotalPrice`보다 크다면 구매할 수 없는 상태가 된다
 
-### 구성품 (MenuProduct)
-
-- `MenuProduct`는 `Product`, `Quantity`, `Menu`를 가진다
-
-### 매장 테이블(OrderTable)
-
-- `OrderTable`은 `Name`, `NumberOfGuest`, `OccupiedStatus`를 가지고 있다
-- `OrderTable`은 이용 중일 때에만 `NumberOfGuest`를 변경할 수 있다
-
-### 주문(Order)
-
-- `Order`는 `OrderStatus`, `OrderLineItems`, `OrderDateTime` 그리고 `OrderType`을 가진다
-- `OrderType`에는 `TakeOutOrder`, `DeliveryOrder`, `EatInOrder`가 있다
-
-### 주문 내역(OrderLineItem)
-
-- `OrderLineItem`은 주문한 `Menu`, `Price` 그리고 `Menu`의 `Quantity` 가진다
-- `OrderLineItem`의 활성화 상태인 `Menu`만 주문할 수 있다
-- `OrderLineItem`의 `Menu` 정보와 매장의 `Menu`는 일치하여야 한다
+- `매장점주`는 `Menu`를 등록할 수 있다
+  - `Price`는 0원 이상이어야 한다
+  - `Price`는 `MenuProduct`들의 가격 합보다 클 수 없다
+  - `Name`은 비어 있을 수 없다
+  - `Name`은 `profanity`을 포함할 수 없다
+  - `MenuProduct`는 비어 있을 수 없다
+    - `MenuProduct`의 `Product`는 매장에 등록된 `Product`이어야 한다
+    - `MenuProduct`의 수량은 0개 이상이어야 한다
+    
+- `매장점주`는 `Menu`의 `Price`를 변경할 수 있다
+  - `Price`는 0원 이상이어야 한다
+  - `Price`가 `MenuProducts`의 `TotalPrice`보다 크다면 `hide` 상태가 된다
+  
+- `매장점주`는 `Menu`를 `display` 할수 있다
+  - `Price`가 `MenuProducts`의 `TotalPrice`보다 크다면 `display`할 수 없다
+  
+- `매장점주`는 `Menu`를 `hide` 할수 있다
 
 ### 포장 주문(TakeOutOrder)
+- `TakeOutOrder`는 `OrderStatus`, `OrderLineItems`, `OrderDateTime` 을 가진다
 
-- `TakeOutOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `포장 후 전달됨` -> `완료됨` 이다
-- `TakeOutOrder`의 `OrderLineItem`의 수량은 1개 이상이어야 한다
+- `TakeOutOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `서빙` -> `계산 완료됨` 이다
+
+- `고객`은 `TakeOutOrder`을 등록할 수 있다
+  - `OrderLineItem`는 비어 있을 수 없다
+    - `Price`과 수량을 가진다
+    - 수량은 1개 이상이어야 한다
+    - `Menu`는 `display` 상태이어야 한다
+    - `Menu`는 매장 내 `Menu`의 가격과 일치하여야 한다
+    
+- `매장점주`는 `TakeOutOrder`를 수락할 수 있다
+  - `TakeOutOrder`는 `접수 대기 중` 상태 이어야 한다
+  
+- `매장점주`는 `TakeOutOrder`를 포장 후 전달할 수 있다
+  - `TakeOutOrder`는 `수락됨` 상태 이어야 한다
+  
+- `매장점주`는 `TakeOutOrder`를 계산 완료할 수 있다
+  - - `TakeOutOrder`는 `서빙` 상태 이어야 한다
 
 ### 배달 주문(DeliveryOrder)
 
-- `DeliveryOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `배달 기사에게 전달됨` -> `배달 중` -> `배달 완료` -> `완료됨` 이다
-- `DeliveryOrder`는 등록 시 `DeliveryAddress`가 있어야 한다
-- `DeliveryOrder`가 수락되면 `KitchenridersClient`에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+- `DeliveryOrder`는 `OrderStatus`, `OrderLineItems`, `OrderDateTime` 그리고 `DeliveryAddress` 을 가진다
+
+- `DeliveryOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `서빙` -> `배달 중` -> `배달 완료` -> `계산 완료됨` 이다
+
 - `DeliveryOrder`의 `OrderLineItem`의 수량은 1개 이상이어야 한다
+
+- `고객`은 `DeliveryOrder`를 등록할 수 있다
+  - `DeliveryAddress`는 비어 있을 수 없다
+  - `OrderLineItem`는 비어 있을 수 없다
+    - `Price`과 수량을 가진다
+    - 수량은 1개 이상이어야 한다
+    - `Menu`는 `display` 상태이어야 한다
+    - `Menu`는 매장 내 `Menu`의 가격과 일치하여야 한다
+    
+- `매장점주`는 `DeliveryOrder`를 수락할 수 있다
+  - `EatInOrder`는 `접수 대기 중` 상태 이어야 한다
+  - `KitchenridersClient`에 배달을 요청한다
+  
+- `매장점주`는 `DeliveryOrder`를 `배달기사`에게 전달할 수 있다
+  - `EatInOrder`는 `수락됨` 상태 이어야 한다
+
+- `배달기사`는 `DeliveryOrder`의 배달을 시작할 수 있다
+  - `EatInOrder`는 `서빙` 상태 이어야 한다
+
+- `배달기사`는 `DeliveryOrder`의 배달을 완료할 수 있다
+  - `EatInOrder`는 `배달 중` 상태 이어야 한다
+
+- `매장점주`는 `DeliveryOrder`를 계산 완료할 수 있다
+  - `DeliveryOrder`는 `배달 완료` 상태 이어야 한다
 
 ### 매장 식사 주문(EatInOrder)
 
-- `EatInOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `매장 테이블로 전달됨` -> `완료됨` 이다
-- `EatInOrder`는 등록 시 손님이 앉을수 있는 `OrderTable`가 있어야 한다
-- `EatInOrder`는 취소될 수 있다
-    - `EatInOrder`의 `OrderLineItem`의 수량은 0개 이하일 수 있다
-- `EatInOrder`가 완료되면 `OrderTable`를 정리한다
+- `EatInOrder`는 `OrderStatus`, `OrderLineItems`, `OrderDateTime` 그리고 `OrderTable` 을 가진다
+
+- `EatInOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `서빙` -> `계산 완료됨` 이다
+
+- `고객`은 `EatInOrder`를 등록할 수 있다
+  - `OrderTable`는 이용 가능한 상태이어야 한다
+  - `OrderLineItem`는 비어 있을 수 없다
+    - `Price`과 수량을 가진다
+    - 수량을 1개 미만으로 설정하여서 취소할 수 있다 
+    - `Menu`는 `display` 상태이어야 한다
+    - `Menu`는 매장 내 `Menu`의 가격과 일치하여야 한다
+    
+- `매장점주`는 `EatInOrder`를 수락할 수 있다
+  - `EatInOrder`는 `접수 대기 중` 상태 이어야 한다
+  
+- `매장점주`는 `EatInOrder`를 매장 테이블로 전달할 수 있다
+  - `EatInOrder`는 `수락됨` 상태 이어야 한다
+  
+- `매장점주`는 `EatInOrder`를 계산 완료할 수 있다
+  - `EatInOrder`는 `서빙` 상태 이어야 한다
+  - `OrderTable`을 다시 손님을 받을 수 있도록 정리한다
 
 ## Value Objects
 
