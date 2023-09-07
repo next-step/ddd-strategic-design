@@ -230,6 +230,7 @@ docker compose -p kitchenpos up -d
 #### 주문된 메뉴 (*OrderLineItem*)
 - orderLineItem
   - Menu 는 등록이 되어있어야 한다.
+  - delivery, takeout 의 경우 Order 의 quantity는 0 이상이어야 한다.
 
 #### 배달 주문 (*Delivery Order*)
 
