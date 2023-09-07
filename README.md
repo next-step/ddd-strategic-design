@@ -194,16 +194,16 @@ docker compose -p kitchenpos up -d
 - menuProduct (메뉴 구성 상품)
   - menuProduct 의 수량은 0 이상이어야 한다.
   - Menu 의 모든 menuProduct 가격의 합이 price 보다 이하이어야 한다.
-- display (전시)
-- hide (비전시)
+- displayed (전시여부)
 
 #### 행위
 - menuGroup 을 등록할 수 있다.
 - Menu 를 등록할 수 있다.
   - 특정 menuGroup 에 속해야 한다.
 - Menu 의 price 를 변경할 수 있다.
-- Menu 를 display 할 수 있다.
-- Menu 를 hide 할 수 있다. 
+- Menu 를 display 를 true 로 할 수 있다.
+- Menu 를 display 를 false 로 변경 할 수 있다.
+- Product 의 price가 변경될 때, Menu 의 가격이 MenuProduct 들의 가격의 합보다 크면 Menu 가 hide 된다.
 
 
 ### 주문 테이블 (*Order Table*)
@@ -213,22 +213,21 @@ docker compose -p kitchenpos up -d
   - name 은 비어있을 수 없다.
 - numberOfGuests (손님 수)
   - numberOfGuests 는 0 이상이어야 한다.
-- clear (테이블 청소)
-  - Order 가 완료되지 않는 경우 clear 할 수 없다.
 - occupied (테이블 사용 여부)
 
 #### 행위
 - OrderTable 을 등록할 수 있다.
 - OrderTable 을 점유 상태로 설정할 수 있다.
-- OrderTable 을 치울 수 있다.
+- OrderTable 을 clear 할 수 있다.
   - numberOfGuests 를 0으로 변경한다.
   - occupied 를 false 로 변경한다.
+  - Order 가 완료되지 않는 경우 clear 할 수 없다.
 - OrderTable 의 손님 수를 변경할 수 있다.
   - occupied 가 true 이어야 한다.
 
 ### 주문 (*Order*)
 
-#### 속성
+#### 주문된 메뉴 (*OrderLineItem*)
 - orderLineItem
   - Menu 는 등록이 되어있어야 한다.
 
@@ -238,20 +237,20 @@ docker compose -p kitchenpos up -d
 - deliveryAddress (배달지 주소)
   - deliveryAddress 는 비어있을 수 없다.
 - quantity (주문 항목 수량)
-  - 0 미만일 수 없다.
+  - quantity는 0 이상이어야 한다.
 - orderType (주문 상태)
   - orderType 은 delivery 이다.
 - orderStatus (주문 상태)
   - waiting -> accepted -> served -> delivering -> delivered -> completed 의 순서를 가진다.
-- kitchenRider (배달 대행 업체)
 
 ##### 행위
 - DeliveryOrder 을 등록할 수 있다.
   - orderStatus 를 waiting 으로 변경한다.
+  - Menu 의 displayed 가 false 인 경우 주문할 수 없다.
 - DeliveryOrder 를 수락할 수 있다.
   - orderStatus 는 waiting 이어야 한다.
   - orderStatus 를 accepted 로 변경한다.
-  - kitchenRider 에게 정보를 전달한다.
+  - 배달을 위해 kitchenRider 를 호출한다.
 - DeliveryOrder 의 음식을 다 만들어 완료할 수 있다.
   - orderStatus 는 accepted 이어야 한다.
   - orderStatus 를 served 로 변경한다.
@@ -269,15 +268,16 @@ docker compose -p kitchenpos up -d
 
 ##### 속성
 - quantity (주문 항목 수량)
-  - 0 미만일 수 없다.
+  - quantity는 0 이상이어야 한다.
 - orderType (주문 상태)
-  - orderType 은 delivery 이다.
+  - orderType 은 takeout 이다.
 - orderStatus (주문 상태)
   - waiting -> accepted -> served -> completed 의 순서를 가진다.
 
 ##### 행위
 - TakeoutOrder 을 등록할 수 있다.
   - orderStatus 를 waiting 으로 변경한다.
+  - Menu 의 displayed 가 false 인 경우 주문할 수 없다.
 - TakeoutOrder 를 접수 완료할 수 있다.
   - orderStatus 는 waiting 이어야 한다.
   - orderStatus 를 accepted 로 변경한다.
@@ -294,13 +294,14 @@ docker compose -p kitchenpos up -d
 - orderTable (주문 테이블)
   - 점유하고 있어야 한다.
 - orderType (주문 상태)
-  - orderType 은 delivery 이다.
+  - orderType 은 eat-in 이다.
 - orderStatus (주문 상태)
   - waiting -> accepted -> served -> completed 의 순서를 가진다.
 
 ##### 행위
 - EatInOrder 을 등록할 수 있다.
   - orderStatus 를 waiting 으로 변경한다.
+  - Menu 의 displayed 가 false 인 경우 주문할 수 없다.
 - EatInOrder 를 접수 완료할 수 있다.
   - orderStatus 는 waiting 이어야 한다.
   - orderStatus 를 accepted 로 변경한다.
