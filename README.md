@@ -131,17 +131,38 @@ docker compose -p kitchenpos up -d
 | 주문 테이블 손님 수  | numberOfGuests | 주문 테이블에 앉은 손님 수이다.      |
 | 주문 테이블 사용 여부 | occupied       | 매장 내 식사를 주문하면 테이블에 앉는다. |
 
-### 주문
+### 매장 내 식사 주문
 
-| 한글명    | 영문명             | 설명                                 |
-|--------|-----------------|------------------------------------|
-| 주문     | Order           | 식당에서 메뉴를 주문한다.                     |
-| 주문 유형  | orderType       | 주문 유형이다.(e.g. 배달 주문, 포장 주문, 매장 주문) |
-| 주문 상태  | orderStatus     | 주문 진행 상태이다.(e.g. 접수 대기, 접수, ...)   |
-| 주문 시간  | orderDateTime   | 주문 시간이다.                           |
-| 주문 메뉴  | orderLineItems  | 주문 메뉴 집합이다.                        |
-| 배달 주소  | deliveryAddress | 배달 주문 주소이다.                        |
-| 주문 테이블 | orderTable      | 매장 내 식사 주문 테이블이다.                  |
+| 한글명    | 영문명            | 설명                               |
+|--------|----------------|----------------------------------|
+| 주문     | EatInOrder     | 식당에서 메뉴를 주문한다.                   |
+| 주문 유형  | orderType      | 주문 유형은 매장 주문이다.                  |
+| 주문 상태  | orderStatus    | 주문 진행 상태이다.(e.g. 접수 대기, 접수, ...) |
+| 주문 시간  | orderDateTime  | 주문 시간이다.                         |
+| 주문 메뉴  | orderLineItems | 주문 메뉴 집합이다.                      |
+| 주문 테이블 | orderTable     | 매장 내 식사 주문 테이블이다.                |
+
+### 포장 주문 주문
+
+| 한글명   | 영문명            | 설명                               |
+|-------|----------------|----------------------------------|
+| 주문    | TakeOutOrder   | 식당에서 메뉴를 주문한다.                   |
+| 주문 유형 | orderType      | 주문 유형은 포장 주문이다.                  |
+| 주문 상태 | orderStatus    | 주문 진행 상태이다.(e.g. 접수 대기, 접수, ...) |
+| 주문 시간 | orderDateTime  | 주문 시간이다.                         |
+| 주문 메뉴 | orderLineItems | 주문 메뉴 집합이다.                      |
+
+### 배달 주문 주문
+
+| 한글명    | 영문명             | 설명                               |
+|--------|-----------------|----------------------------------|
+| 주문     | DeliveryOrder   | 식당에서 메뉴를 주문한다.                   |
+| 주문 유형  | orderType       | 주문 유형은 배달 주문이다.                  |
+| 주문 상태  | orderStatus     | 주문 진행 상태이다.(e.g. 접수 대기, 접수, ...) |
+| 주문 시간  | orderDateTime   | 주문 시간이다.                         |
+| 주문 메뉴  | orderLineItems  | 주문 메뉴 집합이다.                      |
+| 배달 주소  | deliveryAddress | 배달 주문 주소이다.                      |
+| 주문 테이블 | orderTable      | 매장 내 식사 주문 테이블이다.                |
 
 #### 주문 유형
 
@@ -246,48 +267,74 @@ docker compose -p kitchenpos up -d
     - ```occupied```는 ```Order```가 ```COMPLETED``` 상태가 아닐 경우 변경할 수 없다.
 - ```OrderTable```의 목록을 조회할 수 있다.
 
-### 주문(Order)
+### 매장 내 식사 주문(Eat In Order)
 
 #### 속성
 
-- ```Order```는 ```orderType```을 가진다.
-    - ```orderType```은 ```EAT_IN```, ```TAKEOUT```, ```DELIVERY``` 중 하나이다.
-- ```Order```는 ```orderStatus```를 가진다.
-    - ```orderStatus```는 ```WAITING```, ```ACCEPTED```, ```SERVED```, ```DELIVERING```, ```DELIVERED```, ```COMPLETED```
-      중 하나이다.
-- ```Order```는 ```orderDateTime```를 가진다.
-- ```Order```는 ```orderLineItems```를 가진다.
+- ```Eat In Order```는 ```EAT_IN``` ```orderType```을 가진다.
+- ```Eat In Order```는 ```orderStatus```를 가진다.
+    - ```orderStatus```는 ```WAITING```, ```ACCEPTED```, ```SERVED```, ```COMPLETED```중 하나이다.
+- ```Eat In Order```는 ```orderDateTime```를 가진다.
+- ```Eat In Order```는 ```orderLineItems```를 가진다.
     - ```orderLineItems```는 ```Menu``` 집합이다.
-- ```Order```는 ```deliveryAddress```를 가진다.
-    - ```deliveryAddress```는 ```OrderType```이 ```DELIVERY```일 경우 필수이다.
-- ```Order```는 ```orderTable```을 가진다.
-    - ```orderTable```은 ```OrderType```이 ```EAT_IN```일 경우 필수이다.
+- ```Eat In Order```는 ```orderTable```가 필수이다.
 
 #### 기능
 
-- ```Order```는 식당에서 ```Menu```를 주문할때 생성한다.
-- ```Order```는 ```orderType```에 따라 ```orderStatus```를 변경한다.
-- EAT_IN 주문 유형
-    - ```EAT_IN``` 주문 유형은 ```OrderTable```를 가진다.
-    - ```EAT_IN``` 주문 유형이  ```WAITING``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```true```로 변경한다.
-    - ```EAT_IN``` 주문 유형이  ```COMPLETED``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```false```로 변경한다.
-    - ```EAT_IN``` 주문 유형은 다음 ```OrderStatus```를 순서대로 변경한다.
-        1. ```WAITING(접수대기)```
-        2. ```ACCEPTED(접수)```
-        3. ```SERVED(서빙)```
-        4. ```COMPLETED(완료)```
-- TAKEOUT 주문 유형
-    - ```TAKEOUT``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
-        1. ```WAITING(접수대기)```
-        2. ```ACCEPTED(접수)```
-        3. ```SERVED(서빙)```
-        4. ```COMPLETED(완료)```
-- DELIVERY 주문 유형
-    - ```DELIVERY``` 주문 유형은 ```DeliveryAddress```를 가진다.
-    - ```DELIVERY``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
-        1. ```WAITING(접수대기)```
-        2. ```ACCEPTED(접수)```
-        3. ```DELIVERING(배달)```
-        4. ```DELIVERED(배달 완료)```
-        5. ```COMPLETED(완료)```
+- ```Eat In Order```는 식당에서 ```Menu```를 주문할때 생성한다.
+- ```Eat In Order```는 ```orderType```에 따라 ```orderStatus```를 변경한다.
+- ```Eat In Order``` 주문 유형은 ```OrderTable```를 가진다.
+- ```Eat In Order``` 주문 유형이  ```WAITING``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```true```로 변경한다.
+- ```Eat In Order``` 주문 유형이  ```COMPLETED``` 상태가 되면, ```OrderTable```의 ```occupied```를 ```false```로 변경한다.
+- ```Eat In Order``` 주문 유형은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```SERVED(서빙)```
+    4. ```COMPLETED(완료)```
+
+### 포장 주문(TakeOut Order)
+
+#### 속성
+
+- ```TakeOut Order```는 ```orderType```을 가진다.
+- ```TakeOut Order```는 ```TAKEOUT``` ```orderType```을 가진다.
+- ```TakeOut Order```는 ```orderStatus```를 가진다.
+    - ```orderStatus```는 ```WAITING```, ```ACCEPTED```, ```SERVED```,  ```COMPLETED```중 하나이다.
+- ```TakeOut Order```는 ```orderDateTime```를 가진다.
+- ```TakeOut Order```는 ```orderLineItems```를 가진다.
+    - ```orderLineItems```는 ```Menu``` 집합이다.
+
+#### 기능
+
+- ```TakeOut Order```는 식당에서 ```Menu```를 주문할때 생성한다.
+- ```TakeOut Order```는 ```orderType```에 따라 ```orderStatus```를 변경한다.
+- ```TakeOut Order``` 주문은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```SERVED(서빙)```
+    4. ```COMPLETED(완료)```
+
+### 배달 주문(Delivery Order)
+
+#### 속성
+
+- ```Delivery Order```는 ```DELIVERY``` ```orderType```을 가진다.
+- ```Delivery Order```는 ```orderStatus```를 가진다.
+    - ```orderStatus```는 ```WAITING```, ```ACCEPTED```,  ```DELIVERING```, ```DELIVERED```, ```COMPLETED```중 하나이다.
+- ```Delivery Order```는 ```orderDateTime```를 가진다.
+- ```Delivery Order```는 ```orderLineItems```를 가진다.
+    - ```orderLineItems```는 ```Menu``` 집합이다.
+- ```Delivery Order```는 ```deliveryAddress```가 필수이다.
+
+#### 기능
+
+- ```Delivery Order```는 식당에서 ```Menu```를 주문할때 생성한다.
+- ```Delivery Order```는 ```orderType```에 따라 ```orderStatus```를 변경한다.
+- ```Delivery Order``` 은 ```DeliveryAddress```를 가진다.
+- ```Delivery Order``` 은 다음 ```OrderStatus```를 순서대로 변경한다.
+    1. ```WAITING(접수대기)```
+    2. ```ACCEPTED(접수)```
+    3. ```DELIVERING(배달)```
+    4. ```DELIVERED(배달 완료)```
+    5. ```COMPLETED(완료)```
 
