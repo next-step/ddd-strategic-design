@@ -171,49 +171,82 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### 상품(Product)
-- Product는 Price를 가진다
-- Product는 Name을 가진다
-  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
+#### 속성
+- `Product` 는 `Price`를 가진다
+- `Product` 는 `Name`을 가진다
+
+#### 기능
+- `Product`의 `Name`은 `profanity`가 될수 없다
+- `Product`의 `Price`는 변경 될 수 있다
+
 
 ### 메뉴 그룹(MenuGroup)
-- MenuGroup은 Name을 가진다
+#### 속성
+- `MenuGroup`은 `Name`을 가진다
 
 ### 메뉴(Menu)
-- Menu는 Name을 가진다
-  - PurgomalumClient에서 Name의 비속어 여부를 검사한다
-- Menu는 MenuGroup을 가진다
-- Menu는 Price를 가진다
-- Menu는 MenuProducts를 가진다
-- Menu는 (노출 여부를 표현하는 / 구매 가능 여부를 표현하는) DisplayStatus를 가진다
+#### 속성
+- `Menu`는 `Name`을 가진다
+- `Menu`는 `Price`를 가진다
+- `Menu`는 `MenuGroup`을 가진다
+- `Menu`는 `MenuProduct`들을 가진다 
+- `Menu`는 노출 여부인 `display`, `hide`상태를 가진다
+
+#### 기능
+- `Menu`의 `Name`은 `Profanity`가 될수 없다
+- `Menu`는 반드시 `MenuGroup`에 포함되어야 한다
+- `Menu`의 `Price`는 `MenuProduct`들의 `TotalPrice`를 넘을수 없다
+  - `Product`의 `Price`가 변경 된 후, `Menu`의 `Price`가 `MenuProduct`들의 `TotalPrice`보다 크다면 `Menu`는 `Hide`되어야 한다
+
 
 ### 구성품들 (MenuProducts)
-- MenuProduct 들을 가진다 
-- 구성품들의 총 가격을 반환할수 있다
+#### 속성
+- `MenuProducts`는 `MenuProduct` 들을 가진다
+
+#### 기능
+- `MenuProduct`들의 `TotalPrice`를 계산할수 있다.
 
 ### 구성품 (MenuProduct)
-- MenuProduct는 Product를 가진다
-- MenuProduct는 구매할 수량인 Quantity를 가진다
-- MenuProduct는 자신이 포함될 Menu를 가진다
+#### 속성
+- `MenuProduct`는 `Product`를 가진다
+- `MenuProduct`는 `Product`의 수량인 `Quantity`를 가진다
+- `MenuProduct`는 자신이 포함될 `Menu`를 가진다
 
 ### 매장 테이블(OrderTable)
-- OrderTable은 Name을 가지고 있다
-- OrderTable은 NumberOfGuest 을 가지고 있다
-- OrderTable은 이용 여부를 표현하는 OccupiedStatus를 가진다
+#### 속성
+- `OrderTable`은 `Name`을 가지고 있다
+- `OrderTable`은 이용중인 `NumberOfGuest`을 가지고 있다
+- `OrderTable`은 `Name`을 가지고 있다
+- `OrderTable`은 `Occupied`와 `Vacant` 상태를 가질수 있다
+
 
 ### 주문(Order)
-- Order는 주문의 상태를 표현하는 OrderStatus를 가진다
-- Order는 주문내역을 표현하는 OrderLineItem들을 가진다
-- Order는 주문한 시간을 표현하는 OrderDateTime을 갖는다
-- Order는 주문의 종류를 표현하는 OrderType을 가진다
-
-### 주문내역(OrderLineItem)
-- OrderLineItem은 주문한 Menu를 가진다
-- OrderLineItem은 주문한 Menu의 Quantity를 가진다
-- OrderLineItem은 주문 내역의 Price를 가진다
+#### 속성
+- `Order`는 `Delivery Order`, `Takeout Order`, `Eat-In Order` 3가지 타입의 주문이 있다
+- `Order`는 `Order Datetime`을 가진다
+- `Order`는 `Order Line Items`를 가진다
+- `Order`는 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED` 총 6가지 상태가 있다
 
 ### 배달 주문(DeliveryOrder)
-- DeliveryOrder은 DeliveryAddress를 갖는다
-- KitchenridersClient에서 배달 대행 업체로 부터 배달 기사를 배정받는다
+#### 속성
+- `DeliveryOrder`는 `DeliveryAddress`를 가진다
+
+#### 기능
+- `DeliveryOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED`순으로 진행된다 
+- `DeliveryOrder`는 `DeliveryAddress`가 있어야 한다
+- `DeliveryOrder`는 `Kitchen Riders`를 통해 `Start Delivery`해야 한다
 
 ### 매장 식사 주문(EatInOrder)
-- EatInOrder는 손님이 앉을수 있는 OrderTable을 갖는다
+#### 속성
+- `EatInOrder`는 `OrderTable`을 가진다  
+
+#### 기능 
+- `EatInOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
+- `EatInOrder`는 `Occupied`된 `OrderTable`이 없으면 `WAITING`이 될수 없다
+- `EatInOrder`가 `COMPLETED`될때, `OrderTable`에 모든 `Order`가 `COMPLETED` 상태라면 `OrderTable`을 `Clean`한다
+- `EatInOrder`는 `OrderLineItem`을 취소할 수 있다
+
+### 포장 주문(TakeoutOrder)
+#### 기능 
+- `TakeoutOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
+
