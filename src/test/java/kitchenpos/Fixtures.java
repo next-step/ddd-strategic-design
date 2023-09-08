@@ -1,19 +1,15 @@
 package kitchenpos;
 
-import kitchenpos.deliveryorder.domain.DeliveryOrder;
-import kitchenpos.deliveryorder.domain.DeliveryOrderLineItem;
-import kitchenpos.deliveryorder.domain.DeliveryOrderStatus;
-import kitchenpos.eatinorder.domain.EatInOrder;
-import kitchenpos.eatinorder.domain.EatInOrderLineItem;
-import kitchenpos.eatinorder.domain.EatInOrderStatus;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuGroup;
-import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.ordertable.domain.OrderTable;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.exhibit.menu.domain.Menu;
+import kitchenpos.exhibit.menugroup.domain.MenuGroup;
+import kitchenpos.exhibit.menu.domain.MenuProduct;
+import kitchenpos.order.eatinorder.domain.OrderTable;
+import kitchenpos.order.shared.domain.OrderLineItem;
+import kitchenpos.order.shared.domain.OrderStatus;
 import kitchenpos.product.domain.Product;
-import kitchenpos.takeoutorder.domain.TakeOutOrder;
-import kitchenpos.takeoutorder.domain.TakeOutOrderLineItem;
-import kitchenpos.takeoutorder.domain.TakeOutOrderStatus;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -70,51 +66,37 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static DeliveryOrder deliveryOrder(final DeliveryOrderStatus status, final String deliveryAddress) {
+    public static DeliveryOrder deliveryOrder(final OrderStatus status, final String deliveryAddress) {
         final DeliveryOrder order = new DeliveryOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setDeliveryOrderLineItems(Arrays.asList(deliveryOrderLineItem()));
+        order.setOrderLineItems(Arrays.asList(orderLineItem()));
         order.setDeliveryAddress(deliveryAddress);
         return order;
     }
 
-    public static TakeOutOrder takeOutOrder(final TakeOutOrderStatus status) {
+    public static TakeOutOrder takeOutOrder(final OrderStatus status) {
         final TakeOutOrder order = new TakeOutOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setTakeOutOrderLineItems(Arrays.asList(tekeOutOrderLineItem()));
+        order.setOrderLineItems(Arrays.asList(orderLineItem()));
         return order;
     }
 
-    public static EatInOrder eatInOrder(final EatInOrderStatus status, final OrderTable orderTable) {
+    public static EatInOrder eatInOrder(final OrderStatus status, final OrderTable orderTable) {
         final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setEatInOrderLineItems(Arrays.asList(eatInOrderLineItem()));
+        order.setOrderLineItems(Arrays.asList(orderLineItem()));
         order.setOrderTable(orderTable);
         return order;
     }
 
-    public static EatInOrderLineItem eatInOrderLineItem() {
-        final EatInOrderLineItem orderLineItem = new EatInOrderLineItem();
-        orderLineItem.setSeq(new Random().nextLong());
-        orderLineItem.setMenu(menu());
-        return orderLineItem;
-    }
-
-    public static TakeOutOrderLineItem tekeOutOrderLineItem() {
-        final TakeOutOrderLineItem orderLineItem = new TakeOutOrderLineItem();
-        orderLineItem.setSeq(new Random().nextLong());
-        orderLineItem.setMenu(menu());
-        return orderLineItem;
-    }
-
-    public static DeliveryOrderLineItem deliveryOrderLineItem() {
-        final DeliveryOrderLineItem orderLineItem = new DeliveryOrderLineItem();
+    public static OrderLineItem orderLineItem() {
+        final OrderLineItem orderLineItem = new OrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenu(menu());
         return orderLineItem;

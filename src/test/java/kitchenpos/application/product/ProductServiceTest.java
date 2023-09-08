@@ -1,8 +1,8 @@
 package kitchenpos.application.product;
 
-import kitchenpos.application.menu.InMemoryMenuRepository;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.application.exhibit.menu.InMemoryMenuRepository;
+import kitchenpos.exhibit.menu.domain.Menu;
+import kitchenpos.exhibit.menu.domain.MenuRepository;
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
