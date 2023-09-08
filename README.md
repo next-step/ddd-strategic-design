@@ -99,7 +99,7 @@ docker compose -p kitchenpos up -d
 ### 공통
 | 한글명   | 영문명       | 설명             |
 |-------|-----------|----------------|
-| 비속어   | profanity | 비속어            |
+| 비속어   | profanity | 격이 낮고 속된 말            |
 
 <br>
 
@@ -198,3 +198,132 @@ docker compose -p kitchenpos up -d
 | 주문 완료  | completed        | 주문의 모든 절차가 끝난 상태               |
 
 ## 모델링
+
+### 상품
+* 상품(`Product`)은 이름(`name`), 가격(`price`)를 가진다.
+* 상품(`Product`)을 등록(create)한다.
+  * 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다.
+  * 상품(`Product`)의 이름(`name`)은 없거나 비속어(profanity)가 포함되면 안된다.
+* 상품(`Product`)의 가격을 변경(changePrice)한다.
+  * 상품(`Product`)의 가격(`price`)은 0원 이상이어야 한다.
+  * 기존 메뉴(`Menu`)의 총합보다 변경된 메뉴(`Menu`)의 금액의 합이 크면 메뉴(`Menu`)를 화면(`displayed`)에서 숨긴다.
+* 모든 상품(`Product`)을 조회(findAll)한다.
+
+<br>
+
+### 메뉴그룹
+* 메뉴그룹(`MenuGroup`)은 이름(`name`)을 가진다.
+* 메뉴그룹(`MenuGroup`)을 등록(create)한다.
+  * 메뉴그룹(`MenuGroup`)의 이름(`name`)은 비어있거나 공백이면 안된다.
+* 모든 메뉴그룹(`MenuGroup`)을 조회(findAll)한다.
+
+<br>
+
+### 메뉴
+* 메뉴(`Menu`)는 이름(`name`), 가격(`price`), 메뉴구성 상품(`MenuProduct`), 메뉴그룹(`MenuGroup`), 메뉴노출 상태(`displayed`)를 가진다.
+  * 메뉴구성상품(`MenuProduct`)은 상품(`Product`)과 수량(`quantity`)을 가진다.
+* 메뉴(`Menu`)를 등록(create)한다.
+  * 메뉴(`Menu`)의 이름(`name`)은 없거나 비속어(profanity)가 포함되면 안된다.
+  * 메뉴(`Menu`)의 가격(`price`)은 0원 이상이어야 한다.
+  * 미리 등록된 메뉴그룹(`MenuGroup`)에 메뉴(`Menu`)를 등록한다.
+  * 메뉴(`Menu`)는 1개 이상의 상품(`Product`)을 가진다.
+  * 메뉴구성 상품(`MenuProduct`)의 수량(`quantity`)은 0보다 커야한다.
+  * 상품(`Product`)은 미리 등록되어 있어야 한다.
+  * 메뉴(`Menu`)의 가격(`price`)은 상품(`Product`)들의 수량(`quantity`) * 가격(`price`) 보다 클 수 없다.
+* 메뉴(`Menu`)의 가격(`price`)을 변경(changePrice)한다.
+  * 등록된 메뉴(`Menu`)이어야 한다.
+  * 메뉴(`Menu`)의 변경할 가격(`price`)은 0보다 커야한다.
+  * 메뉴(`Menu`)의 변경할 가격은 상품(`Product`)들의 수량(`quantity`) * 가격(`price`) 보다 클 수 없다.
+* 메뉴(`Menu`)를 노출(display)한다.
+  * 존재하는 메뉴(`Menu`)이어야 한다.
+  * 메뉴(`Menu`)의 가격(`price`)이 상품(`Product`)들의 수량(`quantity`) * 가격(`price`) 이하일 경우에만 노출(`displayed`)한다.
+* 메뉴(`Menu`)를 숨긴다(hide).
+  * 존재하는 메뉴(`Menu`)이어야 한다.
+* 모든 메뉴(`Menu`)를 조회(findAll)한다.
+
+<br>
+
+### 주문테이블
+* 주문테이블(`OrderTable`)은 이름(`name`), 테이블에 앉은 고객 수(`numberOfGuests`), 테이블 사용 여부(`occupied`)를 가진다.
+* 주문테이블(`OrderTable`)을 등록(create)한다.
+  * 주문테이블(`OrderTable`)은 이름(`name`)은 비어있으면 안된다.
+* 주문테이블(`OrderTable`)을 사용중으로 바꾼다(sit).
+  * 등록된 주문 테이블(`OrderTable`)이어야 한다.
+* 주문테이블(`OrderTable`)을 치운다(clear).
+  * 등록된 주문 테이블(`OrderTable`)이어야 한다.
+  * 주문테이블(`OrderTable`)의 주문(`EatInOrder`)은 완료(`COMPLETED`) 상태이어야 한다.
+* 주문테이블(`OrderTable`)의 고객수(`numberOfGuests`)를 변경한다.(changeNumberOfGuests).
+  * 등록된 주문 테이블(`OrderTable`)이어야 한다.
+  * 고객수(`numberOfGuests`)는 0보다 커야 한다.
+  * 사용중인 주문테이블(`OrderTable`)이어야 한다.
+* 모든 주문테이블(`OrderTable`)을 조회(findAll)한다.
+
+<br>
+
+### 주문
+* 주문(`Order`)에는 매장주문(`EatInOrder`), 배달주문(`DeliveryOrder`), 포장주문(`TakeOutOrder`)이 있다.
+* 모든 주문(`Order`)을 조회(findAll)한다.
+
+#### 배달주문
+* 주문타입(`type`)이 배달주문(`DELIVERY`)인 주문(`Order`)은 주문상태(`status`), 주문시간(`orderDateTime`), 주문메뉴(`orderLineItem`), 배달주소(`deliveryAddress`)를 가진다.
+* 주문(`Order`)을 시작한다.
+  * 주문(`Order`)을 시작할 때 주문 상태는 접수 중(`WAITING`)이다.
+  * 주문시간(`orderDateTime`)은 주문이 시작된 현재시간이다.
+  * 주문메뉴(`orderLineItem`)의 수량(`quantity`)은 1개 이상이여야 한다.
+  * 메뉴(`menu`)가 주문 불가능(`hide`) 상태일 경우 해당 메뉴는 주문(`Order`) 할 수 없다.
+  * 메뉴(`menu`)의 가격(`price`)과 주문메뉴(`orderLineItem`)의 가격(`price`)은 같아야 한다.
+* 주문(`Order`) 접수 승인(`ACCEPT`) 한다.
+  * 주문(`Order`)의 상태(`status`)가 접수 중(`WAITING`)이여야 한다.
+  * 주문(`Order`)의 가격(`price`)과 배달주소(`deliveryAddress`)를 배달 기사에게 전달한다.
+  * 주문(`Order`)의 상태(`status`)를 접수 승인(`ACCEPTED`)으로 변경한다.
+* 주문(`Order`)의 메뉴(`menu`)를 제공(`SERVE`)한다.
+  * 주문(`Order`)의 상태(`status`)가 주문 승인(`ACCEPTED`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 메뉴 제공(`SERVE`)으로 변경한다.
+* 주문(`Order`) 배달을 시작한다.
+  * 주문(`Order`)의 상태(`status`)가 메뉴 제공(`SERVED`) 상태여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 배달중(`DELIVERING`)으로 변경한다.
+* 주문(`Order`) 배달을 완료한다.
+  * 주문(`Order`)의 상태(`status`)가 배달중(`DELIVERING`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 배달 완료(`DELIVERED`)로 변경한다.
+* 주문(`Order`)을 완료한다.
+  * 주문(`Order`)의 상태(`status`)가 배달 완료(`DELIVERED`)여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 주문 완료(`COMPLETED`)로 변경한다.
+
+#### 포장 주문
+* 주문타입(`type`)이 포장주문(`TAKE OUT`)인 주문(`Order`)은 주문상태(`status`), 주문시간(`orderDateTime`), 주문메뉴(`orderLineItem`)를 가진다.
+* 주문(`Order`)을 시작한다.
+  * 주문(`Order`)을 시작할 때 주문 상태는 접수 중(`WAITING`)이다.
+  * 주문시간(`orderDateTime`)은 주문이 시작된 현재시간이다.
+  * 주문메뉴(`orderLineItem`)의 수량(`quantity`)은 1개 이상이여야 한다.
+  * 메뉴(`menu`)가 주문 불가능(`hide`) 상태일 경우 해당 메뉴는 주문(`Order`) 할 수 없다.
+  * 메뉴(`menu`)의 가격(`price`)과 주문메뉴(`orderLineItem`)의 가격(`price`)이 같아야 한다.
+* 주문(`Order`) 접수 승인(`ACCEPT`) 한다.
+  * 주문(`Order`)의 상태(`status`)가 접수 중(`WAITING`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 접수 승인(`ACCEPTED`)으로 변경한다.
+* 주문(`Order`)의 메뉴(`menu`)를 제공(`SERVE`)한다.
+  * 주문(`Order`)의 상태(`status`)가 주문 승인(`ACCEPTED`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 메뉴 제공(`SERVE`)으로 변경한다.
+* 주문(`Order`)을 완료한다.
+  * 주문(`Order`)의 상태(`status`)가 메뉴 제공(`SERVE`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 주문 완료(`COMPLETED`)로 변경한다.
+
+
+#### 매장 주문
+* 주문타입(`type`)이 매장주문(`EAT IN`)인 주문(`Order`)은 주문 상태(`status`), 주문 시간(`orderDateTime`), 주문메뉴(`orderLineItem`)을 가진다. 
+* 매장주문은 주문테이블(`OrderTable`)에 속한다.
+* 주문(`Order`)를 시작한다.
+  * 주문(`Order`)을 시작할 때 주문 상태는 접수 중(`WAITING`)이다.
+  * 주문시간(`orderDateTime`)은 주문이 시작된 현재시간이다.
+  * 메뉴(`menu`)가 주문 불가능(`hide`) 상태일 경우 해당 메뉴는 주문(`Order`) 할 수 없다.
+  * 메뉴(`menu`)의 가격(`price`)과 주문메뉴(`orderLineItem`)의 가격(`price`)이 같아야 한다.
+  * 주문 테이블(`OrderTable`)을 사용하고 있어야 한다.
+* 주문(`Order`) 접수 승인`(ACCEPT`) 한다.
+  * 주문(`Order`)의 상태(`status`)가 접수 중(`WAITING`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 접수 승인(`ACCEPTED`)으로 변경한다.
+* 주문(`Order`)의 메뉴(`menu`)를 제공(`SERVE`)한다.
+  * 주문(`Order`)의 상태(`status`)가 주문 승인(`ACCEPTED`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 메뉴 제공(`SERVE`)으로 변경한다.
+* 주문(`Order`)을 완료한다.
+  * 주문(`Order`)의 상태(`status`)가 메뉴 제공(`SERVE`)이여야 한다.
+  * 주문(`Order`)의 상태(`status`)를 주문 완료(`COMPLETED`)로 변경한다.
+  * 주문 테이블(`OrderTable`)을 청소(clear)하고 테이블 사용 여부(`occupied`)를 미사용 상태로 변경한다.
