@@ -97,17 +97,12 @@ docker compose -p kitchenpos up -d
 ## 용어 사전
 
 ### 상품
-| 한글명       | 영문명                     | 설명                                        |
-|-----------|-------------------------|-------------------------------------------|
-| 상품        | Product                 | 판매대상을 의미한다.                               |
-| 상품명       | Product Name            | 상품에 이름을 의미한다.                             |
-| 상품가격      | Product Price           | 상품에 가격을 의미한다.                             |
-
-### 메뉴그룹
-| 한글명     | 영문명            | 설명             |
-|---------|----------------|----------------|
-| 메뉴그룹    | MenuGroup      | 메뉴들에 묶음을 의미한다. |
-| 메뉴그룹 이름 | MenuGroup Name | 메뉴그룹에 이름을 의미한다. |
+| 한글명  | 영문명           | 설명                     |
+|------|---------------|------------------------|
+| 상품   | Product       | 판매대상을 의미한다.            |
+| 상품명  | Product Name  | 상품에 이름을 의미한다.          |
+| 욕설   | Profanity     | 인격을 무시하는 모욕적인 말을 의미한다. |
+| 상품가격 | Product Price | 상품에 가격을 의미한다.          |
 
 ### 메뉴
 | 한글명       | 영문명                     | 설명                                     |
@@ -120,6 +115,8 @@ docker compose -p kitchenpos up -d
 | 메뉴상품 총 금액 | MenuProduct Total Price | 메뉴를 구성하는 메뉴상품에 메뉴상품금액의 총 합을 의미한다.      |
 | 노출 메뉴     | Display Menu            | 고객에게 노출되는 메뉴를 의미한다.                    |
 | 비노출 메뉴    | Hide Menu               | 고객에게 노출되지않는 메뉴를 의미한다.                  |
+| 메뉴그룹    | MenuGroup      | 메뉴들에 묶음을 의미한다. |
+| 메뉴그룹 이름 | MenuGroup Name | 메뉴그룹에 이름을 의미한다. |
 
 ### 테이블
 | 한글명    | 영문명                 | 설명                                        |
@@ -153,28 +150,26 @@ docker compose -p kitchenpos up -d
 ### 상품
 - Product(상품) 생성한다.
   - Product Price(상품가격)은 0원 이상이어야 한다.
-  - Product Name(상품이름)은 욕설이 포함될 수 없다.
+  - Product Name(상품이름)은 Profanity(욕설)이 포함될 수 없다.
 - Product Price(상품가격)을 변경한다.
   - 해당 상품으로 구성된 Menu(메뉴)중 Menu Price(메뉴가격)이
-    MenuProduct Total Price(메뉴상품 총 금액) 보다 큰 메뉴는 Hide Menu(비노출 메뉴)로 변경된다. 
-
-### 메뉴그룹
-- MenuGroup(메뉴그룹) 생성한다.
-  - MenuGroup Name(메뉴그룹 이름)은 공백일 수 없다.
+    상품 금액의 합 보다 큰 메뉴는 Hide Menu(비노출 메뉴)로 변경된다.
 
 ### 메뉴
 - Menu(메뉴) 생성한다.
   - Menu Price(메뉴가격)은 0원 이상이어야 한다.
-  - Menu Name(메뉴이름)은 욕설이 포함될 수 없다.
+  - Menu Name(메뉴이름)은 Profanity(욕설)이 포함될 수 없다.
   - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
   - MenuProduct(메뉴상품)에 메뉴수량은 0이상이어야 한다.
 - Menu Price(메뉴가격)을 변경한다.
   - Menu Price(메뉴가격)은 0원 이상이어야 한다.
   - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
 - Display Menu(노출메뉴)로 변경한다.
-  - Menu Price(메뉴가격)은 MenuProduct Total Price(메뉴상품 총 금액) 보다 클 수 없다.
-- Menu(메뉴)는 임의로 Hide Menu(비노출 메뉴)로 변경이 가능하다.
-
+  - Menu Price(메뉴가격)이 MenuProduct Total Price(메뉴상품 총 금액) 보다 큰 경우 노출하지 않는다.
+- Menu(메뉴)는 Hide Menu(비노출 메뉴)로 변경이 가능하다.
+- MenuGroup(메뉴그룹) 생성한다.
+  - MenuGroup Name(메뉴그룹 이름)은 공백일 수 없다.
+  - 
 ### 테이블
 - OrderTable(테이블) 생성한다.
   - OrderTable Name(테이블 이름)은 공백일 수 없다.

@@ -1,6 +1,15 @@
 package kitchenpos;
 
-import kitchenpos.domain.*;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.exhibit.menu.domain.Menu;
+import kitchenpos.exhibit.menugroup.domain.MenuGroup;
+import kitchenpos.exhibit.menu.domain.MenuProduct;
+import kitchenpos.order.eatinorder.domain.OrderTable;
+import kitchenpos.order.shared.domain.OrderLineItem;
+import kitchenpos.order.shared.domain.OrderStatus;
+import kitchenpos.product.domain.Product;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -57,10 +66,9 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static Order order(final OrderStatus status, final String deliveryAddress) {
-        final Order order = new Order();
+    public static DeliveryOrder deliveryOrder(final OrderStatus status, final String deliveryAddress) {
+        final DeliveryOrder order = new DeliveryOrder();
         order.setId(UUID.randomUUID());
-        order.setType(OrderType.DELIVERY);
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
         order.setOrderLineItems(Arrays.asList(orderLineItem()));
@@ -68,20 +76,18 @@ public class Fixtures {
         return order;
     }
 
-    public static Order order(final OrderStatus status) {
-        final Order order = new Order();
+    public static TakeOutOrder takeOutOrder(final OrderStatus status) {
+        final TakeOutOrder order = new TakeOutOrder();
         order.setId(UUID.randomUUID());
-        order.setType(OrderType.TAKEOUT);
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
         order.setOrderLineItems(Arrays.asList(orderLineItem()));
         return order;
     }
 
-    public static Order order(final OrderStatus status, final OrderTable orderTable) {
-        final Order order = new Order();
+    public static EatInOrder eatInOrder(final OrderStatus status, final OrderTable orderTable) {
+        final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
-        order.setType(OrderType.EAT_IN);
         order.setStatus(status);
         order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
         order.setOrderLineItems(Arrays.asList(orderLineItem()));
