@@ -1,9 +1,9 @@
 package kitchenpos.eatinorder.application;
 
-import kitchenpos.common.domain.OrderLineItem;
 import kitchenpos.eatinorder.domain.*;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.takeoutorder.domain.OrderLineItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

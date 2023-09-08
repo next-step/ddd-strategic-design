@@ -1,8 +1,8 @@
 package kitchenpos.takeoutorder.application;
 
-import kitchenpos.common.domain.OrderLineItem;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.takeoutorder.domain.OrderLineItem;
 import kitchenpos.takeoutorder.domain.TakeOutOrder;
 import kitchenpos.takeoutorder.domain.TakeOutOrderRepository;
 import kitchenpos.takeoutorder.domain.TakeOutOrderStatus;

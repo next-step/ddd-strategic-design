@@ -1,12 +1,12 @@
 package kitchenpos.deliveryorder.application;
 
-import kitchenpos.common.domain.OrderLineItem;
 import kitchenpos.deliveryorder.domain.DeliveryOrder;
 import kitchenpos.deliveryorder.domain.DeliveryOrderRepository;
 import kitchenpos.deliveryorder.domain.DeliveryOrderStatus;
 import kitchenpos.deliveryorder.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.takeoutorder.domain.OrderLineItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
