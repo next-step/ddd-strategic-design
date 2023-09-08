@@ -1,7 +1,14 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.menu.application.MenuService;
+import kitchenpos.menu.application.port.out.PurgomalumChecker;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.application.port.out.MenuGroupRepository;
+import kitchenpos.menu.domain.MenuProduct;
+import kitchenpos.menu.application.port.out.MenuRepository;
+import kitchenpos.product.domain.Product;
+import kitchenpos.product.application.port.out.ProductRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +30,7 @@ class MenuServiceTest {
     private MenuRepository menuRepository;
     private MenuGroupRepository menuGroupRepository;
     private ProductRepository productRepository;
-    private PurgomalumClient purgomalumClient;
+    private PurgomalumChecker purgomalumChecker;
     private MenuService menuService;
     private UUID menuGroupId;
     private Product product;
@@ -33,8 +40,8 @@ class MenuServiceTest {
         menuRepository = new InMemoryMenuRepository();
         menuGroupRepository = new InMemoryMenuGroupRepository();
         productRepository = new InMemoryProductRepository();
-        purgomalumClient = new FakePurgomalumClient();
-        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, purgomalumClient);
+        purgomalumChecker = new FakeMenuPurgomalumChecker();
+        menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, purgomalumChecker);
         menuGroupId = menuGroupRepository.save(menuGroup()).getId();
         product = productRepository.save(product("후라이드", 16_000L));
     }
