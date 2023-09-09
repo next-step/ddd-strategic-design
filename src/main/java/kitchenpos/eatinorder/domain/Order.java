@@ -1,6 +1,5 @@
-package kitchenpos.order.domain.common;
+package kitchenpos.order.domain;
 
-import kitchenpos.order.domain.OrderTable;
 import kitchenpos.order.domain.enums.OrderStatus;
 import kitchenpos.order.domain.enums.OrderType;
 
