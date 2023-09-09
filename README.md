@@ -155,3 +155,45 @@ docker compose -p kitchenpos up -d
 | 비속어 | profanity | 사전적으로 비속한[불경스런] 말 |
 
 ## 모델링
+### 메뉴(Menu)
+* ```Menu```는 등록할 수 있다.
+* ```Menu Group Name```은 필수로 존재해야 한다.
+* ```Menu```는 메뉴들을 그룹화하는 ```Menu Group```을 필수로 갖는다.
+* ```Menu```는 1개 이상의 ```Menu Product```들로 이루어져 있다.
+* ```Menu Price```는 0원 이상이어야 한다.
+* ```Menu```가격은 ```Menu Product```들의 가격의 합보다 클 수 없다.
+* ```Menu Name```에는 ```Profanity```가 포함 돼서는 안된다.
+* ```Menu Price```는 변경할 수 있다.
+* ```Menu```는 ```Display```상태로 변경가능하다.
+* ```Menu```는 ```Hide```상태로 변경가능하다.
+
+### 매장 테이블(Order Table)
+* ```Order Table```은 ```Order Table Name```을 필수로 갖는다.
+* ```Order Table```은 ```Occupied```로 만들 수 있다.
+* ```Order Table```은 ```Unoccupied```로 만들 수 있다.
+* ```Number Of Guests```는 변경 가능하다.
+* ```Number Of Guests``` 0 이상이어야 한다.
+* ```Unoccupied Table```은 ```Number Of Guests```를 변경할 수 없다.
+
+### 주문(Order)
+* ```Order```는 ```Delivery```, ```Take Out```, ```Eat In```이라는 ```Order Type```을 갖는다.
+* ```Order```는 ```Menu```를 필수로 갖는다.
+* ```Order Type```이 ```Delivery```인 ```Order```은  ```Waiting```, ```Accepted```, ```Served```, ```Deviering```, ```Delivered```, ```Complted```인 ```Order Status```를 갖는다
+* ```Order Type```이 ```Take Out```와 ```Eat In```인 ```Order```은  ```Waiting```, ```Accepted```, ```Served```, ```Completed```인 ```Order Status```를 갖는다
+* ```Eat In```의 ```Order Line Item```은 0개 미만일 수 있다.
+* ```Delivey```와 ```Take Out```의 ```Order Line Item```은 0개 이상이어야 한다.
+* ```Order Table```이 ```Unoccupied Table```라면 ```Eat In```인 ```Order```을 할 수 없다.
+* ```Hide``` 상태인 ```Menu```는 ```Order```할 수 없다.
+* ```Waiting```인 ```Order```만 ```Accepted```할 수 있다.
+* ```Delviery```인 ```Order```는 ```Kitchen Riders```를 호출한다.
+* ```Accepted```인 ```Order```만 ```Served```할 수 있다.
+* ```Served```인 ```Order```만 ```Delivering```할 수 있다.
+* ```Delivering```인 ```Order```만 ```Delivered```할 수 있다.
+* ```Delivery```인 경우```Delivered```인 ```Order```만 ```Completed```할 수 있다.
+* ```Take Out```과 ```Eat In```인 경우```Served```인 ```Order```만 ```Completed```할 수 있다.
+* ```Completed```가 되면 ```Order Table```은 ```Unoccupied Table```이 된다.
+
+### 상품(Product)
+* ```Product Name```에는 ```Profanity```가 포함되서는 안된다.
+* ```Product Price```는 0원 이상이어야 한다.
+* ```Product Price```는 변경할 수 있다.
