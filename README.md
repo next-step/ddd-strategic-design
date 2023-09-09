@@ -167,50 +167,60 @@ docker compose -p kitchenpos up -d
 | 비속어 | profanity | 욕설이나 부적절한 언어                        |
 | 직원  | manager   | 매장에서 근무하는 포스기를 조작 가능한 사장님 혹은 아르바이트생 |
 
+---
 
-## 모델링
-
+## 모델링 (Product)
 ### 상품(Product)
 #### 속성
 - `Product` 는 `Price`를 가진다
-- `Product` 는 `Name`을 가진다
+- `Product` 는 `profanity`가 아닌 `Name`을 가진다
 
 #### 기능
-- `Product`의 `Name`은 `profanity`가 될수 없다
-- `Product`의 `Price`는 변경 될 수 있다
+- `Product`를 `Create`할수 있다
+- `Product`를 `Change Price`할수 있다
+  - `Product`를 `MenuProduct`로 가지고 있는 `Menu`의 `Price`가 `MenuProduct`들의 `TotalPrice`를 넘으면 `Menu`를 `Hide`한다
 
+---
+
+## 모델링 (Menu)
+### 메뉴(Menu)
+#### 속성
+- `Menu`는 `Profanity`가 아닌 `Name`을 가진다
+- `Menu`는 `MenuProduct`들의 `TotalPrice`보다 작은 `Price`를 가진다
+- `Menu`는 `MenuGroup`을 가진다
+- `Menu`는 `MenuProduct`들을 가진다
+- `Menu`는 노출 여부인 `display`, `hide`상태를 가진다
+
+#### 기능
+- `Menu`는 `Create`할수 있다
+- `Menu`는 `Change Price`를 할수 있다
+- `Menu`는 `Hide`할수 있다
+- `Menu`는 `Display`할수 있다
+- `MenuProduct`들의 `TotalPrice`를 계산할수 있다
 
 ### 메뉴 그룹(MenuGroup)
 #### 속성
 - `MenuGroup`은 `Name`을 가진다
-
-### 메뉴(Menu)
-#### 속성
-- `Menu`는 `Name`을 가진다
-- `Menu`는 `Price`를 가진다
-- `Menu`는 `MenuGroup`을 가진다
-- `Menu`는 `MenuProduct`들을 가진다 
-- `Menu`는 노출 여부인 `display`, `hide`상태를 가진다
-
-#### 기능
-- `Menu`의 `Name`은 `Profanity`가 될수 없다
-- `Menu`는 반드시 `MenuGroup`에 포함되어야 한다
-- `Menu`의 `Price`는 `MenuProduct`들의 `TotalPrice`를 넘을수 없다
-  - `Product`의 `Price`가 변경 된 후, `Menu`의 `Price`가 `MenuProduct`들의 `TotalPrice`보다 크다면 `Menu`는 `Hide`되어야 한다
-
-
-### 구성품들 (MenuProducts)
-#### 속성
-- `MenuProducts`는 `MenuProduct` 들을 가진다
-
-#### 기능
-- `MenuProduct`들의 `TotalPrice`를 계산할수 있다.
 
 ### 구성품 (MenuProduct)
 #### 속성
 - `MenuProduct`는 `Product`를 가진다
 - `MenuProduct`는 `Product`의 수량인 `Quantity`를 가진다
 - `MenuProduct`는 자신이 포함될 `Menu`를 가진다
+
+---
+
+## 모델링 (EatInOrder)
+### 매장 식사 주문(EatInOrder)
+#### 속성
+- `EatInOrder`는 `Occupied`된 `OrderTable`을 가진다
+- `EatInOrder`는 `Order Datetime`을 가진다
+- `EatInOrder`는 `Order Line Items`를 가진다
+
+#### 기능
+- `EatInOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
+- `EatInOrder`가 `COMPLETED`될때, `OrderTable`에 모든 `Order`가 `COMPLETED` 상태라면 `OrderTable`을 `Clean`한다
+- `EatInOrder`는 `OrderLineItem`을 취소할 수 있다
 
 ### 매장 테이블(OrderTable)
 #### 속성
@@ -219,34 +229,38 @@ docker compose -p kitchenpos up -d
 - `OrderTable`은 `Name`을 가지고 있다
 - `OrderTable`은 `Occupied`와 `Vacant` 상태를 가질수 있다
 
+#### 기능
+- `OrderTable`은 `Clear`할수 있다
+- `OrderTable`을 `Occupied`할수 있다
+- `OrderTable`은 `Change Number Of Guest`할수 있다
 
-### 주문(Order)
+---
+
+## 모델링 (TakeOutOrder)
+### 포장 주문(TakeoutOrder)
 #### 속성
-- `Order`는 `Delivery Order`, `Takeout Order`, `Eat-In Order` 3가지 타입의 주문이 있다
-- `Order`는 `Order Datetime`을 가진다
-- `Order`는 `Order Line Items`를 가진다
-- `Order`는 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED` 총 6가지 상태가 있다
+- `TakeoutOrder`는 `Order Datetime`을 가진다
+- `TakeoutOrder`는 `Order Line Items`를 가진다
+#### 기능
+- `TakeoutOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
 
+---
+
+## 모델링 (DeliveryOrder)
 ### 배달 주문(DeliveryOrder)
 #### 속성
 - `DeliveryOrder`는 `DeliveryAddress`를 가진다
+- `DeliveryOrder`는 `Order Datetime`을 가진다
+- `DeliveryOrder`는 `Order Line Items`를 가진다
 
 #### 기능
-- `DeliveryOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED`순으로 진행된다 
-- `DeliveryOrder`는 `DeliveryAddress`가 있어야 한다
+- `DeliveryOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERING`, `DELIVERED`, `COMPLETED`순으로 진행된다
 - `DeliveryOrder`는 `Kitchen Riders`를 통해 `Start Delivery`해야 한다
 
-### 매장 식사 주문(EatInOrder)
-#### 속성
-- `EatInOrder`는 `OrderTable`을 가진다  
 
-#### 기능 
-- `EatInOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
-- `EatInOrder`는 `Occupied`된 `OrderTable`이 없으면 `WAITING`이 될수 없다
-- `EatInOrder`가 `COMPLETED`될때, `OrderTable`에 모든 `Order`가 `COMPLETED` 상태라면 `OrderTable`을 `Clean`한다
-- `EatInOrder`는 `OrderLineItem`을 취소할 수 있다
 
-### 포장 주문(TakeoutOrder)
-#### 기능 
-- `TakeoutOrder`는 `WAITING`, `ACCEPTED`, `SERVED`, `COMPLETED` 순으로 진행된다
+
+
+
+
 
