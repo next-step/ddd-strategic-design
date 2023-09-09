@@ -1,4 +1,4 @@
-package kitchenpos.eatinorder.adapter.in;
+package kitchenpos.eatinTable.adapter.in;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
