@@ -1,6 +1,6 @@
-package kitchenpos.remote;
+package kitchenpos.remote.infra;
 
-import kitchenpos.remote.purgomalum.PurgomalumClient;
+import kitchenpos.remote.infra.purgomalum.PurgomalumClient;
 
 import java.util.Arrays;
 import java.util.List;

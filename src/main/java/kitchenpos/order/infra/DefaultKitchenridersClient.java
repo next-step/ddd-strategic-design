@@ -1,4 +1,4 @@
-package kitchenpos.remote.kitchenriders;
+package kitchenpos.order.infra;
 
 import org.springframework.stereotype.Component;
 

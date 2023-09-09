@@ -9,8 +9,8 @@ import kitchenpos.menu.infra.InMemoryMenuRepository;
 import kitchenpos.product.domain.Product;
 import kitchenpos.product.domain.ProductRepository;
 import kitchenpos.product.infra.InMemoryProductRepository;
-import kitchenpos.remote.FakePurgomalumClient;
-import kitchenpos.remote.purgomalum.PurgomalumClient;
+import kitchenpos.remote.infra.FakePurgomalumClient;
+import kitchenpos.remote.infra.purgomalum.PurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,11 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static kitchenpos.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
