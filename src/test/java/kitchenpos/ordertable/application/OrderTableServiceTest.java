@@ -1,7 +1,9 @@
-package kitchenpos.application;
+package kitchenpos.ordertable.application;
 
+import kitchenpos.order.domain.InMemoryOrderRepository;
 import kitchenpos.order.order.domain.OrderRepository;
 import kitchenpos.order.order.domain.OrderStatus;
+import kitchenpos.ordertable.domain.InMemoryOrderTableRepository;
 import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.ordertable.domain.OrderTableRepository;
 import kitchenpos.ordertable.application.OrderTableService;
