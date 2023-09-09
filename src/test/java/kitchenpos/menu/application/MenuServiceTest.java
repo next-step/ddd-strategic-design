@@ -1,7 +1,7 @@
 package kitchenpos.menu.application;
 
+import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.profanity.infra.FakePurgomalumClient;
-import kitchenpos.domain.*;
 import kitchenpos.profanity.infra.PurgomalumClient;
 import kitchenpos.menu.domain.InMemoryMenuGroupRepository;
 import kitchenpos.menu.domain.InMemoryMenuRepository;
