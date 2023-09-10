@@ -250,7 +250,8 @@ docker compose -p kitchenpos up -d
     - `price`는 반드시 필요하고 0보다 커야 한다.
     - `menuProducts`는 반드시 필요하고 1개 이상이어야 한다.
     - `menuGroup`은 반드시 필요하고 하나의 `MenuGroup`에 포함되어야 한다.
-    - `displayed`는 반드시 필요하고 노출 or 숨김이 가능하다.
+    - `displayed`는 반드시 필요하고 `true` or `false` 중 하나이다.
+        - `true`는 노출(`display`), `false`는 숨김(`hide`) 상태임을 의미한다.
 
 #### 메뉴 (`Menu`) - 유스케이스
 - 관리자는 `Menu`를 생성할 수 있다.
@@ -258,8 +259,9 @@ docker compose -p kitchenpos up -d
     - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
 - 관리자는 `Menu`의 `price`를 수정할 수 있다.
     - 변경되는 `Menu`의 `price`보다 `Menu`의 `price`보다 `MenuProduct` 의 `price`와 `quantity`의 곱에 총합이 더 커야 한다.
-- 관리자는 `Menu`를 노출할 수 있다.
+- 관리자는 `Menu`를 `display` 할 수 있다.
     - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
+- 관리자는 `Menu`를 `hide` 할 수 있다.
 
 ### 메뉴 그룹 (`MenuGroup`)
 
