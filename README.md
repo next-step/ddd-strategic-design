@@ -214,7 +214,7 @@ docker compose -p kitchenpos up -d
 
 - `TakeOutOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `서빙` -> `계산 완료됨` 이다
 
-- `고객`은 `TakeOutOrder`을 등록할 수 있다
+- `고객`은 `TakeOutOrder`을 요청할 수 있다
   - `OrderLineItem`는 비어 있을 수 없다
     - `Price`과 수량을 가진다
     - 수량은 1개 이상이어야 한다
@@ -238,7 +238,7 @@ docker compose -p kitchenpos up -d
 
 - `DeliveryOrder`의 `OrderLineItem`의 수량은 1개 이상이어야 한다
 
-- `고객`은 `DeliveryOrder`를 등록할 수 있다
+- `고객`은 `DeliveryOrder`를 요청할 수 있다
   - `DeliveryAddress`는 비어 있을 수 없다
   - `OrderLineItem`는 비어 있을 수 없다
     - `Price`과 수량을 가진다
@@ -268,7 +268,7 @@ docker compose -p kitchenpos up -d
 
 - `EatInOrder`의 흐름은 `접수 대기 중` -> `수락됨` -> `서빙` -> `계산 완료됨` 이다
 
-- `고객`은 `EatInOrder`를 등록할 수 있다
+- `고객`은 `EatInOrder`를 요청할 수 있다
   - `OrderTable`는 이용 가능한 상태이어야 한다
   - `OrderLineItem`는 비어 있을 수 없다
     - `Price`과 수량을 가진다
@@ -303,7 +303,7 @@ docker compose -p kitchenpos up -d
 - `MenuProducts`는 `Menu`에 포함된 모든 `MenuProduct` 가진다
 - `MenuProducts`에서 전체 구성품의 `TotalPrice`를 생성한다
 
-## 맵?
+## 도메인 모델
 
 ```mermaid
 
