@@ -223,12 +223,12 @@ docker compose -p kitchenpos up -d
 
 ### 상품 (`Product`)
 
-#### 상품 (`Product`) - 속성
+#### 속성
 - `Product` 는 `name`과 `price`를 가진다.
     - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
     - `price`는 반드시 필요하고 0보다 커야 한다.
 
-#### 상품 (`Product`) - 유스케이스
+#### 유스케이스
 - 관리자는 `Product`를 생성할 수 있다.
     - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
 - 관리자는 `Product`의 가격을 수정할 수 있다.
@@ -236,55 +236,59 @@ docker compose -p kitchenpos up -d
         - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합보다 더 크면 비노출한다.
 - 관리자는 `Product`를 조회할 수 있다.
 
+
+### 메뉴 구성 상품 (`MenuProduct`)
+
+#### 속성
+- `MenuProduct`는 `product`와 `quantity`를 가진다.
+  - `product`는 반드시 필요하다.
+  - `quantity`는 반드시 필요하고 0보다 커야 한다.
+  
+#### 유스케이스
+- `MenuProduct`는 `Menu`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
+
 ### 메뉴 (`Menu`)
 
-#### 메뉴 구성 상품 (`MenuProduct`)
-
-##### 메뉴 구성 상품 (`MenuProduct`) - 속성
-- `MenuProduct`는 `Product`와 `quantity`를 가진다.
-    - `Product`는 반드시 필요하다.
-    - `quantity`는 반드시 필요하고 0보다 커야 한다.
-
-#### 메뉴 (`Menu`) - 속성
-- `Menu` 는 `name`, `price`, `MenuGroup`, `MenuProduct`,`displayed`를 가진다.
+#### 속성
+- `Menu` 는 `name`, `price`, `menuGroup`, `menuProducts`,`displayed`를 가진다.
     - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
     - `price`는 반드시 필요하고 0보다 커야 한다.
     - `menuProducts`는 반드시 필요하고 1개 이상이어야 한다.
-    - `menuGroup`은 반드시 필요하고 하나의 `MenuGroup`에 포함되어야 한다.
+    - `menuGroup`은 반드시 필요하고 하나의 `menuGroup`에 포함되어야 한다.
     - `displayed`는 반드시 필요하고 `true` or `false` 중 하나이다.
         - `true`는 노출(`display`), `false`는 숨김(`hide`) 상태임을 의미한다.
 
-#### 메뉴 (`Menu`) - 유스케이스
+#### 유스케이스
 - 관리자는 `Menu`를 생성할 수 있다.
     - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
-    - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
+    - `Menu`의 `price`보다 `menuProducts`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
 - 관리자는 `Menu`의 `price`를 수정할 수 있다.
-    - 변경되는 `Menu`의 `price`보다 `Menu`의 `price`보다 `MenuProduct` 의 `price`와 `quantity`의 곱에 총합이 더 커야 한다.
+    - 변경되는 `Menu`의 `price`보다 `Menu`의 `price`보다 `menuProducts` 의 `price`와 `quantity`의 곱에 총합이 더 커야 한다.
 - 관리자는 `Menu`를 `display` 할 수 있다.
-    - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
+    - `Menu`의 `price`보다 `menuProducts`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
 - 관리자는 `Menu`를 `hide` 할 수 있다.
 - 관리자는 `Menu`를 조회할 수 있다.
 
 ### 메뉴 그룹 (`MenuGroup`)
 
-#### 메뉴 그룹 (`MenuGroup`) - 속성
+#### 속성
 - `MenuGroup`은 `name`을 가진다.
     - `name`은 반드시 필요하다.
 
-#### 메뉴 그룹 (`MenuGroup`) - 유스케이스
+#### 유스케이스
 - 관리자는 `MenuGroup`을 생성할 수 있다.
 - 관리자는 `MenuGroup`을 조회할 수 있다.
 
 ### 주문 테이블(`OrderTable`)
 
-#### 주문 테이블 (`OrderTable`) - 속성
+#### 속성
 - `OrderTable`은 `name`, `numberOfGuests`, `occupied`를 가진다.
     - `name`은 반드시 필요하다.
     - `numberOfGuests`는 반드시 필요하다.
     - `occupied`는 반드시 필요하고 `true` or `false` 중 하나이다.
         - `true`는 착석(`sit`), `false`는 정리(`clear`) 되어 비어있음을 의미한다.
 
-#### 주문 테이블 (`OrderTable`) - 유스케이스
+#### 유스케이스
 - 관리자는 `OrderTable`을 생성할 수 있다.
     - `numberOfGuests`는 0으로, `occupied`는 `false`로 생성된다.
 - 관리자는 `OrderTable`를 `sit` 처리할 수 있다.
@@ -298,86 +302,120 @@ docker compose -p kitchenpos up -d
     - `OrderTable`이 `sit` 상태가 아니면 `numberOfGuests`를 변경할 수 없다.
 - 관리자는 `OrderTable`을 조회할 수 있다.
 
+### 주문 품목(`OrderLineItem`)
+
+#### 속성
+- `OrderLineItem`은 `menu`, `quantity`, `price`를 가진다.
+  - `Menu`는 반드시 필요하다.
+  - `quantity`는 반드시 필요하다.
+  - `OrderLineItme`의 `price`와 `menu`의 `price`는 같아야 한다.
+  - `menu`는 `display` 상태여야 한다.
+
+#### 유스케이스
+- `OrderLineItem`는 `Order`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
+  - 
 ### 주문(`Order`)
+- `Order`은 `type`에 따라 속성과 유스케이스가 조금씩 차이가 나므로 별도로 분리해서 정리한다.
+  - `type`은 다음과 같다.
+    - `EAT_IN` : 매장 식사
+    - `TAKE_OUT` : 포장
+    - `DELIVERY` : 배달
 
-#### 주문 품목(`OrderLineItem`)
-
-##### 주문 품목(`OrderLineItem`) - 속성
-- `OrderLineItem`은 `Menu`, `quantity`, `price`를 가진다.
-    - `Menu`는 반드시 필요하다.
-    - `quantity`는 반드시 필요하다.
-
-#### 주문 (`Order`) - 속성
-- `Order`는 `OrderType`, `OrderStatus`, `orderDateTime`, `OrderLineItem`, `deliveryAddress`, `OrderTable`을 가진다.
-    - `OrderType`은 반드시 필요하고 `DELIVERY` or `TAKEOUT` or `EAT_IN` 중 하나이다.
-    - `OrderStatus`는 반드시 필요하고 `WAITING`, `ACCEPTED`, `SERVED`, `DELIVERED`, `DELIVERING`, `COMPLETED` 중 하나이다.
+#### 주문 (`Order`) - EAN_IN - 속성
+- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `orderTable`를 가진다.
+    - `type`은 `EAT_IN`이다.
+    - `status`는 반드시 필요하고 아래 목록 중 하나이다.
+      - `WAITING`
+      - `ACCEPTED`
+      - `SERVED`
+      - `COMPLETED`
+    - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
     - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
-    - `OrderLineItem`은 반드시 필요하고 1개 이상이어야 한다.
-    - `deliveryAddress`는 `OrderType`이 `DELIVERY`일 경우 반드시 필요하다.
-    - `OrderTable`은 `OrderType`이 `EAT_IN`일 경우 반드시 필요하다.
-
-#### 주문 (`Order`) - 공통 - 유스케이스
-- 관리자는 `Order`을 조회할 수 있다.
-
+    - `orderTable`은 반드시 필요하다.
+  
 #### 주문 (`Order`) - EAN_IN - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
-    - `OrderStatus`는 `WAITING`으로 생성된다.
-    - `OrderDateTime`은 생성한 시점으로 생성된다.
-    - `OrderType`은 반드시 필요하다.
-    - `OrderLineItem`은 하나 이상 있어여 한다.
-    - `OrderLineItem`에 해당하는 메뉴는 노출 상태로 반드시 있어야 한다.
-    - `OrderLineItem`의 `price`와 `Menu`의 `price`는 같아야 한다.
-    - 한 개의 `OrderTable`를 `sit` 해야 한다.
+    - `status`는 `WAITING`으로 생성된다.
+    - `orderDateTime`은 생성한 시점으로 생성된다.
+    - `type`은 반드시 필요하다.
+    - `orderLineItmes`은 하나 이상 있어여 한다.
+    - 한 개의 `orderTable`를 `sit` 해야 한다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-    - 대상 `Order`는 `OrderStatus`가 `WAITING`이어야 한다.   
-    - `OrderStatus`가 `ACCEPTED`로 변경된다.
+    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.   
+    - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `ACCEPTED`이어야 한다.
+  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `SERVED`이어야 한다.
-  - 대상 `Order`와 연관된 `OrderTable`이 존재하지 않는 경우 해당 `OrderTable`의 `numberOfGuests`를 0으로 변경하고 `clear`한다.
-  - `OrderStatus`가 `COMPLETED`로 변경된다.
+  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+  - 대상 `Order`와 연관된 `orderTable`이 존재하지 않는 경우 해당 `orderTable`의 `numberOfGuests`를 0으로 변경하고 `clear`한다.
+  - `status`가 `COMPLETED`로 변경된다.
+- 관리자는 `Order`을 조회할 수 있다.
+
+
+#### 주문 (`Order`) - TAKEOUT - 속성
+- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`를 가진다.
+  - `type`은 `TAKEOUT`이다.
+  - `status`는 반드시 필요하고 아래 목록 중 하나이다.
+    - `WAITING`
+    - `ACCEPTED`
+    - `SERVED`
+    - `COMPLETED`
+  - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
+  - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
 
 #### 주문 (`Order`) - TAKEOUT - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
-    - `OrderStatus`는 `WAITING`으로 생성된다.
-    - `OrderDateTime`은 생성한 시점으로 생성된다.
-    - `OrderType`은 반드시 필요하다.
-    - `OrderLineItem`은 하나 이상 있어여 한다.
-    - `OrderLineItem`에 해당하는 메뉴는 노출 상태로 반드시 있어야 한다.
-    - `OrderLineItem`의 개수는 한 개 이상 이어야 있다.
-    - `OrderLineItem`의 `price`와 `Menu`의 `price`는 같아야 한다.
+    - `status`는 `WAITING`으로 생성된다.
+    - `orderDateTime`은 생성한 시점으로 생성된다.
+    - `type`은 반드시 필요하다.
+    - `orderLineItems`은 하나 이상 있어여 한다.
+    - `orderLineItems`의 개수는 한 개 이상 이어야 있다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `WAITING`이어야 한다.
-  - `OrderStatus`가 `ACCEPTED`로 변경된다.
+  - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
+  - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `ACCEPTED`이어야 한다.
+  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `SERVED`이어야 한다.
-  - `OrderStatus`가 `COMPLETED`로 변경된다.
+  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+  - `status`가 `COMPLETED`로 변경된다.
+- 관리자는 `Order`을 조회할 수 있다.
 
+
+#### 주문 (`Order`) - DELIVERY - 속성
+- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `deliveryAddress`를 가진다.
+  - `type`은 `DELIVERY`이다.
+  - `status`는 반드시 필요하고 아래 목록 중 하나이다.
+    - `WAITING`
+    - `ACCEPTED`
+    - `SERVED`
+    - `DELIVERING`
+    - `DELIVERED`
+    - `COMPLETED`
+  - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
+  - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
+  - `deliveryAddress`은 반드시 필요하다.
+  - 
 #### 주문 (`Order`) - DELIVERY - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
-    - `OrderStatus`는 `WAITING`으로 생성된다.
-    - `OrderDateTime`은 생성한 시점으로 생성된다.
-    - `OrderType`은 반드시 필요하다.
-    - `OrderLineItem`은 하나 이상 있어여 한다.
-    - `OrderLineItem`에 해당하는 메뉴는 노출 상태로 반드시 있어야 한다.
-    - `OrderLineItem`의 개수는 한 개 이상 이어야 있다.
-    - `OrderLineItem`의 `price`와 `Menu`의 `price`는 같아야 한다.
+    - `status`는 `WAITING`으로 생성된다.
+    - `orderDateTime`은 생성한 시점으로 생성된다.
+    - `type`은 반드시 필요하다.
+    - `orderLineItmes`은 하나 이상 있어여 한다.
+    - `orderLineItmes`의 개수는 한 개 이상 이어야 있다.
     - `deliveryAddress`가 반드시 필요하다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `WAITING`이어야 한다.
+  - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
   - `kitchenRiders`에 배달 요청이 된다. 
-  - `OrderStatus`가 `ACCEPTED`로 변경된다.
+  - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `ACCEPTED`이어야 한다.
+  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `startDelivery`할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `SERVED`이어야 한다.
-  - `OrderStatus`가 `DELIVERING`로 변경된다.
+  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+  - `status`가 `DELIVERING`로 변경된다.
 - 관리자는 `Order`를 `completeDelivery`할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `DELIVERING`이어야 한다.
-  - `OrderStatus`가 `DELIVERED`로 변경된다.
+  - 대상 `Order`는 `status`가 `DELIVERING`이어야 한다.
+  - `status`가 `DELIVERED`로 변경된다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `OrderStatus`가 `DELIVERED`이어야 한다.
-  - `OrderStatus`가 `COMPLETED`로 변경된다.
+  - 대상 `Order`는 `status`가 `DELIVERED`이어야 한다.
+  - `status`가 `COMPLETED`로 변경된다.
+- 관리자는 `Order`을 조회할 수 있다.
