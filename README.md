@@ -274,8 +274,114 @@ docker compose -p kitchenpos up -d
 
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 비속어 검사 | Profanity Check | 욕설등의 부적절한 언어가 포함되어있는지 purgomalum contains profanity api를 통해 검사 |
+| 비속어 검사 | Profanity Check | 욕설등의 부적절한 언어가 포함되어있는지 purgomalum 외부 서비스를 통해 contains profanity 검사 |
 
 ---
 
 ## 모델링
+
+### Product (상품)
+
+#### 속성
+- Name은 필수값이다.
+- Price는 0원 이상이어야 한다.
+
+#### 행위
+- Product를 등록할 수 있다.
+  - Name은 Profanity Check한다.
+- Price는 변경할 수 있다.
+  - Price가 변경될 때 해당 Product가 포함된 Menu의 Price가 Menu에 속한 Product Price의 총합보다 비싸진 경우 Menu를 Hide한다.
+    - 요약. (Product가 속한 메뉴의 현재 가격 > 해당 Menu에 속한 Product Price의 총합)인 경우 Menu를 Hide 한다.
+
+### MenuGroup (메뉴 그룹)
+#### 속성
+- Name은 필수값이다.
+
+#### 행위
+- MenuGroup을 등록할 수 있다.
+
+### Menu (메뉴)
+#### 속성
+- Name은 필수값이다.
+- Price는 0원 이상이어야 한다.
+  - Menu의 가격은 Menu에 속한 상품 금액의 합보다 작거나 같아야 한다.
+- Menu Group을 필수로 가진다.
+- Menu Product를 필수로 1개이상 가진다.
+- Menu Product의 Price의 총합보다 클 수 없다.
+- Menu의 Displayed는 변경 가능하다.
+
+#### 행위
+- Menu를 등록할 수 있다.
+  - Name은 Profanity Check한다.
+- Price는 변경할 수 있다.
+- Menu를 Display한다.
+  - Menu의 Price가 Menu에 속한 Menu Product 금액의 합보다 비싼 경우 Menu를 Display할 수 없다.
+- Menu를 Hide한다.
+  - Menu의 Price가 Menu에 속한 Product Price의 합보다 높을 경우 Menu를 Hide한다.
+
+### OrderTable (매장 테이블)
+#### 속성
+- Name은 필수값이다.
+- Occupied를 가진다.
+- Number Of Guests를 가진다.
+- Number Of Guests는 0명 이상이어야 한다.
+
+#### 행위
+- OrderTable을 등록할 수 있다.
+- Sit 할 수 있다.
+- Clear 될 수 있다.
+  - 식사를 완료했다면 Clear할 수있다.
+- Number Of Guests를 변경할 수 있다.
+  - Clear 된 OrderTable은 Number Of Guests를 변경할 수 없다.
+
+### Order (주문)
+#### 속성
+- OrderType을 가진다.
+- OrderStatus를 가진다.
+- DeliveryOrder, TakeOutOrder은 Order Line Item 1개 이상 가진다.
+- OrderDateTime을 가진다.
+- 각각의 주문들은 Hide된 Menu를 주문할 수 없다.
+
+### Delivery Order (배달주문)
+#### 속성
+- Order Line Item 1개 이상 가진다.
+- Delivery Address는 필수값이다.
+- Take-Out Order는 Waiting, Accepted, Served, Delivering, Delivered, Completed 6개의 OrderStatus를 가진다.
+
+#### 행위
+- Delivery Order의 OrderStatus는 Waiting → Accepted → Served → Delivering → Delivered → Completed 순서를 가진다.
+  - 명시된 순서를 지키지 않으면 Order Status는 변경할 수 없다.
+- DeliveryOrder가 들어오면 Order Status는 Waiting이다.
+- Waiting Order를 Accepted 한다.
+  - Kitchen Rider에게 Delivery Address, Price를 전달한다.
+- Accepted Order를 Served한다.
+- Served Order를 Kitchen Rider가 Delivering한다.
+- Delivering Order를 손님이 받으면 Delivered한다.
+- Delivered Order를 Completed한다.
+
+### Take-Out Order (포장주문)
+#### 속성
+- Order Line Item 1개 이상 가진다.
+- Take-Out Order는 Waiting, Accepted, Served, Completed 4개의 OrderStatus를 가진다
+
+#### 행위
+- Take-Out Order의 OrderStatus는 Waiting → Accepted → Served → Completed 순서를 가진다.
+  - 명시된 순서를 지키지 않으면 Order Status는 변경할 수 없다.
+- Take-Out Order가 들어오면 Order Status는 Waiting이다.
+- Waiting Order를 Accepted 한다.
+- Accepted Order를 Served한다.
+- Served Order를 Completed한다.
+
+### Eat-In Order (매장주문)
+#### 속성
+- OrderTable이 필수다.
+- Eat-In Order는 Waiting, Accepted, Served, Completed 4개의 OrderStatus를 가진다.
+
+#### 행위
+- Eat-In Order의 OrderStatus는 Waiting → Accepted → Served → Completed 순서를 가진다.
+  - 명시된 순서를 지키지 않으면 Order Status는 변경할 수 없다.
+- Eat-In Order가 들어오면 Order Status는 Waiting이다.
+- Waiting Order를 Accepted 한다.
+- Accepted Order를 Served한다.
+- Served Order를 Completed한다.
+  - 주문이 Completed된 OrderTable을 Clear한다.
