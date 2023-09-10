@@ -200,7 +200,7 @@ docker compose -p kitchenpos up -d
 - `Menu Name`은 비워두거나 `Profanity`를 포함할 수 없다.
 - `Menu`는 하나의 `MenuGroup`에 속해야 한다.
 - `Menu`는 `MenuProduct`를 1개 이상 가지고 있어야 한다.
-- `MenuProduct`의 'Quantity`는 0개 이상이어야 한다.
+- `MenuProduct`의 `Quantity`는 0개 이상이어야 한다.
 - `Menu Price`는 `MenuProduct`의 가격의 합보다 적거나 같아야 한다.
 - `Menu Price`가 `MenuProduct`의 가격의 합보다 크면 `NotDisplayedMenu`로 설정된다.
 
@@ -219,7 +219,7 @@ docker compose -p kitchenpos up -d
 - `OrderStatus`를 `OrderWaiting`, `OrderAccept`, `OrderServing`, `DeliveryStart`, `DeliveryComplete`, `OrderCompletion` 중 하나로 변경한다.
 - 생성한 `Order`의 목록을 조회한다.
 #### 정책
-- 생성된 `Order`는 `OrderStatus`가 `OrderWaiting`으로 설정된다.'
+- 생성된 `Order`는 `OrderStatus`가 `OrderWaiting`으로 설정된다.
 - `OrderType`은 `Eat In Order`, `Take Out Order`, `Ddelivery Order` 중 하나다.
 - `OrderStatus`는 `OrderWaiting`, `OrderAccept`, `OrderServing`, `DeliveryStart`, `DeliveryComplete`, `OrderCompletion` 중 하나다.
 - `OrderStatus`가 `OrderWaiting`일 경우만 `OrderAccept`로 변경할 수 있다.
