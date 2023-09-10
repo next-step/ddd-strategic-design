@@ -1,9 +1,9 @@
-package kitchenpos.eatinTable.application.port.in;
+package kitchenpos.eatinorder.application.port.in;
 
 import java.util.List;
 import java.util.UUID;
 
-import kitchenpos.eatinTable.domain.EatInTable;
+import kitchenpos.eatinorder.domain.EatInTable;
 
 public interface EatinTableUseCase {
 	EatInTable create(final EatInTable request);

@@ -1,10 +1,9 @@
-package kitchenpos.menu.adapter.in;
+package kitchenpos.eatinorder.adapter.in;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/menus")
+@RequestMapping("/api/eatin-tables")
 @RestController
-public class MenuRestController {
-
+public class EatinTableRestController {
 }

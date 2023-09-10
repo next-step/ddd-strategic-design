@@ -1,5 +1,4 @@
 package kitchenpos.deliveryorder.domain;
 
-public class DeliveryOrderLineItem {
-
+public class OrderLineItem {
 }
