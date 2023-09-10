@@ -1,7 +1,7 @@
 package kitchenpos.application.order;
 
-import kitchenpos.takeoutorder.domain.TakeOutOrder;
-import kitchenpos.takeoutorder.domain.TakeOutOrderRepository;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderRepository;
 
 import java.util.*;
 

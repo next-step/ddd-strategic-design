@@ -1,12 +1,12 @@
 package kitchenpos.Fixture;
 
-import kitchenpos.deliveryorder.domain.DeliveryOrder;
-import kitchenpos.deliveryorder.domain.DeliveryOrderStatus;
-import kitchenpos.eatinorder.domain.EatInOrder;
-import kitchenpos.eatinorder.domain.EatInOrderStatus;
-import kitchenpos.eatinorder.domain.OrderTable;
-import kitchenpos.takeoutorder.domain.TakeOutOrder;
-import kitchenpos.takeoutorder.domain.TakeOutOrderStatus;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
+import kitchenpos.order.eatinorder.domain.OrderTable;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

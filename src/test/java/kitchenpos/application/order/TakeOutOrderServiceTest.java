@@ -2,11 +2,11 @@ package kitchenpos.application.order;
 
 import kitchenpos.application.InMemoryMenuRepository;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.takeoutorder.application.TakeOutOrderService;
-import kitchenpos.takeoutorder.domain.OrderLineItem;
-import kitchenpos.takeoutorder.domain.TakeOutOrder;
-import kitchenpos.takeoutorder.domain.TakeOutOrderRepository;
-import kitchenpos.takeoutorder.domain.TakeOutOrderStatus;
+import kitchenpos.order.takeoutorder.application.TakeOutOrderService;
+import kitchenpos.order.common.domain.OrderLineItem;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderRepository;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
