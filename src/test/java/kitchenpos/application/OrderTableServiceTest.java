@@ -1,10 +1,10 @@
 package kitchenpos.application;
 
-import kitchenpos.order.domain.OrderRepository;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.orderTable.application.OrderTableService;
-import kitchenpos.orderTable.domain.OrderTable;
-import kitchenpos.orderTable.domain.OrderTableRepository;
+import kitchenpos.orderEatIn.application.OrderTableService;
+import kitchenpos.orderEatIn.domain.OrderEatInRepository;
+import kitchenpos.orderEatIn.domain.OrderEatInStatus;
+import kitchenpos.orderEatIn.domain.OrderTable;
+import kitchenpos.orderEatIn.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.List;
 import java.util.UUID;
 
-import static kitchenpos.Fixtures.order;
+import static kitchenpos.Fixtures.orderEatIn;
 import static kitchenpos.Fixtures.orderTable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class OrderTableServiceTest {
     private OrderTableRepository orderTableRepository;
-    private OrderRepository orderRepository;
+    private OrderEatInRepository orderRepository;
     private OrderTableService orderTableService;
 
     @BeforeEach
     void setUp() {
         orderTableRepository = new InMemoryOrderTableRepository();
-        orderRepository = new InMemoryOrderRepository();
+        orderRepository = new InMemoryOrderEatInRepository();
         orderTableService = new OrderTableService(orderTableRepository, orderRepository);
     }
 
@@ -80,7 +80,7 @@ class OrderTableServiceTest {
     void clearWithUncompletedOrders() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
         final UUID orderTableId = orderTable.getId();
-        orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
+        orderRepository.save(orderEatIn(OrderEatInStatus.ACCEPTED, orderTable));
         assertThatThrownBy(() -> orderTableService.clear(orderTableId))
             .isInstanceOf(IllegalStateException.class);
     }
