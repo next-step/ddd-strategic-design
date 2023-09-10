@@ -156,19 +156,26 @@ docker compose -p kitchenpos up -d
 
 ## 모델링
 ### 메뉴(Menu)
-* ```Menu```는 등록할 수 있다.
+#### 속성
 * ```Menu Group Name```은 필수로 존재해야 한다.
-* ```Menu```는 메뉴들을 그룹화하는 ```Menu Group```을 필수로 갖는다.
 * ```Menu```는 1개 이상의 ```Menu Product```들로 이루어져 있다.
+* ```Menu```는 메뉴들을 그룹화하는 ```Menu Group```을 필수로 갖는다.
+
+#### 기능
+* ```Menu```는 등록할 수 있다.
 * ```Menu Price```는 0원 이상이어야 한다.
 * ```Menu```가격은 ```Menu Product```들의 가격의 합보다 클 수 없다.
 * ```Menu Name```에는 ```Profanity```가 포함 돼서는 안된다.
 * ```Menu Price```는 변경할 수 있다.
 * ```Menu```는 ```Display```상태로 변경가능하다.
 * ```Menu```는 ```Hide```상태로 변경가능하다.
+* ```Menu Product```는 0개 이상이어야 한다.
 
 ### 매장 테이블(Order Table)
+#### 속성
 * ```Order Table```은 ```Order Table Name```을 필수로 갖는다.
+
+#### 기능
 * ```Order Table```은 ```Occupied```로 만들 수 있다.
 * ```Order Table```은 ```Unoccupied```로 만들 수 있다.
 * ```Number Of Guests```는 변경 가능하다.
@@ -176,10 +183,13 @@ docker compose -p kitchenpos up -d
 * ```Unoccupied Table```은 ```Number Of Guests```를 변경할 수 없다.
 
 ### 주문(Order)
-* ```Order```는 ```Delivery```, ```Take Out```, ```Eat In```이라는 ```Order Type```을 갖는다.
+#### 속성
 * ```Order```는 ```Menu```를 필수로 갖는다.
+* ```Order```는 ```Delivery```, ```Take Out```, ```Eat In```이라는 ```Order Type```을 갖는다.
 * ```Order Type```이 ```Delivery```인 ```Order```은  ```Waiting```, ```Accepted```, ```Served```, ```Deviering```, ```Delivered```, ```Complted```인 ```Order Status```를 갖는다
-* ```Order Type```이 ```Take Out```와 ```Eat In```인 ```Order```은  ```Waiting```, ```Accepted```, ```Served```, ```Completed```인 ```Order Status```를 갖는다
+* ```Order Type```이 ```Take Out```와 ```Eat In```인 ```Order```은  ```Waiting```, ```Accepted```, ```Served```, ```Completed```인 ```Order Status```를 갖는다.
+
+#### 기능
 * ```Eat In```의 ```Order Line Item```은 0개 미만일 수 있다.
 * ```Delivey```와 ```Take Out```의 ```Order Line Item```은 0개 이상이어야 한다.
 * ```Order Table```이 ```Unoccupied Table```라면 ```Eat In```인 ```Order```을 할 수 없다.
@@ -194,6 +204,11 @@ docker compose -p kitchenpos up -d
 * ```Completed```가 되면 ```Order Table```은 ```Unoccupied Table```이 된다.
 
 ### 상품(Product)
+#### 속성
+* ```Product```는 ```Product Name```을 필수로 갖는다.
+* ```Product```는 ```Product Price```를 필수로 갖는다.
+
+#### 기능
 * ```Product Name```에는 ```Profanity```가 포함되서는 안된다.
 * ```Product Price```는 0원 이상이어야 한다.
 * ```Product Price```는 변경할 수 있다.
