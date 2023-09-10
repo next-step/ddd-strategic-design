@@ -1,6 +1,7 @@
 package kitchenpos.product.adapter.in;
 
 import kitchenpos.product.application.ProductService;
+import kitchenpos.product.application.port.in.ProductUseCase;
 import kitchenpos.product.domain.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ import java.util.UUID;
 @RestController
 class ProductRestController {
     private final ProductService productService;
+
+    // TODO: ProductService 를 ProductUseCase 로 대체
+    private final ProductUseCase productUseCase = null;
 
     public ProductRestController(final ProductService productService) {
         this.productService = productService;
