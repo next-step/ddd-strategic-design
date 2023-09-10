@@ -13,12 +13,12 @@ docker compose -p kitchenpos up -d
 
 - 상품을 등록할 수 있다.
 - 상품의 가격이 올바르지 않으면 등록할 수 없다.
-  - 상품의 가격은 0원 이상이어야 한다.
+    - 상품의 가격은 0원 이상이어야 한다.
 - 상품의 이름이 올바르지 않으면 등록할 수 없다.
-  - 상품의 이름에는 비속어가 포함될 수 없다.
+    - 상품의 이름에는 비속어가 포함될 수 없다.
 - 상품의 가격을 변경할 수 있다.
 - 상품의 가격이 올바르지 않으면 변경할 수 없다.
-  - 상품의 가격은 0원 이상이어야 한다.
+    - 상품의 가격은 0원 이상이어야 한다.
 - 상품의 가격이 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다.
 - 상품의 목록을 조회할 수 있다.
 
@@ -26,7 +26,7 @@ docker compose -p kitchenpos up -d
 
 - 메뉴 그룹을 등록할 수 있다.
 - 메뉴 그룹의 이름이 올바르지 않으면 등록할 수 없다.
-  - 메뉴 그룹의 이름은 비워 둘 수 없다.
+    - 메뉴 그룹의 이름은 비워 둘 수 없다.
 - 메뉴 그룹의 목록을 조회할 수 있다.
 
 ### 메뉴
@@ -35,14 +35,14 @@ docker compose -p kitchenpos up -d
 - 상품이 없으면 등록할 수 없다.
 - 메뉴에 속한 상품의 수량은 0 이상이어야 한다.
 - 메뉴의 가격이 올바르지 않으면 등록할 수 없다.
-  - 메뉴의 가격은 0원 이상이어야 한다.
+    - 메뉴의 가격은 0원 이상이어야 한다.
 - 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
 - 메뉴는 특정 메뉴 그룹에 속해야 한다.
 - 메뉴의 이름이 올바르지 않으면 등록할 수 없다.
-  - 메뉴의 이름에는 비속어가 포함될 수 없다.
+    - 메뉴의 이름에는 비속어가 포함될 수 없다.
 - 메뉴의 가격을 변경할 수 있다.
 - 메뉴의 가격이 올바르지 않으면 변경할 수 없다.
-  - 메뉴의 가격은 0원 이상이어야 한다.
+    - 메뉴의 가격은 0원 이상이어야 한다.
 - 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
 - 메뉴를 노출할 수 있다.
 - 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 노출할 수 없다.
@@ -53,13 +53,13 @@ docker compose -p kitchenpos up -d
 
 - 주문 테이블을 등록할 수 있다.
 - 주문 테이블의 이름이 올바르지 않으면 등록할 수 없다.
-  - 주문 테이블의 이름은 비워 둘 수 없다.
+    - 주문 테이블의 이름은 비워 둘 수 없다.
 - 빈 테이블을 해지할 수 있다.
 - 빈 테이블로 설정할 수 있다.
 - 완료되지 않은 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다.
 - 방문한 손님 수를 변경할 수 있다.
 - 방문한 손님 수가 올바르지 않으면 변경할 수 없다.
-  - 방문한 손님 수는 0 이상이어야 한다.
+    - 방문한 손님 수는 0 이상이어야 한다.
 - 빈 테이블은 방문한 손님 수를 변경할 수 없다.
 - 주문 테이블의 목록을 조회할 수 있다.
 
@@ -73,7 +73,7 @@ docker compose -p kitchenpos up -d
 - 매장 주문은 주문 항목의 수량이 0 미만일 수 있다.
 - 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다.
 - 배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다.
-  - 배달 주소는 비워 둘 수 없다.
+    - 배달 주소는 비워 둘 수 없다.
 - 빈 테이블에는 매장 주문을 등록할 수 없다.
 - 숨겨진 메뉴는 주문할 수 없다.
 - 주문한 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
@@ -220,3 +220,76 @@ docker compose -p kitchenpos up -d
 | 비속어   | profanity     | 상스럽고 거친 용어         |
 
 ## 모델링
+
+### 상품 (`Product`)
+
+#### 상품 (`Product`) - 속성
+- `Product` 는 `name`과 `price`를 가진다.
+    - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
+    - `price`는 반드시 필요하고 0보다 커야 한다.
+
+#### 상품 (`Product`) - 유스케이스
+- 관리자는 `Product`를 생성할 수 있다.
+    - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
+- 관리자는 `Product`의 가격을 수정할 수 있다.
+    - 해당 `Product`가 `MenuProduct`로 포함된 모든 `Menu`에 대해 아래 검증을 진행한다.
+        - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합보다 더 크면 비노출한다.
+
+### 메뉴 (`Menu`)
+
+#### 메뉴 구성 상품 (`MenuProduct`)
+
+##### 메뉴 구성 상품 (`MenuProduct`) - 속성
+- `MenuProduct`는 `Product`와 `quantity`를 가진다.
+    - `Product`는 반드시 필요하다.
+    - `quantity`는 반드시 필요하고 0보다 커야 한다.
+
+#### 메뉴 (`Menu`) - 속성
+- `Menu` 는 `name`, `price`, `MenuGroup`, `menuProducts`,`displayed`를 가진다.
+    - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
+    - `price`는 반드시 필요하고 0보다 커야 한다.
+    - `menuProducts`는 반드시 필요하고 1개 이상이어야 한다.
+    - `menuGroup`은 반드시 필요하고 하나의 `MenuGroup`에 포함되어야 한다.
+    - `displayed`는 반드시 필요하고 노출 or 숨김이 가능하다.
+
+#### 메뉴 (`Menu`) - 유스케이스
+- 관리자는 `Menu`를 생성할 수 있다.
+    - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
+    - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
+- 관리자는 `Menu`의 `price`를 수정할 수 있다.
+    - 변경되는 `Menu`의 `price`보다 `Menu`의 `price`보다 `MenuProduct` 의 `price`와 `quantity`의 곱에 총합이 더 커야 한다.
+- 관리자는 `Menu`를 노출할 수 있다.
+    - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
+
+### 메뉴 그룹 (`MenuGroup`)
+
+#### 메뉴 그룹 (`MenuGroup`) - 속성
+- `MenuGroup`은 `name`을 가진다.
+    - `name`은 반드시 필요하다.
+
+#### 메뉴 그룹 (`MenuGroup`) - 유스케이스
+- 관리자는 `MenuGroup`을 생성할 수 있다.
+
+### 주문 테이블(`OrderTable`)
+
+#### 주문 테이블 (`OrderTable`) - 속성
+- `OrderTable`은 `name`, `numberOfGuests`, `occupied`를 가진다.
+    - `name`은 반드시 필요하다.
+    - `numberOfGuests`는 반드시 필요하다.
+    - `occupied`는 반드시 필요하고 `true` or `false` 중 하나이다.
+        - `true`는 착석(`sit`), `false`는 정리(`clear`) 되어 비어있음을 의미한다.
+
+#### 주문 테이블 (`OrderTable`) - 유스케이스
+- 관리자는 `OrderTable`을 생성할 수 있다.
+    - `numberOfGuests`는 0으로, `occupied`는 `false`로 생성된다.
+- 관리자는 `OrderTable`를 `sit` 처리할 수 있다.
+    - `OrderTable`의 `occupied`가 `true`로 변경된다.
+- 관리자는 `OrderTable`를 `clear` 처리할 수 있다.
+    - `OrderTable`를 이용 중인 `Order`가 `COMPLETED` 상태가 아니면 `clear`할 수 없다.
+    - `OrderTable`의 `occupied`가 `false`로 변경된다.
+    - `OrderTable`의 `numberOfGuests`가 0으로 변경된다..
+- 관리자는 `OrderTable`의 `numberOfGuests`를 변경할 수 있다.
+    - 변경할 `numberOfGuests`는 0 이상 이어야 한다.
+    - `OrderTable`이 `sit` 상태가 아니면 `numberOfGuests`를 변경할 수 없다.
+
+### 주문(`order`)
