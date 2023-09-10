@@ -155,3 +155,115 @@ docker compose -p kitchenpos up -d
 | 포장 주문 | Take Out Order | 포장해서 가져가는 주문                |
 
 ## 모델링
+### 상품
+#### 속성
+- `Product`는 식별자를 가진다.
+- `Product`는 `Product Name`을 가진다.
+- `Product`는 `Product Price`를 가진다.
+#### 행위
+- `Product`를 생성한다.
+- `Product Price`를 변경한다.
+- 생성한 `Product` 목록을 조회한다.
+#### 정책
+- `Product Name`은 비워두거나 `Profanity`를 포함할 수 없다.
+- `Product Price`는 0원 이상이어야 한다.
+
+### 메뉴 그룹
+#### 속성
+- `MenuGroup`은 식별자를 가진다.
+- `MenuGroup`은 `MenuGroup Name`을 가진다.
+#### 행위
+- `MenuGroup`을 생성한다.
+- 생성한 `MenuGroup`의 목록을 조회한다.
+#### 정책
+- `MenuGroup Name`은 비워둘 수 없다.
+
+### 메뉴
+#### 속성
+- `Menu`는 식별자를 가진다.
+- `Menu`는 `Menu Name`을 가진다.
+- `Menu`는 `Menu Price`를 가진다.
+- `Menu`는 `MenuGroup`을 가진다.
+- `Menu`는 `노출 여부`를 가진다.
+- `Menu`는 `MenuProduct`를 가진다.
+- `MenuProduct`는 식별자를 가진다.
+- `MenuProduct`는 `Product`를 가진다.
+- `MenuProduct`는 `Quantity`를 가진다.
+#### 행위
+- `Menu`를 생성한다.
+- `Menu Price`를 변경한다.
+- `Menu`를 노출한다.
+- `Menu`를 숨긴다.
+- 생성한 `Menu`의 목록을 조회한다.
+#### 정책
+- `Menu Price`는 0원 이상이어야 한다.
+- `Menu Name`은 비워두거나 `Profanity`를 포함할 수 없다.
+- `Menu`는 하나의 `MenuGroup`에 속해야 한다.
+- `Menu`는 `MenuProduct`를 1개 이상 가지고 있어야 한다.
+- `MenuProduct`의 'Quantity`는 0개 이상이어야 한다.
+- `Menu Price`는 `MenuProduct`의 가격의 합보다 적거나 같아야 한다.
+- `Menu Price`가 `MenuProduct`의 가격의 합보다 크면 `NotDisplayedMenu`로 설정된다.
+
+### 주문 - 공통
+#### 속성
+- `Order`는 식별자를 가진다.
+- `Order`는 `OrderType`을 가진다.
+- `Order`는 `OrderStatus`를 가진다.
+- `Order`는 `주문일시`를 가진다.
+- `Order`는 `OrderLineItem`을 가진다.
+- `OrderLineItem`은 식별자를 가진다.
+- `OrderLineItem`은 `Menu`를 가진다.
+- `OrderLineItem`은 `Price`를 가진다.
+#### 행위
+- `Order`를 생성한다.
+- `OrderStatus`를 `OrderWaiting`, `OrderAccept`, `OrderServing`, `DeliveryStart`, `DeliveryComplete`, `OrderCompletion` 중 하나로 변경한다.
+- 생성한 `Order`의 목록을 조회한다.
+#### 정책
+- 생성된 `Order`는 `OrderStatus`가 `OrderWaiting`으로 설정된다.'
+- `OrderType`은 `Eat In Order`, `Take Out Order`, `Ddelivery Order` 중 하나다.
+- `OrderStatus`는 `OrderWaiting`, `OrderAccept`, `OrderServing`, `DeliveryStart`, `DeliveryComplete`, `OrderCompletion` 중 하나다.
+- `OrderStatus`가 `OrderWaiting`일 경우만 `OrderAccept`로 변경할 수 있다.
+- `OrderStatus`가 `OrderAccept`일 경우만 `OrderServing`으로 변경할 수 있다.
+- `Menu Price`가 `OrderLineItem`의 `Price`와 같아야 주문할 수 있다.
+- `OrderLineItem`을 1개 이상 가지고 있어야 한다.
+
+### 주문 - 배달 주문
+#### 속성
+- `Order`는 `DeliveryAddress`를 가진다.
+#### 행위
+- `OrderStatus`를 `DeliveryStart`, `DeliveryComplete` 중 하나로 변경한다.
+- `DeliveryAgency`에 `DeliveryCall`을 한다.
+#### 정책
+- 배달 주문은 `OrderStatus`의 변경 순서가 `OrderWaiting` -> `OrderAccept` -> `OrderServing` -> `DeliveryStart` -> `DeliveryComplete` -> `OrderCompletion` 순이다.
+- 배달 주문은 `DeliveryAddress`를 비워둘 수 없다.
+- 배달 주문만 `DeliveryStart`로 설정할 수 있다.
+- 배달 주문만 `DeliveryCall`을 한다.
+- `OrderStatus`가 `OrderServing`일 경우만 `DeliveryStart`로 설정할 수 있다.
+- `OrderStatus`가 `DeliveryStart`일 경우만 `DeliveryComplete`로 설정할 수 있다.
+- `OrderStatus`가 `DeliveryComplete`일 경우만 `OrderCompletion`로 설정할 수 있다.
+- `OrderLineItem`의 수량은 0보다 작을 수 있다.
+
+### 주문 - 매장 주문
+#### 속성
+- `Order`는 `OrderTable`을 가진다.
+- `OrderTable`은 식별자를 가진다.
+- `OrderTable`은 `Order Table Name`을 가진다.
+- `OrderTable`은 `Table Occupancy Status`를 가진다.
+- `OrderTable`은 `Number Of Guests`를 가진다.
+#### 행위
+- `OrderTable`을 생성한다.
+- `OrderTable`의 `Number Of Guests`를 변경한다.
+- `OrderTable`을 `Occupancy Status`를 설정한다.
+#### 정책
+- 매장 주문은 `OrderStatus`의 변경 순서가 `OrderWaiting` -> `OrderAccept` -> `OrderServing` -> `OrderCompletion` 순이다.
+- `OrderStatus`가 `OrderServing`일 경우만 `OrderCompletion`으로 설정할 수 있다.
+- `OrderTable`의 `Order Table Name`은 비워둘 수 없다.
+- `OrderTable`의 `Number Of Guests`는 0 이상이어야 한다.
+
+### 주문 - 포장 주문
+#### 속성
+- `Order`는 `OrderType`이 `Take Out Order`일 경우 `Order Quantity`가 0 이상이어야 한다.
+#### 정책
+- 포장 주문은 `OrderStatus`의 변경 순서가 `OrderWaiting` -> `OrderAccept` -> `OrderServing` -> `OrderCompletion` 순이다.
+- `OrderStatus`가 `OrderServing`일 경우만 `OrderCompletion`로 변경할 수 있다.
+- `OrderLineItem`의 수량은 0보다 작을 수 있다.
