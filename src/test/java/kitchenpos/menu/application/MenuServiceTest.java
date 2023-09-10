@@ -10,7 +10,7 @@ import kitchenpos.menu.domain.MenuGroupRepository;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.product.domain.InMemoryProductRepository;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductRepository;
+import kitchenpos.product.adapter.out.persistence.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

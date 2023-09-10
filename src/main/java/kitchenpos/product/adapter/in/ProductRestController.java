@@ -1,4 +1,4 @@
-package kitchenpos.product.ui;
+package kitchenpos.product.adapter.in;
 
 import kitchenpos.product.application.ProductService;
 import kitchenpos.product.domain.Product;
@@ -9,9 +9,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+// TODO: Req, Res 클래스 사용
 @RequestMapping("/api/products")
 @RestController
-public class ProductRestController {
+class ProductRestController {
     private final ProductService productService;
 
     public ProductRestController(final ProductService productService) {

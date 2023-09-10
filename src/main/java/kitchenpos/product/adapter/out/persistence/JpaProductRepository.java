@@ -1,10 +1,10 @@
-package kitchenpos.product.domain;
+package kitchenpos.product.adapter.out.persistence;
 
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
+// TODO: public 접근 제어자 제거
 public interface JpaProductRepository extends ProductRepository, JpaRepository<Product, UUID> {
 }
