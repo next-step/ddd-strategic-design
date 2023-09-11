@@ -214,6 +214,7 @@ docker compose -p kitchenpos up -d
 - `OrderLineItem`은 식별자를 가진다.
 - `OrderLineItem`은 `Menu`를 가진다.
 - `OrderLineItem`은 `Price`를 가진다.
+- `OrderLineItem`은 `Quantity`를 가진다.
 #### 행위
 - `Order`를 생성한다.
 - `OrderStatus`를 `OrderWaiting`, `OrderAccept`, `OrderServing`, `DeliveryStart`, `DeliveryComplete`, `OrderCompletion` 중 하나로 변경한다.
@@ -241,7 +242,7 @@ docker compose -p kitchenpos up -d
 - `OrderStatus`가 `OrderServing`일 경우만 `DeliveryStart`로 설정할 수 있다.
 - `OrderStatus`가 `DeliveryStart`일 경우만 `DeliveryComplete`로 설정할 수 있다.
 - `OrderStatus`가 `DeliveryComplete`일 경우만 `OrderCompletion`로 설정할 수 있다.
-- `OrderLineItem`의 수량은 0보다 작을 수 있다.
+- `OrderLineItem`의 수량은 0개 이상이다.
 
 ### 주문 - 매장 주문
 #### 속성
@@ -259,6 +260,7 @@ docker compose -p kitchenpos up -d
 - `OrderStatus`가 `OrderServing`일 경우만 `OrderCompletion`으로 설정할 수 있다.
 - `OrderTable`의 `Order Table Name`은 비워둘 수 없다.
 - `OrderTable`의 `Number Of Guests`는 0 이상이어야 한다.
+- `OrderLineItem`의 수량은 0보다 작을 수 있다.
 
 ### 주문 - 포장 주문
 #### 속성
@@ -266,4 +268,4 @@ docker compose -p kitchenpos up -d
 #### 정책
 - 포장 주문은 `OrderStatus`의 변경 순서가 `OrderWaiting` -> `OrderAccept` -> `OrderServing` -> `OrderCompletion` 순이다.
 - `OrderStatus`가 `OrderServing`일 경우만 `OrderCompletion`로 변경할 수 있다.
-- `OrderLineItem`의 수량은 0보다 작을 수 있다.
+- `OrderLineItem`의 수량은 0개 이상이다.
