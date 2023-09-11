@@ -5,7 +5,7 @@ import kitchenpos.menus.domain.MenuGroup;
 import kitchenpos.menus.domain.MenuProduct;
 import kitchenpos.orders.domain.*;
 import kitchenpos.orders.eatin_orders.domain.OrderTable;
-import kitchenpos.product.domain.Product;
+import kitchenpos.products.domain.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
