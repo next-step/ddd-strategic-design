@@ -201,6 +201,7 @@ docker compose -p kitchenpos up -d
 - Product를 등록할 수 있다.
 - Name은 Profanity Check한다.
 - Price는 변경할 수 있다.
+  - Price가 변경될 때 해당 Product가 포함된 Menu의 Price가 Menu에 속한 Product Price의 총합보다 비싸진 경우 Menu를 Hide한다.
 
 ### MenuGroup (메뉴 그룹)
 #### 속성
@@ -213,6 +214,7 @@ docker compose -p kitchenpos up -d
 #### 속성
 - Name은 필수값이다.
 - Price는 0원 이상이어야 한다.
+  - Menu의 가격은 Menu에 속한 상품 금액의 합보다 작거나 같아야 한다.
 - Menu Group을 필수로 가진다.
 - Menu Product를 필수로 1개이상 가진다.
 - Menu Product의 Price의 총합보다 클 수 없다.
@@ -231,7 +233,7 @@ docker compose -p kitchenpos up -d
 - Name은 필수값이다.
 - Occupied를 가진다.
 - Number Of Guests를 가진다.
-- Number Of Guests는 1명 이상이어야 한다.
+- Number Of Guests는 0명 이상이어야 한다.
 
 #### 행위
 - OrderTable을 등록할 수 있다.
@@ -239,7 +241,8 @@ docker compose -p kitchenpos up -d
 - Clear 될 수 있다.
   - 식사를 완료했다면 clear할 수있다.
 - Number Of Guests를 변경할 수 있다.
-
+  - Clear 된 OrderTable은 Number Of Guests를 변경할 수 없다.
+  
 ### Order (주문)
 #### 속성
 - OrderType을 가진다.
