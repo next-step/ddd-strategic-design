@@ -111,14 +111,14 @@ docker compose -p kitchenpos up -d
 | 메뉴 그룹 목록 | Menu Group List | 등록되어 있는 메뉴 그룹의 목록     |
 
 ### 메뉴 (Menu)
-| 한글명   | 영문명        | 설명                            |
-|-------|------------|-------------------------------|
-| 메뉴    | Menu       | 주문을 위한 최소 단위                  |
-| 메뉴 상품 | Menu Item  | 메뉴에 묶여 있는 상품              |
-| 메뉴 가격 | Menu Price | 메뉴의 개당 가격으로 주문 할 때 지불해야 하는 금액 |
-| 메뉴 노출 | Show Menu  | 주문을 할 수 있는 메뉴                 |
-| 메뉴 숨김 | Hide Menu  | 주문을 할 수 없는 메뉴                 |
-| 메뉴 목록 | Menu List  | 등록되어 있는 메뉴 목록                 |
+| 한글명   | 영문명          | 설명                            |
+|-------|--------------|-------------------------------|
+| 메뉴    | Menu         | 주문을 위한 최소 단위                  |
+| 메뉴 상품 | Menu Product | 메뉴에 묶여 있는 상품              |
+| 메뉴 가격 | Menu Price   | 메뉴의 개당 가격으로 주문 할 때 지불해야 하는 금액 |
+| 메뉴 노출 | Show Menu    | 주문을 할 수 있는 메뉴                 |
+| 메뉴 숨김 | Hide Menu    | 주문을 할 수 없는 메뉴                 |
+| 메뉴 목록 | Menu List    | 등록되어 있는 메뉴 목록                 |
 
 ### 주문 테이블 (Order Table)
 | 한글명       | 영문명              | 설명                     |
@@ -129,15 +129,16 @@ docker compose -p kitchenpos up -d
 | 주문 테이블 목록 | Order Table List | 등록되어 있는 주문 테이블 목록      |
 
 ### 주문 (Order)
-| 한글명   | 영문명         | 설명                                    |
-|-------|-------------|---------------------------------------|
-| 주문    | Order       | 메뉴를 접수하는 단위                           |
-| 주문 가격 | Order Price | 메뉴 가격의 합                              |
-| 주문 유형 | Order Type  | 메뉴가 손님에게 전달되는 방법으로 매장, 포장, 배달 주문이 있다. |
-| 매장 주문 | Eat In      | 매장에 방문하여 메뉴를 주문하는 유형                  |
-| 포장 주문 | Take Out    | 매장에서 메뉴를 받아가는 주문 유형                   |
-| 배달 주문 | Delivery    | 원하는 배달 장소에서 메뉴를 받는 주문 유형              |
-| 주문 목록 | Order List  | 등록되어 있는 주문 목록                         |
+| 한글명   | 영문명                 | 설명                                    |
+|-------|---------------------|---------------------------------------|
+| 주문    | Order               | 메뉴를 접수하는 단위                           |
+| 주문 가격 | Order Price         | 메뉴 가격의 합                              |
+| 주문 유형 | Order Type          | 메뉴가 손님에게 전달되는 방법으로 매장, 포장, 배달 주문이 있다. |
+| 매장 주문 | Eat In              | 매장에 방문하여 메뉴를 주문하는 유형                  |
+| 포장 주문 | Take Out            | 매장에서 메뉴를 받아가는 주문 유형                   |
+| 배달 주문 | Delivery            | 원하는 배달 장소에서 메뉴를 받는 주문 유형              |
+| 주문 목록 | Order List          | 등록되어 있는 주문 목록                         |
+| 주문 항목 | Order Line Item | 주문된 메뉴 상품의 목록                         |
 
 ### 매장 주문 (Eat In)
 | 한글명 | 영문명 | 설명 |
@@ -195,9 +196,9 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - `Menu`는 이름을 가져야 하고, `Profanity`가 포함될 수 없다.
-- `Menu`는 `Menu Price`를 가져야 하며, 0원 이상이어야 한다.
-- `Menu`는 `Product`을 1개 이상 가져야 하고, `Product`의 수량은 0 이상이어야 한다.
-- `Menu Price`는 `Prouct Price` 합보다 작거나 같아야 한다.
+- `Menu` `Menu Price`를 가져야 하며, 0원 이상이어야 한다.
+- `Menu`는 `Menu Product`을 1개 이상 가져야 하고, `Menu Product`의 수량은 0 이상이어야 한다.
+- `Menu Price`는 `Menu Product`의 `Prouct Price` 합보다 작거나 같아야 한다.
 - `Menu`는 `Menu Group`에 속해야 한다.
 - `Menu`는 `Show Menu` 또는 `Hide Menu`에 속해야 한다.
 
@@ -216,7 +217,7 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - `Order Table`은 이름을 가져야 한다.
-- `Number Of Guests`는 0 이상이어야 한다.
+- `Number Of Guests`는 0명 이상이어야 한다.
 - `Empty Table`은 `Number Of Guests`를 변경할 수 없다.
 - `Completed` 되지 않은 `Order`이 없어야 `Empty Table`로 변경할 수 있다.
 
@@ -231,7 +232,7 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - `Order`는 `Menu`를 1개 이상 가져야 한다.
-- `Order`의 `Menu`에 속하는 `Product`의 수량은 0 이상 가져야 한다.
+- `Order`의 `Order Line Item`의 수량은 0 이상 가져야 한다.
 - `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order Price`는 `Menu Price`의 합과 일치해야 한다.
 - `Empty Table`에서 `Eat In` `Order`를 접수 할 수 없다.
