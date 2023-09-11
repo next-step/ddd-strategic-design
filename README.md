@@ -124,16 +124,16 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴 용어 사전
 
-| 한글명      | 영문명          | 설명                                                       |
-|----------|--------------|----------------------------------------------------------|
-| 메뉴       | menu         | 키친포스에서 판매되는 메뉴로 하나의 메뉴 그룹에 속하고 한 개 이상의 메뉴 구성 상품으로 구성됩니다. |
-| 이름    | name    | 메뉴의 이름                                                   |
-| 가격    | price   | 메뉴가 판매되고 있는 금액                                           |
-| 노출 여부    | displayed    | 메뉴가 고객에게 공개되어 조회 및 주문 할 수 있는지 여부.                        |
-| 노출       | display      | 메뉴가 고객에게 공개되어 조회 및 주문 할 수 있게 하는 것.                       |
-| 숨김       | hide         | 메뉴가 고객에게 비공개되어 조회 및 주문 할 수 없게 하는 것.                      |
-| 등록       | create       | 새로운 데이터를 추가하는 것.                                         |
-| 가격 변경    | change price | 메뉴가 고객에게 판매되는 가격을 변경하는 것.                                |
+| 한글명   | 영문명          | 설명                                                       |
+|-------|--------------|----------------------------------------------------------|
+| 메뉴    | menu         | 키친포스에서 판매되는 메뉴로 하나의 메뉴 그룹에 속하고 한 개 이상의 메뉴 구성 상품으로 구성됩니다. |
+| 이름    | name         | 메뉴의 이름                                                   |
+| 가격    | price        | 메뉴가 판매되고 있는 금액                                           |
+| 노출 여부 | displayed    | 메뉴가 고객에게 공개되어 조회 및 주문 할 수 있는지 여부.                        |
+| 노출    | display      | 메뉴가 고객에게 공개되어 조회 및 주문 할 수 있게 하는 것.                       |
+| 숨김    | hide         | 메뉴가 고객에게 비공개되어 조회 및 주문 할 수 없게 하는 것.                      |
+| 등록    | create       | 새로운 데이터를 추가하는 것.                                         |
+| 가격 변경 | change price | 메뉴가 고객에게 판매되는 가격을 변경하는 것.                                |
 
 #### 메뉴 - 메뉴 구성 상품 용어 사전
 
@@ -144,32 +144,32 @@ docker compose -p kitchenpos up -d
 
 ### 주문 테이블 용어사전
 
-| 한글명    | 영문명                     | 설명                                 |
-|--------|-------------------------|------------------------------------|
-| 주문 테이블 | order table             | 주문 유형이 매장식사일 때, 고객분이 식사하는 테이블  |
-| 이름     | name                    | 주문 테이블의 이름                         |
-| 인원수    | number of guests        | 주문 테이블에 앉아있는 고객 수                  |
-| 착석 여부  | occupied                | 주문 테이블이 현재 사용 중인지 여부.              |
-| 빈 테이블  | empty table             | 테이블에 착석한 고객이 없는 상태                 |
-| 착석     | sit                     | 매장 식사를 원하는 고객이 앉을 수 있게 한다.         |
+| 한글명    | 영문명                     | 설명                                  |
+|--------|-------------------------|-------------------------------------|
+| 주문 테이블 | order table             | 주문 유형이 매장식사일 때, 고객분이 식사하는 테이블       |
+| 이름     | name                    | 주문 테이블의 이름                          |
+| 인원수    | number of guests        | 주문 테이블에 앉아있는 고객 수                   |
+| 착석 여부  | occupied                | 주문 테이블이 현재 사용 중인지 여부.               |
+| 빈 테이블  | empty table             | 테이블에 착석한 고객이 없는 상태                  |
+| 착석     | sit                     | 매장 식사를 원하는 고객이 앉을 수 있게 한다.          |
 | 정리     | clear                   | 매장 식사가 끝나서 주문 테이블을 정리해서 빈 테이블로 만든다. |
-| 인원수 변경 | change number of guests | 주문 테이블에 앉아있는 고객 수를 변경하는 것.         |          
-| 등록     | create                  | 새로운 주문 테이블을 추가하는 것.                |
+| 인원수 변경 | change number of guests | 주문 테이블에 앉아있는 고객 수를 변경하는 것.          |          
+| 등록     | create                  | 새로운 주문 테이블을 추가하는 것.                 |
 
 ### 주문 용어 사전
 
-| 한글명      | 영문명              | 설명                                                   |
-|----------|------------------|------------------------------------------------------|
-| 주문       | order            | 노출 중인 메뉴에 대해 판매가 발생한 것. 한 개 이상의 주문 품목으로 구성됩니다.       |
-| 주문 유형    | order type       | 고객에 주문된 메뉴를 얻는 방법                                    |
-| 주문 발생 시점 | order date time  | 주문이 발생한 시각                                           |
-| 매장식사     | eat in           | 주문 유형의 하나로, 주문된 메뉴를 매장의 주문 테이블에서 먹고 가는 것             |
-| 포장       | takeout          | 주문 유형의 하나로, 주문된 메뉴를 포장해서 가져가는 것                      |
-| 배달       | delivery         | 주문 유형의 하나로, 주문된 메뉴를 배달주소로 배달 하는 것                    |
-| 배달 주소    | delivery address | 고객에 배달 주문에 대해 배달을 요청한 주소                             |
-| 주문 상태    | order status     | 주문이 처리되는 과정에서의 상태를 나타내는 것                            |
-| 키친라이더 | kitchen rider | 키친 포스의 배달을 담당하는 업체                                   |
-| 라이더   | rider         | 주문을 배달하는 대상                                          |
+| 한글명      | 영문명              | 설명                                             |
+|----------|------------------|------------------------------------------------|
+| 주문       | order            | 노출 중인 메뉴에 대해 판매가 발생한 것. 한 개 이상의 주문 품목으로 구성됩니다. |
+| 주문 유형    | order type       | 고객에 주문된 메뉴를 얻는 방법                              |
+| 주문 발생 시점 | order date time  | 주문이 발생한 시각                                     |
+| 매장식사     | eat in           | 주문 유형의 하나로, 주문된 메뉴를 매장의 주문 테이블에서 먹고 가는 것       |
+| 포장       | takeout          | 주문 유형의 하나로, 주문된 메뉴를 포장해서 가져가는 것                |
+| 배달       | delivery         | 주문 유형의 하나로, 주문된 메뉴를 배달주소로 배달 하는 것              |
+| 배달 주소    | delivery address | 고객에 배달 주문에 대해 배달을 요청한 주소                       |
+| 주문 상태    | order status     | 주문이 처리되는 과정에서의 상태를 나타내는 것                      |
+| 키친라이더    | kitchen rider    | 키친 포스의 배달을 담당하는 업체                             |
+| 라이더      | rider            | 주문을 배달하는 대상                                    |
 
 #### 주문 - 주문 유형 별 주문 상태 용어 사전
 
@@ -212,23 +212,24 @@ docker compose -p kitchenpos up -d
 | 가격    | price         | 주문이 발생한 시점에 메뉴의 가격 |
 | 개수    | quantity      | 주문된 메뉴의 개수         |
 
-
 ### 기타 용어 사전
 
-| 한글명   | 영문명           | 설명                 |
-|-------|---------------|--------------------|
-| 비속어   | profanity     | 상스럽고 거친 용어         |
+| 한글명 | 영문명       | 설명         |
+|-----|-----------|------------|
+| 비속어 | profanity | 상스럽고 거친 용어 |
 
 ## 모델링
 
 ### 상품 (`Product`)
 
 #### 속성
+
 - `Product` 는 `name`과 `price`를 가진다.
     - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
     - `price`는 반드시 필요하고 0보다 커야 한다.
 
 #### 유스케이스
+
 - 관리자는 `Product`를 생성할 수 있다.
     - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
 - 관리자는 `Product`의 가격을 수정할 수 있다.
@@ -236,20 +237,22 @@ docker compose -p kitchenpos up -d
         - `Menu`의 `price`보다 `MenuProduct`의 `Product.price`와 `quantity`의 곱에 총합보다 더 크면 비노출한다.
 - 관리자는 `Product`를 조회할 수 있다.
 
-
 ### 메뉴 구성 상품 (`MenuProduct`)
 
 #### 속성
+
 - `MenuProduct`는 `product`와 `quantity`를 가진다.
     - `product`는 반드시 필요하다.
     - `quantity`는 반드시 필요하고 0보다 커야 한다.
 
 #### 유스케이스
+
 - `MenuProduct`는 `Menu`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
 
 ### 메뉴 (`Menu`)
 
 #### 속성
+
 - `Menu` 는 `name`, `price`, `menuGroup`, `menuProducts`,`displayed`를 가진다.
     - `name`은 반드시 필요하고 비속어가 포함될 수 없다.
     - `price`는 반드시 필요하고 0보다 커야 한다.
@@ -259,6 +262,7 @@ docker compose -p kitchenpos up -d
         - `true`는 노출(`display`), `false`는 숨김(`hide`) 상태임을 의미한다.
 
 #### 유스케이스
+
 - 관리자는 `Menu`를 생성할 수 있다.
     - 비속어 검증기로 `name`에 비속어 포함 여부를 확인해야 한다.
     - `Menu`의 `price`보다 `menuProducts`의 `Product.price`와 `quantity`의 곱에 총합이 더 커야 한다.
@@ -272,16 +276,19 @@ docker compose -p kitchenpos up -d
 ### 메뉴 그룹 (`MenuGroup`)
 
 #### 속성
+
 - `MenuGroup`은 `name`을 가진다.
     - `name`은 반드시 필요하다.
 
 #### 유스케이스
+
 - 관리자는 `MenuGroup`을 생성할 수 있다.
 - 관리자는 `MenuGroup`을 조회할 수 있다.
 
 ### 주문 테이블(`OrderTable`)
 
 #### 속성
+
 - `OrderTable`은 `name`, `numberOfGuests`, `occupied`를 가진다.
     - `name`은 반드시 필요하다.
     - `numberOfGuests`는 반드시 필요하다.
@@ -289,6 +296,7 @@ docker compose -p kitchenpos up -d
         - `true`는 착석(`sit`), `false`는 정리(`clear`) 되어 비어있음을 의미한다.
 
 #### 유스케이스
+
 - 관리자는 `OrderTable`을 생성할 수 있다.
     - `numberOfGuests`는 0으로, `occupied`는 `false`로 생성된다.
 - 관리자는 `OrderTable`를 `sit` 처리할 수 있다.
@@ -305,6 +313,7 @@ docker compose -p kitchenpos up -d
 ### 주문 품목(`OrderLineItem`)
 
 #### 속성
+
 - `OrderLineItem`은 `menu`, `quantity`, `price`를 가진다.
     - `Menu`는 반드시 필요하다.
     - `quantity`는 반드시 필요하다.
@@ -312,78 +321,19 @@ docker compose -p kitchenpos up -d
     - `menu`는 `display` 상태여야 한다.
 
 #### 유스케이스
+
 - `OrderLineItem`는 `Order`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
   - 
+
 ### 주문(`Order`)
-- `Order`은 `type`에 따라 속성과 유스케이스가 조금씩 차이가 나므로 별도로 분리해서 정리한다.
-    - `type`은 다음과 같다.
-        - `EAT_IN` : 매장 식사
-        - `TAKE_OUT` : 포장
-        - `DELIVERY` : 배달
 
-#### 주문 (`Order`) - EAN_IN - 속성
-- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `orderTable`를 가진다.
-    - `type`은 `EAT_IN`이다.
-    - `status`는 반드시 필요하고 아래 목록 중 하나이다.
-        - `WAITING`
-        - `ACCEPTED`
-        - `SERVED`
-        - `COMPLETED`
-    - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
-    - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
-    - `orderTable`은 반드시 필요하다.
+#### 주문 (`Order`) - 속성
 
-#### 주문 (`Order`) - EAN_IN - 유스케이스
-- 관리자는 `Order`를 생성할 수 있다.
-    - `status`는 `WAITING`으로 생성된다.
-    - `orderDateTime`은 생성한 시점으로 생성된다.
-    - `type`은 반드시 필요하다.
-    - `orderLineItmes`은 하나 이상 있어여 한다.
-    - 한 개의 `orderTable`를 `sit` 해야 한다.
-- 관리자는 `Order`를 `accept` 할 수 있다.
-    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
-    - `status`가 `ACCEPTED`로 변경된다.
-- 관리자는 `Order`를 `serve` 할 수 있다.
-    - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
-- 관리자는 `Order`를 `complete`할 수 있다.
-    - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
-    - 대상 `Order`와 연관된 `orderTable`이 존재하지 않는 경우 해당 `orderTable`의 `numberOfGuests`를 0으로 변경하고 `clear`한다.
-    - `status`가 `COMPLETED`로 변경된다.
-- 관리자는 `Order`을 조회할 수 있다.
-
-
-#### 주문 (`Order`) - TAKEOUT - 속성
-- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`를 가진다.
-    - `type`은 `TAKEOUT`이다.
-    - `status`는 반드시 필요하고 아래 목록 중 하나이다.
-        - `WAITING`
-        - `ACCEPTED`
-        - `SERVED`
-        - `COMPLETED`
-    - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
-    - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
-
-#### 주문 (`Order`) - TAKEOUT - 유스케이스
-- 관리자는 `Order`를 생성할 수 있다.
-    - `status`는 `WAITING`으로 생성된다.
-    - `orderDateTime`은 생성한 시점으로 생성된다.
-    - `type`은 반드시 필요하다.
-    - `orderLineItems`은 하나 이상 있어여 한다.
-    - `orderLineItems`의 개수는 한 개 이상 이어야 있다.
-- 관리자는 `Order`를 `accept` 할 수 있다.
-    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
-    - `status`가 `ACCEPTED`로 변경된다.
-- 관리자는 `Order`를 `serve` 할 수 있다.
-    - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
-- 관리자는 `Order`를 `complete`할 수 있다.
-    - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
-    - `status`가 `COMPLETED`로 변경된다.
-- 관리자는 `Order`을 조회할 수 있다.
-
-
-#### 주문 (`Order`) - DELIVERY - 속성
-- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `deliveryAddress`를 가진다.
-    - `type`은 `DELIVERY`이다.
+- `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `orderTable`, `deliveryAddress`를 가진다.
+    - `type`은 반드시 필요하고 아래 목록 중 하나이다.
+        - `EAT_IN`
+        - `TAKE_OUT`
+        - `DELIVERY`
     - `status`는 반드시 필요하고 아래 목록 중 하나이다.
         - `WAITING`
         - `ACCEPTED`
@@ -393,29 +343,41 @@ docker compose -p kitchenpos up -d
         - `COMPLETED`
     - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
     - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
-    - `deliveryAddress`은 반드시 필요하다.
-    -
-#### 주문 (`Order`) - DELIVERY - 유스케이스
+    - `type`에 따라 아래 항목 필수적이다.
+        - type이 `EAT_IN`인 경우, `orderTable`이 반드시 필요하다.
+        - type이 `DELIVERY`인 경우, `deliveryAddress`이 반드시 필요하다.
+
+#### 주문 (`Order`) - 유스케이스
+
 - 관리자는 `Order`를 생성할 수 있다.
     - `status`는 `WAITING`으로 생성된다.
     - `orderDateTime`은 생성한 시점으로 생성된다.
     - `type`은 반드시 필요하다.
     - `orderLineItmes`은 하나 이상 있어여 한다.
-    - `orderLineItmes`의 개수는 한 개 이상 이어야 있다.
-    - `deliveryAddress`가 반드시 필요하다.
+    - `type`에 따라 아래 사항이 준수되어야 한다.
+        - `EAT_IN`인 경우 `orderTable`을 반드시 `sit` 해야한다.
+        - `DELIVERY`인 경우 `deliveryAddress`가 반드시 필요하다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
     - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
-    - `kitchenRiders`에 배달 요청이 된다.
     - `status`가 `ACCEPTED`로 변경된다.
+    - `type`에 따라 아래 사항이 준수되어야 한다.
+        - `DELIVERY`인 경우 `kitchenRiders`에 배달 요청이 된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
     - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `startDelivery`할 수 있다.
+    - `type`이 `DELIVERY`인 경우에만 가능하다.
     - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
     - `status`가 `DELIVERING`로 변경된다.
 - 관리자는 `Order`를 `completeDelivery`할 수 있다.
+    - `type`이 `DELIVERY`인 경우에만 가능하다.
     - 대상 `Order`는 `status`가 `DELIVERING`이어야 한다.
     - `status`가 `DELIVERED`로 변경된다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-    - 대상 `Order`는 `status`가 `DELIVERED`이어야 한다.
+    - `type`에 따라 아래 사항이 준수되어야 한다.
+        - `type`이 `EAT_IN`인 경우,
+            - `status`가 `SERVED`이어야 한다.
+            - 대상 `Order`와 연관된 `orderTable`이 존재하지 않는 경우 `orderTable`이 `clear`된다.
+        - `type`이 `TAKEOUT`인 경우 `status`가 `SERVED`이어야 한다.
+        - `type`이 `DELIVERY`인 경우 `status`가 `DELIVERED`이어야 한다.
     - `status`가 `COMPLETED`로 변경된다.
 - 관리자는 `Order`을 조회할 수 있다.
