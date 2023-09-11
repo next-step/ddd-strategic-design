@@ -1,7 +1,11 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
 import kitchenpos.infra.PurgomalumClient;
+import menu.application.MenuService;
+import menu.domain.Menu;
+import menu.domain.MenuGroupRepository;
+import menu.domain.MenuProduct;
+import menu.domain.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +14,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import product.domain.Product;
+import product.domain.ProductRepository;
 
 import java.math.BigDecimal;
 import java.util.*;
