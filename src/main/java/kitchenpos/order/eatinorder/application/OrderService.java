@@ -1,21 +1,26 @@
-package kitchenpos.order.application;
+package kitchenpos.order.eatinorder.application;
 
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderRepository;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderTableRepository;
-import kitchenpos.order.domain.OrderType;
-import kitchenpos.order.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.order.deliveryorder.infra.KitchenridersClient;
+import kitchenpos.order.eatinorder.domain.Order;
+import kitchenpos.order.eatinorder.domain.OrderLineItem;
+import kitchenpos.order.eatinorder.domain.OrderRepository;
+import kitchenpos.order.eatinorder.domain.OrderStatus;
+import kitchenpos.order.eatinorder.domain.OrderTable;
+import kitchenpos.order.eatinorder.domain.OrderTableRepository;
+import kitchenpos.order.eatinorder.domain.OrderType;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
