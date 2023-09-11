@@ -1,6 +1,6 @@
 package product.application;
 
-import kitchenpos.infra.PurgomalumClient;
+import common.domain.PurgomalumClient;
 import menu.domain.Menu;
 import menu.domain.MenuProduct;
 import menu.domain.MenuRepository;

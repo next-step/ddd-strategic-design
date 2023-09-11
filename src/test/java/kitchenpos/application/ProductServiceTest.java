@@ -4,7 +4,7 @@ import menu.domain.Menu;
 import menu.domain.MenuRepository;
 import product.domain.Product;
 import product.domain.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
+import common.domain.PurgomalumClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

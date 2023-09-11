@@ -1,5 +1,7 @@
-package order.domain;
+package order.infra;
 
+import order.domain.OrderTable;
+import order.domain.OrderTableRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
