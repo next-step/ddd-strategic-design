@@ -241,9 +241,9 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - `MenuProduct`는 `product`와 `quantity`를 가진다.
-  - `product`는 반드시 필요하다.
-  - `quantity`는 반드시 필요하고 0보다 커야 한다.
-  
+    - `product`는 반드시 필요하다.
+    - `quantity`는 반드시 필요하고 0보다 커야 한다.
+
 #### 유스케이스
 - `MenuProduct`는 `Menu`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
 
@@ -306,33 +306,33 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - `OrderLineItem`은 `menu`, `quantity`, `price`를 가진다.
-  - `Menu`는 반드시 필요하다.
-  - `quantity`는 반드시 필요하다.
-  - `OrderLineItme`의 `price`와 `menu`의 `price`는 같아야 한다.
-  - `menu`는 `display` 상태여야 한다.
+    - `Menu`는 반드시 필요하다.
+    - `quantity`는 반드시 필요하다.
+    - `OrderLineItme`의 `price`와 `menu`의 `price`는 같아야 한다.
+    - `menu`는 `display` 상태여야 한다.
 
 #### 유스케이스
 - `OrderLineItem`는 `Order`와 함께 사용되므로 독립적인 유스케이스가 존재하지 않는다.
   - 
 ### 주문(`Order`)
 - `Order`은 `type`에 따라 속성과 유스케이스가 조금씩 차이가 나므로 별도로 분리해서 정리한다.
-  - `type`은 다음과 같다.
-    - `EAT_IN` : 매장 식사
-    - `TAKE_OUT` : 포장
-    - `DELIVERY` : 배달
+    - `type`은 다음과 같다.
+        - `EAT_IN` : 매장 식사
+        - `TAKE_OUT` : 포장
+        - `DELIVERY` : 배달
 
 #### 주문 (`Order`) - EAN_IN - 속성
 - `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `orderTable`를 가진다.
     - `type`은 `EAT_IN`이다.
     - `status`는 반드시 필요하고 아래 목록 중 하나이다.
-      - `WAITING`
-      - `ACCEPTED`
-      - `SERVED`
-      - `COMPLETED`
+        - `WAITING`
+        - `ACCEPTED`
+        - `SERVED`
+        - `COMPLETED`
     - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
     - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
     - `orderTable`은 반드시 필요하다.
-  
+
 #### 주문 (`Order`) - EAN_IN - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
     - `status`는 `WAITING`으로 생성된다.
@@ -341,27 +341,27 @@ docker compose -p kitchenpos up -d
     - `orderLineItmes`은 하나 이상 있어여 한다.
     - 한 개의 `orderTable`를 `sit` 해야 한다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.   
+    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
     - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
+    - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
-  - 대상 `Order`와 연관된 `orderTable`이 존재하지 않는 경우 해당 `orderTable`의 `numberOfGuests`를 0으로 변경하고 `clear`한다.
-  - `status`가 `COMPLETED`로 변경된다.
+    - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+    - 대상 `Order`와 연관된 `orderTable`이 존재하지 않는 경우 해당 `orderTable`의 `numberOfGuests`를 0으로 변경하고 `clear`한다.
+    - `status`가 `COMPLETED`로 변경된다.
 - 관리자는 `Order`을 조회할 수 있다.
 
 
 #### 주문 (`Order`) - TAKEOUT - 속성
 - `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`를 가진다.
-  - `type`은 `TAKEOUT`이다.
-  - `status`는 반드시 필요하고 아래 목록 중 하나이다.
-    - `WAITING`
-    - `ACCEPTED`
-    - `SERVED`
-    - `COMPLETED`
-  - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
-  - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
+    - `type`은 `TAKEOUT`이다.
+    - `status`는 반드시 필요하고 아래 목록 중 하나이다.
+        - `WAITING`
+        - `ACCEPTED`
+        - `SERVED`
+        - `COMPLETED`
+    - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
+    - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
 
 #### 주문 (`Order`) - TAKEOUT - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
@@ -371,30 +371,30 @@ docker compose -p kitchenpos up -d
     - `orderLineItems`은 하나 이상 있어여 한다.
     - `orderLineItems`의 개수는 한 개 이상 이어야 있다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-  - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
-  - `status`가 `ACCEPTED`로 변경된다.
+    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
+    - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
+    - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
-  - `status`가 `COMPLETED`로 변경된다.
+    - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+    - `status`가 `COMPLETED`로 변경된다.
 - 관리자는 `Order`을 조회할 수 있다.
 
 
 #### 주문 (`Order`) - DELIVERY - 속성
 - `Order`는 `type`, `status`, `orderLineItems`, `orderDateTime`, `deliveryAddress`를 가진다.
-  - `type`은 `DELIVERY`이다.
-  - `status`는 반드시 필요하고 아래 목록 중 하나이다.
-    - `WAITING`
-    - `ACCEPTED`
-    - `SERVED`
-    - `DELIVERING`
-    - `DELIVERED`
-    - `COMPLETED`
-  - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
-  - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
-  - `deliveryAddress`은 반드시 필요하다.
-  - 
+    - `type`은 `DELIVERY`이다.
+    - `status`는 반드시 필요하고 아래 목록 중 하나이다.
+        - `WAITING`
+        - `ACCEPTED`
+        - `SERVED`
+        - `DELIVERING`
+        - `DELIVERED`
+        - `COMPLETED`
+    - `orderLineItems`은 반드시 필요하고 1개 이상이어야 한다.
+    - `orderDateTime`는 주문이 들어온 시점으로 반드시 필요하다.
+    - `deliveryAddress`은 반드시 필요하다.
+    -
 #### 주문 (`Order`) - DELIVERY - 유스케이스
 - 관리자는 `Order`를 생성할 수 있다.
     - `status`는 `WAITING`으로 생성된다.
@@ -404,18 +404,18 @@ docker compose -p kitchenpos up -d
     - `orderLineItmes`의 개수는 한 개 이상 이어야 있다.
     - `deliveryAddress`가 반드시 필요하다.
 - 관리자는 `Order`를 `accept` 할 수 있다.
-  - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
-  - `kitchenRiders`에 배달 요청이 된다. 
-  - `status`가 `ACCEPTED`로 변경된다.
+    - 대상 `Order`는 `status`가 `WAITING`이어야 한다.
+    - `kitchenRiders`에 배달 요청이 된다.
+    - `status`가 `ACCEPTED`로 변경된다.
 - 관리자는 `Order`를 `serve` 할 수 있다.
-  - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
+    - 대상 `Order`는 `status`가 `ACCEPTED`이어야 한다.
 - 관리자는 `Order`를 `startDelivery`할 수 있다.
-  - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
-  - `status`가 `DELIVERING`로 변경된다.
+    - 대상 `Order`는 `status`가 `SERVED`이어야 한다.
+    - `status`가 `DELIVERING`로 변경된다.
 - 관리자는 `Order`를 `completeDelivery`할 수 있다.
-  - 대상 `Order`는 `status`가 `DELIVERING`이어야 한다.
-  - `status`가 `DELIVERED`로 변경된다.
+    - 대상 `Order`는 `status`가 `DELIVERING`이어야 한다.
+    - `status`가 `DELIVERED`로 변경된다.
 - 관리자는 `Order`를 `complete`할 수 있다.
-  - 대상 `Order`는 `status`가 `DELIVERED`이어야 한다.
-  - `status`가 `COMPLETED`로 변경된다.
+    - 대상 `Order`는 `status`가 `DELIVERED`이어야 한다.
+    - `status`가 `COMPLETED`로 변경된다.
 - 관리자는 `Order`을 조회할 수 있다.
