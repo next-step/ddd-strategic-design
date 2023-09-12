@@ -1,6 +1,11 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.*;
+import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.order.common.application.OrderService;
+import kitchenpos.order.common.domain.*;
+import kitchenpos.order.delivery.application.DeliveryOrderService;
+import kitchenpos.order.eatin.domain.OrderTable;
+import kitchenpos.order.eatin.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,7 @@ class OrderServiceTest {
     private OrderTableRepository orderTableRepository;
     private FakeKitchenridersClient kitchenridersClient;
     private OrderService orderService;
+    private DeliveryOrderService deliveryOrderService;
 
     @BeforeEach
     void setUp() {
@@ -30,6 +36,7 @@ class OrderServiceTest {
         orderTableRepository = new InMemoryOrderTableRepository();
         kitchenridersClient = new FakeKitchenridersClient();
         orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
+        deliveryOrderService = new DeliveryOrderService(orderRepository);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.")
@@ -228,7 +235,7 @@ class OrderServiceTest {
     @Test
     void startDelivery() {
         final UUID orderId = orderRepository.save(order(OrderStatus.SERVED, "서울시 송파구 위례성대로 2")).getId();
-        final Order actual = orderService.startDelivery(orderId);
+        final Order actual = deliveryOrderService.startDelivery(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERING);
     }
 
@@ -236,7 +243,7 @@ class OrderServiceTest {
     @Test
     void startDeliveryWithoutDeliveryOrder() {
         final UUID orderId = orderRepository.save(order(OrderStatus.SERVED)).getId();
-        assertThatThrownBy(() -> orderService.startDelivery(orderId))
+        assertThatThrownBy(() -> deliveryOrderService.startDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
 
@@ -245,7 +252,7 @@ class OrderServiceTest {
     @ParameterizedTest
     void startDelivery(final OrderStatus status) {
         final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
-        assertThatThrownBy(() -> orderService.startDelivery(orderId))
+        assertThatThrownBy(() -> deliveryOrderService.startDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
 
@@ -253,7 +260,7 @@ class OrderServiceTest {
     @Test
     void completeDelivery() {
         final UUID orderId = orderRepository.save(order(OrderStatus.DELIVERING, "서울시 송파구 위례성대로 2")).getId();
-        final Order actual = orderService.completeDelivery(orderId);
+        final Order actual = deliveryOrderService.completeDelivery(orderId);
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERED);
     }
 
@@ -262,7 +269,7 @@ class OrderServiceTest {
     @ParameterizedTest
     void completeDelivery(final OrderStatus status) {
         final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
-        assertThatThrownBy(() -> orderService.completeDelivery(orderId))
+        assertThatThrownBy(() -> deliveryOrderService.completeDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
 
