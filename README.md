@@ -113,10 +113,10 @@ docker compose -p kitchenpos up -d
 
 ## 메뉴
 
-| 한글명   | 영문명            | 설명                   |
-|-------|----------------|----------------------|
-| 메뉴    | menu           | 주문의 판매 단위            |
-| 메뉴 그룹 | menu group     | 메뉴를 그룹핑              |
+| 한글명   | 영문명            | 설명             |
+|-------|----------------|----------------|
+| 메뉴    | menu           | 주문의 판매 단위      |
+| 메뉴 그룹 | menu group     | 메뉴를 그룹핑        |
 | 노출 메뉴 | displayed menu | 숨김처리가 되지 않은 메뉴 |
 | 숨김 메뉴 | hided menu     | 숨김처리가 된 메뉴     |
 
@@ -140,6 +140,7 @@ docker compose -p kitchenpos up -d
 | 배달 주소 | delivery address | 배달 받기를 원하는 주소        |
 | 배달 중  | DELIVERING       | 배달원이 주문을 배달하는 상태     |
 | 배달 완료 | DELIVERED        | 배달원이 배달을 완료한 상태      |
+| 배달원   | delivery manager | 배달원                  |
 
 ## 매장주문
 
