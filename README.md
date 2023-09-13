@@ -113,12 +113,12 @@ docker compose -p kitchenpos up -d
 
 ## 메뉴
 
-| 한글명   | 영문명            | 설명             |
-|-------|----------------|----------------|
-| 메뉴    | menu           | 주문의 판매 단위      |
-| 메뉴 그룹 | menu group     | 메뉴를 그룹핑        |
-| 노출 메뉴 | displayed menu | 숨김처리가 되지 않은 메뉴 |
-| 숨김 메뉴 | hided menu     | 숨김처리가 된 메뉴     |
+| 한글명   | 영문명            | 설명         |
+|-------|----------------|------------|
+| 메뉴    | menu           | 주문의 판매 단위  |
+| 메뉴 그룹 | menu group     | 메뉴를 그룹핑    |
+| 노출 메뉴 | displayed menu | 노출중인 메뉴    |
+| 숨김 메뉴 | hided menu     | 숨김처리가 된 메뉴 |
 
 ## 주문
 
@@ -159,3 +159,17 @@ docker compose -p kitchenpos up -d
 | 포장 주문 | take out order | 손님이 직접 포장해서 가져가는 주문 |
 
 ## 모델링
+
+
+
+> 팀은 기술적이고 전술적인 모델링의 늪에 빠지길 원치 않았기 대문에 조심할 필요가 있었다. 문장은 팀 전체에 그 의미가 통해야 했다.
+...
+요구사항을 완전히 다시 정리하고 다른 항목을 추가하고 더 분명하게 다듬는 일은 ,실제로 일어나는 일이 무엇인지 훨씬 더 정확하게 정의해준다.
+
+자연스러운 모델링
+LottoStatistics에서 수익률을 계산한다.
+Lottery는 구매 방식을 구별할 수 있는 LotteryType을 가진다.
+Point는 방향을 표현하는 Direction을 가진다.
+LadderGame에서 GameResult를 생성한다.
+LadderGame은 GameInfo를 가진다.
+PointGenerator는 Point을 생성한다.
