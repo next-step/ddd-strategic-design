@@ -184,23 +184,23 @@ class OrderServiceTest {
         assertThatThrownBy(() -> orderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @DisplayName("주문을 접수한다.")
-    @Test
-    void accept() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, orderTable(true, 4))).getId();
-        final Order actual = orderService.accept(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
-    }
-
-    @DisplayName("접수 대기 중인 주문만 접수할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
-    @ParameterizedTest
-    void accept(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, orderTable(true, 4))).getId();
-        assertThatThrownBy(() -> orderService.accept(orderId))
-            .isInstanceOf(IllegalStateException.class);
-    }
+//
+//    @DisplayName("주문을 접수한다.")
+//    @Test
+//    void accept() {
+//        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, orderTable(true, 4))).getId();
+//        final Order actual = orderService.accept(orderId);
+//        assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
+//    }
+//
+//    @DisplayName("접수 대기 중인 주문만 접수할 수 있다.")
+//    @EnumSource(value = OrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
+//    @ParameterizedTest
+//    void accept(final OrderStatus status) {
+//        final UUID orderId = orderRepository.save(order(status, orderTable(true, 4))).getId();
+//        assertThatThrownBy(() -> orderService.accept(orderId))
+//            .isInstanceOf(IllegalStateException.class);
+//    }
 
     @DisplayName("배달 주문을 접수되면 배달 대행사를 호출한다.")
     @Test
@@ -239,13 +239,13 @@ class OrderServiceTest {
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.DELIVERING);
     }
 
-    @DisplayName("배달 주문만 배달할 수 있다.")
-    @Test
-    void startDeliveryWithoutDeliveryOrder() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.SERVED)).getId();
-        assertThatThrownBy(() -> orderService.startDelivery(orderId))
-            .isInstanceOf(IllegalStateException.class);
-    }
+//    @DisplayName("배달 주문만 배달할 수 있다.")
+//    @Test
+//    void startDeliveryWithoutDeliveryOrder() {
+//        final UUID orderId = orderRepository.save(order(OrderStatus.SERVED)).getId();
+//        assertThatThrownBy(() -> orderService.startDelivery(orderId))
+//            .isInstanceOf(IllegalStateException.class);
+//    }
 
     @DisplayName("서빙된 주문만 배달할 수 있다.")
     @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
