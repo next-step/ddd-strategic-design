@@ -19,7 +19,7 @@ docker compose -p kitchenpos up -d
 - 상품의 가격을 변경할 수 있다.
 - 상품의 가격이 올바르지 않으면 변경할 수 없다.
     - 상품의 가격은 0원 이상이어야 한다.
-- 상품의 가격이 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨진다.
+- 상품의 가격이 변경될 때 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 크면 메뉴가 숨겨지고 주문이 불가능해진다.
 - 상품의 목록을 조회할 수 있다.
 
 ### 메뉴 그룹
@@ -120,6 +120,7 @@ docker compose -p kitchenpos up -d
 | 메뉴 가격    | menu price      | 메뉴의 가격, 0원 이상이어야한다. |
 | 메뉴 이름    | menu name       | 메뉴의 이름              |
 | 메뉴 그룹    | menu group      | 메뉴를 그룹핑하는데 사용       |
+| 메뉴 상품    | menu product    | 메뉴에 포함된 상품 및 갯수 정보  |
 | 메뉴 그룹 이름 | menu group name | 메뉴 그룹의 이름           |
 | 노출 메뉴    | displayed menu  | 노출중인 메뉴             |
 | 숨김 메뉴    | hided menu      | 숨김처리가 된 메뉴          |
@@ -165,115 +166,118 @@ docker compose -p kitchenpos up -d
 ## 포장주문
 
 | 한글명   | 영문명           | 설명                  |
-|-------|---------------|---------------------|
+|-------|---------------|---------------------|경
 | 포장 주문 | takeout order | 손님이 직접 포장해서 가져가는 주문 |
 
 ## 모델링
 
-### 상품
+### 상품 (Product)
 
-* Product를 등록한다.
-    * Product Name에는 Profanity(=비속어)가 포함될 수 없다.
-    * Product Price는 0원 이상이다.
-    * Product Price가 없으면 안된다.
-* Product Price를 변경할 수 있다.
-    * Product Price는 0원 이상이다.
-    * Product Price가 변경될 때, Product가 포함된 Menu에 속한 'Product Price 합 > Menu Price' 이면 Hided Menu로 변경된다.
+#### 속성 
+* Name은 공백과 비속어를 허용하지 않고 필수값이다.
+* Price는 0원 이상이고 필수값이다.
+
+#### 행위
+* Product를 등록할 수 있다.
+* Price를 변경할 수 있다.
+    * 메뉴의 가격이 메뉴에 속한 Product Price들의 합보다 크면 메뉴가 숨김 처리된다.
 * Product List를 조회할 수 있다.
 
 ### 메뉴 그룹
+#### 속성
+* Name은 공백을 허용하지 않고 필수값이다.
 
-- Menu Group을 등록(=register) 할 수 있다.
-    - Menu Group Name로 공백을 등록할 수 없다.
+#### 행위
+- Menu Group을 등록할 수 있다.
 - Menu Group List를 조회할 수 있다.
 
 ### 메뉴
+#### 속성
+* Name은 공백과 비속어를 허용하지 않고 필수값이다.
+* Menu Group은 필수 값이고 메뉴그룹 목록에 존재해야한다.
+* Price는 0원 이상이고 필수값이며 가격정책을 가진다.
+  * 가격정책: Menu Product의 Price * Quantity 총합보다 클 수 없다.
+* Menu Product를 최소 1개이상 가진다.
+* Menu Product의 Product는 상품 목록에 존재해야한다.
+* displayed 속성에 따라서 노출 상태를 변경할 수 있다. 
 
+#### 행위
 - 1개이상의 Registered Product으로 Menu를 등록할 수 있다.
-    - Registered Product가 아니면 등록할 수 없다.
-    - Menu에 속한 Product의 수량(= quantity)은 0 이상이어야 한다.
-    - Menu Price가 0원 이상이어야 한다.
-    - Menu에 속한 'Product Price 합'은 Menu Price보다 크거나 같아야 한다.
-    - Menu는 특정 Menu Group에 속해야 한다.
-    - Menu Name에는 Profanity(=비속어)가 포함될 수 없다.
 - Menu Price를 변경할 수 있다.
-    - Menu Price는 0원 이상이어야 한다.
-    - Menu에 속한 'Product Price 합'은 Menu Price보다 크거나 같아야 한다.
+  - 가격 정책을 준수해야한다.
 - Menu를 노출(=display)할 수 있다.
-    - Menu에 속한 'Product Price 합'은 Menu Price보다 크거나 같아야 한다.
+  - 가격 정책을 준수해야한다.
 - Menu를 숨길(= hide) 수 있다.
 - Menu List를 조회할 수 있다.
 
 ### 주문 테이블
+#### 속성
+- Name은 공백을 허용하지 않고 필수값이다.
+- Occupied 속성에 따라서 테이블이 사용중인지 비어있는지 여부를 알 수 있다.
+- Number Of Guests를 가진다.
+- Number Of Guests는 빈 테이블에서는 변경할 수 없다.
+- Number Of Guests는 1명 이상이어야 한다.
 
+#### 행위
 - Order Table을 등록할 수 있다.
-    - Order Table Name을 공백으로 둘 수 없다.
-- 빈 테이블(=Empty Table)을 사용중인 테이블(=In Use Order Table)로 변경할 수 있다.
-- 사용중인 테이블(= In Use Order Table)을 빈 테이블(=Empty Table)로 변경할 수 있다.
-    - 완료되지 않은 주문(Not Completed Order)이 있는 사용중인 테이블(=In Use Order Table)은 빈 테이블(=Empty Table)로 변경할 수 없다.
-- 방문한 손님 수(=number of guests)를 변경할 수 있다.
-    - 방문한 손님 수(=number of guests)가 0이상이어야 한다.
-    - 빈 테이블(=Empty Table)은 방문한 손님 수(=number of guests)를 변경할 수 없다.
+- Order Table을 사용중인 테이블로 변경할 수 있다.
+- Order Table을 빈 테이블로 변경할 수 있다.
+  - 완료되지 않은 주문이있다면 빈 테이블로 변경할 수 없다.
+- Number Of Guests를 변경할 수 있다.
 - Order Table List를 조회할 수 있다.
 
 ### 주문 (공통)
+#### 속성
+- OrderType은 3가지(DELIVERY, TAKEOUT, EAT_IN)중 1개이고 필수값이다.
+- 6개의 Order Status(WAITING, ACCEPTED, SERVED, DELIVERING, DELIVERED, COMPLETED) 중 1개를 필수값으로 가진다.
+  - Order Status는 OrderType에 따라 누락되거나 추가되는 단계가 있다. 
+- Order Date Time을 필수값으로 가진다.
+- 숨김처리된 Menu는 주문할 수 없다.
+
+#### 행위
 - Order List를 조회할 수 있다.
 
-#### 매장주문
+### 매장주문(Eat In Order)
 
-- 1개 이상의 등록된 메뉴(=registered menu)로 Eat In Order를 등록할 수 있다.
-    - 주문 유형(=Order Type)이 DELIVERY인 경우에만 등록할 수 있다.
-    - 없는 Menu면 등록할 수 없다.
-    - 빈 테이블(=Empty Table)에는 매장 주문(=Eat In Menu)을 등록할 수 없다.
-    - Eat In Menu는 주문 항목(=order line item)의 수량(=quantity)이 0 미만일 수 있다.
-    - 숨겨진 메뉴(= Hided Menu)는 주문할 수 없다.
-    - 주문한 메뉴(=Ordered Menu)의 Price은 실제 Menu Price와 일치해야 한다.
-    - 없는 Menu는 등록할 수 없다.
-- Eat In Orde를 접수(= accept)한다. 
-    - WAITING 상태에서만 Order를 접수할 수 있다.
-- Eat In Order를 서빙(= serve)한다.
-    - ACCEPTED 상태에서만 서빙할 수 있다.
-- Eat In Order를 완료(= complete)한다.
-    - SERVED 상태에서만 완료할 수 있다.
-    - Order Table의 모든 Eat In Order이 COMPLETED 상태가 되면 Empty Table로 변경된다.
-    - COMPLETED 상태가 아닌 매장 주문(=Not Completed Eat In Order)이 있는 Order Table은 Empty Table로 변경하지 않는다.
+#### 속성
+- Order Line Item 0개 미만일 수 있다.
+- Order Table이 필수다.
+  - 빈 테이블에서는 주문을 할 수 없다.
+- Order Status는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다. 
 
-#### 배달주문
+#### 행위
+- Eat In Order를 등록할 수 있다.
+  - Order Status는 WAITING 상태가 된다.
+- Eat In Orde를 ACCEPTED 한다. 
+- Eat In Order를 SERVED 한다.
+- Eat In Order를 COMPLETED 한다.
+  - Order Table의 모든 Eat In Order이 COMPLETED 상태가 되면 Empty Table로 변경된다.
 
-- 1개 이상의 등록된 메뉴(=registered menu)로 Delivery Order를 등록할 수 있다.
-    - 주문 유형(=Order Type)이 EAT_IN인 경우에만 등록할 수 있다.
-    - 없는 Menu이면 등록할 수 없다.
-    - 숨겨진 메뉴(= Hided Menu)는 주문할 수 없다.
-    - 주문한 메뉴(=Ordered Menu)의 Price은 실제 Menu Price와 일치해야 한다.
-    - 배달 주소(=Delivery Address)는 공백으로 등록할 수 없다.
-    - 주문 항목(=Order Line Item)의 수량(=quantity)은 0 이상이어야 한다.
-    - 없는 Menu는 등록할 수 없다.
-- Delivery Order를 접수(= accept)한다.
-    - WAITING 상태에서만 Order를 접수할 수 있다.
-    - 배달 주문(= Delivery Order)가 접수되면 배달 대행사(= Delivery Agency)를 호출(=call)한다.
-- Delivery Order를 서빙(= serve)한다.
-    - ACCEPTED 상태에서만 서빙할 수 있다.
-- Delivery Order를 배달(=DELIVERING)한다.
-    - 배달 주문만 배달할 수 있다.
-    - SERVED 상태에 주문만 배달할 수 있다.
-- Delivery Order을 배달 완료(=DELIVERED)한다.
-    - DELIVERING 상태에서만 배달 완료할 수 있다.
-- Delivery Order를 완료(= complete)한다.
-    - DELIVERED 상태인 배달 주문만 완료할 수 있다.
+### 포장주문
+#### 속성
+- Order Line Item 1개 이상 가진다.
+- OrderStatus는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다.
 
-#### 포장주문
+#### 행위
+- Takeout Order를 등록할 수 있다.
+  - Order Status는 WAITING 상태가 된다.
+- Takeout Order를 ACCEPTED 한다.
+- Takeout Order를 SERVED 한다.
+- Takeout Order를 COMPLETED 한다.
 
-- 1개 이상의 등록된 메뉴(=registered menu)로 Takeout Order를 등록할 수 있다.
-    - 주문 유형(=Order Type)이 TAKEOUT인 경우에만 등록할 수 있다.
-    - 없는 Menu이면 등록할 수 없다.
-    - 숨겨진 메뉴(= Hided Menu)는 주문할 수 없다.
-    - 주문한 메뉴(=Ordered Menu)의 Price은 실제 Menu Price와 일치해야 한다.
-    - 주문 항목(=Order Line Item)의 수량(=quantity)은 0 이상이어야 한다.
-    - 없는 Menu는 등록할 수 없다.
-- Takeout Order를 접수(= accept)한다.
-    - WAITING 상태에서만 Order를 접수할 수 있다.
-    - Delivery Order가 접수되면 배달 대행사(=Delivery Agency)를 호출(=call)한다.
-- Takeout Order를 서빙(= serve)한다.
-    - ACCEPTED 상태에서만 서빙할 수 있다.
-- Takeout Order를 완료(= complete)한다.
-    - SERVED 상태에서만 완료할 수 있다.
+### 배달주문
+#### 속성
+- Order Line Item 1개 이상 가진다.
+- Delivery Address는 공백을 허용하지 않는 필수값이다.
+- OrderStatus는 WAITING > ACCEPTED > SERVED > **DELIVERING** > **DELIVERED** > COMPLETED 순서대로만 변경할 수 있다.
+
+#### 행위
+- Delivery Order를 등록할 수 있다.
+  - Order Status는 WAITING 상태가 된다.
+- Delivery Order를 ACCEPTED 한다.
+    - 배달 대행사(= Delivery Agency)를 호출(=call)한다.
+- Delivery Order를 SERVED 한다.
+- Delivery Order를 DELIVERING 한다.
+- Delivery Order을 DELIVERED 한다.
+- Delivery Order를 COMPLETED 한다.
+
