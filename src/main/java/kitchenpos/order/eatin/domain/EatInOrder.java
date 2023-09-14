@@ -1,6 +1,7 @@
-package kitchenpos.order.common.domain;
+package kitchenpos.order.eatin.domain;
 
-import kitchenpos.order.eatin.domain.OrderTable;
+import kitchenpos.order.common.domain.OrderLineItem;
+import kitchenpos.order.common.domain.OrderType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class EatInOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -20,7 +21,7 @@ public class Order {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private EatInOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -34,9 +35,6 @@ public class Order {
     )
     private List<OrderLineItem> orderLineItems;
 
-    @Column(name = "delivery_address")
-    private String deliveryAddress;
-
     @ManyToOne
     @JoinColumn(
         name = "order_table_id",
@@ -48,7 +46,7 @@ public class Order {
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public EatInOrder() {
     }
 
     public UUID getId() {
@@ -67,11 +65,11 @@ public class Order {
         this.type = type;
     }
 
-    public OrderStatus getStatus() {
+    public EatInOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final EatInOrderStatus status) {
         this.status = status;
     }
 
@@ -89,14 +87,6 @@ public class Order {
 
     public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(final String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
     }
 
     public OrderTable getOrderTable() {

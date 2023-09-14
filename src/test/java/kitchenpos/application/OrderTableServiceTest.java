@@ -1,9 +1,9 @@
 package kitchenpos.application;
 
-import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
-import kitchenpos.order.eatin.domain.OrderTable;
 import kitchenpos.order.eatin.application.OrderTableService;
+import kitchenpos.order.eatin.domain.EatInOrderRepository;
+import kitchenpos.order.eatin.domain.EatInOrderStatus;
+import kitchenpos.order.eatin.domain.OrderTable;
 import kitchenpos.order.eatin.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class OrderTableServiceTest {
     private OrderTableRepository orderTableRepository;
-    private OrderRepository orderRepository;
+    private EatInOrderRepository orderRepository;
     private OrderTableService orderTableService;
 
     @BeforeEach
     void setUp() {
         orderTableRepository = new InMemoryOrderTableRepository();
-        orderRepository = new InMemoryOrderRepository();
+        orderRepository = new InMemoryEatInOrderRepository();
         orderTableService = new OrderTableService(orderTableRepository, orderRepository);
     }
 
@@ -80,7 +80,7 @@ class OrderTableServiceTest {
     void clearWithUncompletedOrders() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
         final UUID orderTableId = orderTable.getId();
-        orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
+        orderRepository.save(order(EatInOrderStatus.ACCEPTED, orderTable));
         assertThatThrownBy(() -> orderTableService.clear(orderTableId))
             .isInstanceOf(IllegalStateException.class);
     }
