@@ -210,22 +210,6 @@ docker compose -p kitchenpos up -d
 - Menu를 숨길(= hide) 수 있다.
 - Menu List를 조회할 수 있다.
 
-### 주문 테이블
-#### 속성
-- Name은 공백을 허용하지 않고 필수값이다.
-- Occupied 속성에 따라서 테이블이 사용중인지 비어있는지 여부를 알 수 있다.
-- Number Of Guests를 가진다.
-- Number Of Guests는 빈 테이블에서는 변경할 수 없다.
-- Number Of Guests는 1명 이상이어야 한다.
-
-#### 행위
-- Order Table을 등록할 수 있다.
-- Order Table을 사용중인 테이블로 변경할 수 있다.
-- Order Table을 빈 테이블로 변경할 수 있다.
-  - 완료되지 않은 주문이있다면 빈 테이블로 변경할 수 없다.
-- Number Of Guests를 변경할 수 있다.
-- Order Table List를 조회할 수 있다.
-
 ### 주문 (공통)
 #### 속성
 - OrderType은 3가지(DELIVERY, TAKEOUT, EAT_IN)중 1개이고 필수값이다.
@@ -236,22 +220,6 @@ docker compose -p kitchenpos up -d
 
 #### 행위
 - Order List를 조회할 수 있다.
-
-### 매장주문(Eat In Order)
-
-#### 속성
-- Order Line Item 0개 미만일 수 있다.
-- Order Table이 필수다.
-  - 빈 테이블에서는 주문을 할 수 없다.
-- Order Status는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다. 
-
-#### 행위
-- Eat In Order를 등록할 수 있다.
-  - Order Status는 WAITING 상태가 된다.
-- Eat In Orde를 ACCEPTED 한다. 
-- Eat In Order를 SERVED 한다.
-- Eat In Order를 COMPLETED 한다.
-  - Order Table의 모든 Eat In Order이 COMPLETED 상태가 되면 Empty Table로 변경된다.
 
 ### 포장주문
 #### 속성
@@ -281,3 +249,34 @@ docker compose -p kitchenpos up -d
 - Delivery Order을 DELIVERED 한다.
 - Delivery Order를 COMPLETED 한다.
 
+### 매장주문(Eat In Order)
+
+#### 속성
+- Order Line Item 0개 미만일 수 있다.
+- Order Table이 필수다.
+  - 빈 테이블에서는 주문을 할 수 없다.
+- Order Status는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다.
+
+#### 행위
+- Eat In Order를 등록할 수 있다.
+  - Order Status는 WAITING 상태가 된다.
+- Eat In Orde를 ACCEPTED 한다.
+- Eat In Order를 SERVED 한다.
+- Eat In Order를 COMPLETED 한다.
+  - Order Table의 모든 Eat In Order이 COMPLETED 상태가 되면 Empty Table로 변경된다.
+
+### 주문 테이블
+#### 속성
+- Name은 공백을 허용하지 않고 필수값이다.
+- Occupied 속성에 따라서 테이블이 사용중인지 비어있는지 여부를 알 수 있다.
+- Number Of Guests를 가진다.
+- Number Of Guests는 빈 테이블에서는 변경할 수 없다.
+- Number Of Guests는 1명 이상이어야 한다.
+
+#### 행위
+- Order Table을 등록할 수 있다.
+- Order Table을 사용중인 테이블로 변경할 수 있다.
+- Order Table을 빈 테이블로 변경할 수 있다.
+  - 완료되지 않은 주문이있다면 빈 테이블로 변경할 수 없다.
+- Number Of Guests를 변경할 수 있다.
+- Order Table List를 조회할 수 있다.
