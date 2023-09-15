@@ -213,8 +213,6 @@ docker compose -p kitchenpos up -d
 ### 주문 (공통)
 #### 속성
 - OrderType은 3가지(DELIVERY, TAKEOUT, EAT_IN)중 1개이고 필수값이다.
-- 6개의 Order Status(WAITING, ACCEPTED, SERVED, DELIVERING, DELIVERED, COMPLETED) 중 1개를 필수값으로 가진다.
-  - Order Status는 OrderType에 따라 누락되거나 추가되는 단계가 있다. 
 - Order Date Time을 필수값으로 가진다.
 - 숨김처리된 Menu는 주문할 수 없다.
 
@@ -224,6 +222,7 @@ docker compose -p kitchenpos up -d
 ### 포장주문
 #### 속성
 - Order Line Item 1개 이상 가진다.
+- 4개의 Order Status(WAITING, ACCEPTED, SERVED, COMPLETED) 중 1개를 필수값으로 가진다.
 - OrderStatus는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다.
 
 #### 행위
@@ -236,6 +235,7 @@ docker compose -p kitchenpos up -d
 ### 배달주문
 #### 속성
 - Order Line Item 1개 이상 가진다.
+- 6개의 Order Status(WAITING, ACCEPTED, SERVED, DELIVERING, DELIVERED, COMPLETED) 중 1개를 필수값으로 가진다.
 - Delivery Address는 공백을 허용하지 않는 필수값이다.
 - OrderStatus는 WAITING > ACCEPTED > SERVED > **DELIVERING** > **DELIVERED** > COMPLETED 순서대로만 변경할 수 있다.
 
@@ -254,6 +254,7 @@ docker compose -p kitchenpos up -d
 
 #### 속성
 - Order Line Item 0개 미만일 수 있다.
+- 4개의 Order Status(WAITING, ACCEPTED, SERVED, COMPLETED) 중 1개를 필수값으로 가진다.
 - Order Table이 필수다.
   - 빈 테이블에서는 주문을 할 수 없다.
 - Order Status는 WAITING > ACCEPTED > SERVED > COMPLETED 순서대로만 변경할 수 있다.
