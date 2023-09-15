@@ -229,9 +229,9 @@ docker compose -p kitchenpos up -d
 #### 행위
 - Takeout Order를 등록할 수 있다.
   - Order Status는 WAITING 상태가 된다.
-- Takeout Order를 ACCEPTED 한다.
-- Takeout Order를 SERVED 한다.
-- Takeout Order를 COMPLETED 한다.
+- Takeout Order를 WAITING에서 수락하면 ACCEPTED가 된다.
+- Takeout Order를 ACCEPTED에서 서빙하면 SERVED가 된다.
+- Takeout Order를 SERVED에서 완료하면 COMPLETED가 한다.
 
 ### 배달주문
 #### 속성
@@ -242,12 +242,13 @@ docker compose -p kitchenpos up -d
 #### 행위
 - Delivery Order를 등록할 수 있다.
   - Order Status는 WAITING 상태가 된다.
-- Delivery Order를 ACCEPTED 한다.
+- Delivery Order를 WAITING에서 수락하면 ACCEPTED가 된다.
     - 배달 대행사(= Delivery Agency)를 호출(=call)한다.
-- Delivery Order를 SERVED 한다.
-- Delivery Order를 DELIVERING 한다.
-- Delivery Order을 DELIVERED 한다.
-- Delivery Order를 COMPLETED 한다.
+- Delivery Order를 ACCEPTED에서 서빙하면 SERVED가 된다.
+- Delivery Order를 SERVED에서 배달 시작하면 DELIVERING이 한다.
+- Delivery Order를 DELIVERING에서 배달 완료하면 DELIVERED 한다.
+- Delivery Order를 DELIVERED에서 주문 완료하면 COMPLETED 한다.
+
 
 ### 매장주문(Eat In Order)
 
@@ -260,9 +261,9 @@ docker compose -p kitchenpos up -d
 #### 행위
 - Eat In Order를 등록할 수 있다.
   - Order Status는 WAITING 상태가 된다.
-- Eat In Orde를 ACCEPTED 한다.
-- Eat In Order를 SERVED 한다.
-- Eat In Order를 COMPLETED 한다.
+- Eat In Order를 WAITING에서 수락하면 ACCEPTED가 된다.
+- Eat In Order를 ACCEPTED에서 서빙하면 SERVED가 된다.
+- Eat In Order를 SERVED에서 완료하면 COMPLETED가 한다.
   - Order Table의 모든 Eat In Order이 COMPLETED 상태가 되면 Empty Table로 변경된다.
 
 ### 주문 테이블
