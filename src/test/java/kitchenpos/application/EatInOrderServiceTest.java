@@ -4,7 +4,11 @@ import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.eatin.application.EatInOrderService;
-import kitchenpos.order.eatin.domain.*;
+import kitchenpos.order.eatin.domain.eatin.EatInOrder;
+import kitchenpos.order.eatin.domain.eatin.EatInOrderRepository;
+import kitchenpos.order.eatin.domain.eatin.EatInOrderStatus;
+import kitchenpos.order.eatin.domain.ordertable.OrderTable;
+import kitchenpos.order.eatin.domain.ordertable.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -89,18 +93,6 @@ class EatInOrderServiceTest {
             OrderType.EAT_IN, orderTableId, createOrderLineItemRequest(menuId, 19_000L, quantity)
         );
         assertDoesNotThrow(() -> eatInEatInOrderService.create(expected));
-    }
-
-    @DisplayName("매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다.")
-    @ValueSource(longs = -1L)
-    @ParameterizedTest
-    void createWithoutEatInOrder(final long quantity) {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final EatInOrder expected = createEatInOrderRequest(
-            OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 19_000L, quantity)
-        );
-        assertThatThrownBy(() -> eatInEatInOrderService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("빈 테이블에는 매장 주문을 등록할 수 없다.")

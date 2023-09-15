@@ -39,7 +39,7 @@ class DeliveryOrderServiceTest {
     @Test
     void createDeliveryOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final DeliveryOrder expected = createOrderRequest(
+        final DeliveryOrder expected = createDeliveryOrderRequest(
             OrderType.DELIVERY, "서울시 송파구 위례성대로 2", createOrderLineItemRequest(menuId, 19_000L, 3L)
         );
         final DeliveryOrder actual = deliveryOrderService.create(expected);
@@ -59,7 +59,7 @@ class DeliveryOrderServiceTest {
     @ParameterizedTest
     void create(final OrderType type) {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final DeliveryOrder expected = createOrderRequest(type, createOrderLineItemRequest(menuId, 19_000L, 3L));
+        final DeliveryOrder expected = createDeliveryOrderRequest(type, createOrderLineItemRequest(menuId, 19_000L, 3L));
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -68,7 +68,7 @@ class DeliveryOrderServiceTest {
     @MethodSource("orderLineItems")
     @ParameterizedTest
     void create(final List<OrderLineItem> orderLineItems) {
-        final DeliveryOrder expected = createOrderRequest(OrderType.TAKEOUT, orderLineItems);
+        final DeliveryOrder expected = createDeliveryOrderRequest(OrderType.TAKEOUT, orderLineItems);
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -81,12 +81,24 @@ class DeliveryOrderServiceTest {
         );
     }
 
+    @DisplayName("매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다.")
+    @ValueSource(longs = -1L)
+    @ParameterizedTest
+    void createWithoutEatInOrder(final long quantity) {
+        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
+        final DeliveryOrder expected = createDeliveryOrderRequest(
+                OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 19_000L, quantity)
+        );
+        assertThatThrownBy(() -> deliveryOrderService.create(expected))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다.")
     @NullAndEmptySource
     @ParameterizedTest
     void create(final String deliveryAddress) {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final DeliveryOrder expected = createOrderRequest(
+        final DeliveryOrder expected = createDeliveryOrderRequest(
             OrderType.DELIVERY, deliveryAddress, createOrderLineItemRequest(menuId, 19_000L, 3L)
         );
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
@@ -97,7 +109,7 @@ class DeliveryOrderServiceTest {
     @Test
     void createNotDisplayedMenuOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, false, menuProduct())).getId();
-        final DeliveryOrder expected = createOrderRequest(OrderType.DELIVERY, createOrderLineItemRequest(menuId, 19_000L, 3L));
+        final DeliveryOrder expected = createDeliveryOrderRequest(OrderType.DELIVERY, createOrderLineItemRequest(menuId, 19_000L, 3L));
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -106,7 +118,7 @@ class DeliveryOrderServiceTest {
     @Test
     void createNotMatchedMenuPriceOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final DeliveryOrder expected = createOrderRequest(OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 16_000L, 3L));
+        final DeliveryOrder expected = createDeliveryOrderRequest(OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 16_000L, 3L));
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -168,7 +180,7 @@ class DeliveryOrderServiceTest {
     @DisplayName("배달 주문만 배달할 수 있다.")
     @Test
     void startDeliveryWithoutDeliveryOrder() {
-        final UUID orderId = deliveryOrderRepository.save(order(DeliveryOrderStatus.SERVED)).getId();
+        final UUID orderId = deliveryOrderRepository.save(order(DeliveryOrderStatus.SERVED, OrderType.TAKEOUT)).getId();
         assertThatThrownBy(() -> deliveryOrderService.startDelivery(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -225,7 +237,7 @@ class DeliveryOrderServiceTest {
         assertThat(actual).hasSize(2);
     }
 
-    private DeliveryOrder createOrderRequest(
+    private DeliveryOrder createDeliveryOrderRequest(
         final OrderType type,
         final String deliveryAddress,
         final OrderLineItem... orderLineItems
@@ -237,11 +249,11 @@ class DeliveryOrderServiceTest {
         return order;
     }
 
-    private DeliveryOrder createOrderRequest(final OrderType orderType, final OrderLineItem... orderLineItems) {
-        return createOrderRequest(orderType, Arrays.asList(orderLineItems));
+    private DeliveryOrder createDeliveryOrderRequest(final OrderType orderType, final OrderLineItem... orderLineItems) {
+        return createDeliveryOrderRequest(orderType, Arrays.asList(orderLineItems));
     }
 
-    private DeliveryOrder createOrderRequest(final OrderType orderType, final List<OrderLineItem> orderLineItems) {
+    private DeliveryOrder createDeliveryOrderRequest(final OrderType orderType, final List<OrderLineItem> orderLineItems) {
         final DeliveryOrder order = new DeliveryOrder();
         order.setType(orderType);
         order.setOrderLineItems(orderLineItems);

@@ -48,10 +48,8 @@ public class TakeOutOrderService {
         final List<OrderLineItem> orderLineItems = new ArrayList<>();
         for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
             final long quantity = orderLineItemRequest.getQuantity();
-            if (type != OrderType.EAT_IN) {
-                if (quantity < 0) {
-                    throw new IllegalArgumentException();
-                }
+            if (quantity < 0) {
+                throw new IllegalArgumentException();
             }
             final Menu menu = menuRepository.findById(orderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
@@ -102,14 +100,12 @@ public class TakeOutOrderService {
     public TakeOutOrder complete(final UUID orderId) {
         final TakeOutOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        final OrderType type = order.getType();
         final TakeOutOrderStatus status = order.getStatus();
 
-        if (type == OrderType.TAKEOUT) {
-            if (status != TakeOutOrderStatus.SERVED) {
-                throw new IllegalStateException();
-            }
+        if (status != TakeOutOrderStatus.SERVED) {
+            throw new IllegalStateException();
         }
+
         order.setStatus(TakeOutOrderStatus.COMPLETED);
         return order;
     }
