@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 import kitchenpos.menugroup.domain.MenuGroup;
+import kitchenpos.product.domain.Product;
 
 public class Fixtures {
     public static final UUID INVALID_ID = new UUID(0L, 0L);
