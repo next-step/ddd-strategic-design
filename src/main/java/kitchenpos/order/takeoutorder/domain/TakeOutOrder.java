@@ -11,13 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderStatus;
-import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 
 @Table(name = "takeout_orders")
 @Entity
@@ -42,14 +40,6 @@ public class TakeOutOrder {
         foreignKey = @ForeignKey(name = "fk_takeout_order_line_item_to_orders")
     )
     private List<OrderLineItem> orderLineItems;
-
-    @ManyToOne
-    @JoinColumn(
-        name = "order_table_id",
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
-    )
-    private OrderTable orderTable;
 
     @Transient
     private UUID orderTableId;
@@ -87,14 +77,6 @@ public class TakeOutOrder {
 
     public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
-    }
-
-    public OrderTable getOrderTable() {
-        return orderTable;
-    }
-
-    public void setOrderTable(final OrderTable orderTable) {
-        this.orderTable = orderTable;
     }
 
     public UUID getOrderTableId() {
