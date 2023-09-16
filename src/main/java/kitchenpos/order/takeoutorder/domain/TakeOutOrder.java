@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderStatus;
 
-@Table(name = "takeout_orders")
+@Table(name = "take_out_orders")
 @Entity
 public class TakeOutOrder {
 
@@ -34,7 +34,7 @@ public class TakeOutOrder {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
-        name = "order_id",
+        name = "take_out_order_id",
         nullable = false,
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_takeout_order_line_item_to_orders")

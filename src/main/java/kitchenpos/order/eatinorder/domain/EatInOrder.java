@@ -36,7 +36,7 @@ public class EatInOrder {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
-        name = "order_id",
+        name = "eat_in_order_id",
         nullable = false,
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_eat_in_order_line_item_to_orders")
