@@ -1,11 +1,11 @@
 package kitchenpos.application;
 
-import kitchenpos.external.profanity.ProfanityClient;
-
 import java.util.Arrays;
 import java.util.List;
+import kitchenpos.external.profanity.ProfanityClient;
 
 public class FakeProfanityClient implements ProfanityClient {
+
     private static final List<String> profanities;
 
     static {

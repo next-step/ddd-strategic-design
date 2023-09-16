@@ -1,5 +1,9 @@
 package kitchenpos.order.application;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.UUID;
 import kitchenpos.order.domain.OrderRepository;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderTable;
@@ -7,13 +11,9 @@ import kitchenpos.order.domain.OrderTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.UUID;
-
 @Service
 public class OrderTableService {
+
     private final OrderTableRepository orderTableRepository;
     private final OrderRepository orderRepository;
 

@@ -16,6 +16,7 @@ import kitchenpos.order.domain.OrderType;
 import kitchenpos.product.domain.Product;
 
 public class Fixtures {
+
     public static final UUID INVALID_ID = new UUID(0L, 0L);
 
     public static Menu menu() {
