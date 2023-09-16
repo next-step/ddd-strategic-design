@@ -28,7 +28,7 @@ class OrderServiceTest {
     private OrderRepository orderRepository;
     private MenuRepository menuRepository;
     private OrderTableRepository orderTableRepository;
-    private FakeKitchenridersClient kitchenridersClient;
+    private FakeDeliveryAgencyClient kitchenridersClient;
     private OrderService orderService;
 
     @BeforeEach
@@ -36,7 +36,7 @@ class OrderServiceTest {
         orderRepository = new InMemoryOrderRepository();
         menuRepository = new InMemoryMenuRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
-        kitchenridersClient = new FakeKitchenridersClient();
+        kitchenridersClient = new FakeDeliveryAgencyClient();
         orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
     }
 

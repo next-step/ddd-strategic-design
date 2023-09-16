@@ -1,6 +1,6 @@
 package kitchenpos.order.application;
 
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.external.deliveryagency.DeliveryAgencyClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.domain.Order;
@@ -23,18 +23,18 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
     private final OrderTableRepository orderTableRepository;
-    private final KitchenridersClient kitchenridersClient;
+    private final DeliveryAgencyClient deliveryAgencyClient;
 
     public OrderService(
         final OrderRepository orderRepository,
         final MenuRepository menuRepository,
         final OrderTableRepository orderTableRepository,
-        final KitchenridersClient kitchenridersClient
+        final DeliveryAgencyClient deliveryAgencyClient
     ) {
         this.orderRepository = orderRepository;
         this.menuRepository = menuRepository;
         this.orderTableRepository = orderTableRepository;
-        this.kitchenridersClient = kitchenridersClient;
+        this.deliveryAgencyClient = deliveryAgencyClient;
     }
 
     @Transactional
@@ -114,7 +114,7 @@ public class OrderService {
                     .getPrice()
                     .multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));
             }
-            kitchenridersClient.requestDelivery(orderId, sum, order.getDeliveryAddress());
+            deliveryAgencyClient.requestDelivery(orderId, sum, order.getDeliveryAddress());
         }
         order.setStatus(OrderStatus.ACCEPTED);
         return order;
