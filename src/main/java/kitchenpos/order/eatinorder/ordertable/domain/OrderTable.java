@@ -1,4 +1,4 @@
-package kitchenpos.order.domain;
+package kitchenpos.order.eatinorder.ordertable.domain;
 
 import java.util.UUID;
 import javax.persistence.Column;

@@ -1,4 +1,4 @@
-package kitchenpos.order.domain;
+package kitchenpos.order.deliveryorder.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,22 +15,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import kitchenpos.order.common.domain.OrderLineItem;
+import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 
-@Table(name = "orders")
+@Table(name = "delivery_orders")
 @Entity
-public class Order {
+public class DeliveryOrder {
 
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
 
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private OrderType type;
-
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private DeliveryOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -40,7 +38,7 @@ public class Order {
         name = "order_id",
         nullable = false,
         columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
+        foreignKey = @ForeignKey(name = "fk_delivery_order_line_item_to_orders")
     )
     private List<OrderLineItem> orderLineItems;
 
@@ -58,7 +56,7 @@ public class Order {
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public DeliveryOrder() {
     }
 
     public UUID getId() {
@@ -69,19 +67,11 @@ public class Order {
         this.id = id;
     }
 
-    public OrderType getType() {
-        return type;
-    }
-
-    public void setType(final OrderType type) {
-        this.type = type;
-    }
-
-    public OrderStatus getStatus() {
+    public DeliveryOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final DeliveryOrderStatus status) {
         this.status = status;
     }
 

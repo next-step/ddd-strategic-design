@@ -1,10 +1,10 @@
-package kitchenpos.order.ui;
+package kitchenpos.order.eatinorder.ordertable.ui;
 
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.order.application.OrderTableService;
-import kitchenpos.order.domain.OrderTable;
+import kitchenpos.order.eatinorder.ordertable.application.OrderTableService;
+import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

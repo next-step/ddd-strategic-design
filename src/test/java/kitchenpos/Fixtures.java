@@ -8,11 +8,13 @@ import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.order.domain.Order;
-import kitchenpos.order.domain.OrderLineItem;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderType;
+import kitchenpos.order.common.domain.OrderLineItem;
+import kitchenpos.order.common.domain.OrderStatus;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
 import kitchenpos.product.domain.Product;
 
 public class Fixtures {
@@ -65,36 +67,52 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static Order order(final OrderStatus status, final String deliveryAddress) {
-        final Order order = new Order();
-        order.setId(UUID.randomUUID());
-        order.setType(OrderType.DELIVERY);
-        order.setStatus(status);
-        order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setOrderLineItems(Arrays.asList(orderLineItem()));
-        order.setDeliveryAddress(deliveryAddress);
-        return order;
+    public static TakeOutOrder takeOutOrder(final OrderStatus status) {
+        final TakeOutOrder takeOutOrder = new TakeOutOrder();
+        takeOutOrder.setId(UUID.randomUUID());
+        takeOutOrder.setStatus(status);
+        takeOutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        takeOutOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        return takeOutOrder;
     }
 
-    public static Order order(final OrderStatus status) {
-        final Order order = new Order();
-        order.setId(UUID.randomUUID());
-        order.setType(OrderType.TAKEOUT);
-        order.setStatus(status);
-        order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setOrderLineItems(Arrays.asList(orderLineItem()));
-        return order;
+    public static EatInOrder eatInOrder(final OrderStatus status) {
+        final EatInOrder eatInOrder = new EatInOrder();
+        eatInOrder.setId(UUID.randomUUID());
+        eatInOrder.setStatus(status);
+        eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        return eatInOrder;
     }
 
-    public static Order order(final OrderStatus status, final OrderTable orderTable) {
-        final Order order = new Order();
-        order.setId(UUID.randomUUID());
-        order.setType(OrderType.EAT_IN);
-        order.setStatus(status);
-        order.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        order.setOrderLineItems(Arrays.asList(orderLineItem()));
-        order.setOrderTable(orderTable);
-        return order;
+    public static EatInOrder eatInOrder(final OrderStatus status, final OrderTable orderTable) {
+        final EatInOrder eatInOrder = new EatInOrder();
+        eatInOrder.setId(UUID.randomUUID());
+        eatInOrder.setStatus(status);
+        eatInOrder.setOrderTable(orderTable);
+        eatInOrder.setOrderTableId(orderTable.getId());
+        eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        return eatInOrder;
+    }
+
+    public static DeliveryOrder deliveryOrder(final DeliveryOrderStatus status, final String deliveryAddress) {
+        final DeliveryOrder deliveryOrder = new DeliveryOrder();
+        deliveryOrder.setId(UUID.randomUUID());
+        deliveryOrder.setStatus(status);
+        deliveryOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        deliveryOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        deliveryOrder.setDeliveryAddress(deliveryAddress);
+        return deliveryOrder;
+    }
+
+    public static DeliveryOrder deliveryOrder(final DeliveryOrderStatus status) {
+        final DeliveryOrder deliveryOrder = new DeliveryOrder();
+        deliveryOrder.setId(UUID.randomUUID());
+        deliveryOrder.setStatus(status);
+        deliveryOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
+        deliveryOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        return deliveryOrder;
     }
 
     public static OrderLineItem orderLineItem() {

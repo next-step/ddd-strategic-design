@@ -1,6 +1,5 @@
 package kitchenpos.application;
 
-import static kitchenpos.Fixtures.order;
 import static kitchenpos.Fixtures.orderTable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,11 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.order.application.OrderTableService;
-import kitchenpos.order.domain.OrderRepository;
-import kitchenpos.order.domain.OrderStatus;
-import kitchenpos.order.domain.OrderTable;
-import kitchenpos.order.domain.OrderTableRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
+import kitchenpos.order.eatinorder.ordertable.application.OrderTableService;
+import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
+import kitchenpos.order.eatinorder.ordertable.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,16 +18,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class OrderTableServiceTest {
+class DeliveryOrderTableServiceTest {
 
     private OrderTableRepository orderTableRepository;
-    private OrderRepository orderRepository;
+    private EatInOrderRepository orderRepository;
     private OrderTableService orderTableService;
 
     @BeforeEach
     void setUp() {
         orderTableRepository = new InMemoryOrderTableRepository();
-        orderRepository = new InMemoryOrderRepository();
+        orderRepository = new InMemoryEatInOrderRepository();
         orderTableService = new OrderTableService(orderTableRepository, orderRepository);
     }
 
@@ -73,16 +71,6 @@ class OrderTableServiceTest {
             () -> assertThat(actual.getNumberOfGuests()).isZero(),
             () -> assertThat(actual.isOccupied()).isFalse()
         );
-    }
-
-    @DisplayName("완료되지 않은 주문이 있는 주문 테이블은 빈 테이블로 설정할 수 없다.")
-    @Test
-    void clearWithUncompletedOrders() {
-        final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
-        final UUID orderTableId = orderTable.getId();
-        orderRepository.save(order(OrderStatus.ACCEPTED, orderTable));
-        assertThatThrownBy(() -> orderTableService.clear(orderTableId))
-            .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("방문한 손님 수를 변경할 수 있다.")
