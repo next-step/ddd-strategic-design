@@ -94,6 +94,9 @@ docker compose -p kitchenpos up -d
 - 완료되지 않은 매장 주문이 있는 주문 테이블은 빈 테이블로 설정하지 않는다.
 - 주문 목록을 조회할 수 있다.
 
+<br>
+
+
 ## 용어 사전
 
 
@@ -144,10 +147,42 @@ docker compose -p kitchenpos up -d
 | 완료됨    | Completed | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
 
 
-### 손님
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 손님 | guest | 키친 포스의 주문을 하는 이용자 |
+### 포장 주문
+| 한글명    | 영문명           | 설명 |
+|--------|---------------| --- |
+| 주문  | Takeout Order | 음식을 매장에서 먹지 않고 포장 요구하는 주문 |
+| 주문 항목  | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
+| 주문 항목들  | Order Line Items | Order Line item 의 묶음을 말한다 |
+| 주문 상태 | OrderStatus | 주문의 진행상태 |
+| 대기중    | Waiting | 주문의 처음 상태 |
+| 접수됨    | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
+| 서빙됨    | Served | 접수된 주문을 음식을 준비하여 서빙한 상태 |
+| 완료됨    | Completed | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
+
+
+### 배달 주문
+| 한글명    | 영문명           | 설명 |
+|--------|---------------| --- |
+| 주문  | Delivery Order | 음식을 배달 주소에 가져다 주는 주문 |
+| 배달 주소  | Delivery Address | 배달 주문의 음식 도착지 |
+| 배달 대행사 | Kitchen Riders | 음식을 배달 주소에 운반해주는 업체 |
+| 주문 항목  | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
+| 주문 항목들  | Order Line Items | Order Line item 의 묶음을 말한다 |
+| 주문 상태 | Order Status | 주문의 진행상태 |
+| 대기중    | Waiting | 주문의 처음 상태 |
+| 접수됨    | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
+| 서빙됨    | Served | 접수된 주문을 음식을 준비하여 서빙한 상태 |
+| 배달중    | Delivering | 배달 대행사가 음식을 배달 주소에 운반하고 있는 상태 |
+| 배달 완료됨 | Delivery Completed | 배달 대행사가 음식을 배달 주소에 운반 완료한 상태 |
+| 완료됨    | Completed | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
+
+
+
+### 공통
+| 한글명 | 영문명 | 설명                                                                            |
+|-----| --- |-------------------------------------------------------------------------------|
+| 손님  | guest | 키친 포스의 주문을 하는 이용자                                                             |
+| 비속어 | Bad Language | 비속어 정책에 따른 제한된 단어 <br/>(_비속어 정책: 해당 사이트(“https://purgomalum.com”)에서 규정한 비속어_) |
 
 
 
@@ -171,7 +206,7 @@ docker compose -p kitchenpos up -d
 
 
 
-#### 정책 **
+#### [정책 - 메뉴 가격 정책]
 
  - Menu Price Policy 
    - 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다
@@ -199,7 +234,7 @@ docker compose -p kitchenpos up -d
 - View All Menus 를 할 수 있다.
 
 
-#### 정책 **
+#### [정책 - 메뉴 노출 정책]
  - Menu Display Policy 
    - 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 
@@ -236,11 +271,51 @@ docker compose -p kitchenpos up -d
 
 
 
-#### 정책 **
-- EatInOrderCompletePolicy
+#### [정책 - 매장주문 완료 정책]
+- EatInOrder Complete Policy
   - EatInOrder가 Complete 되었을때, 해당 EatInOrder와 관련된 Table의 모든 EatInOrder가 Completed면 Clean Table한다
 
 
 <br>
 
+
+### [포장 주문]
+ - TakeOutOrder는 OrderStatus, 주문시각, OrderLineItems를 갖는다.
+ - OrderStatus는 Waiting, Accepted, Served, Completed 을 갖는다.
+   - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Completed)와 같이 진행된다.
+ - OrderLineItems는 OrderLineItem을 갖는다.
+ - OrderLineItem은 Menu의 id, Price, Quantity를 갖는다.
+ - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
+ - TakeOutOrder는 생성할 수 있다.
+   - Menu는 Displayed Menu 여야 한다.
+ - TakeOutOrder는 접수할 수 있다.
+ - TakeOutOrder는 서빙할 수 있다.
+ - TakeOutOrder는 완료할 수 있다.
+
+<br>
+
+
+### [배달 주문]
+ - DeliveryOrder는 DeliveryAddress, OrderStatus, 주문시각, OrderLineItems를 갖는다.
+ - DeliveryAddress는 주소를 갖는다.
+   - 주소는 존재해야한다.
+ - OrderStatus는 Waiting, Accepted, Served, Delivering, Delivery Completed, Completed 을 갖는다.
+   - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Delivering > Delivery Complete > Completed)와 같이 진행된다.
+ - OrderLineItems는 OrderLineItem을 갖는다.
+ - OrderLineItem은 Menu의 id, Price, Quantity를 갖는다.
+ - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
+ - DeliveryOrder는 생성할 수 있다.
+   - Menu는 Displayed Menu 여야 한다.
+   - DeliveryOrder 생성 시, DeliveryAddress 존재해야한다.
+ - DeliveryOrder는 접수할 수 있다.
+   - DeliveryOrder가 접수되었을 때, DeliveryOrderAcceptPolicy를 따른다.
+ - DeliveryOrder는 서빙할 수 있다.
+ - DeliveryOrder는 배달시작할 수 있다.
+ - DeliveryOrder는 배달완료할 수 있다.
+ - DeliveryOrder는 완료할 수 있다.
+
+
+#### [정책 - 배달주문 접수 정책]
+- Delivery Order Accept Policy
+  - Delivery Order가 접수 되었을 때, Kitchen Riders에게 배달 요청을 한다.
 
