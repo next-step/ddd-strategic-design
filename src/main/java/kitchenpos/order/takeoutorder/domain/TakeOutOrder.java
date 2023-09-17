@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Table(name = "take_out_orders")
 @Entity
@@ -38,9 +37,6 @@ public class TakeOutOrder {
         foreignKey = @ForeignKey(name = "fk_takeout_order_line_item_to_orders")
     )
     private List<TakeOutOrderLineItem> orderLineItems;
-
-    @Transient
-    private UUID orderTableId;
 
     public TakeOutOrder() {
     }
@@ -75,13 +71,5 @@ public class TakeOutOrder {
 
     public void setOrderLineItems(final List<TakeOutOrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
-    }
-
-    public UUID getOrderTableId() {
-        return orderTableId;
-    }
-
-    public void setOrderTableId(final UUID orderTableId) {
-        this.orderTableId = orderTableId;
     }
 }
