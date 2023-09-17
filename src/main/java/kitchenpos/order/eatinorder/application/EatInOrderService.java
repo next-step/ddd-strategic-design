@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import kitchenpos.deliveryagency.DeliveryAgencyClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderLineItem;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
@@ -39,20 +39,20 @@ public class EatInOrderService {
 
     @Transactional
     public EatInOrder create(final EatInOrder request) {
-        final List<OrderLineItem> orderLineItemRequests = request.getOrderLineItems();
+        final var orderLineItemRequests = request.getOrderLineItems();
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
         final List<Menu> menus = menuRepository.findAllByIdIn(
             orderLineItemRequests.stream()
-                .map(OrderLineItem::getMenuId)
+                .map(EatInOrderLineItem::getMenuId)
                 .collect(Collectors.toList())
         );
         if (menus.size() != orderLineItemRequests.size()) {
             throw new IllegalArgumentException();
         }
-        final List<OrderLineItem> orderLineItems = new ArrayList<>();
-        for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
+        final List<EatInOrderLineItem> orderLineItems = new ArrayList<>();
+        for (final var orderLineItemRequest : orderLineItemRequests) {
             final long quantity = orderLineItemRequest.getQuantity();
             final Menu menu = menuRepository.findById(orderLineItemRequest.getMenuId())
                 .orElseThrow(NoSuchElementException::new);
@@ -62,7 +62,7 @@ public class EatInOrderService {
             if (menu.getPrice().compareTo(orderLineItemRequest.getPrice()) != 0) {
                 throw new IllegalArgumentException();
             }
-            final OrderLineItem orderLineItem = new OrderLineItem();
+            final EatInOrderLineItem orderLineItem = new EatInOrderLineItem();
             orderLineItem.setMenu(menu);
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);

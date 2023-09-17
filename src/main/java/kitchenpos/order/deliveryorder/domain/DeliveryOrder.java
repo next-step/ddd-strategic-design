@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 
 @Table(name = "delivery_orders")
@@ -40,7 +39,7 @@ public class DeliveryOrder {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_delivery_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<DeliveryOrderLineItem> orderLineItems;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
@@ -83,11 +82,11 @@ public class DeliveryOrder {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
+    public List<DeliveryOrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
+    public void setOrderLineItems(final List<DeliveryOrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
     }
 

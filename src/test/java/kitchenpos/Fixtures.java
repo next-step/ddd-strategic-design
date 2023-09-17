@@ -8,13 +8,15 @@ import java.util.UUID;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderLineItem;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderLineItem;
 import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderLineItem;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 import kitchenpos.product.domain.Product;
 
@@ -73,7 +75,7 @@ public class Fixtures {
         takeOutOrder.setId(UUID.randomUUID());
         takeOutOrder.setStatus(status);
         takeOutOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        takeOutOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        takeOutOrder.setOrderLineItems(Arrays.asList(takeOutOrderLineItem()));
         return takeOutOrder;
     }
 
@@ -82,7 +84,7 @@ public class Fixtures {
         eatInOrder.setId(UUID.randomUUID());
         eatInOrder.setStatus(status);
         eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        eatInOrder.setOrderLineItems(Arrays.asList(eatInOrderLineItem()));
         return eatInOrder;
     }
 
@@ -93,7 +95,7 @@ public class Fixtures {
         eatInOrder.setOrderTable(orderTable);
         eatInOrder.setOrderTableId(orderTable.getId());
         eatInOrder.setOrderDateTime(LocalDateTime.of(2020, 1, 1, 12, 0));
-        eatInOrder.setOrderLineItems(Arrays.asList(orderLineItem()));
+        eatInOrder.setOrderLineItems(Arrays.asList(eatInOrderLineItem()));
         return eatInOrder;
     }
 
@@ -116,8 +118,22 @@ public class Fixtures {
         return deliveryOrder;
     }
 
-    public static OrderLineItem orderLineItem() {
-        final OrderLineItem orderLineItem = new OrderLineItem();
+    public static DeliveryOrderLineItem orderLineItem() {
+        final DeliveryOrderLineItem orderLineItem = new DeliveryOrderLineItem();
+        orderLineItem.setSeq(new Random().nextLong());
+        orderLineItem.setMenu(menu());
+        return orderLineItem;
+    }
+
+    public static TakeOutOrderLineItem takeOutOrderLineItem() {
+        final TakeOutOrderLineItem orderLineItem = new TakeOutOrderLineItem();
+        orderLineItem.setSeq(new Random().nextLong());
+        orderLineItem.setMenu(menu());
+        return orderLineItem;
+    }
+
+    public static EatInOrderLineItem eatInOrderLineItem() {
+        final EatInOrderLineItem orderLineItem = new EatInOrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenu(menu());
         return orderLineItem;

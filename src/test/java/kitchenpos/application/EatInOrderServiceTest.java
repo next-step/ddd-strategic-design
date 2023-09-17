@@ -18,9 +18,9 @@ import java.util.Random;
 import java.util.UUID;
 import kitchenpos.Fixtures;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.eatinorder.application.EatInOrderService;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderLineItem;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
@@ -71,7 +71,7 @@ class EatInOrderServiceTest {
     @DisplayName("메뉴가 없으면 등록할 수 없다.")
     @MethodSource("orderLineItems")
     @ParameterizedTest
-    void create(final List<OrderLineItem> orderLineItems) {
+    void create(final List<EatInOrderLineItem> orderLineItems) {
         final EatInOrder expected = createEatInOrderRequest(orderLineItems);
         assertThatThrownBy(() -> eatInOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
@@ -215,11 +215,11 @@ class EatInOrderServiceTest {
         assertThat(actual).hasSize(2);
     }
 
-    private EatInOrder createEatInOrderRequest(final OrderLineItem... orderLineItems) {
+    private EatInOrder createEatInOrderRequest(final EatInOrderLineItem... orderLineItems) {
         return createEatInOrderRequest(Arrays.asList(orderLineItems));
     }
 
-    private EatInOrder createEatInOrderRequest(final List<OrderLineItem> orderLineItems) {
+    private EatInOrder createEatInOrderRequest(final List<EatInOrderLineItem> orderLineItems) {
         final EatInOrder eatInOrder = new EatInOrder();
         eatInOrder.setOrderLineItems(orderLineItems);
         return eatInOrder;
@@ -227,7 +227,7 @@ class EatInOrderServiceTest {
 
     private EatInOrder createEatInOrderRequest(
         final UUID orderTableId,
-        final OrderLineItem... orderLineItems
+        final EatInOrderLineItem... orderLineItems
     ) {
         final EatInOrder eatInOrder = new EatInOrder();
         eatInOrder.setOrderTableId(orderTableId);
@@ -235,8 +235,8 @@ class EatInOrderServiceTest {
         return eatInOrder;
     }
 
-    private static OrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
-        final OrderLineItem orderLineItem = new OrderLineItem();
+    private static EatInOrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
+        final EatInOrderLineItem orderLineItem = new EatInOrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenuId(menuId);
         orderLineItem.setPrice(BigDecimal.valueOf(price));

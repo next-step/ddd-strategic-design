@@ -9,8 +9,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderLineItem;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderRepository;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 import org.springframework.stereotype.Service;
@@ -32,20 +32,20 @@ public class TakeoutOrderService {
 
     @Transactional
     public TakeOutOrder create(final TakeOutOrder request) {
-        final List<OrderLineItem> orderLineItemRequests = request.getOrderLineItems();
+        final var orderLineItemRequests = request.getOrderLineItems();
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
         final List<Menu> menus = menuRepository.findAllByIdIn(
             orderLineItemRequests.stream()
-                .map(OrderLineItem::getMenuId)
+                .map(TakeOutOrderLineItem::getMenuId)
                 .collect(Collectors.toList())
         );
         if (menus.size() != orderLineItemRequests.size()) {
             throw new IllegalArgumentException();
         }
-        final List<OrderLineItem> orderLineItems = new ArrayList<>();
-        for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
+        final List<TakeOutOrderLineItem> orderLineItems = new ArrayList<>();
+        for (final var orderLineItemRequest : orderLineItemRequests) {
             final long quantity = orderLineItemRequest.getQuantity();
             if (quantity < 0) {
                 throw new IllegalArgumentException();
@@ -58,7 +58,7 @@ public class TakeoutOrderService {
             if (menu.getPrice().compareTo(orderLineItemRequest.getPrice()) != 0) {
                 throw new IllegalArgumentException();
             }
-            final OrderLineItem orderLineItem = new OrderLineItem();
+            final TakeOutOrderLineItem orderLineItem = new TakeOutOrderLineItem();
             orderLineItem.setMenu(menu);
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);

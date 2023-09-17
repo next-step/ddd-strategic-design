@@ -16,9 +16,9 @@ import java.util.Random;
 import java.util.UUID;
 import kitchenpos.Fixtures;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.deliveryorder.application.DeliveryOrderService;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderLineItem;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderRepository;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +67,7 @@ class DeliveryOrderServiceTest {
     @DisplayName("메뉴가 없으면 등록할 수 없다.")
     @MethodSource("orderLineItems")
     @ParameterizedTest
-    void create(final List<OrderLineItem> orderLineItems) {
+    void create(final List<DeliveryOrderLineItem> orderLineItems) {
         final DeliveryOrder expected = createDeliveryOrderRequest(orderLineItems);
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
@@ -232,7 +232,7 @@ class DeliveryOrderServiceTest {
 
     private DeliveryOrder createDeliveryOrderRequest(
         final String deliveryAddress,
-        final OrderLineItem... orderLineItems
+        final DeliveryOrderLineItem... orderLineItems
     ) {
         final DeliveryOrder deliveryOrder = new DeliveryOrder();
         deliveryOrder.setDeliveryAddress(deliveryAddress);
@@ -240,18 +240,18 @@ class DeliveryOrderServiceTest {
         return deliveryOrder;
     }
 
-    private DeliveryOrder createDeliveryOrderRequest(final OrderLineItem... orderLineItems) {
+    private DeliveryOrder createDeliveryOrderRequest(final DeliveryOrderLineItem... orderLineItems) {
         return createDeliveryOrderRequest(Arrays.asList(orderLineItems));
     }
 
-    private DeliveryOrder createDeliveryOrderRequest(final List<OrderLineItem> orderLineItems) {
+    private DeliveryOrder createDeliveryOrderRequest(final List<DeliveryOrderLineItem> orderLineItems) {
         final DeliveryOrder deliveryOrder = new DeliveryOrder();
         deliveryOrder.setOrderLineItems(orderLineItems);
         return deliveryOrder;
     }
 
-    private static OrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
-        final OrderLineItem orderLineItem = new OrderLineItem();
+    private static DeliveryOrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
+        final DeliveryOrderLineItem orderLineItem = new DeliveryOrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenuId(menuId);
         orderLineItem.setPrice(BigDecimal.valueOf(price));

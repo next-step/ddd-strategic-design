@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import kitchenpos.deliveryagency.DeliveryAgencyClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderLineItem;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderRepository;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import org.springframework.stereotype.Service;
@@ -37,20 +37,20 @@ public class DeliveryOrderService {
 
     @Transactional
     public DeliveryOrder create(final DeliveryOrder request) {
-        final List<OrderLineItem> orderLineItemRequests = request.getOrderLineItems();
+        final List<DeliveryOrderLineItem> orderLineItemRequests = request.getOrderLineItems();
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
             throw new IllegalArgumentException();
         }
         final List<Menu> menus = menuRepository.findAllByIdIn(
             orderLineItemRequests.stream()
-                .map(OrderLineItem::getMenuId)
+                .map(DeliveryOrderLineItem::getMenuId)
                 .collect(Collectors.toList())
         );
         if (menus.size() != orderLineItemRequests.size()) {
             throw new IllegalArgumentException();
         }
-        final List<OrderLineItem> orderLineItems = new ArrayList<>();
-        for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
+        final List<DeliveryOrderLineItem> orderLineItems = new ArrayList<>();
+        for (final DeliveryOrderLineItem orderLineItemRequest : orderLineItemRequests) {
             final long quantity = orderLineItemRequest.getQuantity();
             if (quantity < 0) {
                 throw new IllegalArgumentException();
@@ -63,7 +63,7 @@ public class DeliveryOrderService {
             if (menu.getPrice().compareTo(orderLineItemRequest.getPrice()) != 0) {
                 throw new IllegalArgumentException();
             }
-            final OrderLineItem orderLineItem = new OrderLineItem();
+            final DeliveryOrderLineItem orderLineItem = new DeliveryOrderLineItem();
             orderLineItem.setMenu(menu);
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
@@ -91,7 +91,7 @@ public class DeliveryOrderService {
         }
 
         BigDecimal sum = BigDecimal.ZERO;
-        for (final OrderLineItem orderLineItem : deliveryOrder.getOrderLineItems()) {
+        for (final DeliveryOrderLineItem orderLineItem : deliveryOrder.getOrderLineItems()) {
             sum = orderLineItem.getMenu()
                 .getPrice()
                 .multiply(BigDecimal.valueOf(orderLineItem.getQuantity()));

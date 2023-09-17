@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import kitchenpos.order.common.domain.OrderLineItem;
 
 @Table(name = "take_out_orders")
 @Entity
@@ -38,7 +37,7 @@ public class TakeOutOrder {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_takeout_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<TakeOutOrderLineItem> orderLineItems;
 
     @Transient
     private UUID orderTableId;
@@ -70,11 +69,11 @@ public class TakeOutOrder {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
+    public List<TakeOutOrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
+    public void setOrderLineItems(final List<TakeOutOrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
     }
 

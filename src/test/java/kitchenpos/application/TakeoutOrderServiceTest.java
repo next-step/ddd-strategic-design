@@ -16,9 +16,9 @@ import java.util.Random;
 import java.util.UUID;
 import kitchenpos.Fixtures;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.takeoutorder.application.TakeoutOrderService;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderLineItem;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderRepository;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +60,7 @@ class TakeoutOrderServiceTest {
     @DisplayName("메뉴가 없으면 등록할 수 없다.")
     @MethodSource("orderLineItems")
     @ParameterizedTest
-    void create(final List<OrderLineItem> orderLineItems) {
+    void create(final List<TakeOutOrderLineItem> orderLineItems) {
         final TakeOutOrder expected = createTakeoutOrder(orderLineItems);
         assertThatThrownBy(() -> takeoutOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
@@ -153,19 +153,19 @@ class TakeoutOrderServiceTest {
     }
 
     private TakeOutOrder createTakeoutOrder(
-        final OrderLineItem... orderLineItems
+        final TakeOutOrderLineItem... orderLineItems
     ) {
         return createTakeoutOrder(Arrays.asList(orderLineItems));
     }
 
-    private TakeOutOrder createTakeoutOrder(final List<OrderLineItem> orderLineItems) {
+    private TakeOutOrder createTakeoutOrder(final List<TakeOutOrderLineItem> orderLineItems) {
         final TakeOutOrder TakeOutOrder = new TakeOutOrder();
         TakeOutOrder.setOrderLineItems(orderLineItems);
         return TakeOutOrder;
     }
 
-    private static OrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
-        final OrderLineItem orderLineItem = new OrderLineItem();
+    private static TakeOutOrderLineItem createOrderLineItemRequest(final UUID menuId, final long price, final long quantity) {
+        final TakeOutOrderLineItem orderLineItem = new TakeOutOrderLineItem();
         orderLineItem.setSeq(new Random().nextLong());
         orderLineItem.setMenuId(menuId);
         orderLineItem.setPrice(BigDecimal.valueOf(price));
