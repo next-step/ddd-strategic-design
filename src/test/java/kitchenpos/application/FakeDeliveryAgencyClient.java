@@ -2,7 +2,7 @@ package kitchenpos.application;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import kitchenpos.external.deliveryagency.DeliveryAgencyClient;
+import kitchenpos.deliveryagency.DeliveryAgencyClient;
 
 public class FakeDeliveryAgencyClient implements DeliveryAgencyClient {
 

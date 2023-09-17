@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import kitchenpos.order.common.domain.OrderLineItem;
-import kitchenpos.order.common.domain.OrderStatus;
 
 @Table(name = "take_out_orders")
 @Entity
@@ -27,7 +26,7 @@ public class TakeOutOrder {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private TakeOutOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -55,11 +54,11 @@ public class TakeOutOrder {
         this.id = id;
     }
 
-    public OrderStatus getStatus() {
+    public TakeOutOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final TakeOutOrderStatus status) {
         this.status = status;
     }
 

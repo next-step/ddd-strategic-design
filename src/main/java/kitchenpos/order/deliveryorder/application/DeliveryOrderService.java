@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import kitchenpos.external.deliveryagency.DeliveryAgencyClient;
+import kitchenpos.deliveryagency.DeliveryAgencyClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;

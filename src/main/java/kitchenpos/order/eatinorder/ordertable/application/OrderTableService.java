@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTableRepository;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class OrderTableService {
     public OrderTable clear(final UUID orderTableId) {
         final OrderTable orderTable = orderTableRepository.findById(orderTableId)
             .orElseThrow(NoSuchElementException::new);
-        if (orderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
+        if (orderRepository.existsByOrderTableAndStatusNot(orderTable, EatInOrderStatus.COMPLETED)) {
             throw new IllegalStateException();
         }
         orderTable.setNumberOfGuests(0);

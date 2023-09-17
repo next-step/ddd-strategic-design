@@ -1,4 +1,4 @@
-package kitchenpos.external.deliveryagency;
+package kitchenpos.deliveryagency;
 
 import java.math.BigDecimal;
 import java.util.UUID;

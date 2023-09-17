@@ -3,7 +3,6 @@ package kitchenpos.order.eatinorder.domain;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 
 public interface EatInOrderRepository {
@@ -14,5 +13,5 @@ public interface EatInOrderRepository {
 
     List<EatInOrder> findAll();
 
-    boolean existsByOrderTableAndStatusNot(OrderTable orderTable, OrderStatus status);
+    boolean existsByOrderTableAndStatusNot(OrderTable orderTable, EatInOrderStatus status);
 }

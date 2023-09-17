@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 
 public class InMemoryEatInOrderRepository implements EatInOrderRepository {
@@ -32,7 +32,7 @@ public class InMemoryEatInOrderRepository implements EatInOrderRepository {
     }
 
     @Override
-    public boolean existsByOrderTableAndStatusNot(OrderTable orderTable, OrderStatus status) {
+    public boolean existsByOrderTableAndStatusNot(OrderTable orderTable, EatInOrderStatus status) {
         UUID orderTableId = orderTable.getId();
         return orders.values()
             .stream()

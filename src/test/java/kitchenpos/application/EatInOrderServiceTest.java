@@ -19,10 +19,10 @@ import java.util.UUID;
 import kitchenpos.Fixtures;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.application.EatInOrderService;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTable;
 import kitchenpos.order.eatinorder.ordertable.domain.OrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ class EatInOrderServiceTest {
         assertThat(actual).isNotNull();
         assertAll(
             () -> assertThat(actual.getId()).isNotNull(),
-            () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.WAITING),
+            () -> assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.WAITING),
             () -> assertThat(actual.getOrderDateTime()).isNotNull(),
             () -> assertThat(actual.getOrderLineItems()).hasSize(1),
             () -> assertThat(actual.getOrderTable().getId()).isEqualTo(expected.getOrderTableId())
@@ -130,15 +130,15 @@ class EatInOrderServiceTest {
     @DisplayName("주문을 접수한다.")
     @Test
     void accept() {
-        final UUID orderId = orderRepository.save(eatInOrder(OrderStatus.WAITING, orderTable(true, 4))).getId();
+        final UUID orderId = orderRepository.save(eatInOrder(EatInOrderStatus.WAITING, orderTable(true, 4))).getId();
         final EatInOrder actual = eatInOrderService.accept(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
+        assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.ACCEPTED);
     }
 
     @DisplayName("접수 대기 중인 주문만 접수할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = EatInOrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void accept(final OrderStatus status) {
+    void accept(final EatInOrderStatus status) {
         final UUID orderId = orderRepository.save(eatInOrder(status, orderTable(true, 4))).getId();
         assertThatThrownBy(() -> eatInOrderService.accept(orderId))
             .isInstanceOf(IllegalStateException.class);
@@ -147,15 +147,15 @@ class EatInOrderServiceTest {
     @DisplayName("주문을 서빙한다.")
     @Test
     void serve() {
-        final UUID orderId = orderRepository.save(Fixtures.eatInOrder(OrderStatus.ACCEPTED)).getId();
+        final UUID orderId = orderRepository.save(Fixtures.eatInOrder(EatInOrderStatus.ACCEPTED)).getId();
         final EatInOrder actual = eatInOrderService.serve(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.SERVED);
+        assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.SERVED);
     }
 
     @DisplayName("접수된 주문만 서빙할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "ACCEPTED", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = EatInOrderStatus.class, names = "ACCEPTED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void serve(final OrderStatus status) {
+    void serve(final EatInOrderStatus status) {
         final UUID orderId = orderRepository.save(Fixtures.eatInOrder(status)).getId();
         assertThatThrownBy(() -> eatInOrderService.serve(orderId))
             .isInstanceOf(IllegalStateException.class);
@@ -164,15 +164,15 @@ class EatInOrderServiceTest {
     @DisplayName("주문을 완료한다.")
     @Test
     void complete() {
-        final EatInOrder expected = orderRepository.save(Fixtures.eatInOrder(OrderStatus.SERVED, orderTable()));
+        final EatInOrder expected = orderRepository.save(Fixtures.eatInOrder(EatInOrderStatus.SERVED, orderTable()));
         final EatInOrder actual = eatInOrderService.complete(expected.getId());
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED);
+        assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.COMPLETED);
     }
 
     @DisplayName("포장 및 매장 주문의 경우 서빙된 주문만 완료할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = EatInOrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void completeTakeoutAndEatInOrder(final OrderStatus status) {
+    void completeTakeoutAndEatInOrder(final EatInOrderStatus status) {
         final UUID orderId = orderRepository.save(Fixtures.eatInOrder(status)).getId();
         assertThatThrownBy(() -> eatInOrderService.complete(orderId))
             .isInstanceOf(IllegalStateException.class);
@@ -182,10 +182,10 @@ class EatInOrderServiceTest {
     @Test
     void completeEatInOrder() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
-        final EatInOrder expected = orderRepository.save(eatInOrder(OrderStatus.SERVED, orderTable));
+        final EatInOrder expected = orderRepository.save(eatInOrder(EatInOrderStatus.SERVED, orderTable));
         final EatInOrder actual = eatInOrderService.complete(expected.getId());
         assertAll(
-            () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED),
+            () -> assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.COMPLETED),
             () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().isOccupied()).isFalse(),
             () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().getNumberOfGuests()).isEqualTo(0)
         );
@@ -195,11 +195,11 @@ class EatInOrderServiceTest {
     @Test
     void completeNotTable() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
-        orderRepository.save(eatInOrder(OrderStatus.SERVED, orderTable));
-        final EatInOrder expected = orderRepository.save(eatInOrder(OrderStatus.SERVED, orderTable));
+        orderRepository.save(eatInOrder(EatInOrderStatus.SERVED, orderTable));
+        final EatInOrder expected = orderRepository.save(eatInOrder(EatInOrderStatus.SERVED, orderTable));
         final EatInOrder actual = eatInOrderService.complete(expected.getId());
         assertAll(
-            () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED),
+            () -> assertThat(actual.getStatus()).isEqualTo(EatInOrderStatus.COMPLETED),
             () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().isOccupied()).isTrue(),
             () -> assertThat(orderTableRepository.findById(orderTable.getId()).get().getNumberOfGuests()).isEqualTo(4)
         );
@@ -209,8 +209,8 @@ class EatInOrderServiceTest {
     @Test
     void findAll() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
-        orderRepository.save(eatInOrder(OrderStatus.SERVED, orderTable));
-        orderRepository.save(Fixtures.eatInOrder(OrderStatus.SERVED, orderTable));
+        orderRepository.save(eatInOrder(EatInOrderStatus.SERVED, orderTable));
+        orderRepository.save(Fixtures.eatInOrder(EatInOrderStatus.SERVED, orderTable));
         final List<EatInOrder> actual = eatInOrderService.findAll();
         assertThat(actual).hasSize(2);
     }

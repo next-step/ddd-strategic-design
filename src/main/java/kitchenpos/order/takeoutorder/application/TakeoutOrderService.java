@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.OrderLineItem;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrder;
 import kitchenpos.order.takeoutorder.domain.TakeOutOrderRepository;
+import kitchenpos.order.takeoutorder.domain.TakeOutOrderStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,7 +65,7 @@ public class TakeoutOrderService {
         }
         TakeOutOrder takeOutOrder = new TakeOutOrder();
         takeOutOrder.setId(UUID.randomUUID());
-        takeOutOrder.setStatus(OrderStatus.WAITING);
+        takeOutOrder.setStatus(TakeOutOrderStatus.WAITING);
         takeOutOrder.setOrderDateTime(LocalDateTime.now());
         takeOutOrder.setOrderLineItems(orderLineItems);
         return orderRepository.save(takeOutOrder);
@@ -75,10 +75,10 @@ public class TakeoutOrderService {
     public TakeOutOrder accept(final UUID orderId) {
         final TakeOutOrder takeOutOrder = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (takeOutOrder.getStatus() != OrderStatus.WAITING) {
+        if (takeOutOrder.getStatus() != TakeOutOrderStatus.WAITING) {
             throw new IllegalStateException();
         }
-        takeOutOrder.setStatus(OrderStatus.ACCEPTED);
+        takeOutOrder.setStatus(TakeOutOrderStatus.ACCEPTED);
         return takeOutOrder;
     }
 
@@ -86,10 +86,10 @@ public class TakeoutOrderService {
     public TakeOutOrder serve(final UUID orderId) {
         final TakeOutOrder takeOutOrder = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (takeOutOrder.getStatus() != OrderStatus.ACCEPTED) {
+        if (takeOutOrder.getStatus() != TakeOutOrderStatus.ACCEPTED) {
             throw new IllegalStateException();
         }
-        takeOutOrder.setStatus(OrderStatus.SERVED);
+        takeOutOrder.setStatus(TakeOutOrderStatus.SERVED);
         return takeOutOrder;
     }
 
@@ -97,11 +97,11 @@ public class TakeoutOrderService {
     public TakeOutOrder complete(final UUID orderId) {
         final TakeOutOrder takeOutOrder = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        final OrderStatus status = takeOutOrder.getStatus();
-        if (status != OrderStatus.SERVED) {
+        final TakeOutOrderStatus status = takeOutOrder.getStatus();
+        if (status != TakeOutOrderStatus.SERVED) {
             throw new IllegalStateException();
         }
-        takeOutOrder.setStatus(OrderStatus.COMPLETED);
+        takeOutOrder.setStatus(TakeOutOrderStatus.COMPLETED);
         return takeOutOrder;
     }
 
