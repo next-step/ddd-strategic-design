@@ -101,7 +101,12 @@ docker compose -p kitchenpos up -d
 ### 상품
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| 상품 | Product |  메뉴에 등록될 음식 |
+| 상품 | Product | 메뉴에 등록될 음식을 말한다 | 
+| 상품명 | Displayed Name | 상품명을 말한다 | 
+| 가격 | Price | 상품 가격을 말한다 |
+| 상품 등록 | Register Product | (새로운)상품을 등록하는 것을 말한다 | 
+| 상품 가격 변경 | Change the Price | 상품 가격을 변경하는 것을 말한다 | 
+| 상품 목록 조회 | View All Products| 전체 상품을 조회하는 것을 말한다 | 
 
 ### 메뉴
 | 한글명   | 영문명          | 설명                    |
@@ -146,3 +151,25 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+
+### [상품]
+
+- Product는 Displayed Name 와 Price, Quantity 를 갖는다.
+- DisplayedName 은 이름을 갖는다.
+  - 이름은 Bad Language 를 포함할 수 없다.
+- Price는 가격을 갖는다.
+  - 가격은 0원 이상이어야 한다.
+- Register Product 를 할 수 있다.
+  - Register Product 시, Displayed Name 과 Price 는 필수여야 한다.
+  - Register Product 시, Price 는 0원 이상이다.
+- Change the price 를 할 수 있다.
+  - Change the price  시, 변경될 Price 는 0원 이상이여야 한다.
+  - Change the price  시, Menu Price Policy 를 따른다.
+- View All Products 가 가능하다.
+
+
+
+#### 정책 **
+
+| 메뉴가격정책 | Menu Price Policy | 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다 |
