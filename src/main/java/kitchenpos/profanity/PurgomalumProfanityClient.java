@@ -1,4 +1,4 @@
-package kitchenpos.external.profanity;
+package kitchenpos.profanity;
 
 import java.net.URI;
 import org.springframework.boot.web.client.RestTemplateBuilder;

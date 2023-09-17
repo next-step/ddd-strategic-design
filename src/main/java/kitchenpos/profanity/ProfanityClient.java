@@ -1,4 +1,4 @@
-package kitchenpos.external.profanity;
+package kitchenpos.profanity;
 
 public interface ProfanityClient {
 
