@@ -124,34 +124,25 @@ docker compose -p kitchenpos up -d
 | --- | --- | --- |
 | 비속어 | Slang | 비속어 정책에 정의된 사이트에서 필터링 된 단어 |
 
-### 주문 테이블
+### 매장 주문
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 테이블 | Table | 매장 주문을 위해 방문한 손님들이 차지해야하는 테이블 |
+| 손님 수 | Number of Guests | 테이블을 사용하고 있는 손님 수를 말한다 |
+| 테이블 상태 | TableStatus | 테이블 사용유무 |
 | 사용중 | In Use | 테이블을 사용하는 상태 |
 | 사용안함 | Not In Use | 테이블을 사용하지 않는 상태 |
 | 테이블 정리 | Clean Table | 테이블 상태를 사용안함으로 변경하는 것 |
-| 테이블 착석 | Sit On Table | 테이블 상태를 사용중으로 변경하는 것 |
-| 방문한 손님 | visiting guest | 매장 주문을 이용하는 손님 |
-| 손님 | guest | 키친 포스의 주문을 하는 이용자 |
-
-### 주문
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 주문 | Order | 손님이 메뉴를 요구하는 것 |
-| 주문 유형 | Order Type | 주문의 종류. 배달 주문, 포장 주문, 매장 주문이 있다 |
-| 배달 주문 | Delivery Order | 음식을 배달 주소에 가져다 주는 주문 |
-| 포장 주문 | Takeout Order | 음식을 매장에서 먹지 않고 포장 요구하는 주문 |
-| 매장 주문 | Eat In Order | 음식을 매장에서 먹고갈 경우에 하는 주문 |
+| 테이블 착석 | Seat on Table | 테이블 상태를 사용중으로 변경하는 것 |
+| 테이블 목록 조회 | View All Tables| 전체 테이블을 조회하는 것을 말한다 |
+| 주문 | Eat In Order | 음식을 매장에서 먹고갈 경우에 하는 주문 |
 | 주문 항목 | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
-| 배달 주소 | Delivery Address | 배달 주문의 음식 도착지 |
-| 배달 대행사 | Kitchen Riders | 음식을 배달 주소에 운반해주는 업체 |
-| 대기중 | Waiting | 배달, 포장, 매장 주문의 처음 상태 |
+| 주문 항목들 | Order Line Items | Order Line item 의 묶음을 말한다 |
+| 주문 상태 | OrderStatus | 주문의 진행상태 |
+| 대기중 | Waiting | 매장 주문의 처음 상태 |
 | 접수됨 | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
-| 서빙됨 | Served | 접수된 주문을 음식을 준비하여 서빙한 상태. 서빙은 매장 주문 손님, 포장 주문 손님, 배달 대행사에게 음식을 전한다 |
-| 배달중 | Delivering | 배달 대행사가 음식을 배달 주소에 운반하고 있는 상태 |
-| 배달 완료됨 | Delivery Completed | 배달 대행사가 음식을 배달 주소에 운반 완료한 상태 |
-| 완료됨 | Completed | 배달, 포장, 매장 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
+| 서빙됨 | Served | 접수된 주문을 음식을 준비하여 서빙한 상태 |
+| 완료됨 | Completed | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
 
 ## 모델링
 
@@ -200,3 +191,34 @@ docker compose -p kitchenpos up -d
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
 | 메뉴노출정책 | Menu Display Policy | 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다 |
+
+### 매장 주문
+- Table은 식별자, 이름, 손님 수를 갖는다.
+- Table을 등록할 수 있다.
+  - Table 등록 시, 테이블 상태는 Not In Use이다.
+- Table의 손님 수를 변경 할 수 있다.
+  - Table의 손님 수 변경 시, 손님 수는 0명 이상이여야 한다.
+- Table은 Clean Table 할 수 있다.
+  - 테이블 상태를 Not In Use로 변경과 손님 수를 0으로 만든다.
+- Table은 Seat on Table 할 수 있다.
+  - 테이블 상태를 In Use로 변경한다.
+
+
+- EatInOrder는 Table의 식별자, OrderStatus, 주문시각, OrderLineItems를 갖는다.
+- OrderStatus는 Waiting, Accepted, Served, Completed 을 갖는다.
+  - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Completed)와 같이 진행된다.
+- OrderLineItems는 OrderLineItem을 갖는다.
+- OrderLineItem은 Menu의 식별자, Price, Quantity를 갖는다.
+  - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
+- EatInOrder는 생성할 수 있다.
+  - EatInOrder 생성 시, Table은  In Use 여야 한다.
+  - Menu는 Displayed Menu 여야 한다.
+- EatInOrder는 접수할 수 있다.
+- EatInOrder는 서빙할 수 있다.
+- EatInOrder는 완료할 수 있다.
+  - EatInOrder가 완료될 때, EatInOrder Complete Policy를 따른다.
+  
+
+#### 정책
+- EatInOrderCompletePolicy
+  - EatInOrder가 Complete 되었을때, 해당 EatInOrder와 관련된 Table의 모든 EatInOrder가 Completed면 Clean Table한다
