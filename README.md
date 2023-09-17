@@ -99,39 +99,42 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴
 
-| 한글명   | 영문명            | 설명                 |
-|-------|----------------|--------------------|
-| 메뉴    | Menu           | 메뉴그룹에 속하는 주문 가능 단위 |
-| 메뉴그룹  | MenuGroup      | 메뉴를 분류한 그룹         |
-| 메뉴상품  | MenuProduct    | 메뉴가 포함하고 있는 상품     |
-| 금액    | price          | 메뉴 금액              |
-| 보이는메뉴 | DisplayedMenu  | 사용자에게 보이는 메뉴       |
-| 숨겨진메뉴 | HiddenMenu     | 사용자에게 숨겨진 메뉴       |
-| 상품    | Product        | 메뉴에 등록할 수 있는 제품    |
-| 비속어   | Profanity      | 메뉴이름에 적합하지 않은 비속어  |
+| 한글명   | 영문명           | 설명                             |
+|-------|---------------|--------------------------------|
+| 메뉴    | Menu          | 메뉴그룹에 속하는 주문 가능 단위             |
+| 메뉴그룹  | MenuGroup     | 메뉴를 분류한 그룹                     |
+| 메뉴상품  | MenuProducts  | 메뉴가 포함하고 있는 상품 목록              |
+| 가격    | Price         | 메뉴 금액                          |
+| 노출여부  | Displayed     | 사용자에게 메뉴를 보이게 하거나 숨기게 하는 구분 단위 |
+| 보이는메뉴 | DisplayedMenu | 사용자에게 보이는 메뉴                   |
+| 숨겨진메뉴 | HiddenMenu    | 사용자에게 숨겨진 메뉴                   |
+| 상품    | Product       | 메뉴에 등록할 수 있는 제품                |
+| 비속어   | Profanity     | 메뉴이름에 적합하지 않은 비속어              |
+| 이름    | name          | 메뉴 이름                          |
 
 ### 상품
 
-| 한글명   | 영문명            | 설명                                   |
-|-------|----------------|--------------------------------------|
-| 상품    | Product        | 메뉴에 등록할 수 있는 제품                      |
-| 금액    | price          | 상품 금액                                |
-| 비속어   | Profanity      | 이름에 적합하지 않은 비속어                      | 
+| 한글명 | 영문명            | 설명                                   |
+|--|----------------|--------------------------------------|
+| 상품 | Product        | 메뉴에 등록할 수 있는 제품                      |
+| 금액 | price          | 상품 금액                                |
+| 비속어 | Profanity      | 이름에 적합하지 않은 비속어                      | 
+| 이름 | name      | 상품 이름                      | 
 
 ### 배달 주문
 
-| 한글명   | 영문명           | 설명                          |
-|-------|---------------|-----------------------------|
-| 배달주문   | Order         | 고객에게 라이더를 통해 배달 음식을 전달하는 주문 |
-| 주문아이템 | OrderLineItem | 배달 주문에 포함된 메뉴               |
-| 주문상태  | OrderStatus   | 배달 주문의 상태                   |
-| 대기중   | WAITING       | 배달 주문이 접수 되는것을 기다리는 상태      |
-| 접수완료  | ACCEPTED      | 가게에서 배달주문을 받아들였다는 상태        |
-| 제공완료  | SERVED        | 라이더에게 음식을 전달한 상태            | 
-| 배달중   | DELIVERING    | 고객이 주문한 제품을 배송지로 전달중인 상태    |
-| 배달완료  | DELIVERED     | 고객이 주문한 제품을 배송지에서 받았다는 상태   |
-| 주문완료  | COMPLETED     | 배달 주문 프로세스가 끝났다는 상태         |
-| 라이더   | kitchenriders | 고객이 주문한 상품을 전달하는 사람         |
+| 한글명   | 영문명            | 설명                          |
+|-------|----------------|-----------------------------|
+| 배달주문   | Order          | 고객에게 라이더를 통해 배달 음식을 전달하는 주문 |
+| 주문아이템 | OrderLineItems | 배달 주문에 포함된 메뉴 목록            |
+| 주문상태  | OrderStatus    | 배달 주문의 상태                   |
+| 대기중   | WAITING        | 배달 주문이 접수 되는것을 기다리는 상태      |
+| 접수완료  | ACCEPTED       | 가게에서 배달주문을 받아들였다는 상태        |
+| 제공완료  | SERVED         | 라이더에게 음식을 전달한 상태            | 
+| 배달중   | DELIVERING     | 고객이 주문한 제품을 배송지로 전달중인 상태    |
+| 배달완료  | DELIVERED      | 고객이 주문한 제품을 배송지에서 받았다는 상태   |
+| 주문완료  | COMPLETED      | 배달 주문 프로세스가 끝났다는 상태         |
+| 라이더   | kitchenriders  | 고객이 주문한 상품을 전달하는 사람         |
 
 
 ### 포장 주문
@@ -148,19 +151,66 @@ docker compose -p kitchenpos up -d
 
 ### 매장 주문
 
-| 한글명   | 영문명            | 설명                        |
-|-------|----------------|---------------------------|
-| 매장주문  | Order          | 고객이 매장에서 식사하는 주문                     |
-| 주문아이템 | OrderLineItem  | 매장 주문에 포함된 메뉴             |
-| 주문상태  | OrderStatus    | 매장 주문의 상태                 |
-| 대기중   | WAITING        | 매장 주문이 접수 되는것을 기다리는 상태    |
-| 접수완료  | ACCEPTED       | 가게에서 매장 주문을 받아들였다는 상태     |
-| 제공완료  | SERVED         | 고객에게 음식을 전달한 상태           |
-| 주문완료  | COMPLETED      | 매장 주문 프로세스가 끝났다는 상태       |
-| 테이블   | OrderTable     | 고객이 앉아서 음식을 제공 받을 수 있는 장소 |
-| 고객수   | numberOfGuests | 한 테이블에 앉은 고객 수            |
-
-
+| 한글명   | 영문명             | 설명                        |
+|-------|-----------------|---------------------------|
+| 매장주문  | Order           | 고객이 매장에서 식사하는 주문          |
+| 주문아이템 | OrderLineItem   | 매장 주문에 포함된 메뉴             |
+| 주문상태  | OrderStatus     | 매장 주문의 상태                 |
+| 대기중   | WAITING         | 매장 주문이 접수 되는것을 기다리는 상태    |
+| 접수완료  | ACCEPTED        | 가게에서 매장 주문을 받아들였다는 상태     |
+| 제공완료  | SERVED          | 고객에게 음식을 전달한 상태           |
+| 주문완료  | COMPLETED       | 매장 주문 프로세스가 끝났다는 상태       |
+| 테이블   | OrderTable      | 고객이 앉아서 음식을 제공 받을 수 있는 장소 |
+| 고객수   | numberOfGuests  | 한 테이블에 앉은 고객 수            |
+| 공석여부  | occupied        | 테이블에 고객이 앉았는지 여부          |
+| 빈테이블  | EmptyOrderTable | 테이블에 고객이 없는 상태            |
 
 
 ## 모델링
+
+### 메뉴
+
+- `Menu`는 특정 `MenuGroup`에 속한다.
+- `Menu`는 식별자와 `Name`, `Price`, `Displayed`, `MenuGroup`, `MenuProducts`를 가진다.
+- `Menu`의 `Name`은 `Profanity` 가 포함될 수 없다.
+- `Menu`는 `DisplayedMenu`되거나 `HiddenMenu`가 될 수 있다.
+- `Menu`의 `Price`는 0원 이상이어야 한다.
+- `Menu`의 `Price`는 `MenuProducts`의 금액의 합보다 작거나 같아야 한다.
+- `Menu`의 `Price`이 `MenuProducts`의 금액의 합보다 작거나 같으면 `DisplayedMenu`로 바꿀 수 있다.
+- `Menu` 는 `MenuGroup` 이 존재해야 한다.
+- `Menu` 를 생성할때, `MenuProduct`를 함께 생성한다.
+- `MenuGroup`은 식별자와 이름을 가진다.
+- `MenuProduct`는 식별자와 `Product`, 수량 을 가진다.
+
+### 상품
+
+- `Product`는 식별자와 `Name`, `Price`을 가진다.
+- `Product`의 `Name`에 `Profanity`가 포함될 수 없고 빈값이 될 수 없다.
+- `Product`의 `Price`는 0원 이상의 값을 가진다.
+
+### 배달주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문시간, 배달주소, `OrderLineItems`를 가진다.
+- 메뉴가 노출되고 메뉴 가격과 `OrderLineItem` 가격이 같으면 `Order` 생성이 가능하다.
+- `Order`는 `WAITING` -> `ACCEPTED` ➜ `SERVED` ➜ `DELIVERING` ➜ `DELIVERED` ➜ `COMPLETED` 순서로 진행된다.
+- `Order`가 접수되면 `kitchenriders` 에게 배달을 요청한다.
+- `OrderLineItem`는 식별자와 가격, 수량, 메뉴를 가진다.
+- `OrderLineItem`의 수량은 0 보다 크거나 같아야 한다.
+
+### 포장주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, `OrderLineItems`를 가진다.
+- 메뉴가 노출되고 메뉴 가격과 `OrderLineItem` 가격이 같으면 `Order` 생성이 가능하다.
+- `Order`는 `WAITING` ➜ `ACCEPTED` ➜ `SERVED` ➜ `COMPLETED` 순서로 진행된다.
+- `OrderLineItem`는 식별자와 가격, 수량, 메뉴를 가진다.
+- `OrderLineItem`의 수량은 0 보다 크거나 같아야 한다.
+
+### 매장주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, `OrderLineItems`를 가진다.
+- 메뉴가 노출되고 메뉴 가격과 `OrderLineItem` 가격이 같으면 `Order` 생성이 가능하다.
+- `Order`는 `WAITING` ➜ `ACCEPTED` ➜ `SERVED` ➜ `COMPLETED` 순서로 진행된다.
+- `OrderLineItem`는 식별자와 가격, 수량, 메뉴를 가진다.
+- `OrderLineItem`의 수량은 0 보다 크거나 같아야 한다.
+- `OrderTable`은 식별자와 이름, `numberOfGuests`, `occupied` 를 가진다.
+- `OrderTable`은 `Order`가 완료되면 `EmptyOrderTable`이 된다.
