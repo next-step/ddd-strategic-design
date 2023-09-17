@@ -162,9 +162,8 @@ docker compose -p kitchenpos up -d
 
 
 #### 정책
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 메뉴가격정책 | Menu Price Policy | 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다 |
+- 메뉴가격정책(Menu Price Policy)
+  - 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다
 
 
 ### 메뉴
@@ -188,9 +187,8 @@ docker compose -p kitchenpos up -d
 
 
 #### 정책
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 메뉴노출정책 | Menu Display Policy | 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다 |
+- 메뉴노출정책(Menu Display Policy)
+  - 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 
 ### 매장 주문
 - Table은 식별자, 이름, 손님 수를 갖는다.
@@ -220,5 +218,5 @@ docker compose -p kitchenpos up -d
   
 
 #### 정책
-- EatInOrderCompletePolicy
+- 매장주문완료정책(EatInOrderCompletePolicy)
   - EatInOrder가 Complete 되었을때, 해당 EatInOrder와 관련된 Table의 모든 EatInOrder가 Completed면 Clean Table한다
