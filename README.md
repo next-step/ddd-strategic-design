@@ -117,6 +117,7 @@ docker compose -p kitchenpos up -d
 | 메뉴 노출 | Display Menu | 메뉴를 보이는 상태를 말한다 |
 | 메뉴 숨김 | Hide Menu | 메뉴를 보이지 않는 상태를 말한다 |
 | 메뉴 등록 | Register Menu | (새로운)메뉴를 등록하는 것을 말한다 |
+| 메뉴 가격 변경 | Change the Price | 메규 가격을 변경하는 것을 말한다 |
 | 메뉴 목록 조회 | View All Menus | 전체 메뉴를 조회하는 것을 말한다 |
 
 ### 공통
@@ -208,11 +209,16 @@ docker compose -p kitchenpos up -d
   - `Register Menu` 시, `Displayed Name`, `Price`, `Menu Products`는 필수여야 한다.
   - `Register Menu` 시, 1개 이상의 `Product` 로 구성되어야 한다.
 - `Menu Products` 금액의 합은 `Menu`의 `Price`보다 크거나 같아야 한다.
+- `Change the price`를 할 수 있다.
+  - `Change the price` 시, 변경될 `Price`는 0원 이상이여야 한다.
+  - `Change the price` 시, Menu Price Policy를 따른다.
 - `Menu`를 `Display Menu` 또는 `Hide Menu`를 할 수 있다.
 - `Menu`는 Menu Display Policy를 따른다
 - `View All Menus`를 할 수 있다.
 
 #### 정책
+- 메뉴가격정책(Menu Price Policy)
+  - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
 - 메뉴노출정책(Menu Display Policy)
   - 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 
