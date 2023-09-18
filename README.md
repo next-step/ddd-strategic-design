@@ -176,11 +176,13 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### 상품
+#### 속성
 - `Product`는 식별자, `Displayed Name` 와 `Price`를 갖는다.
 - `Displayed Name`은 이름을 갖는다.
   - 이름은 `Slang`를 포함할 수 없다.
 - `Price`는 가격을 갖는다.
   - 가격은 0원 이상이어야 한다.
+#### 기능
 - `Register Product`를 할 수 있다.
   - `Register Product` 시, `Displayed Name`과 `Price`는 필수여야 한다.
   - `Register Product` 시, `Price`는 0원 이상이다.
@@ -197,6 +199,7 @@ docker compose -p kitchenpos up -d
 
 
 ### 메뉴
+#### 속성
 - `Menu`는 식별자, `Displayed Name`, `Price`, `Menu Products`를 갖는다.
 - `Displayed Name`은 이름을 갖는다.
   - 이름은 `Slang`를 포함할 수 없다.
@@ -209,6 +212,7 @@ docker compose -p kitchenpos up -d
 - `Menu`는 특정 `Menu Group`에 속해야 한다.
 - `Menu Group`은 이름을 갖는다.
   - 이름은 존재해야 한다.
+#### 기능
 - `Register Menu`를 할 수 있다.
   - `Register Menu` 시, `Displayed Name`, `Price`, `Menu Products`는 필수여야 한다.
   - `Register Menu` 시, 1개 이상의 `Product` 로 구성되어야 한다.
@@ -225,7 +229,9 @@ docker compose -p kitchenpos up -d
 
 
 ### 매장 주문
+#### 속성
 - `Table`은 식별자, 이름, `손님 수`를 갖는다.
+#### 기능
 - `Table`을 등록할 수 있다.
   - `Table` 등록 시, 테이블 상태는 `Not In Use`이다.
 - `Table`의 `손님 수`를 변경 할 수 있다.
@@ -236,6 +242,7 @@ docker compose -p kitchenpos up -d
   - 테이블 상태를 `In Use`로 변경한다.
 
 
+#### 속성
 - `EatInOrder`는 `Table`의 식별자, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
   - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
@@ -244,6 +251,7 @@ docker compose -p kitchenpos up -d
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 식별자, `Price`, Quantity를 갖는다.
   - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
 - `EatInOrder`는 생성할 수 있다.
   - `EatInOrder` 생성 시, `Table`은  `In Use` 여야 한다.
   - `Menu`는 Displayed Menu 여야 한다.
@@ -258,6 +266,7 @@ docker compose -p kitchenpos up -d
   
 
 ### 포장 주문
+#### 속성
 - `TakeOutOrder`는 `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
   - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
@@ -266,6 +275,7 @@ docker compose -p kitchenpos up -d
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
 - `TakeOutOrder`는 생성할 수 있다.
   - `Menu`는 Displayed Menu 여야 한다.
 - `TakeOutOrder`는 접수할 수 있다.
@@ -274,6 +284,7 @@ docker compose -p kitchenpos up -d
 
 
 ### 배달 주문
+#### 속성
 - `DeliveryOrder`는 `DeliveryAddress`, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `DeliveryAddress`는 주소를 갖는다.
   - 주소는 존재해야한다.
@@ -284,6 +295,7 @@ docker compose -p kitchenpos up -d
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
 - `DeliveryOrder`는 생성할 수 있다.
   - `Menu`는 Displayed Menu 여야 한다.
   - `DeliveryOrder` 생성 시, `DeliveryAddress` 존재해야한다.
