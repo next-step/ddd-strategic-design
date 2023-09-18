@@ -202,7 +202,9 @@ docker compose -p kitchenpos up -d
   - 이름은 `Slang`를 포함할 수 없다.
 - `Price`는 가격을 갖는다.
   - 가격은 0원 이상이어야 한다.
-- `Menu Products`는 식별자, `Product` 식별자, 갯수를 갖는다.
+- Quantity는 수량을 갖는다.
+  - 수량은 0개 이상이어야 한다.
+- `Menu Products`는 식별자, `Product` 식별자, Quantity를 갖는다.
   - 갯수는 0개 이상이여야 한다.
 - `Menu`는 특정 `Menu Group`에 속해야 한다.
 - `Menu Group`은 이름을 갖는다.
@@ -237,6 +239,8 @@ docker compose -p kitchenpos up -d
 - `EatInOrder`는 `Table`의 식별자, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
   - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+  - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 식별자, `Price`, Quantity를 갖는다.
   - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
@@ -257,6 +261,8 @@ docker compose -p kitchenpos up -d
 - `TakeOutOrder`는 `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
   - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+  - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
@@ -273,6 +279,8 @@ docker compose -p kitchenpos up -d
   - 주소는 존재해야한다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Delivering`, `Delivery Completed`, `Completed` 을 갖는다.
   - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Delivering` > `Delivery Completed` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+  - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
 - `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
