@@ -186,12 +186,14 @@ docker compose -p kitchenpos up -d
   - `Register Product` 시, `Price`는 0원 이상이다.
 - `Change the price`를 할 수 있다.
   - `Change the price` 시, 변경될 `Price`는 0원 이상이여야 한다.
-  - `Change the price` 시, Menu Price Policy를 따른다.
+  - `Change the price` 시, Menu Display Policy를 따른다.
 - `View All Products`가 가능하다.
 
 #### 정책
+- 메뉴노출정책(Menu Display Policy)
+  - `Product`의 `Change the Price`가 일어났을 때, 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 - 메뉴가격정책(Menu Price Policy)
-  - 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다
+  - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
 
 
 ### 메뉴
@@ -208,19 +210,16 @@ docker compose -p kitchenpos up -d
 - `Register Menu`를 할 수 있다.
   - `Register Menu` 시, `Displayed Name`, `Price`, `Menu Products`는 필수여야 한다.
   - `Register Menu` 시, 1개 이상의 `Product` 로 구성되어야 한다.
-- `Menu Products` 금액의 합은 `Menu`의 `Price`보다 크거나 같아야 한다.
+  - `Register Menu` 시, Menu Price Policy를 따른다.
 - `Change the price`를 할 수 있다.
   - `Change the price` 시, 변경될 `Price`는 0원 이상이여야 한다.
   - `Change the price` 시, Menu Price Policy를 따른다.
 - `Menu`를 `Display Menu` 또는 `Hide Menu`를 할 수 있다.
-- `Menu`는 Menu Display Policy를 따른다
 - `View All Menus`를 할 수 있다.
 
 #### 정책
 - 메뉴가격정책(Menu Price Policy)
   - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
-- 메뉴노출정책(Menu Display Policy)
-  - 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 
 
 ### 매장 주문
