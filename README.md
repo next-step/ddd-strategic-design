@@ -179,38 +179,37 @@ docker compose -p kitchenpos up -d
 
 
 ### 공통
-| 한글명 | 영문명 | 설명                                                                            |
-|-----| --- |-------------------------------------------------------------------------------|
+| 한글명 | 영문명   | 설명                                                                            |
+|-----|-------|-------------------------------------------------------------------------------|
 | 손님  | guest | 키친 포스의 주문을 하는 이용자                                                             |
-| 비속어 | Bad Language | 비속어 정책에 따른 제한된 단어 <br/>(_비속어 정책: 해당 사이트(“https://purgomalum.com”)에서 규정한 비속어_) |
+| 비속어 | Slang | 비속어 정책에 따른 제한된 단어 <br/>(_비속어 정책: 해당 사이트(“https://purgomalum.com”)에서 규정한 비속어_) |
 
 
 
 ## 모델링
 
 
-### [상품]
-
-- Product는 식별자, Displayed Name, Price 를 갖는다.
-- DisplayedName 은 이름을 갖는다.
-  - 이름은 Bad Language 를 포함할 수 없다.
-- Price는 가격을 갖는다.
+### 상품
+#### 속성
+- `Product`는 식별자, `Displayed Name` 와 `Price`를 갖는다.
+- `Displayed Name`은 이름을 갖는다.
+  - 이름은 `Slang`를 포함할 수 없다.
+- `Price`는 가격을 갖는다.
   - 가격은 0원 이상이어야 한다.
-- Register Product 를 할 수 있다.
-  - Register Product 시, Displayed Name 과 Price 는 필수여야 한다.
-  - Register Product 시, Price 는 0원 이상이다.
-- Change the price 를 할 수 있다.
-  - Change the price  시, 변경될 Price 는 0원 이상이여야 한다.
-  - Change the price  시, Menu Price Policy 를 따른다.
-- View All Products 가 가능하다.
+#### 기능
+- `Register Product`를 할 수 있다.
+  - `Register Product` 시, `Displayed Name`과 `Price`는 필수여야 한다.
+  - `Register Product` 시, `Price`는 0원 이상이다.
+- `Change the price`를 할 수 있다.
+  - `Change the price` 시, 변경될 `Price`는 0원 이상이여야 한다.
+  - `Change the price` 시, *Menu Display Policy* 를 따른다.
+- `View All Products`가 가능하다.
 
+#### 정책
+- _Menu Display Policy(메뉴 노출 정책)_
+  - `Product`의 `Change the Price`가 일어났을 때, *Menu Price Policy* 을 만족하지 못한 `Menu`는 숨겨진다
 
-
-#### [정책 - 메뉴 가격 정책]
-
- - Menu Price Policy 
-   - 메뉴의 가격은 메뉴에 속한 상품들의 가격 총합보다 작거나 같아야 한다
-
+  
 <br>
 
 
