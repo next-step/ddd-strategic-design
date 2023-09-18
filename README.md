@@ -233,15 +233,16 @@ docker compose -p kitchenpos up -d
 #### 속성
 - `Order`는 `Menu`를 1개 이상 가져야 한다.
 - `Order`의 `Order Line Item`의 수량은 0 이상 가져야 한다.
-- `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order Price`는 `Menu Price`의 합과 일치해야 한다.
-- `Empty Table`에서 `Eat In` `Order`를 접수 할 수 없다.
-- `Served`된 `Order`만 `Completed` 할 수 있다.
 
 #### 기능
 - `Order`를 접수 할 수 있다.
+  - `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
+  - `Empty Table`만 `Eat In` `Order`를 접수 할 수 없다.
 - `Order`를 `Accepted`할 수 있다.
+  - `Waiting`된 `Order`만 `Accepted` 할 수 있다.
 - `Order`를 `Served`할 수 있다.
+  - `Accepted`된 `Order`만 `Served` 할 수 있다.
 - `Order`를 `Completed` 할 수 있다.
   - `Order Table`이 `Completed`되면 `Empty Table`로 변경한다.
 - `Order List`을 조회할 수 있다.
@@ -251,15 +252,17 @@ docker compose -p kitchenpos up -d
 #### 속성
 - `Order`는 `Menu`를 1개 이상 가져야 한다.
 - `Order`의 `Menu`에 속하는 `Product`의 수량은 0 이상 가져야 한다.
-- `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order Price`는 `Menu Price`의 합과 일치해야 한다.
-- `Served`된 `Order`만 `Completed` 할 수 있다.
 
 #### 기능
 - `Order`를 접수 할 수 있다.
+  - `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order`를 `Accepted`할 수 있다.
+  - `Waiting`된 `Order`만 `Accepted` 할 수 있다.
 - `Order`를 `Served`할 수 있다.
+  - `Accepted`된 `Order`만 `Served` 할 수 있다.
 - `Order`를 `Completed` 할 수 있다.
+  - `Served`된 `Order`만 `Completed` 할 수 있다.
 - `Order List`을 조회할 수 있다.
 
 ### 배달 주문 (Delivery)
@@ -267,19 +270,21 @@ docker compose -p kitchenpos up -d
 #### 속성
 - `Order`는 `Menu`를 1개 이상 가져야 한다.
 - `Order`의 `Menu`에 속하는 `Product`의 수량은 0 이상 가져야 한다.
-- `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order Price`는 `Menu Price`의 합과 일치해야 한다.
-- `Delivery`는 배달 주소가 있어야 한다.
-- `Served`된 `Order`만 `Delivering` 할 수 있다.
-- `Delivering`된 `Order`만 `Delivered` 할 수 있다.
-- `Delivered`된 `Order`만 `Completed` 할 수 있다.
 
 #### 기능
 - `Order`를 접수 할 수 있다.
+  - `Show Menu`의 `Order`만 `Waiting` 할 수 있다.
 - `Order`를 `Accepted`할 수 있다.
+  - `Waiting`된 `Order`만 `Accepted` 할 수 있다.
   - `Delivery Agency`를 호출한다.
 - `Order`를 `Served`할 수 있다.
+  - `Accepted`된 `Order`만 `Served` 할 수 있다.
 - `Order`를 `Delivering` 할 수 있다.
+  - `Served`된 `Order`만 `Delivering` 할 수 있다.
+  - `Delivery`는 배달 주소가 있어야 한다.
 - `Order`를 `Delivered` 할 수 있다.
+  - `Delivering`된 `Order`만 `Delivered` 할 수 있다.
 - `Order`를 `Completed` 할 수 있다.
+  - `Delivered`된 `Order`만 `Completed` 할 수 있다.
 - `Order List`을 조회할 수 있다.
