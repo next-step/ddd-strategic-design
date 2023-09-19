@@ -193,7 +193,8 @@ docker compose -p kitchenpos up -d
   - `Product`의 `Change the Price`가 일어났을 때, 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 - 메뉴가격정책(Menu Price Policy)
   - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
-
+- 비속어정책(Slang Policy)
+  - `https://www.purgomalum.com/service/containsprofanity`에서 단어를 필터링 한다
 
 ### 메뉴
 #### 속성
@@ -223,6 +224,8 @@ docker compose -p kitchenpos up -d
 #### 정책
 - 메뉴가격정책(Menu Price Policy)
   - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
+- 비속어정책(Slang Policy)
+  - `https://www.purgomalum.com/service/containsprofanity`에서 단어를 필터링 한다
 
 
 ### 매장 주문
