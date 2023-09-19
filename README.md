@@ -119,7 +119,8 @@ docker compose -p kitchenpos up -d
 | 가격           | Price          | 메뉴 가격을 말한다                 |
 | 메뉴 그룹        | Menu Group     | 메뉴를 분류하기 위한 그룹을 말한다        | 
 | 메뉴에 속한 상품    | Menu Products  | 메뉴에 속한 상품을 말한다             | 
-| 메뉴에 속한 상품 수량 | Quantity       | 메뉴에 속한 상품 수량               |
+| 메뉴에 속한 상품 수량 | Quantity       | 메뉴에 속한 상품 수량을 말한다.         |
+| 메뉴 금액        | Price            | 메뉴 금액을 말한다.                |
 | 메뉴 노출        | Display Menu   | 메뉴를 보이는 상태를 말한다            |
 | 메뉴 숨김        | Hide Menu      | 메뉴를 보이지 않는 상태를 말한다         |
 | 메뉴 등록        | Register Menu  | (새로운)메뉴를 등록하는 것을 말한다       | 
@@ -141,6 +142,8 @@ docker compose -p kitchenpos up -d
 | 주문  | Eat In Order | 음식을 매장에서 먹고갈 경우에 하는 주문 |
 | 주문 항목  | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
 | 주문 항목들  | Order Line Items | Order Line item 의 묶음을 말한다 |
+| 주문 항목 금액 | Price            | 주문 항목(메뉴) 금액을 말한다.                            |
+| 주문 항목 수량 | Quantity         | 주문 항목(메뉴) 수량을 말한다.                            |
 | 주문 상태 | OrderStatus | 주문의 진행상태 |
 | 대기중    | Waiting | 매장 주문의 처음 상태 |
 | 접수됨    | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
@@ -149,16 +152,18 @@ docker compose -p kitchenpos up -d
 
 
 ### 포장 주문
-| 한글명    | 영문명           | 설명 |
-|--------|---------------| --- |
-| 주문  | Takeout Order | 음식을 매장에서 먹지 않고 포장 요구하는 주문 |
-| 주문 항목  | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
-| 주문 항목들  | Order Line Items | Order Line item 의 묶음을 말한다 |
-| 주문 상태 | OrderStatus | 주문의 진행상태 |
-| 대기중    | Waiting | 주문의 처음 상태 |
-| 접수됨    | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
-| 서빙됨    | Served | 접수된 주문을 음식을 준비하여 서빙한 상태 |
-| 완료됨    | Completed | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다 |
+| 한글명      | 영문명              | 설명                                            |
+|----------|------------------|-----------------------------------------------|
+| 주문       | Takeout Order    | 음식을 매장에서 먹지 않고 포장 요구하는 주문                     |
+| 주문 항목    | Order Line Item  | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
+| 주문 항목들   | Order Line Items | Order Line item 의 묶음을 말한다                     |
+| 주문 항목 금액 | Price            | 주문 항목(메뉴) 금액을 말한다.                            |
+| 주문 항목 수량 | Quantity         | 주문 항목(메뉴) 수량을 말한다.                            |
+| 주문 상태    | OrderStatus      | 주문의 진행상태                                      |
+| 대기중      | Waiting          | 주문의 처음 상태                                     |
+| 접수됨      | Accepted         | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태                  |
+| 서빙됨      | Served           | 접수된 주문을 음식을 준비하여 서빙한 상태                       |
+| 완료됨      | Completed        | 주문의 마지막 상태. 주문이 손님에게 제공 완료되었음을 의미한다           |
 
 
 ### 배달 주문
@@ -169,6 +174,8 @@ docker compose -p kitchenpos up -d
 | 배달 대행사 | Kitchen Riders | 음식을 배달 주소에 운반해주는 업체 |
 | 주문 항목  | Order Line Item | 한 번의 주문에 1개 이상의 메뉴로 주문할 수 있는데, 각각의 주문한 메뉴 항목을 말한다 |
 | 주문 항목들  | Order Line Items | Order Line item 의 묶음을 말한다 |
+| 주문 항목 금액 | Price            | 주문 항목(메뉴) 금액을 말한다.                            |
+| 주문 항목 수량 | Quantity         | 주문 항목(메뉴) 수량을 말한다.                            |
 | 주문 상태 | Order Status | 주문의 진행상태 |
 | 대기중    | Waiting | 주문의 처음 상태 |
 | 접수됨    | Accepted | 접수 대기 중인 주문을 확인하고 주문을 접수한 상태 |
@@ -222,8 +229,6 @@ docker compose -p kitchenpos up -d
 - `Price`는 가격을 갖는다.
     - 가격은 0원 이상이어야 한다.
 - `Menu Products`는 식별자, `Product` 식별자, `Quantity` 를 갖는다.
-- `Quantity` 는 수량을 갖는다.
-    - 수량은 0개 이상이어야 한다.
 - `Menu`는 특정 `Menu Group`에 속해야 한다.
 - `Menu Group`은 이름을 갖는다.
     - 이름은 존재해야 한다.
@@ -251,38 +256,37 @@ docker compose -p kitchenpos up -d
 
 ### 매장 주문
 #### 속성
-- `Table`은 식별자, 이름, `손님 수`를 갖는다.
+- `Table`은 식별자, 이름, `Number of Guest`를 갖는다.
 #### 기능
 - `Table`을 등록할 수 있다.
-    - `Table` 등록 시, 테이블 상태는 `Not In Use`이다.
-- `Table`의 `손님 수`를 변경 할 수 있다.
-    - `Table`의 `손님 수` 변경 시, `손님 수`는 0명 이상이여야 한다.
+    - 테이블 상태는 `Not In Use`이다.
+- `Table`의 `Number of Guest`를 변경 할 수 있다.
+    -  `Number of Guest`는 0명 이상이여야 한다.
 - `Table`은 `Clean Table` 할 수 있다.
-    - 테이블 상태를 `Not In Use`로 변경과 `손님 수`를 0으로 만든다.
+    - `Not In Use`로 변경과 `Number of Guest`를 0명으로 만든다.
 - `Table`은 `Seat on Table` 할 수 있다.
-    - 테이블 상태를 `In Use`로 변경한다.
+    - `In Use`로 변경한다.
 
 
 #### 속성
-- `EatInOrder`는 `Table`의 식별자, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
+- `EatInOrder`는 식별자, `Table`의 식별자, `OrderStatus`, 주문시간, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
     - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
-- Quantity는 수량을 갖는다.
-    - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
-- `OrderLineItem`은 `Menu`의 식별자, `Price`, Quantity를 갖는다.
-    - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+- `OrderLineItem`은 `Price`와 `Quantity`를 갖는다.
+- `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+
 #### 기능
 - `EatInOrder`는 생성할 수 있다.
-    - `EatInOrder` 생성 시, `Table`은  `In Use` 여야 한다.
+    - `Table`은  `In Use` 여야 한다.
     - `Menu`는 Displayed Menu 여야 한다.
 - `EatInOrder`는 접수할 수 있다.
 - `EatInOrder`는 서빙할 수 있다.
 - `EatInOrder`는 완료할 수 있다.
-    - `EatInOrder`가 완료될 때, EatInOrder Complete Policy를 따른다.
+    - EatInOrder Complete Policy 를 따른다.
 
 #### 정책
-- _EatInOrderCompletePolicy(매장주문 완료정책)_
+- _EatInOrder Complete Policy(매장주문 완료정책)_
     - `EatInOrder`가 Complete 되었을때, 해당 `EatInOrder`와 관련된 `Table`의 모든 `EatInOrder`가 `Completed`면 `Clean Table`한다
 
 
@@ -290,14 +294,13 @@ docker compose -p kitchenpos up -d
 
 ### 포장 주문
 #### 속성
-- `TakeOutOrder`는 `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
+- `TakeOutOrder`는 식별자, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
 - `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
     - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
-- Quantity는 수량을 갖는다.
-    - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
-- `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
+- `OrderLineItem`은 `Price`와 `Quantity`를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+
 #### 기능
 - `TakeOutOrder`는 생성할 수 있다.
     - `Menu`는 Displayed Menu 여야 한다.
@@ -318,8 +321,9 @@ docker compose -p kitchenpos up -d
 - Quantity는 수량을 갖는다.
     - 수량은 0개 이상이어야 한다.
 - `OrderLineItems`는 `OrderLineItem`을 갖는다.
-- `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
+- `OrderLineItem`은 `Price`와 `Quantity`를 갖는다.
 - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+
 #### 기능
 - `DeliveryOrder`는 생성할 수 있다.
     - `Menu`는 Displayed Menu 여야 한다.
