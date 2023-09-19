@@ -99,68 +99,243 @@ docker compose -p kitchenpos up -d
 
 ### 메뉴
 
-| 한글명   | 영문명            | 설명                 |
-|-------|----------------|--------------------|
-| 메뉴    | Menu           | 메뉴그룹에 속하는 주문 가능 단위 |
-| 메뉴그룹  | MenuGroup      | 메뉴를 분류한 그룹         |
-| 메뉴상품  | MenuProduct    | 메뉴가 포함하고 있는 상품     |
-| 금액    | price          | 메뉴 금액              |
-| 보이는메뉴 | DisplayedMenu  | 사용자에게 보이는 메뉴       |
-| 숨겨진메뉴 | HiddenMenu     | 사용자에게 숨겨진 메뉴       |
-| 상품    | Product        | 메뉴에 등록할 수 있는 제품    |
-| 비속어   | Profanity      | 메뉴이름에 적합하지 않은 비속어  |
+| 한글명    | 영문명          | 설명                             |
+|--------|--------------|--------------------------------|
+| 메뉴     | Menu         | 메뉴그룹에 속하는 주문 가능 단위             |
+| 메뉴그룹   | MenuGroup    | 메뉴를 분류한 그룹                     |
+| 메뉴상품   | MenuProduct  | 메뉴가 포함하고 있는 상품                 |
+| 메뉴상품목록 | MenuProducts | 메뉴가 포함하고 있는 상품 목록              |
+| 가격     | Price        | 메뉴 금액                          |
+| 노출여부   | Displayed    | 사용자에게 메뉴를 보이게 하거나 숨기게 하는 구분 단위 |
+| 상품     | Product      | 메뉴에 등록할 수 있는 제품                |
+| 비속어    | Profanity    | 메뉴이름에 적합하지 않은 비속어              |
+| 이름     | Name         | 메뉴 이름                          |
+| 수량     | Quantity     | 메뉴상품에 속한 상품의 수량                |
 
 ### 상품
 
-| 한글명   | 영문명            | 설명                                   |
-|-------|----------------|--------------------------------------|
-| 상품    | Product        | 메뉴에 등록할 수 있는 제품                      |
-| 금액    | price          | 상품 금액                                |
-| 비속어   | Profanity      | 이름에 적합하지 않은 비속어                      | 
+| 한글명 | 영문명            | 설명                                   |
+|--|----------------|--------------------------------------|
+| 상품 | Product        | 메뉴에 등록할 수 있는 제품                      |
+| 가격 | Price          | 상품 가격                                |
+| 비속어 | Profanity      | 이름에 적합하지 않은 비속어                      | 
+| 이름 | Name      | 상품 이름                      | 
+| 메뉴 | Menu      | 상품이 속한 메뉴                      | 
+| 메뉴상품 | MenuProduct      | 메뉴가 포함하고 있는 상품                      |
+| 노출여부 | Displayed      | 사용자에게 매뉴를 보이게 하거나 숨기게 하는 구분 단위 |
 
 ### 배달 주문
 
-| 한글명   | 영문명           | 설명                          |
-|-------|---------------|-----------------------------|
-| 배달주문   | Order         | 고객에게 라이더를 통해 배달 음식을 전달하는 주문 |
-| 주문아이템 | OrderLineItem | 배달 주문에 포함된 메뉴               |
-| 주문상태  | OrderStatus   | 배달 주문의 상태                   |
-| 대기중   | WAITING       | 배달 주문이 접수 되는것을 기다리는 상태      |
-| 접수완료  | ACCEPTED      | 가게에서 배달주문을 받아들였다는 상태        |
-| 제공완료  | SERVED        | 라이더에게 음식을 전달한 상태            | 
-| 배달중   | DELIVERING    | 고객이 주문한 제품을 배송지로 전달중인 상태    |
-| 배달완료  | DELIVERED     | 고객이 주문한 제품을 배송지에서 받았다는 상태   |
-| 주문완료  | COMPLETED     | 배달 주문 프로세스가 끝났다는 상태         |
-| 라이더   | kitchenriders | 고객이 주문한 상품을 전달하는 사람         |
+| 한글명     | 영문명             | 설명                          |
+|---------|-----------------|-----------------------------|
+| 배달주문    | Order           | 고객에게 라이더를 통해 배달 음식을 전달하는 주문 |
+| 메뉴      | Menu            | 주문에 포함된 메뉴                  |
+| 주문아이템   | OrderLineItem   | 배달 주문에 포함된 메뉴               |
+| 주문아이템목록 | OrderLineItems  | 배달 주문에 포함된 메뉴 목록            |
+| 주문상태    | OrderStatus     | 배달 주문의 상태                   |
+| 주문시간    | OrderDateTime   | 고객이 주문이 등록된 시각              |
+| 배달      | Delivery | 고객이 주문한 메뉴를 고객에게 전달하는 행위    |
+| 배달주소    | DeliveryAddress | 고객의 주문이 도착해야 하는 위치          |
+| 가격      | Price           | 메뉴 또는 주문아이템의 가격             |
+| 대기중     | WAITING         | 배달 주문이 접수 되는것을 기다리는 상태      |
+| 접수완료    | ACCEPTED        | 가게에서 배달주문을 받아들였다는 상태        |
+| 제공완료    | SERVED          | 라이더에게 음식을 전달한 상태            | 
+| 배달중     | DELIVERING      | 고객이 주문한 제품을 배송지로 전달중인 상태    |
+| 배달완료    | DELIVERED       | 고객이 주문한 제품을 배송지에서 받았다는 상태   |
+| 주문완료    | COMPLETED       | 배달 주문 프로세스가 끝났다는 상태         |
+| 라이더     | Kitchenriders   | 고객이 주문한 상품을 전달하는 사람         |
 
 
 ### 포장 주문
 
-| 한글명   | 영문명            | 설명                  |
-|-------|----------------|---------------------|
-| 포장주문  | Order          | 고객이 직접 방문하여 가져가는 주문              |
-| 주문아이템 | OrderLineItem  | 포장 주문에 포함된 메뉴       |
-| 주문상태  | OrderStatus    | 포장 주문의 상태           |
+| 한글명   | 영문명            | 설명                     |
+|-------|----------------|------------------------|
+| 포장주문  | Order          | 고객이 직접 방문하여 가져가는 주문    |
+| 주문아이템 | OrderLineItem  | 포장 주문에 포함된 메뉴          |
+| 주문아이템목록 | OrderLineItems  | 포장 주문에 포함된 메뉴 목록       |
+| 주문시간    | OrderDateTime   | 고객이 주문이 등록된 시각         |
+| 주문상태  | OrderStatus    | 포장 주문의 상태              |
 | 대기중   | WAITING        | 포장 주문이 접수 되는것을 기다리는 상태 |
-| 접수완료  | ACCEPTED       | 가게에서 포장 주문을 받아들였다는 상태 |
-| 제공완료  | SERVED         | 고객에게 포장된 음식을 전달한 상태 |
-| 주문완료  | COMPLETED      | 포장 주문 프로세스가 끝났다는 상태 |
+| 접수완료  | ACCEPTED       | 가게에서 포장 주문을 받아들였다는 상태  |
+| 제공완료  | SERVED         | 고객에게 포장된 음식을 전달한 상태    |
+| 주문완료  | COMPLETED      | 포장 주문 프로세스가 끝났다는 상태    |
 
 ### 매장 주문
 
-| 한글명   | 영문명            | 설명                        |
-|-------|----------------|---------------------------|
-| 매장주문  | Order          | 고객이 매장에서 식사하는 주문                     |
-| 주문아이템 | OrderLineItem  | 매장 주문에 포함된 메뉴             |
-| 주문상태  | OrderStatus    | 매장 주문의 상태                 |
-| 대기중   | WAITING        | 매장 주문이 접수 되는것을 기다리는 상태    |
-| 접수완료  | ACCEPTED       | 가게에서 매장 주문을 받아들였다는 상태     |
-| 제공완료  | SERVED         | 고객에게 음식을 전달한 상태           |
-| 주문완료  | COMPLETED      | 매장 주문 프로세스가 끝났다는 상태       |
-| 테이블   | OrderTable     | 고객이 앉아서 음식을 제공 받을 수 있는 장소 |
-| 고객수   | numberOfGuests | 한 테이블에 앉은 고객 수            |
-
-
+| 한글명     | 영문명             | 설명                        |
+|---------|-----------------|---------------------------|
+| 매장주문    | Order           | 고객이 매장에서 식사하는 주문          |
+| 주문아이템   | OrderLineItem   | 매장 주문에 포함된 메뉴             |
+| 주문아이템목록 | OrderLineItems  | 매장 주문에 포함된 메뉴 목록          |
+| 주문시간    | OrderDateTime   | 고객이 주문이 등록된 시각            |
+| 주문상태    | OrderStatus     | 매장 주문의 상태                 |
+| 대기중     | WAITING         | 매장 주문이 접수 되는것을 기다리는 상태    |
+| 접수완료    | ACCEPTED        | 가게에서 매장 주문을 받아들였다는 상태     |
+| 제공완료    | SERVED          | 고객에게 음식을 전달한 상태           |
+| 주문완료    | COMPLETED       | 매장 주문 프로세스가 끝났다는 상태       |
+| 테이블     | OrderTable      | 고객이 앉아서 음식을 제공 받을 수 있는 장소 |
+| 고객수     | NumberOfGuests  | 한 테이블에 앉은 고객 수            |
+| 착석여부    | Occupied        | 테이블에 고객이 앉았는지 여부          |
+| 빈테이블    | EmptyOrderTable | 테이블에 고객이 없는 상태            |
+| 이름      | Name            | 테이블 이름                    |
+| 착석      | Sit             | 테이블에 고객이 앉는 행위            |
+| 정리      | Clear           | 테이블의 앉은 고객이 나가고 정리하는 행위   |
 
 
 ## 모델링
+
+### 메뉴
+
+#### 속성
+
+- 메뉴(Menu)는 이름(Name), 가격(Price), 노출여부(Displayed), 메뉴그룹(MenuGroup), 메뉴상품목록(MenuProducts)를 가진다.
+- 메뉴(Menu)의 이름(Name)에 비속어(Profanity)가 포함될 수 없고 빈값이 될 수 없다.
+- 메뉴(Menu)의 가격(Price)은 0원 이상이어야 한다.
+- 메뉴(Menu)는 메뉴(Menu)가 속해있는 메뉴그룹(MenuGroup)이 반드시 존재해야 한다.
+- 메뉴(Menu)는 1개 이상의 메뉴상품(MenuProduct)를 가진다.
+- 메뉴상품(MenuProduct)은 상품(Product)과 수량(Quantity)을 가진다.
+- 메뉴상품(MenuProduct)의 상품(Product)은 반드시 존재해야 한다.
+- 메뉴상품(MenuProduct)의 수량(Quantity)은 0개 이상이어야 한다.
+- 메뉴(Menu)의 가격(Price)은 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 작거나 같아야 한다.
+- 메뉴(Menu)의 가격(Price)이 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 크면 메뉴를 노출할 수 없다.
+- 메뉴상품(MenuProduct)에 포함된 상품(Product)의 가격(Price)이 변경됐을 때, 
+  메뉴(Menu)의 가격(Price)이 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 크면 메뉴를 노출할 수 없다.
+
+#### 행위
+
+- 메뉴(Menu)는 등록할 수 있다.
+- 메뉴(Menu)는 가격(Price)를 변경할 수 있다.
+- 등록된 메뉴(Menu)를 노출할 수 있다. 
+- 등록된 메뉴(Menu)는 숨길 수 있다.
+- 등록된 메뉴(Menu)의 목록을 조회할 수 있다.
+
+
+### 메뉴그룹
+
+#### 속성
+
+- 메뉴그룹(MenuGroup)은 이름(Name)을 반드시 가진다.
+
+#### 행위
+
+- 메뉴그룹(MenuGroup)을 등록할 수 있다.
+- 메뉴그룹(MenuGroup)의 목록을 조회할 수 있다.
+
+
+### 상품
+
+#### 속성
+
+- 상품(Product)는 이름(Name), 가격(Price)을 가진다.
+- 상품(Product)의 이름(Name)에 비속어(Profanity)가 포함될 수 없고 빈값이 될 수 없다.
+- 상품(Product)의 가격(Price)은 0원 이상의 값을 가진다.
+- 상품(Product)의 가격(Price)이 변경됐을 때,
+  메뉴(Menu)의 가격(Price)이 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 크면 메뉴를 노출할 수 없다.
+
+#### 행위
+
+- 상품(Product)은 등록할 수 있다.
+- 상품(Product)은 가격(Price)를 변경할 수 있다.
+- 상품(Product) 목록을 조회할 수 있다.
+
+### 배달주문
+
+#### 속성
+
+- 배달주문(Order)은 주문상태(OrderStatus), 주문시간(OrderDateTime), 배달주소(DeliveryAddress), 주문아이템목록(OrderLineItems)를 가진다.
+- 배달주문(Order)은 노출된 메뉴(Menu)만 가진다.
+- 배달주문(Order)의 메뉴(Menu) 가격(Price)과 주문아이템(OrderLineItem) 가격(Price)은 같아야 한다.
+- 배달주문(Order)은 대기중(WAITING) -> 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 배달중(DELIVERING) ➜ 배달완료(DELIVERED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
+- 배달주문(Order)이 접수되면 라이더(Kitchenriders) 에게 배달을 요청한다.
+- 배달주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
+- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
+- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+
+#### 행위
+- 배달주문(Order)을 등록할 수 있다.
+- 배달주문(Order)을 접수한다.
+  - 대기중(WAITING)일 때 접수완료(ACCEPTED)가 가능하다.
+  - 라이더(Kitchenriders)에게 배달(Delivery)을 요청한다.
+- 라이더(Kitchenriders) 에게 제공한다.
+  - 접수완료(ACCEPTED) 일 때 제공완료(SERVED)가 가능하다.
+- 배달(Delivery)을 시작할 수 있다.
+  - 제공완료(SERVED) 일 때 배달(Delivery)을 시작할 수 있다.
+- 배달(Delivery)을 완료한다.
+  - 배달중(Delivery) 일 때 배달완료(DELIVERED)가 가능하다.
+- 배달주문(Order)을 완료한다.
+  - 배달완료(DELIVERED) 일 때 완료(COMPLETED)가 가능하다.
+- 배달주문(Order) 목록을 조회할 수 있다.
+
+
+### 포장주문
+
+#### 속성
+
+- 포장주문(Order)은 주문상태(OrderStatus), 주문시간(OrderDateTime), 주문아이템목록(OrderLineItems)을 가진다.
+- 포장주문(Order)은 노출된 메뉴(Menu)만 가진다.
+- 포장주문(Order)의 메뉴(Menu) 가격(Price)과 주문아이템(OrderLineItem) 가격(Price)은 같아야 한다.
+- 포장주문(Order)은 대기중(WAITING) ➜ 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
+- 포장주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
+- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
+- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+
+#### 행위
+- 포장주문(Order)을 등록할 수 있다.
+- 포장주문(Order)을 접수한다.
+  - 대기중(WAITING)일 때 접수가 가능하다.
+- 포장주문(Order)을 고객에게 제공한다.
+  - 접수완료(ACCEPTED)일 때 제공이 가능하다.
+- 포장주문(Order)을 완료한다.
+  - 제공완료(SERVED)일 때 완료(COMPLETED)가 가능하다.
+- 포장주문(Order) 목록을 조회할 수 있다.
+
+
+### 매장주문
+
+#### 속성
+
+- 매장주문(Order)은 주문상태(OrderStatus), 주문시간(OrderDateTime), 주문아이템목록(OrderLineItems), 테이블(OrderTable)을 가진다.
+- 매장주문(Order)은 노출된 메뉴(Menu)만 가진다.
+- 매장주문(Order)의 메뉴(Menu) 가격(Price)과 주문아이템(OrderLineItem) 가격(Price)은 같아야 한다.
+- 매장주문(Order)은 대기중(WAITING) ➜ 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
+- 매장주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
+- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재 해야 한다.
+- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+- 테이블(OrderTable)은 반드시 존재 해야 한다.
+- 테이블(OrderTable)이 비어있어야 매장주문(Order)을 등록할 수 있다.
+
+#### 행위
+- 매장주문(Order)을 등록할 수 있다.
+- 매장주문(Order)을 접수한다.
+  - 대기중(WAITING)일 때 접수가 가능하다.
+- 매장주문(Order)을 매장에 있는 고객에게 제공한다.
+  - 접수완료(ACCEPTED)일 때 제공이 가능하다.
+- 매장주문(Order)을 완료한다.
+  - 제공완료(SERVED)일 때 완료(COMPLETED)가 가능하다.
+  - 테이블(OrderTable)을 빈테이블(EmptyOrderTable)로 변경한다.
+- 매장주문(Order) 목록을 조회할 수 있다.
+
+
+#### 테이블
+
+#### 속성
+
+- 테이블(OrderTable)은 이름(Name), 고객수(NumberOfGuests), 착석여부(Occupied) 를 가진다.
+- 테이블(OrderTable) 이름(Name)은 빈값이 될 수 없다.
+- 빈테이블(EmptyOrderTable)은 고객수(NumberOfGuests)가 0이고 아무도 착석하지 않은 상태다.
+
+#### 행위
+
+- 테이블(OrderTable)을 등록할 수 있다.
+- 테이블(OrderTable)에 고객이 착석(Sit)할 수 있다.
+  - 착석여부(Occupied)를 변경한다.
+- 테이블(OrderTable)을 정리(Clear)할 수 있다.
+  - 매장주문(Order)이 완료된 테이블(Table)만 정리(Clear)할 수 있다.
+  - 착석여부(Occupied)를 변경한다.
+- 테이블(OrderTable) 고객수(NumberOfGuests)를 변경할 수 있다.
+  - 고객이 착석(sit)한 테이블만 고객수(NumberOfGuests)를 변경할 수 있다.
+  - 고객수(NumberOfGuests)는 0보다 작을 수 없다.
+- 테이블(OrderTable) 목록을 조회할 수 있다.
