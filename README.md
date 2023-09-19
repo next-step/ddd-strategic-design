@@ -112,17 +112,18 @@ docker compose -p kitchenpos up -d
 | 상품 목록 조회 | View All Products| 전체 상품을 조회하는 것을 말한다                 | 
 
 ### 메뉴
-| 한글명       | 영문명          | 설명                         |
-|-----------|--------------|----------------------------|
-| 메뉴        | Menu | 손님들이 보고 주문하게 될 상품의 묶음을 말한다 |
-| 메뉴명       | Displayed Name | 메뉴명을 말한다                   | 
-| 가격        | Price | 메뉴 가격을 말한다                 |
-| 메뉴 그룹     | Menu Group | 메뉴를 분류하기 위한 그룹을 말한다        | 
-| 메뉴에 속한 상품 | Menu Products | 메뉴에 속한 상품을 말한다             | 
-| 메뉴 노출     | Display Menu | 메뉴를 보이는 상태를 말한다            |
-| 메뉴 숨김     | Hide Menu | 메뉴를 보이지 않는 상태를 말한다         |
-| 메뉴 등록     | Register Menu | (새로운)메뉴를 등록하는 것을 말한다       | 
-| 메뉴 목록 조회  | View All Menus| 전체 메뉴를 조회하는 것을 말한다         |
+| 한글명          | 영문명            | 설명                         |
+|--------------|----------------|----------------------------|
+| 메뉴           | Menu           | 손님들이 보고 주문하게 될 상품의 묶음을 말한다 |
+| 메뉴명          | Displayed Name | 메뉴명을 말한다                   | 
+| 가격           | Price          | 메뉴 가격을 말한다                 |
+| 메뉴 그룹        | Menu Group     | 메뉴를 분류하기 위한 그룹을 말한다        | 
+| 메뉴에 속한 상품    | Menu Products  | 메뉴에 속한 상품을 말한다             | 
+| 메뉴에 속한 상품 수량 | Quantity       | 메뉴에 속한 상품 수량               |
+| 메뉴 노출        | Display Menu   | 메뉴를 보이는 상태를 말한다            |
+| 메뉴 숨김        | Hide Menu      | 메뉴를 보이지 않는 상태를 말한다         |
+| 메뉴 등록        | Register Menu  | (새로운)메뉴를 등록하는 것을 말한다       | 
+| 메뉴 목록 조회     | View All Menus | 전체 메뉴를 조회하는 것을 말한다         |
  
 
 
@@ -213,29 +214,38 @@ docker compose -p kitchenpos up -d
 <br>
 
 
-### [메뉴]
-- Menu 는 식별자, Displayed Name, Price, Menu Products 를 갖는다.
-- Displayed Name 은 이름을 갖는다.
-  - 이름은 Bad Language 를 포함할 수 없다.
-- Price는 가격을 갖는다.
-  - 가격은 0원 이상이어야 한다.
-- Menu Products는 식별자, Product 식별자, 갯수를 갖는다.
-  - 갯수는 0개 이상이여야 한다.
-- Menu는 특정 Menu Group에 속해야 한다.
-- Menu Group은 이름을 갖는다.
-  - 이름은 존재해야 한다.
-- Register Menue 를 할 수 있다.
-  - Register Menu 시, Displayed Name, Price, Menu Product 는 필수여야 한다.
-  - Register Menu 시, 1개 이상의 Product 로 구성되어야 한다.
-- Menu Products 금액의 합은 Menu의 Price보다 크거나 같아야 한다.
-- Menu를 Displayed Menu 또는 Hide Menu를 할 수 있다.
-- Menu는 Menu Display Policy 를 따른다
-- View All Menus 를 할 수 있다.
+### 메뉴
+#### 속성
+- `Menu`는 식별자, `Displayed Name`, `Price`, `Menu Products`를 갖는다.
+- `Displayed Name`은 이름을 갖는다.
+    - 이름은 `Slang`를 포함할 수 없다.
+- `Price`는 가격을 갖는다.
+    - 가격은 0원 이상이어야 한다.
+- `Menu Products`는 식별자, `Product` 식별자, `Quantity` 를 갖는다.
+- `Quantity` 는 수량을 갖는다.
+    - 수량은 0개 이상이어야 한다.
+- `Menu`는 특정 `Menu Group`에 속해야 한다.
+- `Menu Group`은 이름을 갖는다.
+    - 이름은 존재해야 한다.
+#### 기능
+- `Register Menu`를 할 수 있다.
+    - `Register Menu` 시, `Displayed Name`, `Price`, `Menu Products`는 필수여야 한다.
+    - `Register Menu` 시, 1개 이상의 `Product` 로 구성되어야 한다.
+    - `Register Menu` 시, Menu Price Policy를 따른다.
+- `Change the price`를 할 수 있다.
+    - `Change the price` 시, 변경될 `Price`는 0원 이상이여야 한다.
+    - `Change the price` 시, Menu Price Policy 를 따른다.
+    - `Change the price` 시, Menu Display Policy 를 따른다.
+- `Menu`를 `Display Menu` 또는 `Hide Menu`를 할 수 있다.
+- `View All Menus`를 할 수 있다.
+
+#### 정책
+- _Menu Price Policy(메뉴 가격 정책)_
+    - `Menu`의 `Price`는 `Menu Products`의 `Price` 총합보다 작거나 같아야 한다
+- _Menu Display Policy(메뉴 노출 정책)_
+    - `Product`의 `Change the Price`가 일어났을 때, *Menu Price Policy* 을 만족하지 못한 `Menu`는 숨겨진다
 
 
-#### [정책 - 메뉴 노출 정책]
- - Menu Display Policy 
-   - 상품의 가격이 변경되어 메뉴가격정책을 만족하지 못한 메뉴는 숨겨진다
 
 <br>
 
