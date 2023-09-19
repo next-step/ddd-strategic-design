@@ -101,6 +101,7 @@ docker compose -p kitchenpos up -d
 | --- | --- | --- |
 | 상품 | Product | 메뉴에 등록될 음식을 말한다 | 
 | 상품명 | Displayed Name | 상품명을 말한다 | 
+| 비속어 | Slang | 비속어 정책에 정의된 사이트에서 필터링 된 단어 |
 | 가격 | Price | 상품 가격을 말한다 |
 | 상품 등록 | Register Product | (새로운)상품을 등록하는 것을 말한다 | 
 | 상품 가격 변경 | Change the Price | 상품 가격을 변경하는 것을 말한다 | 
@@ -111,6 +112,7 @@ docker compose -p kitchenpos up -d
 | --- | --- | --- |
 | 메뉴 | Menu | 손님들이 보고 주문하게 될 상품의 묶음을 말한다 |
 | 메뉴명 | Displayed Name | 메뉴명을 말한다 |
+| 비속어 | Slang | 비속어 정책에 정의된 사이트에서 필터링 된 단어 |
 | 가격 | Price | 메뉴 가격을 말한다 |
 | 메뉴 그룹 | Menu Group | 메뉴를 분류하기 위한 그룹을 말한다 |
 | 메뉴에 속한 상품 | Menu Products | 메뉴에 속한 상품을 말한다 |
@@ -119,11 +121,6 @@ docker compose -p kitchenpos up -d
 | 메뉴 등록 | Register Menu | (새로운)메뉴를 등록하는 것을 말한다 |
 | 메뉴 가격 변경 | Change the Price | 메규 가격을 변경하는 것을 말한다 |
 | 메뉴 목록 조회 | View All Menus | 전체 메뉴를 조회하는 것을 말한다 |
-
-### 공통
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-| 비속어 | Slang | 비속어 정책에 정의된 사이트에서 필터링 된 단어 |
 
 ### 매장 주문
 | 한글명 | 영문명 | 설명 |
