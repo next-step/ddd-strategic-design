@@ -7,7 +7,7 @@ import kitchenpos.eatinorders.domain.OrderStatus;
 import kitchenpos.eatinorders.domain.OrderTable;
 import kitchenpos.eatinorders.domain.OrderTableRepository;
 import kitchenpos.eatinorders.domain.OrderType;
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.deliveryorders.domain.KitchenridersClient;
 import kitchenpos.menus.domain.Menu;
 import kitchenpos.menus.domain.MenuRepository;
 
