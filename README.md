@@ -131,7 +131,7 @@ docker compose -p kitchenpos up -d
 | 한글명    | 영문명           | 설명 |
 |--------|---------------| --- |
 | 테이블 | Table | 매장 주문을 위해 방문한 손님들이 차지해야하는 테이블 |
-| 손님 수 | Number of Guests | 테이블을 사용하고 있는 손님 수를 말한다. |
+| 손님 수 | Number of Guest | 테이블을 사용하고 있는 손님 수를 말한다. |
 | 테이블 상태 | TableStatus | 테이블 사용유무 |
 | 사용중    | In Use | 테이블을 사용하는 상태 |
 | 사용안함   | Not In Use | 테이블을 사용하지 않는 상태 |
@@ -249,82 +249,88 @@ docker compose -p kitchenpos up -d
 
 <br>
 
-
-### [매장 주문]
-
-[//]: # (테이블)
- - Table 은 식별자, 이름, 손님 수를 갖는다.
- - Table 을 등록할 수 있다.
-   - Table 등록 시, 테이블 상태는 Not In Use 이다.
- - Table의 손님수를 변경 할 수 있다.
-   - Table의 손님 수 변경 시, 손님 수는 0명 이상이여야 한다.
- - Table 은 Clean Table 할 수 있다.
-   - 테이블 상태를 Not In Use 로 변경과 Number of Guests 를 0으로 만든다.
- - Table 은 Seat on Table 할 수 있다.
-   - 테이블 상태를 In Use 로 변경한다.
-
-[//]: # (매장 주문)
- - EatInOrder는 Table의 식별자, OrderStatus, 주문시각, OrderLineItems를 갖는다.
- - OrderStatus는 Waiting, Accepted, Served, Completed 을 갖는다.
-   - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Completed)와 같이 진행된다.
- - OrderLineItems는 OrderLineItem을 갖는다.
- - OrderLineItem은 Menu의 식별자, Price, Quantity를 갖는다.
-   - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
- - EatInOrder는 생성할 수 있다.
-   - EatInOrder 생성 시, Table은  In Use 여야 한다.
-   - Menu는 Displayed Menu 여야 한다.
- - EatInOrder는 접수할 수 있다.
- - EatInOrder는 서빙할 수 있다.
- - EatInOrder는 완료할 수 있다.
-   - EatInOrder가 완료될 때, EatInOrder Complete Policy를 따른다.
+### 매장 주문
+#### 속성
+- `Table`은 식별자, 이름, `손님 수`를 갖는다.
+#### 기능
+- `Table`을 등록할 수 있다.
+    - `Table` 등록 시, 테이블 상태는 `Not In Use`이다.
+- `Table`의 `손님 수`를 변경 할 수 있다.
+    - `Table`의 `손님 수` 변경 시, `손님 수`는 0명 이상이여야 한다.
+- `Table`은 `Clean Table` 할 수 있다.
+    - 테이블 상태를 `Not In Use`로 변경과 `손님 수`를 0으로 만든다.
+- `Table`은 `Seat on Table` 할 수 있다.
+    - 테이블 상태를 `In Use`로 변경한다.
 
 
+#### 속성
+- `EatInOrder`는 `Table`의 식별자, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
+- `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
+    - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+    - 수량은 0개 이상이어야 한다.
+- `OrderLineItems`는 `OrderLineItem`을 갖는다.
+- `OrderLineItem`은 `Menu`의 식별자, `Price`, Quantity를 갖는다.
+    - `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
+- `EatInOrder`는 생성할 수 있다.
+    - `EatInOrder` 생성 시, `Table`은  `In Use` 여야 한다.
+    - `Menu`는 Displayed Menu 여야 한다.
+- `EatInOrder`는 접수할 수 있다.
+- `EatInOrder`는 서빙할 수 있다.
+- `EatInOrder`는 완료할 수 있다.
+    - `EatInOrder`가 완료될 때, EatInOrder Complete Policy를 따른다.
 
-#### [정책 - 매장주문 완료 정책]
-- EatInOrder Complete Policy
-  - EatInOrder가 Complete 되었을때, 해당 EatInOrder와 관련된 Table의 모든 EatInOrder가 Completed면 Clean Table한다
+#### 정책
+- _EatInOrderCompletePolicy(매장주문 완료정책)_
+    - `EatInOrder`가 Complete 되었을때, 해당 `EatInOrder`와 관련된 `Table`의 모든 `EatInOrder`가 `Completed`면 `Clean Table`한다
 
 
 <br>
 
+### 포장 주문
+#### 속성
+- `TakeOutOrder`는 `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
+- `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Completed` 을 갖는다.
+    - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+    - 수량은 0개 이상이어야 한다.
+- `OrderLineItems`는 `OrderLineItem`을 갖는다.
+- `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
+- `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
+- `TakeOutOrder`는 생성할 수 있다.
+    - `Menu`는 Displayed Menu 여야 한다.
+- `TakeOutOrder`는 접수할 수 있다.
+- `TakeOutOrder`는 서빙할 수 있다.
+- `TakeOutOrder`는 완료할 수 있다.
 
-### [포장 주문]
- - TakeOutOrder는 OrderStatus, 주문시각, OrderLineItems를 갖는다.
- - OrderStatus는 Waiting, Accepted, Served, Completed 을 갖는다.
-   - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Completed)와 같이 진행된다.
- - OrderLineItems는 OrderLineItem을 갖는다.
- - OrderLineItem은 Menu의 id, Price, Quantity를 갖는다.
- - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
- - TakeOutOrder는 생성할 수 있다.
-   - Menu는 Displayed Menu 여야 한다.
- - TakeOutOrder는 접수할 수 있다.
- - TakeOutOrder는 서빙할 수 있다.
- - TakeOutOrder는 완료할 수 있다.
 
 <br>
 
+### 배달 주문
+#### 속성
+- `DeliveryOrder`는 `DeliveryAddress`, `OrderStatus`, 주문시각, `OrderLineItems`를 갖는다.
+- `DeliveryAddress`는 주소를 갖는다.
+    - 주소는 존재해야한다.
+- `OrderStatus`는 `Waiting`, `Accepted`, `Served`, `Delivering`, `Delivery Completed`, `Completed` 을 갖는다.
+    - `OrderStatus`는 순서를 갖는데, (`Waiting` > `Accepted` > `Served` > `Delivering` > `Delivery Completed` > `Completed`)와 같이 진행된다.
+- Quantity는 수량을 갖는다.
+    - 수량은 0개 이상이어야 한다.
+- `OrderLineItems`는 `OrderLineItem`을 갖는다.
+- `OrderLineItem`은 `Menu`의 id, `Price`, Quantity를 갖는다.
+- `OrderLineItem`의 `Price`와 `Menu`의 `Price`는 같아야한다.
+#### 기능
+- `DeliveryOrder`는 생성할 수 있다.
+    - `Menu`는 Displayed Menu 여야 한다.
+    - `DeliveryOrder` 생성 시, `DeliveryAddress` 존재해야한다.
+- `DeliveryOrder`는 접수할 수 있다.
+    - `DeliveryOrder`가 접수되었을 때, DeliveryOrder Accept Policy를 따른다.
+- `DeliveryOrder`는 서빙할 수 있다.
+- `DeliveryOrder`는 배달시작할 수 있다.
+- `DeliveryOrder`는 배달완료할 수 있다.
+- `DeliveryOrder`는 완료할 수 있다.
 
-### [배달 주문]
- - DeliveryOrder는 DeliveryAddress, OrderStatus, 주문시각, OrderLineItems를 갖는다.
- - DeliveryAddress는 주소를 갖는다.
-   - 주소는 존재해야한다.
- - OrderStatus는 Waiting, Accepted, Served, Delivering, Delivery Completed, Completed 을 갖는다.
-   - OrderStatus는 순서를 갖는데, (Waiting > Acceptec > Served > Delivering > Delivery Complete > Completed)와 같이 진행된다.
- - OrderLineItems는 OrderLineItem을 갖는다.
- - OrderLineItem은 Menu의 id, Price, Quantity를 갖는다.
- - OrderLineItem의 Price와 Menu의 Price는 같아야한다.
- - DeliveryOrder는 생성할 수 있다.
-   - Menu는 Displayed Menu 여야 한다.
-   - DeliveryOrder 생성 시, DeliveryAddress 존재해야한다.
- - DeliveryOrder는 접수할 수 있다.
-   - DeliveryOrder가 접수되었을 때, DeliveryOrderAcceptPolicy를 따른다.
- - DeliveryOrder는 서빙할 수 있다.
- - DeliveryOrder는 배달시작할 수 있다.
- - DeliveryOrder는 배달완료할 수 있다.
- - DeliveryOrder는 완료할 수 있다.
-
-
-#### [정책 - 배달주문 접수 정책]
-- Delivery Order Accept Policy
-  - Delivery Order가 접수 되었을 때, Kitchen Riders에게 배달 요청을 한다.
-
+#### 정책
+- _Delivery Order Accept Policy(배달주문접수정책)_
+    - `DeliveryOrder`가 접수 되었을 때, `Kitchen Riders`에게 배달 요청을 한다.
