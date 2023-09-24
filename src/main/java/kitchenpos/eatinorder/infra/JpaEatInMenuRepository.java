@@ -1,5 +1,7 @@
-package kitchenpos.eatinorder.domain;
+package kitchenpos.eatinorder.infra;
 
+import kitchenpos.eatinorder.domain.EatInMenu;
+import kitchenpos.eatinorder.domain.EatInMenuRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
