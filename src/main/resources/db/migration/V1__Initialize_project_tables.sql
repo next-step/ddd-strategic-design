@@ -53,7 +53,7 @@ create table orders
     primary key (id)
 ) engine = InnoDB;
 
-create table product
+create table deliveryProduct
 (
     id    binary(16)     not null,
     name  varchar(255)   not null,
@@ -69,7 +69,7 @@ alter table menu
 alter table menu_product
     add constraint fk_menu_product_to_product
         foreign key (product_id)
-            references product (id);
+            references deliveryProduct (id);
 
 alter table menu_product
     add constraint fk_menu_product_to_menu
