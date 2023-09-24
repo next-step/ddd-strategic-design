@@ -3,6 +3,8 @@ package kitchenpos.application;
 import kitchenpos.application.deliveryorder.FakeKitchenridersClient;
 import kitchenpos.domain.*;
 import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.takeoutorder.application.TakeOutOrderService;
+import kitchenpos.takeoutorder.domain.TakeOutOrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class OrderServiceTest {
-    private OrderRepository orderRepository;
+class TakeOutOrderServiceTest {
+    private TakeOutOrderRepository orderRepository;
     private MenuRepository menuRepository;
     private OrderTableRepository orderTableRepository;
     private FakeKitchenridersClient kitchenridersClient;
@@ -29,9 +31,7 @@ class OrderServiceTest {
     void setUp() {
         orderRepository = new InMemoryOrderRepository();
         menuRepository = new InMemoryMenuRepository();
-        orderTableRepository = new InMemoryOrderTableRepository();
-        kitchenridersClient = new FakeKitchenridersClient();
-        orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
+        orderService = new TakeOutOrderService(orderRepository, menuRepository);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.")

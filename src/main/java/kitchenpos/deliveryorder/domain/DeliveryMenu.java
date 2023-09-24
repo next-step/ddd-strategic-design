@@ -51,4 +51,7 @@ public class DeliveryMenu {
         return displayed;
     }
 
+    public void setDisplayed(boolean displayed) {
+        this.displayed = displayed;
+    }
 }
