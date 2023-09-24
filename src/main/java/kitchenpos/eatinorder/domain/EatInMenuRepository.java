@@ -13,6 +13,5 @@ public interface EatInMenuRepository {
 
     List<EatInMenu> findAllByIdIn(List<UUID> ids);
 
-    List<EatInMenu> findAllByProductId(UUID productId);
 }
 
