@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kitchenpos.eatinorders.domain.Order;
-import kitchenpos.eatinorders.domain.OrderRepository;
+import kitchenpos.eatinorders.domain.order.Order;
+import kitchenpos.eatinorders.domain.order.OrderRepository;
 
 public interface JpaOrderRepository extends OrderRepository, JpaRepository<Order, UUID> {
 }
