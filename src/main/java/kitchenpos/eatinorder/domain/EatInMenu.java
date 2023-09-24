@@ -1,5 +1,6 @@
-package kitchenpos.deliveryorder.domain;
+package kitchenpos.eatinorder.domain;
 
+import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 @Table(name = "menu")
 @Entity
-public class DeliveryMenu {
+public class EatInMenu {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -26,7 +27,7 @@ public class DeliveryMenu {
         columnDefinition = "binary(16)",
         foreignKey = @ForeignKey(name = "fk_menu_to_menu_group")
     )
-    private DeliveryMenuGroup menuGroup;
+    private MenuGroup menuGroup;
 
     @Column(name = "displayed", nullable = false)
     private boolean displayed;
@@ -43,7 +44,7 @@ public class DeliveryMenu {
     @Transient
     private UUID menuGroupId;
 
-    public DeliveryMenu() {
+    public EatInMenu() {
     }
 
     public UUID getId() {
@@ -70,10 +71,35 @@ public class DeliveryMenu {
         this.price = price;
     }
 
+    public MenuGroup getMenuGroup() {
+        return menuGroup;
+    }
 
+    public void setMenuGroup(final MenuGroup menuGroup) {
+        this.menuGroup = menuGroup;
+    }
 
     public boolean isDisplayed() {
         return displayed;
     }
 
+    public void setDisplayed(final boolean displayed) {
+        this.displayed = displayed;
+    }
+
+    public List<MenuProduct> getMenuProducts() {
+        return menuProducts;
+    }
+
+    public void setMenuProducts(final List<MenuProduct> menuProducts) {
+        this.menuProducts = menuProducts;
+    }
+
+    public UUID getMenuGroupId() {
+        return menuGroupId;
+    }
+
+    public void setMenuGroupId(final UUID menuGroupId) {
+        this.menuGroupId = menuGroupId;
+    }
 }
