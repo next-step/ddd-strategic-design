@@ -1,12 +1,13 @@
-package kitchenpos.deliveryorder.domain;
+package kitchenpos.takeoutorder.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "menu")
 @Entity
-public class DeliveryMenu {
+public class TakeOutMenu {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -20,7 +21,7 @@ public class DeliveryMenu {
     @Column(name = "displayed", nullable = false)
     private boolean displayed;
 
-    public DeliveryMenu() {
+    public TakeOutMenu() {
     }
 
     public UUID getId() {
@@ -47,8 +48,10 @@ public class DeliveryMenu {
         this.price = price;
     }
 
+
     public boolean isDisplayed() {
         return displayed;
     }
+
 
 }
