@@ -178,9 +178,10 @@ class DeliveryOrderServiceTest {
     }
 
     @DisplayName("배달 주문만 배달할 수 있다.")
-    @Test
-    void startDeliveryWithoutDeliveryOrder() {
-        final UUID orderId = orderRepository.save(order(OrderType.DELIVERY, OrderStatus.SERVED, "배달지주소")).getId();
+    @EnumSource(value = OrderType.class, names = "DELIVERY", mode = EnumSource.Mode.EXCLUDE)
+    @ParameterizedTest
+    void startDeliveryWithoutDeliveryOrder(final OrderType type) {
+        final UUID orderId = orderRepository.save(order(type, OrderStatus.SERVED, "배달지주소")).getId();
         assertThatThrownBy(() -> orderService.startDelivery(orderId))
                 .isInstanceOf(IllegalStateException.class);
     }
@@ -224,15 +225,6 @@ class DeliveryOrderServiceTest {
     @ParameterizedTest
     void completeDeliveryOrder(final OrderStatus status) {
         final UUID orderId = orderRepository.save(order(status, "서울시 송파구 위례성대로 2")).getId();
-        assertThatThrownBy(() -> orderService.complete(orderId))
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("포장 및 매장 주문의 경우 서빙된 주문만 완료할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
-    @ParameterizedTest
-    void completeTakeoutAndEatInOrder(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, "배달지주소")).getId();
         assertThatThrownBy(() -> orderService.complete(orderId))
                 .isInstanceOf(IllegalStateException.class);
     }

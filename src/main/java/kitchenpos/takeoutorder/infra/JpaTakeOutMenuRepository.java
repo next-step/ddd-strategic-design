@@ -10,7 +10,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JpaTakeOutMenuRepository extends TakeOutMenuRepository, JpaRepository<TakeOutMenu, UUID> {
-    @Query("select m from TakeOutMenu m join m.menuProducts mp where mp.product.id = :productId")
-    @Override
-    List<TakeOutMenu> findAllByProductId(@Param("productId") UUID productId);
+
 }

@@ -160,18 +160,9 @@ class EatInOrderServiceTest {
     @DisplayName("주문을 완료한다.")
     @Test
     void complete() {
-        final EatInOrder expected = orderRepository.save(order(OrderStatus.DELIVERED, orderTable(true, 4)));
+        final EatInOrder expected = orderRepository.save(order(OrderStatus.SERVED, orderTable(true, 4)));
         final EatInOrder actual = orderService.complete(expected.getId());
         assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED);
-    }
-
-    @DisplayName("배달 주문의 경우 배달 완료된 주문만 완료할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "DELIVERED", mode = EnumSource.Mode.EXCLUDE)
-    @ParameterizedTest
-    void completeDeliveryOrder(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, orderTable(true, 4))).getId();
-        assertThatThrownBy(() -> orderService.complete(orderId))
-                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("포장 및 매장 주문의 경우 서빙된 주문만 완료할 수 있다.")

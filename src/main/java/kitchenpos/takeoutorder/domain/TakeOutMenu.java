@@ -54,4 +54,7 @@ public class TakeOutMenu {
     }
 
 
+    public void setDisplayed(boolean displayed) {
+        this.displayed = displayed;
+    }
 }

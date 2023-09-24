@@ -13,6 +13,5 @@ public interface TakeOutMenuRepository {
 
     List<TakeOutMenu> findAllByIdIn(List<UUID> ids);
 
-    List<TakeOutMenu> findAllByProductId(UUID productId);
 }
 
