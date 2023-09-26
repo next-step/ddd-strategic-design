@@ -193,9 +193,9 @@ docker compose -p kitchenpos up -d
 - 메뉴(Menu)의 가격(Price)은 0원 이상이어야 한다.
 - 메뉴(Menu)는 메뉴(Menu)가 속해있는 메뉴그룹(MenuGroup)이 반드시 존재해야 한다.
 - 메뉴(Menu)는 1개 이상의 메뉴상품(MenuProduct)를 가진다.
-- 메뉴상품(MenuProduct)은 상품(Product)과 수량(Quantity)을 가진다.
-- 메뉴상품(MenuProduct)의 상품(Product)은 반드시 존재해야 한다.
-- 메뉴상품(MenuProduct)의 수량(Quantity)은 0개 이상이어야 한다.
+  - 메뉴상품(MenuProduct)은 상품(Product)과 수량(Quantity)을 가진다.
+  - 메뉴상품(MenuProduct)의 상품(Product)은 반드시 존재해야 한다.
+  - 메뉴상품(MenuProduct)의 수량(Quantity)은 0개 이상이어야 한다.
 - 메뉴(Menu)의 가격(Price)은 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 작거나 같아야 한다.
 - 메뉴(Menu)의 가격(Price)이 메뉴상품목록(MenuProducts)에 포함된 상품(Product)들의 가격(Price)의 합보다 크면 메뉴를 노출할 수 없다.
 - 메뉴상품(MenuProduct)에 포함된 상품(Product)의 가격(Price)이 변경됐을 때, 
@@ -248,9 +248,9 @@ docker compose -p kitchenpos up -d
 - 배달주문(Order)은 대기중(WAITING) -> 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 배달중(DELIVERING) ➜ 배달완료(DELIVERED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
 - 배달주문(Order)이 접수되면 라이더(Kitchenriders) 에게 배달을 요청한다.
 - 배달주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
-- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
-- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
-- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+  - 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+  - 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
+  - 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
 
 #### 행위
 - 배달주문(Order)을 등록할 수 있다.
@@ -277,9 +277,9 @@ docker compose -p kitchenpos up -d
 - 포장주문(Order)의 메뉴(Menu) 가격(Price)과 주문아이템(OrderLineItem) 가격(Price)은 같아야 한다.
 - 포장주문(Order)은 대기중(WAITING) ➜ 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
 - 포장주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
-- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
-- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
-- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+  - 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+  - 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재해야 한다.
+  - 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
 
 #### 행위
 - 포장주문(Order)을 등록할 수 있다.
@@ -301,9 +301,9 @@ docker compose -p kitchenpos up -d
 - 매장주문(Order)의 메뉴(Menu) 가격(Price)과 주문아이템(OrderLineItem) 가격(Price)은 같아야 한다.
 - 매장주문(Order)은 대기중(WAITING) ➜ 접수완료(ACCEPTED) ➜ 제공완료(SERVED) ➜ 주문완료(COMPLETED) 순서로 진행된다.
 - 매장주문(Order)은 1개 이상의 주문아이템(OrderLineItem)을 가진다.
-- 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
-- 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재 해야 한다.
-- 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
+  - 주문아이템(OrderLineItem)은 가격(Price), 수량(Quantity), 메뉴(Menu)를 가진다.
+  - 주문아이템(OrderLineItem)은 메뉴(Menu)는 반드시 존재 해야 한다.
+  - 주문아이템(OrderLineItem)의 수량은 0 보다 크거나 같아야 한다.
 - 테이블(OrderTable)은 반드시 존재 해야 한다.
 - 테이블(OrderTable)이 비어있어야 매장주문(Order)을 등록할 수 있다.
 
