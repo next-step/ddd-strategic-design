@@ -1,5 +1,9 @@
-package kitchenpos.application;
+package kitchenpos.application.order.application;
 
+import kitchenpos.application.infra.FakeKitchenridersClient;
+import kitchenpos.application.menu.domain.InMemoryMenuRepository;
+import kitchenpos.application.order.domain.InMemoryOrderRepository;
+import kitchenpos.application.order.domain.InMemoryOrderTableRepository;
 import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderLineItem;

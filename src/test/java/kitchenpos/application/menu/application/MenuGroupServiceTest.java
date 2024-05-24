@@ -1,5 +1,6 @@
-package kitchenpos.application;
+package kitchenpos.application.menu.application;
 
+import kitchenpos.application.menu.domain.InMemoryMenuGroupRepository;
 import kitchenpos.menu.application.MenuGroupService;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuGroupRepository;
