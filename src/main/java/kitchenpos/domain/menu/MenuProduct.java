@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.domain.menu;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,13 +10,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import kitchenpos.domain.product.Product;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
-@Table(name = "order_line_item")
+@Table(name = "menu_product")
 @Entity
-public class OrderLineItem {
+public class MenuProduct {
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -24,22 +24,19 @@ public class OrderLineItem {
 
     @ManyToOne(optional = false)
     @JoinColumn(
-        name = "menu_id",
+        name = "product_id",
         columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
+        foreignKey = @ForeignKey(name = "fk_menu_product_to_product")
     )
-    private Menu menu;
+    private Product product;
 
     @Column(name = "quantity", nullable = false)
     private long quantity;
 
     @Transient
-    private UUID menuId;
+    private UUID productId;
 
-    @Transient
-    private BigDecimal price;
-
-    public OrderLineItem() {
+    public MenuProduct() {
     }
 
     public Long getSeq() {
@@ -50,12 +47,12 @@ public class OrderLineItem {
         this.seq = seq;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setMenu(final Menu menu) {
-        this.menu = menu;
+    public void setProduct(final Product product) {
+        this.product = product;
     }
 
     public long getQuantity() {
@@ -66,19 +63,11 @@ public class OrderLineItem {
         this.quantity = quantity;
     }
 
-    public UUID getMenuId() {
-        return menuId;
+    public UUID getProductId() {
+        return productId;
     }
 
-    public void setMenuId(final UUID menuId) {
-        this.menuId = menuId;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(final BigDecimal price) {
-        this.price = price;
+    public void setProductId(final UUID productId) {
+        this.productId = productId;
     }
 }

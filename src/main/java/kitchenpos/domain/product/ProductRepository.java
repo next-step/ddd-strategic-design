@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.domain.product;
 
 import java.util.List;
 import java.util.Optional;

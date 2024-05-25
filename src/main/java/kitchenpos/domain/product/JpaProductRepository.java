@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.domain.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

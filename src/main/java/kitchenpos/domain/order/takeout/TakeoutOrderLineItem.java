@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.domain.order.takeout;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,12 +10,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import kitchenpos.domain.menu.Menu;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
-@Table(name = "menu_product")
+@Table(name = "order_line_item")
 @Entity
-public class MenuProduct {
+public class TakeoutOrderLineItem {
     @Column(name = "seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -23,19 +25,22 @@ public class MenuProduct {
 
     @ManyToOne(optional = false)
     @JoinColumn(
-        name = "product_id",
+        name = "menu_id",
         columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_menu_product_to_product")
+        foreignKey = @ForeignKey(name = "fk_order_line_item_to_menu")
     )
-    private Product product;
+    private Menu menu;
 
     @Column(name = "quantity", nullable = false)
     private long quantity;
 
     @Transient
-    private UUID productId;
+    private UUID menuId;
 
-    public MenuProduct() {
+    @Transient
+    private BigDecimal price;
+
+    public TakeoutOrderLineItem() {
     }
 
     public Long getSeq() {
@@ -46,12 +51,12 @@ public class MenuProduct {
         this.seq = seq;
     }
 
-    public Product getProduct() {
-        return product;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setProduct(final Product product) {
-        this.product = product;
+    public void setMenu(final Menu menu) {
+        this.menu = menu;
     }
 
     public long getQuantity() {
@@ -62,11 +67,19 @@ public class MenuProduct {
         this.quantity = quantity;
     }
 
-    public UUID getProductId() {
-        return productId;
+    public UUID getMenuId() {
+        return menuId;
     }
 
-    public void setProductId(final UUID productId) {
-        this.productId = productId;
+    public void setMenuId(final UUID menuId) {
+        this.menuId = menuId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(final BigDecimal price) {
+        this.price = price;
     }
 }

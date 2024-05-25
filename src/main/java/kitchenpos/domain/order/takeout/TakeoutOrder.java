@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.domain.order.takeout;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import kitchenpos.domain.order.eatin.OrderTable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,46 +20,42 @@ import java.util.UUID;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class TakeoutOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
 
-    @Column(name = "type", nullable = false, columnDefinition = "varchar(255)")
-    @Enumerated(EnumType.STRING)
-    private OrderType type;
-
     @Column(name = "status", nullable = false, columnDefinition = "varchar(255)")
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private TakeoutOrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(
-        name = "order_id",
-        nullable = false,
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
+            name = "order_id",
+            nullable = false,
+            columnDefinition = "binary(16)",
+            foreignKey = @ForeignKey(name = "fk_order_line_item_to_orders")
     )
-    private List<OrderLineItem> orderLineItems;
+    private List<TakeoutOrderLineItem> orderLineItems;
 
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
     @ManyToOne
     @JoinColumn(
-        name = "order_table_id",
-        columnDefinition = "binary(16)",
-        foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
+            name = "order_table_id",
+            columnDefinition = "binary(16)",
+            foreignKey = @ForeignKey(name = "fk_orders_to_order_table")
     )
     private OrderTable orderTable;
 
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public TakeoutOrder() {
     }
 
     public UUID getId() {
@@ -69,19 +66,11 @@ public class Order {
         this.id = id;
     }
 
-    public OrderType getType() {
-        return type;
-    }
-
-    public void setType(final OrderType type) {
-        this.type = type;
-    }
-
-    public OrderStatus getStatus() {
+    public TakeoutOrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final OrderStatus status) {
+    public void setStatus(final TakeoutOrderStatus status) {
         this.status = status;
     }
 
@@ -93,11 +82,11 @@ public class Order {
         this.orderDateTime = orderDateTime;
     }
 
-    public List<OrderLineItem> getOrderLineItems() {
+    public List<TakeoutOrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
 
-    public void setOrderLineItems(final List<OrderLineItem> orderLineItems) {
+    public void setOrderLineItems(final List<TakeoutOrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
     }
 
