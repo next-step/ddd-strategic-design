@@ -134,39 +134,54 @@ docker compose -p kitchenpos up -d
 | 주문 메뉴 | Order Line Item | 주문을 구성하는 메뉴이고 1개 이상의 수량을 갖는다. ex) `후라이드 1+1 2개`                                     |
 | 주문 유형 | Order Type      | 손님이 주문하는 유형. ex) [배달 주문](#배달-주문), [매장 주문](#매장-주문), [포장 주문](#포장-주문)                  |
 | 배달 주문 | Delivery Order  | 손님이 주소로 메뉴 배달을 요청하는 주문                                                              |
-| 매장 주문 | EatIn Order     | 손님이 매장 테이블로 메뉴 서빙을 요청하는 주문                                                          |
+| 매장 주문 | Store Order     | 손님이 매장 테이블로 메뉴 서빙을 요청하는 주문                                                          |
 | 포장 주문 | Takeout Order   | 손님이 메뉴 포장을 요청하는 주문                                                                  |
 | 주문 상태 | Order Status    | 주문의 진행 현황을 나타내는 상태. ex) Waiting, Accepted, Served, Delivering, Delivered, Completed |
 | 주문 시간 | Order Date Time | 주문이 생성된 시간                                                                          |
 
 #### 배달 주문
-| 한글명   | 영문명              | 설명                           |
-|-------|------------------|------------------------------|
-| 배달 주소 | Delivery Address | 배달 주문 손님에게 배달을 가야하는 목적지 주소   |
-| 배달 요청 | Delivery Request | 주문 접수 후 배달 대행사 통해 라이더를 호출한다. |
-| 대기중   | Waiting          | 배달 주문이 생성되고 접수를 기다리는 상태      |
-| 접수됨   | Accepted         | 배달 요청 후 배달 주문이 접수된 상태        |
-| 전달됨   | Served           | 음식을 라이더에게 전달한 상태             |
-| 배달중   | Delivering       | 라이더가 음식을 손님에게 배달중인 상태        |
-| 배달됨   | Delivered        | 라이더가 손님에게 음식을 배달완료한 상태       |
-| 완료됨   | Completed        | 주문의 모든 과정이 완료된 상태            |
-| 라이더   | Rider            | 배달 주문된 메뉴들을 배달 주소에 전달해줄 사람   |
+| 한글명    | 영문명              | 설명                                                  |
+|--------|------------------|-----------------------------------------------------|
+| 배달 주소  | Delivery Address | 배달 주문 손님에게 배달을 가야하는 목적지 주소                          |
+| 라이더    | Rider            | 배달 주문된 메뉴들을 배달 주소에 전달해줄 사람                          |
+| 배달 대행사 | Delivery Agency  | 라이더가 소속된 업체. 사장님은 배달 주문된 메뉴를 손님에게 전달하기 위해 요청할 수 있다. |
+| 배달 요청  | Delivery Request | 주문 접수 후 배달 대행사 통해 라이더를 호출한다.                        |
+| 대기중    | Waiting          | 배달 주문이 생성되고 접수를 기다리는 상태                             |
+| 접수됨    | Accepted         | 배달 요청 후 배달 주문이 접수된 상태                               |
+| 전달됨    | Served           | 음식을 라이더에게 전달한 상태                                    |
+| 배달중    | Delivering       | 라이더가 음식을 손님에게 배달중인 상태                               |
+| 배달됨    | Delivered        | 라이더가 손님에게 음식을 배달완료한 상태                              |
+| 완료됨    | Completed        | 주문의 모든 과정이 완료된 상태                                   |
+| 요청     | Request          | 배달 주문을 요청하는 행위.                                     |
+| 접수     | Accept           | 배달 주문을 접수하는 행위.                                     |
+| 전달     | Serve            | 배달 주문의 메뉴를 라이더에게 전달하는 행위.                           |
+| 배달 시작  | StartDelivery    | 라이더가 전달된 메뉴를 배달 주소에 전달하는 행위.                        |
+| 배달 완료  | CompleteDelivery | 라이더가 배달 주소에 배달을 완료하는 행위.                            |
+| 완료     | Complete         | 배달 주문을 완료하는 행위.                                     |
 
 #### 매장 주문
-| 한글명 | 영문명       | 설명                                    |
-|-----|-----------|---------------------------------------|
-| 대기중 | Waiting   | 매장 주문이 생성되고 접수를 기다리는 상태               |
-| 접수됨 | Accepted  | 매장 주문이 접수된 상태                         |
-| 전달됨 | Served    | 테이블에 음식이 서빙된 상태                       |
-| 완료됨 | Completed | 주문의 모든 과정이 완료된 상태로 주문이 완료되면 테이블을 비운다. |
+| 한글명 | 영문명       | 설명                                       |
+|-----|-----------|------------------------------------------|
+| 대기중 | Waiting   | 매장 주문이 생성되고 접수를 기다리는 상태                  |
+| 접수됨 | Accepted  | 매장 주문이 접수된 상태                            |
+| 전달됨 | Served    | 테이블에 음식이 서빙된 상태                          |
+| 완료됨 | Completed | 주문의 모든 과정이 완료된 상태로 주문이 완료되면 테이블을 초기화 한다. |
+| 요청  | Request   | 매장 주문을 요청하는 행위.                          |
+| 접수  | Accept    | 매장 주문을 접수하는 행위.                          |
+| 전달  | Serve     | 매장 주문의 메뉴를 손님에게 전달하는 행위.                 |
+| 완료  | Complete  | 매장 주문을 완료하는 행위.                          |
 
 #### 포장 주문
-| 한글명 | 영문명       | 설명                      |
-|-----|-----------|-------------------------|
-| 대기중 | Waiting   | 포장 주문이 생성되고 접수를 기다리는 상태 |
-| 접수됨 | Accepted  | 포장 주문이 접수된 상태           |
-| 전달됨 | Served    | 손님에게 포장된 음식이 전달된 상태     |
-| 완료됨 | Completed | 주문의 모든 과정이 완료된 상태       |
+| 한글명 | 영문명       | 설명                       |
+|-----|-----------|--------------------------|
+| 대기중 | Waiting   | 포장 주문이 생성되고 접수를 기다리는 상태  |
+| 접수됨 | Accepted  | 포장 주문이 접수된 상태            |
+| 전달됨 | Served    | 손님에게 포장된 음식이 전달된 상태      |
+| 완료됨 | Completed | 주문의 모든 과정이 완료된 상태        |
+| 요청  | Request   | 포장 주문을 요청하는 행위.          |
+| 접수  | Accept    | 포장 주문을 접수하는 행위.          |
+| 전달  | Serve     | 포장 주문의 메뉴를 손님에게 전달하는 행위. |
+| 완료  | Complete  | 포장 주문을 완료하는 행위.          |
 
 ### 테이블
 | 한글명      | 영문명              | 설명                                                  |
@@ -177,121 +192,244 @@ docker compose -p kitchenpos up -d
 | 테이블 사용중  | Occupied         | 손님이 테이블을 사용할 수 없는 상태.                               |
 | 테이블 비어있음 | Unoccupied       | 손님이 테이블을 사용할 수 있는 상태.                               |
 | 인원 수     | Number Of Guests | 테이블에 앉은 손님 수. 0명 이상이어야 하며 사용중인 테이블의 인원 수를 변경할 수 있다. |
+| 테이블 세팅   | Sit              | 손님이 앉은 테이블을 표시하는 행위.                                |
+| 테이블 초기화  | Clear            | 매장 주문이 완료된 테이블을 다른 손님이 앉을 수 있는 상태로 초기화하는 행위.        |
+
 
 ## 모델링
 
 ### 상품
-- `상품`은 `상품 이름`과 `상품 가격`을 필수로 가진다.
-- `사장님`은 `상품`을 등록할 수 있다.
-  - `상품 이름`에 `비속어`를 사용할 수 없다.
-  - `상품 가격`은 0원 이상이여야 한다.
-  - ![상품 등록.png](image/상품%20등록.png)
-- `사장님`은 `상품 가격`을 변경할 수 있다.
-  - `상품 가격` 변경 시 `메뉴 상품` 가격의 합보다 `메뉴 가격`이 비싸면 메뉴가 `숨김 처리`된다.
-  - ![상품 수정.png](image/상품%20수정.png)
+#### 프로퍼티
+- `상품(Product)`은 `상품 이름(Product Name)`과 `상품 가격(Product Price)`을 필수로 가진다.
+- `상품 이름(Product Name)`에 `비속어(Profanity)`를 사용할 수 없다.
+- `상품 가격(Product Price)`은 0원 이상이여야 한다.
+
+#### 행위
+- `사장님(Owner)`은 `상품(Product)`을 등록할 수 있다.
+- `사장님(Owner)`은 `상품 가격(Product Price)`을 변경할 수 있다.
+  - `상품 가격(Product Price)` 변경 시 `메뉴 상품(Menu Product)` 가격의 합보다 `메뉴 가격(Menu Product)`이 비싸면 메뉴가 `숨김 처리(Hide)`된다.
 
 ### 메뉴 그룹
-- `메뉴 그룹`은 `메뉴 그룹 이름`을 필수로 가진다.
-- `사장님`은 `메뉴 그룹`을 등록할 수 있다.
-  - `메뉴 그룹 이름`은 빈 문자열이 될 수 없다.
+#### 프로퍼티
+- `메뉴 그룹(Menu Group)`은 `메뉴 그룹 이름(Menu Group Name)`을 필수로 가진다.
+- `메뉴 그룹 이름(Menu Group Name)`은 빈 문자열이 될 수 없다.
+#### 행위
+- `사장님(Owner)`은 `메뉴 그룹(Menu Group)`을 등록할 수 있다.
 
 ### 메뉴
-- `메뉴`는 `메뉴 이름`, `메뉴 가격`, `메뉴 그룹`, `메뉴 상품`, `메뉴 노출 상태`을 필수로 가진다.
-- `사장님`은 `메뉴`를 등록할 수 있다.
-  - `메뉴 이름`에 `비속어`를 사용할 수 없다.
-  - `메뉴 가격`은 0원 이상이어야 한다.
-  - `메뉴 상품` 가격의 합보다 `메뉴 가격`이 비쌀 수 없다.
-  - 하나의 `메뉴 그룹`을 설정해야 한다.
-  - `메뉴 노출 상태`를 `노출` 혹은 `숨김` 상태로 설정할 수 있다.
-  - 한 가지 이상의 `메뉴 상품`을 등록해야 한다.
-  - `메뉴 상품`의 수량은 하나 이상이어야 한다.
-  - ![메뉴 등록.png](image/메뉴%20등록.png)
-- `사장님`은 `메뉴 가격`을 수정할 수 있다.
-  - `메뉴 상품` 가격의 합보다 `메뉴 가격`이 비쌀 수 없다.
-  - ![메뉴 수정.png](image/메뉴%20수정.png)
-- `사장님`은 `메뉴 노출 상태`를 수정할 수 있다.
-  - `노출 메뉴`로 변경할 수 있다.
-    - `메뉴 상품` 가격의 합보다 `메뉴 가격`이 비싸면 `노출` 상태로 변경할 수 없다.
-  - `숨김 메뉴`로 변경할 수 있다.
-  - ![메뉴 노출 상태 수정.png](image/메뉴%20노출%20상태%20수정.png)
+#### 프로퍼티
+- `메뉴(Menu)`는 `메뉴 이름(Menu Name)`, `메뉴 가격(Menu Product)`, `메뉴 그룹(Menu Group)`, `메뉴 상품(Menu Product)`, `메뉴 노출 상태(Displayed)`을 필수로 가진다.
+- `메뉴 이름(Menu Name)`에 `비속어(Profanity)`를 사용할 수 없다.
+- `메뉴 가격(Menu Product)`은 0원 이상이어야 한다.
+- `메뉴 상품(Menu Product)` 가격의 합보다 `메뉴 가격(Menu Product)`이 비쌀 수 없다.
+- 하나의 `메뉴 그룹(Menu Group)`을 설정해야 한다.
+- 한 가지 이상의 `메뉴 상품(Menu Product)`을 등록해야 한다.
+- `메뉴 상품(Menu Product)`의 수량은 하나 이상이어야 한다.
+- `메뉴 노출 상태(Displayed)`를 `노출(Display)` 혹은 `숨김(Hide)` 상태로 설정할 수 있다.
+
+#### 행위
+- `사장님(Owner)`은 `메뉴(Menu)`를 등록할 수 있다.
+- `사장님(Owner)`은 `메뉴 가격(Menu Product)`을 수정할 수 있다.
+  - `메뉴 상품(Menu Product)` 가격의 합보다 `메뉴 가격(Menu Product)`이 비쌀 수 없다.
+- `사장님(Owner)`은 `메뉴 노출 상태(Displayed)를 수정할 수 있다.
+  - `노출 메뉴(Display Menu)`로 변경할 수 있다.
+    - `메뉴 상품(Menu Product)` 가격의 합보다 `메뉴 가격(Menu Product)`이 비싸면 `노출(Display)` 상태로 변경할 수 없다.
+  - `숨김 메뉴(Hide Menu)`로 변경할 수 있다.
 
 ### 테이블
-- `테이블`은 `테이블 이름`, `테이블 상태`, `인원 수`를 필수로 가진다.
-- `사장님`은 `테이블`을 등록할 수 있다.
-  - ![테이블 등록.png](image/테이블%20등록.png)
-- `사장님`은 `테이블`의 `인원 수`를 변경할 수 있다.
-  - 사용 중인 `테이블`의 `인원 수`만 변경할 수 있다.
-  - `인원 수`는 0명 이상이어야 한다.
-  - ![테이블 인원 수 변경.png](image/테이블%20인원%20수%20변경.png)
-- `사장님`은 `테이블`을 초기화할 수 있다.
-  - 매장주문이 완료되지 않은 테이블은 초기화 할 수 없다.
-  - ![테이블 초기화.png](image/테이블%20초기화.png)
+#### 프로퍼티
+- `테이블(Table)`은 `테이블 이름(Table Name)`, `테이블 상태(Table Status)`, `인원 수`를 필수로 가진다.
+- `테이블 이름(Table Name)`은 빈 문자열이 될 수 없다.
+- `테이블 상태(Table Status)`는 `사용중(Occupied)`과 `비어있음(Unoccupied)`을 갖는다.
+- `인원 수(Number Of Guests)`는 0명 이상이어야 한다.
+
+#### 행위
+- `사장님(Owner)`은 `테이블(Table)`을 등록할 수 있다.
+  - `사용중(Occupied)`인 `테이블(Table)`의 `인원 수(Number Of Guests)`만 변경할 수 있다.
+  - `인원 수(Number Of Guests)`는 0명 이상이어야 한다.
+- `사장님(Owner)`은 `테이블(Table)`을 `세팅(Sit)`할 수 있다.
+  - `손님`이 이미 앉아있는 테이블은 `세팅(Sit)`할 수 없다.
+- `사장님(Owner)`은 `테이블(Table)`을 `초기화(Clear)`할 수 있다.
+  - `매장주문(EatIn Order)`이 `완료(Completed)`되지 않은 테이블은 `초기화(Clear)` 할 수 없다.
 
 ### 주문
-- `주문`은 `주문 유형`, `주문 상태`, `주문 시간`, `주문 상품`을 필수로 가지고, `주문 유형`에 따라 `배달 주소`와 `테이블`을 가진다.
+#### 프로퍼티
+- `주문(Order)`은 `주문 유형(Order Type)`, `주문 상태(Order Status)`, `주문 시간(Order Date Time)`, `주문 메뉴(Order Line Item)`을 필수로 갖는다. 그리고 `주문 유형(Order Typ)`에 따라 `배달 주소(Delivery)`와 `테이블(Table)`을 가진다.
+- `주문 유형(Order Type)`은 `배달 주문(Delivery Order)`, `매장 주문(Store Order)`, `포장 주문(TakeOut Order)`을 갖는다.
+- `주문 상태(Order Status)`는 `Waiting`, `Accepted`, `Served`, `Delivering`, `Delivered`, `Completed`를 갖는다.
+- 하나 이상의 `주문 메뉴(Order Line Item)`를 등록해야 한다.
+  - `노출 메뉴(Display Menu)`만 등록할 수 있다.
+- 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
+- `배달 주문(Delivery Order)`의 경우 `배달 주소(Delivery)`를 갖는다.
+- `매장 주문(Store Order)`의 경우 `테이블(Table)`을 갖는다.
+
+> `주문 유형(Order Type)`에 따라 진행되는 행위는 다르며 이는 아래에서 설명한다.
 
 ### 배달 주문
-`사장님`은 포스기로 `배달 주문`을 진행시킬 수 있다.
+#### 행위
+`사장님(Owner)`은 포스기로 `배달 주문(Delivery Order)`을 진행시킬 수 있다.
+- `배달 주문(Delivery Order)`을 `요청(Request)`할 수 있다.
+- 요청된 `배달 주문(Delivery Order)`을 `접수(Accept)`할 수 있다.
+  - 이때 `배달 대행사(Delivery Agency)`를 통해 라이더를 호출한다. 
+- 승인된 `배달 주문(Delivery Order)`을 `전달(Serve)`할 수 있다.
+- 서빙된 `배달 주문(Delivery Order)`을 `배달 시작(StartDelivery)`할 수 있다.
+- 배달이 시작된 `배달 주문(Delivery Order)`을 `배달 완료(CompleteDelivery)`할 수 있다.
+- 배달이 완료된 `배달 주문(Delivery Order)`을 `완료(Complete)`할 수 있다.
+
 ```mermaid
-flowchart
-  *[배달 주문 요청] --> Waiting[
-    Waiting
-    <div style='text-align: left'>
-      - 하나 이상의 `메뉴`를 등록해야 한다.
-      - `노출 메뉴`만 등록할 수 있다.
-      - 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
-      - `배달 주소` 정보를 입력해야 한다.
-    </div>
-  ]
-  Waiting --> Accepted[
-    Accepted
-    <div style='text-align: left'>
-      - 배달 대행사 통해 라이더를 호출한다.
-    </div>
-  ]
-  Accepted --> Served
-  Served --> Delivering
-  Delivering --> Delivered
-  Delivered --> Completed
+    stateDiagram-v2
+  [*] --> Waiting: Request 요청
+  note right of Waiting
+    rules
+    1. 하나 이상의 `메뉴`를 등록해야 한다.
+    2. `노출 메뉴`만 등록할 수 있다.
+    3. 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
+    4. `배달 주소` 정보를 입력해야 한다.
+  end note
+  Waiting --> Accepted: Accept 접수
+  note left of Accepted
+    Accept
+    배달 대행사를 통해 라이더를 호출한다.
+  end note
+  Accepted --> Served: Serve 전달
+  Served --> Delivering: StartDelivery 배달 시작
+  Delivering --> Delivered: CompleteDelivery 배달 완료
+  Delivered --> Completed: Complete 완료
 ```
 
 ### 매장 주문
-`사장님`은 포스기로 `매장 주문`을 진행시킬 수 있다.
+`사장님(Owner)`은 포스기로 `매장 주문(Store Order)`을 진행시킬 수 있다.
+- `매장 주문(Store Order)`을 `요청(Request)`할 수 있다.
+- 요청된 `매장 주문(Store Order)`을 `접수(Accept)`할 수 있다.
+- 승인된 `매장 주문(Store Order)`을 `전달(Serve)`할 수 있다.
+- 서빙된 `매장 주문(Store Order)`을 `완료(Complete)`할 수 있다.
+  - 이때 `테이블(Table)`을 `초기화(Clear)`한다.
+
 ```mermaid
-flowchart
-  *[매장 주문 요청] --> Waiting[
-    Waiting
-    <div style='text-align: left'>
-      - 하나 이상의 `메뉴`를 등록해야 한다.
-      - `매장 주문`의 `메뉴` 수량은 0개보다 작을 수 있다.
-      - `노출 메뉴`만 등록할 수 있다.
-      - 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
-      - 손님이 사용중인 `테이블` 정보를 입력해야 한다.
-    </div>
-  ]
-  Waiting --> Accepted
-  Accepted --> Served
-  Served --> Completed[
-    Completed
-    <div style='text-align: left'>
-    - 테이블을 초기화한다.
-    </div>
-  ]
+    stateDiagram-v2
+  [*] --> Waiting: Request 주문 요청
+  note right of Waiting
+    Request
+    1. 하나 이상의 `메뉴`를 등록해야 한다.
+    2. `노출 메뉴`만 등록할 수 있다.
+    3. 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
+    4. `매장 주문`의 `메뉴` 수량은 0개보다 작을 수 있다.
+    5. 손님이 사용중인 `테이블` 정보를 입력해야 한다.
+  end note
+  Waiting --> Accepted: Accept 접수
+  Accepted --> Served: Serve 전달
+  Served --> Completed: Complete 완료
+  note left of Completed
+    Complete
+    `매장 주문` 완료 후 `테이블`을 `초기화`한다.
+  end note
 ```
 
 ### 포장 주문
-`사장님`은 포스기로 `포장 주문`을 진행시킬 수 있다.
+`사장님(Owner)`은 포스기로 `포장 주문(Takeout Order)`을 진행시킬 수 있다.
+- `포장 주문(Takeout Order)`을 `요청(Request)`할 수 있다.
+- 요청된 `포장 주문(Takeout Order)`을 `접수(Accept)`할 수 있다.
+- 승인된 `포장 주문(Takeout Order)`을 `전달(Serve)`할 수 있다.
+- 서빙된 `포장 주문(Takeout Order)`을 `완료(Complete)`할 수 있다.
+
 ```mermaid
-flowchart
-  *[포장 주문 요청] --> Waiting[
-    Waiting
-    <div style='text-align: left'>
-      - 하나 이상의 `메뉴`를 등록해야 한다.
-      - `노출 메뉴`만 등록할 수 있다.
-      - 등록한 메뉴 가격과 주문 상품의 가격이 일치해야 한다.
-    </div>
-  ]
-  Waiting --> Accepted
-  Accepted --> Served
-  Served --> Completed
+    stateDiagram-v2
+  [*] --> Waiting: Request 요청
+  note right of Waiting
+    Request
+    1. 하나 이상의 `메뉴`를 등록해야 한다.
+    2. `노출 메뉴`만 등록할 수 있다.
+    3. 등록한 `메뉴 가격`과 주문 상품의 가격이 일치해야 한다.
+  end note
+  Waiting --> Accepted: Accept 접수
+  Accepted --> Served: Serve 전달
+  Served --> Completed: Complete 완료
+```
+
+## 클래스 다이어그램
+```mermaid
+---
+title: Kitchen Pos
+---
+classDiagram
+  Order <|-- DeliveryOrder
+  Order <|-- StoreOrder
+  Order <|-- TakeoutOrder
+  Order: -UUID id
+  Order: -String type
+  Order: -LocalDateTime orderDateTime
+  Order: -List<OrderLineItem> orderLineItems
+  Order: +accept()
+  Order: +serve()
+  Order: +complete()
+
+  class DeliveryOrder {
+    -String deliveryAddress
+    +startDelivery()
+    +completeDelivery()
+  }
+  class StoreOrder {
+    -OrderTable orderTable
+    +complete()
+  }
+  class TakeoutOrder {
+  }
+
+  Order "1" ..> "*" OrderLineItem
+  StoreOrder "1" ..> "1" OrderTable
+  Menu "1" ..> "1" MenuGroup
+  OrderLineItem "1" ..> "1" Menu
+  Menu "1" ..> "*" MenuProduct
+  MenuProduct "1" ..> "1" Product
+
+  class OrderLineItem {
+    -Long seq
+    -Menu menu
+    -long quantity
+    -BigDecimal price
+  }
+
+
+  class OrderTable {
+    -UUID id
+    -String name
+    -boolean occupied
+    -int numberOfGuests
+    
+    +sit()
+    +clear()
+  }
+
+  class MenuGroup {
+    -UUID id
+    -String name
+  }
+
+  class Menu {
+    -UUID id
+    -String name
+    -BigDecimal price
+    -MenuGroup menuGroup
+    -boolean displayed
+    -List<MenuProduct> menuProducts
+    
+    +changePrice()
+    +display()
+    +hide()
+  }
+
+  class MenuProduct {
+    -Long seq
+    -Product product
+    -long quantity
+    -UUID productId
+  }
+
+  class Product {
+    -UUID id
+    -String name
+    -BigDecimal price
+    
+    +changePrice()
+  }
 ```
