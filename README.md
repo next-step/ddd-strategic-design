@@ -125,7 +125,6 @@ docker compose -p kitchenpos up -d
 | 메뉴 가격  | menuPrice     | 메뉴의 가격                                                     |
 | 메뉴 그룹  | menuGroup     | 메뉴가 속하는 그룹                                                 |
 | 메뉴 이름  | menuName      | 메뉴의 이름                                                     |
-| 비속어    | profanity     | https://www.purgomalum.com/profanitylist.html 에 등록된 비속어 단어 |
 | 숨겨진 메뉴 | hiddenMenu    | 사용자에게 보이지 않는 메뉴                                            |
 | 메뉴 목록  | menuList      | 메뉴의 전체 목록                                                  |
 
