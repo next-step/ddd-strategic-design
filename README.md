@@ -100,12 +100,12 @@ docker compose -p kitchenpos up -d
 
 | 한글명      | 영문명           | 설명                           |
 |----------|---------------|------------------------------|
-| 상품       | product       | 키친포스기가 관리하는 상품               |
-| 상품 등록    | productCreate | 키친포스기가 관리하는 상품을 등록하는 행위.     |
+| 상품       | product       | 키친포스기가 관리하는 상품. 메뉴를 구성하는 단위. |
 | 상품 가격    | price         | 키친포스기가 관리하는 상품의 가격.          |
-| 상품 가격 변경 | priceChange   | 키친포스기가 관리하는 상품의 가격을 변경하는 행위. |
 | 상품 이름    | name          | 키친포스기가 관리하는 상품의 이름.          |
 | 상품 목록    | list          | 키친포스기에 등록된 모든 상품의 목록.        |
+| 상품 등록    | productCreate | 키친포스기가 관리하는 상품을 등록하는 행위.     |
+| 상품 가격 변경 | priceChange   | 키친포스기가 관리하는 상품의 가격을 변경하는 행위. |
 
 ### 메뉴 그룹
 
@@ -174,16 +174,61 @@ docker compose -p kitchenpos up -d
 | 주문 종료    | completed      | 손님이 직접 음식을 받아가고 결제 완료 된 상태. 
 
 ### 매장 주문
-| 한글명      | 영문명      | 설명                            |
-|----------|----------|-------------------------------|
-| 주문       | order    | 손님들이 매장에서 음식을 먹는다.            |
-| 주문 테이블 | order table | 매장에서 주문을 하는 곳                 |
-| 주문 항목    | orderLineItem   | 주문한 메뉴의 종류와 수량의 정보. |
-| 빈 테이블    | empty table | 주문을 할 수 없는 주문 테이블             |
-| 주문 접수 대기 | waiting  | 주문이 매장에서 수락을 기다리는 상태          |
-| 주문 접수    | accepted | 주문이 매장에서 수락되어 조리를 시작하는 상태.    |
-| 서빙 완료    | served   | 조리가 완료되어 라이더가 가져갈 수 있는 상태.    |
-| 주문 종료    | completed | 주문이 종료 된 상태.                  
+| 한글명      | 영문명           | 설명                         |
+|----------|---------------|----------------------------|
+| 주문       | order         | 손님들이 매장에서 음식을 먹는다.         |
+| 주문 테이블   | orderTable    | 매장에서 주문을 하는 곳              |
+| 주문 항목    | orderLineItem | 주문한 메뉴의 종류와 수량의 정보.        |
+| 빈 테이블    | emptyTable    | 주문을 할 수 없는 주문 테이블          |
+| 주문 접수 대기 | waiting       | 주문이 매장에서 수락을 기다리는 상태       |
+| 주문 접수    | accepted      | 주문이 매장에서 수락되어 조리를 시작하는 상태. |
+| 서빙 완료    | served        | 조리가 완료되어 음식을 전달 할 수 있는 상태. |
+| 주문 종료    | completed     | 손님이 음식을 다 먹고 계산까지 완료한 상태.               
 
 ## 모델링
 
+### 상품
+
+- `Product`는 식별자, `name`, `price`를 가진다.
+
+### 메뉴
+
+- `MenuGroup`은 식별자, `name`을 가진다.
+- `Menu`는 식별자, `name`, `price`, `MenuProducts`를 가진다.
+- `Menu`는 `MenuGroup`에 속한다.
+- `MenuProduct`는 `price`와 수량을 가진다.
+   
+- `Menu`의 `price`는 `MenuProducts`의 금액의 합보다 적거나 같아야 한다.
+- `Menu`의 가격이 `MenuProducts`의 금액의 합보다 크면 `hiddenMenu`가 된다.
+- `Menu`의 가격은 0원 이상이어야 한다.
+
+### 매장 주문
+
+- `OrderTable`은 식별자, `name`, `NumberOfGuests`를 가진다.
+- `OrderTable`이 반드시 있어야한다.
+- `EmptyTable`은 `NumberOfGuests`가 0이고 변경 불가능하다.
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, `OrderLineItems`를 가진다.
+- `Order`는 `OrderTable`에 추가된다.   
+- `OrderLineItem`는 가격과 수량을 가진다.
+- `OrderLineItem`의 수량은 음수일 수 있다.
+   
+- `Order`는 주문 접수 대기 -> 주문 접수 -> 서빙 완료 -> 계산 완료 순서로 진행된다.
+- 계산완료되면 `OrderTable`은 `emptyTable`이 된다.
+
+### 배달 주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, 배달 주소, `OrderLineItems`를 가진다.
+- `OrderLineItem`의 수량은 1개 이상이다.
+- `OrderLineItem`는 가격과 수량을 가진다.
+
+- `Order`는 주문 접수 대기 -> 주문 접수 -> 서빙 완료 -> 배달 -> 배달 완료 -> 주문 종료 순서로 진행된다.
+- `Order`가 접수되면 `DeliveryAgency`가 호출된다.
+- 배달 주소를 입력해야한다.
+
+### 포장 주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, `OrderLineItems`를 가진다.
+- `OrderLineItem`의 수량은 1개 이상이다.
+- `OrderLineItem`는 가격과 수량을 가진다.
+   
+- `Order`는 주문 접수 대기 -> 주문 접수 -> 서빙 완료 -> 주문 종료 순서로 진행된다.
