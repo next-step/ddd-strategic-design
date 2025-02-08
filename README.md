@@ -334,47 +334,73 @@ docker compose -p kitchenpos up -d
 
 ```mermaid
 flowchart TD
-  guest
+    guest
 %% 외부 시스템 (ID: externalSystem)	
-  subgraph externalSystem [외부 시스템]
-    KitchenRidersClient
-    PurgomalumClient
-  end
+    subgraph externalSystem [외부 시스템]
+        KitchenRidersClient
+        PurgomalumClient
+    end
 
-  style externalSystem stroke-dasharray: 5  
+    style externalSystem stroke-dasharray: 5  
 %% 메뉴
-  subgraph 메뉴
-    style 주문 stroke-dasharray: 5
-    menu
-    product
-    menu --> product
-  end
+    subgraph 메뉴
+        style 주문 stroke-dasharray: 5
+        menu
+        product
+        menu --> product
+    end
 
 %% 주문
-  subgraph 주문
-    style 주문 stroke-dasharray: 5
-    order
-    deliveryOrder
-    takeOutOrder
-    eatInOrder
-    DeliveryOrderFlow
-    TakeOutOrderFlow
-    EatInOrderFlow
-    OrderTable
-    order -- case:delivery orderType --> deliveryOrder
-    order -- case:takeOut orderType --> takeOutOrder
-    order -- case:eatIn orderType --> eatInOrder
-    deliveryOrder -- 배달 주문 시작 --> DeliveryOrderFlow
-    takeOutOrder -- 포장 주문 시작 --> TakeOutOrderFlow
-    eatInOrder -- 매장 주문 시작 --> EatInOrderFlow
-    EatInOrderFlow -- 매장 테이블 해지 요청 --> OrderTable
-  end
+    subgraph 주문
+        style 주문 stroke-dasharray: 5
+        order
+        deliveryOrder
+        takeOutOrder
+        eatInOrder
+        DeliveryOrderFlow
+        TakeOutOrderFlow
+        EatInOrderFlow
+        OrderTable
+        order -- case:delivery orderType --> deliveryOrder
+        order -- case:takeOut orderType --> takeOutOrder
+        order -- case:eatIn orderType --> eatInOrder
+        deliveryOrder -- 배달 주문 시작 --> DeliveryOrderFlow
+        takeOutOrder -- 포장 주문 시작 --> TakeOutOrderFlow
+        eatInOrder -- 매장 주문 시작 --> EatInOrderFlow
+        EatInOrderFlow -- 매장 테이블 해지 요청 --> OrderTable
+    end
 
-  guest -- 주문 요청 --> order
-  guest -- 매장 테이블 점유 --> OrderTable
-  guest -- 메뉴 선택 --> menu
-  DeliveryOrderFlow -- 배달 요청 --> KitchenRidersClient
-  menu -- 비속어 검증 --> PurgomalumClient
-  product -- 비속어 검증 --> PurgomalumClient
+    guest -- 주문 요청 --> order
+    guest -- 매장 테이블 점유 --> OrderTable
+    guest -- 메뉴 선택 --> menu
+    DeliveryOrderFlow -- 배달 요청 --> KitchenRidersClient
+    menu -- 비속어 검증 --> PurgomalumClient
+    product -- 비속어 검증 --> PurgomalumClient
+
+```
+
+### 배달 주문 순서
+
+```mermaid
+sequenceDiagram
+    participant Guest
+    participant Delivery Order
+    participant Delivery Order Flow
+    participant Kitchen Riders Client
+    Guest ->> Delivery Order: 배달 주문 요청
+    Delivery Order ->> Delivery Order Flow: 배달 주문 프로세스 시작
+    Delivery Order Flow ->> Delivery Order: 배달 주문 대기 중
+    Delivery Order ->> Delivery Order Flow: 배달 주문 접수 요청
+    Delivery Order Flow -->> Kitchen Riders Client: 배달 요청
+    Delivery Order Flow ->> Delivery Order: 배달 접수 완료
+    Kitchen Riders Client -->> Delivery Order Flow: 배달 요청 확인
+    Delivery Order ->> Delivery Order Flow: 배달 주문 서빙 요청
+    Delivery Order Flow ->> Delivery Order: 배달 주문 서빙 완료
+    Delivery Order ->> Delivery Order Flow: 배달 중 요청
+    Delivery Order Flow ->> Delivery Order: 배달 중
+    Delivery Order ->> Delivery Order Flow: 배달 완료 요청
+    Delivery Order Flow ->> Delivery Order: 배달 완료
+    Delivery Order ->> Delivery Order Flow: 배달 주문 완료 요청
+    Delivery Order Flow ->> Delivery Order: 배달 주문 완료
 
 ```
