@@ -114,11 +114,11 @@ docker compose -p kitchenpos up -d
 | 사용 테이블  | OccupiedTable   | 테이블에 손님이 있는 경우                                                 |
 | 미사용 테이블 | UnOccupiedTable | 손님이 식사 후, 테이블에서 벗어난 경우                                         |
 | 빈 테이블   | EmptyTable      | 미사용 테이블이며 주문완료한 경우                                             |
+| 라이더     | Rider           | 배달기사를 지칭함.                                                     |
 | 주문 상태   | OrderStatus     | 주문은 상태를 가지며, 하나의 상태만 가진다.                                      |
 | 대기중     | Waiting         | 주문을 접수하기 전 상태로, 주문의 첫 상태                                       |
 | 접수      | Accepted        | 주문을 확인하여 주문을 접수한 상태.                                           |
 | 서빙      | Served          | 접수한 주문을 완성한 상태.                                                |
-| 라이더     | Rider           | 배달기사를 지칭함.                                                     |
 | 배달 중    | Delivering      | 주문유형이 배달주문인 경우로, 라이더가 배달을 진행하는 상태                              |
 | 배달 완료   | Delivered       | 주문유형이 배달주문인 경우로, 배달을 완료한 상태                                    |
 | 완료      | Completed       | 주문이 완료된 최종상태                                                   |
