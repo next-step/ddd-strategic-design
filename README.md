@@ -328,4 +328,4 @@ docker compose -p kitchenpos up -d
 
 - `매장 테이블`는 `매장 주문이 완료`되면 `테이블 점유를 해지`한다.
 
-![img_2.png](img_2.png)
+![kitch_pos_modeling.png](kitchen_pos_model.png)
