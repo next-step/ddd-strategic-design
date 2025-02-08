@@ -423,3 +423,25 @@ sequenceDiagram
     TakeOut Order Flow ->> TakeOut Order: 포장 주문 완료
 
 ```
+
+### 매장 주문 순서
+
+```mermaid
+sequenceDiagram
+    participant Guest
+    participant EatIn Order
+    participant EatIn Order Flow
+    participant OrderTable
+    Guest ->> EatIn Order: 매장 주문 요청
+    EatIn Order ->> EatIn Order Flow: 매장 주문 프로세스 시작
+    EatIn Order Flow ->> EatIn Order: 매장 주문 대기 중
+    EatIn Order ->> EatIn Order Flow: 매장 주문 접수 요청
+    EatIn Order Flow ->> EatIn Order: 매장 접수 완료
+    EatIn Order ->> EatIn Order Flow: 매장 주문 서빙 요청
+    EatIn Order Flow ->> EatIn Order: 매장 주문 서빙 완료
+    EatIn Order ->> EatIn Order Flow: 매장 주문 완료 요청
+    EatIn Order Flow -->> OrderTable: 매장 테이블 점유 해제 요청
+    EatIn Order Flow ->> EatIn Order: 매장 주문 완료
+    OrderTable -->> EatIn Order Flow: 매장 테이블 점유 해제
+
+```
