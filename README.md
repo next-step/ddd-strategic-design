@@ -404,3 +404,22 @@ sequenceDiagram
     Delivery Order Flow ->> Delivery Order: 배달 주문 완료
 
 ```
+
+### 포장 주문 순서
+
+```mermaid
+sequenceDiagram
+    participant Guest
+    participant TakeOut Order
+    participant TakeOut Order Flow
+    Guest ->> TakeOut Order: 포장 주문 요청
+    TakeOut Order ->> TakeOut Order Flow: 포장 주문 프로세스 시작
+    TakeOut Order Flow ->> TakeOut Order: 포장 주문 대기 중
+    TakeOut Order ->> TakeOut Order Flow: 포장 주문 접수 요청
+    TakeOut Order Flow ->> TakeOut Order: 포장 접수 완료
+    TakeOut Order ->> TakeOut Order Flow: 포장 주문 서빙 요청
+    TakeOut Order Flow ->> TakeOut Order: 포장 주문 서빙 완료
+    TakeOut Order ->> TakeOut Order Flow: 포장 주문 완료 요청
+    TakeOut Order Flow ->> TakeOut Order: 포장 주문 완료
+
+```
