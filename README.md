@@ -328,4 +328,53 @@ docker compose -p kitchenpos up -d
 
 - `매장 테이블`는 `매장 주문이 완료`되면 `테이블 점유를 해지`한다.
 
-![kitch_pos_modeling.png](kitchen_pos_model.png)
+![kitchen_pos_modeling.png](kitchen_pos_model.png)
+
+### Kitchen Pos 모델링
+
+```mermaid
+flowchart TD
+  guest
+%% 외부 시스템 (ID: externalSystem)	
+  subgraph externalSystem [외부 시스템]
+    KitchenRidersClient
+    PurgomalumClient
+  end
+
+  style externalSystem stroke-dasharray: 5  
+%% 메뉴
+  subgraph 메뉴
+    style 주문 stroke-dasharray: 5
+    menu
+    product
+    menu --> product
+  end
+
+%% 주문
+  subgraph 주문
+    style 주문 stroke-dasharray: 5
+    order
+    deliveryOrder
+    takeOutOrder
+    eatInOrder
+    DeliveryOrderFlow
+    TakeOutOrderFlow
+    EatInOrderFlow
+    OrderTable
+    order -- case:delivery orderType --> deliveryOrder
+    order -- case:takeOut orderType --> takeOutOrder
+    order -- case:eatIn orderType --> eatInOrder
+    deliveryOrder -- 배달 주문 시작 --> DeliveryOrderFlow
+    takeOutOrder -- 포장 주문 시작 --> TakeOutOrderFlow
+    eatInOrder -- 매장 주문 시작 --> EatInOrderFlow
+    EatInOrderFlow -- 매장 테이블 해지 요청 --> OrderTable
+  end
+
+  guest -- 주문 요청 --> order
+  guest -- 매장 테이블 점유 --> OrderTable
+  guest -- 메뉴 선택 --> menu
+  DeliveryOrderFlow -- 배달 요청 --> KitchenRidersClient
+  menu -- 비속어 검증 --> PurgomalumClient
+  product -- 비속어 검증 --> PurgomalumClient
+
+```
