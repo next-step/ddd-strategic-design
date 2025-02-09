@@ -232,6 +232,13 @@ docker compose -p kitchenpos up -d
 | 손님       | guest            | `주문`을 목적으로 하는 사람이다.                                                 |
 | 주문 생성 시간 | order time       | `손님`이 주문한 시간이다.                                                     |
 
+### 유저 (User)
+
+| 한글명 | 영문명         | 설명                  |
+|-----|-------------|---------------------|
+| 손님  | guest       | `주문`을 목적으로 하는 사람이다. |
+| 사장님 | store owner | `메뉴`를 만드는 사람이다.     |
+
 ### 배달 주문 (Delivery)
 
 | 한글명         | 영문명                       | 설명                                                                                    |
@@ -301,10 +308,11 @@ docker compose -p kitchenpos up -d
 - `주문`은 손님이 원하는 `주문 유형`에 따라 `주문`을 수행한다.
 - `주문`은 `주문 내역`을 토대로 `주문`을 검증한다.
 
-### 4. 손님
+### 4. 유저
 
 - `손님`은 `주문`을 한다.
 - `손님`은 `매장 테이블`을 `점유`한다.
+- `사장님`은 `메뉴`를 만든다.
 
 ### 5. 배달 주문
 
@@ -333,6 +341,7 @@ docker compose -p kitchenpos up -d
 ```mermaid
 flowchart TD
     guest
+    store_owner
 %% 외부 시스템 (ID: externalSystem)	
     subgraph externalSystem [외부 시스템]
         KitchenRidersClient
@@ -368,9 +377,10 @@ flowchart TD
         EatInOrderFlow -- 매장 테이블 해지 요청 --> OrderTable
     end
 
-    guest -- 주문 요청 --> order
+    guest -- <순서 2> : 주문 요청 --> order
     guest -- 매장 테이블 점유 --> OrderTable
-    guest -- 메뉴 선택 --> menu
+    guest -- <순서 1> : 메뉴 선택 --> menu
+    store_owner -- 메뉴 생성 --> menu
     DeliveryOrderFlow -- 배달 요청 --> KitchenRidersClient
     menu -- 비속어 검증 --> PurgomalumClient
     product -- 비속어 검증 --> PurgomalumClient
