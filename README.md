@@ -149,3 +149,5 @@ docker compose -p kitchenpos up -d
 | 배달 대행사 | Rider Client     | 배달정보를 전달해 배달을 요청할 수 있는 외부서비스                                              |  
 
 ## 모델링
+
+![img.png](src/main/resources/image/DB_Diagram.png)
