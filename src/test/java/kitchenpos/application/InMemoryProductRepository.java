@@ -1,16 +1,16 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.Product;
-import kitchenpos.domain.ProductRepository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import kitchenpos.domain.Product;
+import kitchenpos.domain.ProductRepository;
 
 public class InMemoryProductRepository implements ProductRepository {
+
     private final Map<UUID, Product> products = new HashMap<>();
 
     @Override
