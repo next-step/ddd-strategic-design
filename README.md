@@ -152,3 +152,6 @@ docker compose -p kitchenpos up -d
 | 완료    | Complete                 | 주문의 진행이 끝난 최종상태                                                                                                                                                                 |
 
 ## 모델링
+
+### 주문상태 다이어그램
+![OrderStatus_Diagram.png](OrderStatus_Diagram.png)
