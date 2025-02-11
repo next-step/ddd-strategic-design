@@ -141,8 +141,8 @@ docker compose -p kitchenpos up -d
 | 방문 손님 수        | number of guests        | `주문 테이블`에 앉은 손님 수 (0 이상)|
 | 주문 테이블 목록      | order table list        | 등록된 `주문 테이블`들의 전체 목록|
 | 주문 테이블 등록하기    | create order table      | 새로운 `주문 테이블`을 등록하는 기능|
-| 빈 테이블 해지하기     | sit order table         | 빈 `테이블`을 해지하는 기능 (손님이 테이블에 앉은 상태)|
-| 빈 테이블 설정 하기    | clear order table       | 빈 `테이블`로 설정하는 기능 (손님이 테이블에 없는 상태)|
+| 빈 테이블에 앉기      | sit order table         | 빈 `테이블`을 해지하는 기능 (손님이 테이블에 앉은 상태)|
+| 주문 테이블 치우기     | clear order table       | 빈 `테이블`로 설정하는 기능 (손님이 테이블에 없는 상태)|
 | 방문 손님 수 변경하기   | change number of guests | `주문 테이`블의 방문한 손님 수를 수정하는 기능|
 | 주문 테이블 목록 조회하기 | find order table list   | 등록된 `주문 테이블` 목록을 조회하는 기능|
 
@@ -187,3 +187,144 @@ docker compose -p kitchenpos up -d
 
 
 ## 모델링
+
+## `상품 (product)`
+- `상품(product)`은 `상품 가격(product price)`, `상품 이름(product name)`을 가진다.
+- `상품 가격(product price)`은 0원 이상이어야 한다.
+- `상품 이름(product name)`에는 비속어가 포함될 수 없다.
+- `상품 목록(find product list)`을 조회할 수 있다.
+
+### `상품 등록하기(create product)` 정책
+- `상품 가격(product price)`이 0원 이상이고, `상품 이름(product name)`에 비속어가 포함되지 않은 경우 상품(product)을 등록할 수 있다.
+
+### `상품 가격 변경하기(change product price)` 정책
+- `상품 가격(product price)`이 0원 이상인 경우에만 변경할 수 있다.
+- 가격 변경 후 `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 금액의 합보다 높으면 `메뉴(menu)`가 숨겨진다.
+
+---
+
+## `메뉴 그룹 (menu group)`
+- `메뉴 그룹(menu group)`은 여러 개의 `메뉴(menu)`를 포함한다.
+- `메뉴 그룹 목록(find menu group list)`을 조회할 수 있다.
+
+### `메뉴 그룹 등록하기(create menu group)` 정책
+- `메뉴 그룹 이름(menu group name)`이 비어 있지 않은 경우 `메뉴 그룹(menu group)`을 등록할 수 있다.
+
+---
+
+## `메뉴 (menu)`
+- `메뉴(menu)`는 `메뉴 가격(menu price)`, `메뉴 상품(menu product)`, `메뉴 그룹(menu group)`, `메뉴 노출 상태(display menu)`를 가진다.
+- `메뉴 가격(menu price)`은 0원 이상이어야 한다.
+- `메뉴 목록(find menu list)`을 조회할 수 있다.
+
+### `메뉴 등록하기(create menu)` 정책
+- 하나 이상의 `상품(product)`이 포함된 경우에만 `메뉴(menu)`를 등록할 수 있다.
+- `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 가격 합보다 크거나 같아야 등록이 가능하다.
+
+### `메뉴 가격 변경하기(change menu price)` 정책
+- `메뉴 가격(menu price)`이 0원 이상인 경우에만 변경할 수 있다.
+- 변경된 가격이 `메뉴 상품(menu product)` 가격 합보다 크지 않아야 한다.
+
+### `메뉴 노출하기(display menu)` 정책
+- `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 가격 합보다 높은 경우 `메뉴(menu)`가 숨겨진다.
+- `메뉴(menu)`를 고객이 볼 수 있도록 설정할 수 있다.
+
+### `메뉴 숨기기(hide menu)` 정책
+- `메뉴(menu)`를 고객이 볼 수 없도록 설정할 수 있다.
+
+---
+
+## `주문 테이블 (order table)`
+- `주문 테이블(order table)`은 `주문 테이블 상태(order table status)`, `방문 손님 수(number of guests)`를 가진다.
+- `방문 손님 수(number of guests)`는 0 이상이어야 한다.
+- `주문 테이블 목록(find order table list)`을 조회할 수 있다.
+
+### `주문 테이블 등록하기(create order table)` 정책
+- `주문 테이블 이름(order table name)`이 비어 있지 않은 경우 `주문 테이블(order table)`을 등록할 수 있다.
+
+### `빈 테이블에 앉기(sit order table)` 정책
+- `주문 테이블(order table)`을 사용 중 상태로 변경할 수 있다.
+
+### `주문 테이블 치우기(clear order table)` 정책
+- 완료되지 않은 `주문(order)`이 있는 경우 `주문 테이블 치우기(clear order table)`로 설정할 수 없다.
+
+### `방문 손님 수 변경하기(change number of guests)` 정책
+- `방문 손님 수(number of guests)`가 0 이상인 경우에만 변경할 수 있다.
+
+---
+
+## `주문 (order)`
+- `주문(order)`은 `주문 유형(order type)`, `주문 상태(order status)`, `주문 항목(order item)`을 가진다.
+- `주문 목록(find order list)`을 조회할 수 있다.
+
+### `주문 등록(create order)`하기 정책
+- 하나 이상의 `메뉴(menu)`가 포함된 경우에만 `주문(order)`을 등록할 수 있다.
+- `숨겨진 메뉴(hide menu)`를 주문할 수 없다.
+
+### 주문 상태 (order status) 변경 정책
+- `대기(waiting)` 상태의 주문만 `주문 수락(accepted)`할 수 있다.
+- `주문 수락(accepted)`된 주문만 `주문 제공(served)`할 수 있다.
+- `주문 제공(served)`된 주문만 `배달 중(delivering)`으로 변경할 수 있다.
+- `배달 중(delivering)`인 주문만 `배달 완료(delivered)`할 수 있다.
+- `배달 완료(delivered)`된 주문만 `주문 완료(completed)`할 수 있다.
+- `포장 주문(take out order)` 및 `매장 주문(table order)`의 경우 `주문 제공(served)`된 주문만 `주문 완료(completed)`할 수 있다.
+
+---
+
+## `주문 유형 (order type)`
+
+### `배달 주문 (delivery order)`
+- `배달 주문(delivery order)`은 `배달 주소(delivery address)`를 가진다.
+- `배달 대행사 호출하기(call delivery agency)`를 통해 배달을 요청할 수 있다.
+- `배달 주소(delivery address)`는 비워 둘 수 없다.
+
+### `포장 주문 (takeout order)`
+
+### `매장 주문 (table order)`
+- `매장 주문(table order)`은 `주문 테이블(order table)`을 가진다.
+- `주문 테이블 상태(order table status)`가 사용 중이어야 한다.
+
+
+
+
+```mermaid
+sequenceDiagram
+    participant 직원 as 직원
+    participant 상품 as 상품
+
+    직원->>+상품: 상품 등록 요청 (상품 이름, 가격)
+    상품->>상품: 상품 이름 검증 (비속어 포함 여부)
+    상품->>상품: 상품 가격 검증 (0원 이상)
+    
+    alt 상품 이름이 비속어 포함 또는 가격이 0원 미만
+        상품-->>직원: 상품 등록 실패 (잘못된 입력)
+    else
+        상품->>+상품: 상품 정보 저장
+        상품-->>직원: 상품 등록 완료
+    end
+```
+------------
+```mermaid
+sequenceDiagram  
+ participant 고객 as 고객  
+ participant 주문 as 주문   
+ participant 직원 as 직원  
+ participant 배달대행 as 배달 대행사  
+
+ 고객->>+주문: 주문 요청 (메뉴 선택, 배달/포장/매장)  
+ 주문-->>고객: 주문 대기 상태  
+  
+ 직원->>+주문: 주문 수락 (accepted)  
+ 주문-->>고객: 주문 수락  
+  
+ 직원->>+주문: 주문 제공 (served)  
+ 주문-->>고객: 주문 제공  
+  
+ 주문-->>배달대행: 배달 요청  
+ 배달대행-->>주문: 배달 중 (delivering)  
+ 배달대행->>+주문: 배달 완료 (delivered)  
+ 주문-->>고객: 주문 배달 완료  
+
+ 고객->>+주문: 주문 완료  
+ 주문-->>고객: 주문 완료
+ ```
