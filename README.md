@@ -235,6 +235,26 @@ docker compose -p kitchenpos up -d
 
 ### 주문 (`Order`)
 
+```mermaid
+---
+title: 컨텍스트 맵
+---
+flowchart LR
+    ShopOwner[점주]
+    Customer[고객]
+    Rider[라이더]
+
+    MenuContext[메뉴 컨텍스트]
+    OrderContext[주문 컨텍스트]
+    Agency[배달 대행사]
+
+    Customer -- "메뉴 주문 요청" --> OrderContext
+    ShopOwner -- "테이블 관리/주문 수락" --> OrderContext
+    OrderContext -- "uses" --> MenuContext
+    OrderContext -- "배달 주문 요청" --> Agency
+    Rider -- "배달 수행" --> OrderContext
+```
+
 **주문 테이블(`Order Table`)**
 
 * 프로퍼티
@@ -279,10 +299,10 @@ docker compose -p kitchenpos up -d
 
 * 프로퍼티
   * 주문 유형 (`Order Type`)
-    * 주문 유형은 필수값이다.
+    * 주문 유형은 매장 주문(`Eat In Order`)이다.
   * 주문 상태 (`Order Status`)
     * 주문 상태는 필수값이다.
-    * 기본값은 대기이다.
+    * 기본값은 대기(`Waiting`)이다.
   * 주문 항목 목록 (`Order Line Items`)
   * 주문 일시 (`Order DateTime`)
     * 주문 일시는 필수값이다.
@@ -290,43 +310,51 @@ docker compose -p kitchenpos up -d
     * 주문 테이블은 필수값이다.
 * 유즈케이스
   * 매장에서 메뉴를 주문한다.
+    * 주문 상태는 대기(`Waiting`)이다.
   * 메뉴 주문을 수락한다.
-    * 대기인 주문만 수락할 수 있다.
+    * 대기(`Waiting`)인 주문만 수락할 수 있다.
+    * 주문 상태를 수락(`Accepted`)으로 변경한다.
   * 주문받은 음식을 완성하여 주문 테이블에 제공한다.
-    * 수락된 주문만 제공할 수 있다.
+    * 수락(`Accepted`)된 주문만 제공할 수 있다.
+    * 주문 상태를 제공(`Served`)으로 변경한다.
   * 매장 주문을 완료한다.
-    * 제공된 주문만 완료할 수 있다.
+    * 제공(`Served`)된 주문만 완료할 수 있다.
+    * 주문 상태를 완료(`Completed`)로 변경한다.
     * 주문 테이블을 정리해야 한다.
 
 **포장 주문(`Take Out Order`)**
 
 * 프로퍼티
   * 주문 유형 (`Order Type`)
-    * 주문 유형은 필수값이다.
+    * 주문 유형은 포장 주문(`Take Out Order`)이다.
   * 주문 상태 (`Order Status`)
     * 주문 상태는 필수값이다.
-    * 기본값은 대기이다.
+    * 기본값은 대기(`Waiting`)이다.
   * 주문 항목 목록 (`Order Line Items`)
     * 적어도 한 개의 주문 항목을 가져야 한다.
   * 주문 일시 (`Order DateTime`)
     * 주문 일시는 필수값이다.
 * 유즈케이스
   * 포장으로 메뉴를 주문한다.
+    * 주문 상태는 대기(`Waiting`)이다.
   * 포장 주문을 수락한다.
-    * 대기인 주문만 수락할 수 있다.
+    * 대기(`Waiting`)인 주문만 수락할 수 있다.
+    * 주문 상태를 수락(`Accepted`)으로 변경한다.
   * 고객이 주문한 음식을 완성하여 고객에게 제공한다.
-    * 수락된 주문만 제공할 수 있다.
+    * 수락(`Accepted`)된 주문만 제공할 수 있다.
+    * 주문 상태를 제공(`Served`)으로 변경한다.
   * 포장 주문을 완료한다.
-    * 제공된 주문만 완료할 수 있다.
+    * 제공(`Served`)된 주문만 완료할 수 있다.
+    * 주문 상태를 완료(`Completed`)로 변경한다.
 
 **배달 주문(`Delivery Order`)**
 
 * 프로퍼티
   * 주문 유형 (`Order Type`)
-    * 주문 유형은 필수값이다.
+    * 주문 유형은 배달 주문(`Delivery Order`)이다.
   * 주문 상태 (`Order Status`)
     * 주문 상태는 필수값이다.
-    * 기본값은 대기이다.
+    * 기본값은 대기(`Waiting`)이다.
   * 주문 항목 목록 (`Order Line Items`)
     * 적어도 한 개의 주문 항목을 가져야 한다.
   * 주문 일시 (`Order DateTime`)
@@ -334,19 +362,44 @@ docker compose -p kitchenpos up -d
   * 배달 주소 (`Delivery Address`)
 * 유즈케이스
   * 배달로 메뉴를 주문한다.
+    * 주문 상태는 대기(`Waiting`)이다.
   * 배달 주문을 수락한다.
     * 배달 대행사에 배달을 요청해야 한다.
-    * 대기인 주문만 수락할 수 있다.
-    * 주문 상태를 수락으로 변경한다.
+    * 대기(`Waiting`)인 주문만 수락할 수 있다.
+    * 주문 상태를 수락(`Accepted`)으로 변경한다.
   * 고객이 주문한 음식을 완성하여 라이더에게 제공한다.
-    * 수락된 주문만 제공할 수 있다.
-    * 주문 상태를 제공으로 변경한다.
+    * 수락(`Accepted`)된 주문만 제공제공할 수 있다.
+    * 주문 상태를 제공(`Served`)으로 변경한다.
   * 라이더가 메뉴를 배달한다.
-    * 제공된 주문만 배달할 수 있다.
-    * 주문 상태를 배달 중으로 변경한다.
+    * 제공(`Served`)된 주문만 배달할 수 있다.
+    * 주문 상태를 배달 중(`Delivering`)으로 변경한다.
   * 라이더는 고객에게 메뉴를 전달한다.
-    * 배달 중인 주문만 배달 완료할 수 있다.
-    * 주문 상태를 배달 완료로 변경한다.
+    * 배달 중(`Delivering`)인 주문만 배달 완료할 수 있다.
+    * 주문 상태를 배달 완료(`Delivered`)로 변경한다.
   * 배달 주문을 완료한다.
-    * 배달 완료인 주문만 완료할 수 있다.
-    * 주문 상태를 완료로 변경한다.
+    * 배달 완료(`Delivered`)인 주문만 완료할 수 있다.
+    * 주문 상태를 완료(`Completed`)로 변경한다.
+
+```mermaid
+---
+title: 주문 상태 다이어그램
+---
+flowchart LR
+    OrderCreated[주문 생성]
+    Accepted[주문 수락]
+    Served[주문 제공]
+    Delivering[배달 중]
+    Delivered[배달 완료]
+    EatInCompleted[주문 완료]
+    TakeOutCompleted[주문 완료]
+    DeliveryCompleted[주문 완료]
+    
+    OrderCreated --> Accepted
+    Accepted --> Served
+    Served -- "매장 주문" --> EatInCompleted
+    Served -- "포장 주문" --> TakeOutCompleted
+    
+    Served -- "배달 주문" --> Delivering
+    Delivering --> Delivered
+    Delivered --> DeliveryCompleted
+```
