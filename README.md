@@ -341,10 +341,51 @@ graph TD
 ```
 
 #### 배달 주문
+```mermaid
+%% Sequence Diagram: 배달 주문 프로세스
+sequenceDiagram
+    actor 손님
+    participant 주문
+    participant 매장
+    participant 배달 대행사
 
+    손님->>+주문: 주문 대기 (배달 주문 요청)
+    주문->>+매장: 주문 접수
+    매장->>+배달 대행사: 배달 요청
+    배달 대행사->>+매장: 배달원 할당
+    매장->>+배달 대행사: 배달 중
+    배달 대행사->>+손님: 배달 완료
+    손님->>+주문: 주문 완료
+```
 
-#### ㅍ장 주문
+#### 포장 주문
+```mermaid
+%% Sequence Diagram: 포장 주문 프로세스
+sequenceDiagram
+    actor 손님
+    participant 주문
+    participant 매장
 
+    손님->>+주문: 주문 대기 (포장 주문 요청)
+    주문->>+매장: 주문 수락
+    매장->>+손님: 포장 주문 제공
+    손님->>+주문: 주문 완료
+```
 
 #### 매장 주문
+
+```mermaid
+%% Sequence Diagram: 매장 주문 프로세스
+sequenceDiagram
+    actor 손님
+    participant 주문
+    participant 매장
+
+    손님->>+주문: 주문 대기 (매장 주문 요청)
+    주문->>+매장: 주문 수락
+    매장->>+손님: 매장 주문 제공
+    매장->>+주문 테이블: 테이블 정리 요청
+    주문 테이블->>+매장: 빈 테이블 설정
+    매장->>+주문: 주문 완료
+```
 
