@@ -254,13 +254,14 @@ docker compose -p kitchenpos up -d
 
 ```mermaid
 stateDiagram-v2
-    state 배달주문 {
+    state 배달주문_상태_다이어그램 {
         direction LR
-        접수대기 --> 접수
-        접수 --> 서빙
-        서빙 --> 배달
-        배달 --> 배달완료
-        배달완료 --> 완료
+        [*] --> WAITING : 등록
+        WAITING --> ACCEPTED : 접수
+        ACCEPTED --> SERVED : 서빙
+        SERVED --> DELIVERING : 배달
+        DELIVERING --> DELIVERED : 배달완료
+        DELIVERED --> COMPLETED : 완료
     }
 ```
 
@@ -284,11 +285,12 @@ stateDiagram-v2
 
 ```mermaid
 stateDiagram-v2
-    state 포장주문 {
+    state 포장주문_상태_다이어그램 {
         direction LR
-        접수대기 --> 접수
-        접수 --> 서빙
-        서빙 --> 완료
+        [*] --> WAITING : 등록
+        WAITING --> ACCEPTED : 접수
+        ACCEPTED --> SERVED : 서빙
+        SERVED --> COMPLETED : 완료
     }
 ```
 
@@ -314,10 +316,11 @@ stateDiagram-v2
 
 ```mermaid
 stateDiagram-v2
-    state 매장주문 {
+    state 매장주문_상태_다이어그램 {
         direction LR
-        접수대기 --> 접수
-        접수 --> 서빙
-        서빙 --> 완료
+        [*] --> WAITING : 등록
+        WAITING --> ACCEPTED : 접수
+        ACCEPTED --> SERVED : 서빙
+        SERVED --> COMPLETED : 완료
     }
 ```
