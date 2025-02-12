@@ -1,6 +1,6 @@
 package kitchenpos.application;
 
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.shared.port.out.PurgomalumClient;
 
 import java.util.Arrays;
 import java.util.List;
