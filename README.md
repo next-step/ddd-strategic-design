@@ -216,6 +216,109 @@ docker compose -p kitchenpos up -d
 
 ### 모델링
 
+
+# Kitchen POS System
+
+레스토랑의 주문과 메뉴를 관리하는 POS 시스템입니다.
+
+## 시스템 플로우 차트
+
+#### 주문 프로세스 플로우
+```mermaid
+graph TD
+  subgraph Customer["고객 Flow"]
+    A[고객] --> B{주문 유형 선택}
+    B -->|배달 주문 flow| C1[배달 주문]
+    B -->|포장 주문 flow| C2[포장 주문]
+    B -->|매장 식사 flow| C3[테이블 착석]
+    C3 --> C4[매장 주문]
+
+    C1 --> D[메뉴 선택]
+    C2 --> D
+    C4 --> D
+
+    D --> E[주문 요청]
+  end
+
+  subgraph Owner["업주 Flow"]
+    G[주문 접수] --> H{주문 타입 확인}
+
+    H -->|배달 주문| J1[주문 수락]
+
+    H -->|포장 주문| J2[주문 수락]
+
+    H -->|매장식사| J3[주문 수락]
+
+    J1 & J2 & J3 --> K[메뉴 준비]
+
+    K -->|배달 주문| L1[라이더 픽업]
+    L1 --> M1[배달 완료]
+
+    K -->|포장 주문| L2[포장 완료]
+    L2 --> M2[고객 수령]
+
+    K -->|매장식사| L3[서빙]
+    L3 --> M3[식사 완료]
+  end
+
+  subgraph Rider["라이더 대행사 가상 Flow"]
+    N[대행사] --> O[라이더 배정]
+    O --> P[라이더 가게 도착]
+    P --> Q[라이더 음식 수령]
+    Q --> R[라이더 고객에게 배달 완료]
+  end
+
+  E -->|주문 전송| G
+  J1 -->|배달 요청| N
+  R -->|배달 완료 처리| M1
+```
+
+#### 메뉴 관리 프로세스 플로우
+
+```mermaid
+graph TD
+    subgraph ProductManagement["상품 관리"]
+        P1[상품 관리 시작] --> P2[상품 등록]
+        P2 --> P3[상품 이름 설정]
+        P3 --> P4[상품 가격 설정]
+        P4 --> P5[상품 등록 완료]
+
+        P5 --> P6{가격 변경 필요?}
+        P6 -->|Yes| P7[상품 가격 수정]
+        P7 --> P5
+        P6 -->|No| P8[상품 관리 종료]
+    end
+
+    subgraph MenuGroupManagement["메뉴 그룹 관리"]
+        G1[메뉴 그룹 관리 시작] --> G2[메뉴 그룹 등록]
+        G2 --> G3[그룹 이름 설정<br/>ex: 덮밥, 메인디쉬, 음료]
+        G3 --> G4[메뉴 그룹 등록 완료]
+    end
+
+    subgraph MenuManagement["메뉴 관리"]
+        M1[메뉴 관리 시작] --> M2[신규 메뉴 등록]
+        M2 --> M3[메뉴 이름 설정]
+        M3 --> M4[메뉴 그룹 선택]
+        M4 --> M5[구성 상품 선택]
+        M5 --> M6[메뉴 가격 설정]
+        M6 --> M7[메뉴 등록 완료]
+
+        M7 --> M8{메뉴 노출 여부}
+        M8 -->|노출| M9[메뉴 노출 처리]
+        M8 -->|숨김| M10[메뉴 숨김 처리]
+
+        M9 & M10 --> M11{수정 필요?}
+        M11 -->|가격 수정| M12[메뉴 가격 변경]
+        M11 -->|노출 상태 변경| M8
+        M11 -->|No| M13[메뉴 관리 종료]
+        M12 --> M7
+    end
+
+    P5 -.->|등록된 상품| M5
+    G4 -.->|등록된 그룹| M4
+  ```
+
+
 #### 도메인 모델
 ![kitchen pos](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/min-queue/ddd-legacy/step-2/uml/class-diagram.puml)
 
