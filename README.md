@@ -261,7 +261,7 @@ graph LR
 행위
 * `Product` 등록은 `상품 등록 정책`을 만족시켜야 한다
 * `Product Price`를 변경할 수 있다.
-* `Product Price`를 변경할 땐 0원 이상 입력하여야 한다.
+  * `Product Price`를 변경할 땐 0원 이상 입력하여야 한다.
 * `Product List`를 조회할 수 있다
 
 ### MenuGroup : 메뉴 그룹 관리
@@ -290,9 +290,10 @@ graph LR
 행위
 * `Menu` 등록은 `메뉴 등록 정책`을 만족시켜야 한다
 * `Menu Price`를 변경할 수 있다.
-* `Menu Price`를 변경할 땐 0원 이상 입력하여야 한다.
-* `Menu Price`를 변경하여 `Menu Products`의 `Total Product Price` 보다 크면 `Menu`는 `Hide Menu`가 된다.
-* `Menu`는 `Display Menu` 또는 `Hide Menu`로 변경할 수 있다
+  * `Menu Price`를 변경할 땐 0원 이상 입력하여야 한다.
+  * `Menu Price`가 `Menu Products`의 `Total Product Price` 보다 크면 `Menu`는 `Hide Menu`가 된다.
+* `Menu`는 `Display Menu`로 변경할 수 있다
+* `Menu`는 `Hide Menu`로 변경할 수 있다
 * `Menu List`를 조회할 수 있다
 
 ### Eet In Order : 매장 식사 주문 관리
@@ -309,10 +310,10 @@ graph LR
 
 행위
 * `Order Table` 등록은 `주문 테이블 등록 정책`을 만족시켜야 한다
-* `Order Table`을 처음 등록할때는 `Empty Table`로 등록한다
+  * `Order Table`을 처음 등록할때는 `Empty Table`로 등록한다
 * `Order Table`의 `Number of Guests`를 변경할 수 있다
-* `Order Table`의 `Number of Guests`를 변경할 땐 0명 이상 입력해야 한다
-* `Empty Table`은 `Number of Guests`를 변경할 수 없다.
+  * `Order Table`의 `Number of Guests`를 변경할 땐 0명 이상 입력해야 한다
+  * `Empty Table`은 `Number of Guests`를 변경할 수 없다.
 * `Order Table List`을 조회할 수 있다
 * `Eet In Order`을 생성하기 위해서는 `매장 식사 주문 생성 정책`을 만족시켜야 한다
 * `Eet In Order`을 생성하면 `Order Status`는 `Waiting`이 된다 
