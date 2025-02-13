@@ -283,4 +283,8 @@ docker compose -p kitchenpos up -d
 - `비속어 검증 시스템`은 단어가 `비속어`인지 검증한다.
 - `배달 기사`는 `배달 주문`을 통해 `배달 주소`를 받아 배달을 진행한다.
 
+#### 8. 손님
+- `손님`은 `주문`을 요청한다.
+- `손님`은 `매장 테이블`에 `앉는다`.
+
 ![modeling.png](src/main/resources/images/modeling.png)
