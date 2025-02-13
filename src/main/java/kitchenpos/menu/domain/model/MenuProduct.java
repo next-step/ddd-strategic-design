@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 import java.util.UUID;
+import kitchenpos.product.domain.model.Product;
 
 @Table(name = "menu_product")
 @Entity
