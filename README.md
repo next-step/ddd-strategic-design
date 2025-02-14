@@ -155,39 +155,66 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### Product
+#### 속성
 - `Product`는 식별자와 `price`, `name`을 가진다.
+#### 공통 정책
 - `Product`의 `name`은 필수값이고, `PurgomalumClient`를 통해 비속어가 포함되어 있지 않은지 확인한다.
 - `Product`의 `price`는 0원 이상이어야 한다.
+#### 기능
+- `Product`를 등록
+- `Product`를 전체조회
 - `Product`의 `price`를 변경
-  - `Product`를 포함한 `Menu`들 중  `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하는 Menu는 `Not Displayed`된다
+  - `Product`를 포함한 `Menu`들 중  `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하는 `Menu`는 `Not Displayed`된다
+
 ### MenuGroup
+#### 속성
 - `MenuGroup`는 식별자와 `name`을 가진다.
+#### 공통 정책
 - `MenuGroup`의 `name`은 필수값이다.
+#### 기능
+- `MenuGroup`를 등록
+- `MenuGroup`를 전체조회
+
 ### Menu
+#### 속성
 - `Menu`는 식별자와 `MenuGroup`, `price`, `name`, `displayed`, `MenuProduct`를 가진다.
+- `MenuProduct`은 `seq`와 `quantity`를 가진다.
+#### 공통 정책
 - `Menu`의 `name`은 필수값이고, `PurgomalumClient`를 통해 비속어가 포함되어 있지 않은지 확인한다.
-- `Menu`는 1개의 `MenuProduct`를 반드시 가진다
+- `Menu`는 1개의 `MenuGroup`에 반드시 속한다.
+- `Menu`의 `MenuProduct`는 1개 이상이어야 한다.
 - `MenuProduct`의 `quantity`는 0개 이상이어야 한다.
-- `Menu` 생성
+#### 기능
+- `Menu`를 전체조회
+- `Menu`를 생성
   - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 `Menu`는 생성되지 못한다
-- `Price` 변경
+- `Menu`의 `price`를 변경
   - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 `price`는 변경되지 못한다
+- `Menu`를 `Displayed`한다
+  - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 `Displayed`할 수 없다
+- `Menu`를 `NotDisplayed`한다
+
 ### OrderTable
+#### 속성
 - `OrderTable`은 식별자와 `name`, `numberOfGuests`, `occupied`를 가진다.
+#### 공통 정책
 - `OrderTable`의 초기값은 `numberOfGuests`는 0명, `occupied`는 `Not Occupied`이다.
 - `OrderTable`의 `name`은 필수값이다.
-- `OrderTable`의 `Occupied` 변경
-  - `OrderTable`을 `Occupied`할 때 제약은 없다
-  - `OrderTable`에 완료되지 않은 `Order`가 존재하면 `NotOccupied` 할 수 없다
+#### 기능
+- `OrderTable`를 `Occupied`한다
+- `OrderTable`를 `NotOccupied`한다
+  - `OrderTable`에 `complete`되지 않은 `Order`가 존재하면 `NotOccupied` 할 수 없다
 - `OrderTable`의 `numberOfGuests` 변경
-  - `OrderTable`이 `Occupied`일 때만 변경할 수 있다
+  - `OrderTable`이 `Occupied`일 때만 `numberOfGuests`를 변경할 수 있다
 
 ### Order
-- `Order`는 식별자와 `orderType`, `orderStatus`, `orderMenu`를 가진다. 
-- `EatInOrder`는 `OrderTable`를 가진다
-- `DeliveryOrder`는 `deliveryAddress`를 가진다
-- `TakeOutOrder`는 존재한다
-
+#### 속성
+- `Order`는 식별자와 `orderType`, `orderStatus`, `orderMenu`를 가진다.
+- `OrderMenu`는 `seq`, `price`, `quantity`를 가진다.
+- `Order`의 유형으로는 `EatInOrder`, `DeliveryOrder`, `TakeOutOrder`가 있다
+  - `EatInOrder`는 `OrderTable`를 추가적으로 가진다
+  - `DeliveryOrder`는 `deliveryAddress`를 추가적으로 가진다
+#### 공통 정책
 - `Order`를 생성하면 `Waiting`이 된다
   - `EatInOrder` 생성
     - `EatInOrder`는 `Occupied`인 `OrderTable`에 등록해야한다
@@ -197,11 +224,18 @@ docker compose -p kitchenpos up -d
     - `DeliveryOrder`의 `deliveryAddress`는 필수값이다
   - `TakeOutOrder` 생성
     - `TakeOutOrder`의 `OrderMenu`는 `quantity`가 0개 이상이어야 한다
-
+#### 기능
 - `Order`를 접수하면 `Accepted`로 변경한다
+  - `Order`는 `Waiting`일 때만 `Accepted`로 변경할 수 있다
   - `DeliveryOrder`는 `DeliveryAgency`를 호출한다
 - `Order`를 서빙하면 `Served`로 변경한다
+  - `Order`는 `Accepted`일 때만 `Served`로 변경할 수 있다 
 - `DeliveryOrder`의 배달이 시작되면 `Delivering`로 변경한다
+  - `DeliveryOrder`가 `Served`일 때만 `Delivering`로 변경할 수 있다 
 - `DeliveryOrder`의 배달이 완료되면 `Delivered`로 변경한다
+  - `DeliveryOrder`가 `Delivering`일 때만 `Delivered`로 변경할 수 있다 
 - `Order`를 완료하면 `Complete`로 변경한다
+  - `EatInOrder`가 `Served`일 때만 `Complete`로 변경할 수 있다
   - `EatInOrder`가 등록된 `OrderTable`의 모든 `Order`가 `complete`되면, `OrderTable`을 `NotOccupied`로 변경하고 `numberOfGuests`를 0명으로 변경한다
+  - `TakeOutOrder`가 `Served`일 때만 `Complete`로 변경할 수 있다
+  - `DeliveryOrder`가 `Delivered`일 때만 `Complete`로 변경할 수 있다
