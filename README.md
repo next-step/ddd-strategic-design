@@ -155,52 +155,53 @@ docker compose -p kitchenpos up -d
 ## 모델링
 
 ### Product
-- Product는 식별자와 price, name을 가진다.
-- Product의 name은 필수값이고, PurgomalumClient를 통해 비속어가 포함되어 있지 않은지 확인한다.
-- Product의 price를 변경
-  - Product를 포함한 Menu들 중  `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하는 Menu는 `Not Displayed`된다
+- `Product`는 식별자와 `price`, `name`을 가진다.
+- `Product`의 `name`은 필수값이고, `PurgomalumClient`를 통해 비속어가 포함되어 있지 않은지 확인한다.
+- `Product`의 `price`는 0원 이상이어야 한다.
+- `Product`의 `price`를 변경
+  - `Product`를 포함한 `Menu`들 중  `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하는 Menu는 `Not Displayed`된다
 ### MenuGroup
-- MenuGroup는 식별자와 name을 가진다.
-- MenuGroup의 name은 필수값이다.
+- `MenuGroup`는 식별자와 `name`을 가진다.
+- `MenuGroup`의 `name`은 필수값이다.
 ### Menu
-- Menu는 식별자와 MenuGroup, price, name, displayed, MenuProducts를 가진다.
-- Menu의 name은 필수값이고, PurgomalumClient를 통해 비속어가 포함되어 있지 않은지 확인한다.
-- Menu는 1개의 MenuProduct를 반드시 가진다
-- MenuProduct의 quantity는 0개 이상이어야 한다.
-- Menu 생성
-  - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 Menu는 생성되지 못한다
-- Price 변경
-  - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 price는 변경되지 못한다
+- `Menu`는 식별자와 `MenuGroup`, `price`, `name`, `displayed`, `MenuProduct`를 가진다.
+- `Menu`의 `name`은 필수값이고, `PurgomalumClient`를 통해 비속어가 포함되어 있지 않은지 확인한다.
+- `Menu`는 1개의 `MenuProduct`를 반드시 가진다
+- `MenuProduct`의 `quantity`는 0개 이상이어야 한다.
+- `Menu` 생성
+  - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 `Menu`는 생성되지 못한다
+- `Price` 변경
+  - `MenuPrice <= ProductPrice * MenuProductQuantity`를 만족하지 못하면 `price`는 변경되지 못한다
 ### OrderTable
-- OrderTable은 식별자와 name, numberOfGuests, occupied를 가진다.
-- OrderTable의 초기값은 numberOfGuests는 0명, occupied는 Not Occupied이다.
-- OrderTable의 name은 필수값이다.
-- OrderTable Occupied 변경
-  - OrderTable을 Occupied할 때 제약은 없다
-  - OrderTable에 완료되지 않은 Order가 존재하면 NotOccupied 할 수 없다
-- OrderTable의 numberOfGuests 변경
-  - OrderTable이 Occupied일 때만 변경할 수 있다
+- `OrderTable`은 식별자와 `name`, `numberOfGuests`, `occupied`를 가진다.
+- `OrderTable`의 초기값은 `numberOfGuests`는 0명, `occupied`는 `Not Occupied`이다.
+- `OrderTable`의 `name`은 필수값이다.
+- `OrderTable`의 `Occupied` 변경
+  - `OrderTable`을 `Occupied`할 때 제약은 없다
+  - `OrderTable`에 완료되지 않은 `Order`가 존재하면 `NotOccupied` 할 수 없다
+- `OrderTable`의 `numberOfGuests` 변경
+  - `OrderTable`이 `Occupied`일 때만 변경할 수 있다
 
 ### Order
-- Order는 식별자와 orderType, orderStatus, orderMenus를 가진다. 
-- EatInOrder는 OrderTable를 가진다
-- DeliveryOrder는 deliveryAddress를 가진다
-- TakeOutOrder는 존재한다
+- `Order`는 식별자와 `orderType`, `orderStatus`, `orderMenu`를 가진다. 
+- `EatInOrder`는 `OrderTable`를 가진다
+- `DeliveryOrder`는 `deliveryAddress`를 가진다
+- `TakeOutOrder`는 존재한다
 
-- Order를 생성하면 Waiting가 된다
-  - EatInOrder 생성
-    - EatInOrder는 Occupied인 OrderTable에 등록해야한다
-    - EatInOrder는 OrderMenus의 quantity 제약이 없다
-  - DeliveryOrder 생성
-    - DeliveryOrder는 OrderMenus의 quantity가 0개 이상이어야 한다
-    - DeliveryOrder는 deliveryAddress가 필수값이다
-  - TakeOutOrder 생성
-    - TakeOutOrder는 OrderMenus의 quantity가 0개 이상이어야 한다
+- `Order`를 생성하면 `Waiting`이 된다
+  - `EatInOrder` 생성
+    - `EatInOrder`는 `Occupied`인 `OrderTable`에 등록해야한다
+    - `EatInOrder`의 `OrderMenu`는 `quantity` 제약이 없다
+  - `DeliveryOrder` 생성
+    - `DeliveryOrder`의 `OrderMenu`는 `quantity`가 0개 이상이어야 한다
+    - `DeliveryOrder`의 `deliveryAddress`는 필수값이다
+  - `TakeOutOrder` 생성
+    - `TakeOutOrder`의 `OrderMenu`는 `quantity`가 0개 이상이어야 한다
 
-- Order를 접수하면 Accepted로 변경한다
-  - DeliveryOrder는 `DeliveryAgency`를 호출한다
-- Order를 서빙하면 Served로 변경한다
-- DeliveryOrder의 배달이 시작되면 Delivering로 변경한다
-- DeliveryOrder의 배달이 완료되면 Delivered로 변경한다
-- Order를 완료하면 Complete로 변경한다
-  - EatInOrder는 등록된 OrderTable의 모든 Order가 완료된 상태면, OrderTable을 NotOccupied로 변경하고 numberOfGuests를 0명으로 변경한다
+- `Order`를 접수하면 `Accepted`로 변경한다
+  - `DeliveryOrder`는 `DeliveryAgency`를 호출한다
+- `Order`를 서빙하면 `Served`로 변경한다
+- `DeliveryOrder`의 배달이 시작되면 `Delivering`로 변경한다
+- `DeliveryOrder`의 배달이 완료되면 `Delivered`로 변경한다
+- `Order`를 완료하면 `Complete`로 변경한다
+  - `EatInOrder`가 등록된 `OrderTable`의 모든 `Order`가 `complete`되면, `OrderTable`을 `NotOccupied`로 변경하고 `numberOfGuests`를 0명으로 변경한다
