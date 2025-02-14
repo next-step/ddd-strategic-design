@@ -228,6 +228,7 @@ docker compose -p kitchenpos up -d
 - `Order`를 수락하면 `Accepted`로 변경한다
   - `Order`는 `Waiting`일 때만 `Accepted`로 변경할 수 있다
   - `DeliveryOrder`는 `DeliveryAgency`를 호출한다
+    - `Order`는 `DeliveryAgency`에 `OrderMenu들의 Quantity합`과 `deliveryAddress`를 제공한다
 - `Order`를 서빙하면 `Served`로 변경한다
   - `Order`는 `Accepted`일 때만 `Served`로 변경할 수 있다 
 - `DeliveryOrder`의 배달이 시작되면 `Delivering`로 변경한다
