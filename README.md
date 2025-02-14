@@ -138,6 +138,7 @@ docker compose -p kitchenpos up -d
 |---------------|-----------------------------------------------------|----------------------------------|
 | 주문            | order                                               | 고객이 배달로 주문한 상품정보를 나타낸다.          |
 | 주문 종류(배달)     | DELIVERY                                            | 배달 주문 종류.                        |
+| 주문 상태 | Order Status                                       | 주문의 상태를 나타낸다.                  |
 | 주문 상태 흐름      | WAITING, ACCEPTED, SERVED, DELIVERING, DELIVERED, COMPLETED | 주문의 상태 흐름                        |
 | 주문 상태(접수 대기중) | WAITING                                             | 배달 주문이 접수완료 되기 전 상태.             |
 | 주문 상태(접수 완료)  | ACCEPTED                                            | 배달 주문이 접수완료된 상태.                 |
@@ -154,6 +155,7 @@ docker compose -p kitchenpos up -d
 | 주문            | Order            | 고객이 포장 주문한 상품정보를 나타낸다.    |
 | 주문 아이템        | Order Line Item  | 고객이 주문한 상품 목록 정보(메뉴, 수량). |
 | 주문 종류(포장)     | TAKEOUT   | 포장 주문 종류.                 |
+| 주문 상태 | Order Status                                       | 주문의 상태를 나타낸다.                  |
 | 주문 상태 흐름      | WAITING,  ACCEPTED, SERVED, COMPLETED | 주문의 상태 흐름                   |
 | 주문 상태(접수 대기중) | WAITING   | 포장 주문이 접수되기 전 상태.         |
 | 주문 상태(접수 완료)  | ACCEPTED  | 포장 주문이 접수 완료된 상태.         |
@@ -168,6 +170,7 @@ docker compose -p kitchenpos up -d
 | 주문 테이블        | order table | 매장에서 주문이 발생하는 테이블               |
 | 주문 종류(매장)     | EAT_IN    | 매장 주문 종류.                       |
 | 방문한 손님 수      | number of guests | 매장 테이블에 앉은 손님 수                 |
+| 주문 상태 | Order Status                                       | 주문의 상태를 나타낸다.                  |
 | 주문 상태 흐름      | WAITING,  ACCEPTED, SERVED, COMPLETED | 주문의 상태 흐름                  |
 | 주문 상태(접수 대기중) | WAITING   | 고객이 주문을 요청 한 상태                 |
 | 주문 상태(접수 완료)  | ACCEPTED  | 고객의 주문이 접수 완료된 상태.              |
@@ -175,3 +178,45 @@ docker compose -p kitchenpos up -d
 | 주문 상태(주문 완료)  | COMPLETED | 고객이 식사를 완료하고 `주문테이블`을 떠난 상태     |
 
 ## 모델링
+
+### 상품
+
+- `Product`는 `UUID` `Product Name`, `Product Price`을 가지고 있다.
+- `Product Name`에는 `profanity`가 포함될 수 없다.
+
+### 메뉴
+
+- `Menu Group`은 `UUID`, `Menu Group Name`을 가지고 있다.
+- `Menu`는 `UUID` `Menu Displayed`, `Menu Price`, `Menu Product`, ` Menu Name` 를 가지고 있다.
+- `Menu`는 특정 `MenuGroup`에 속한다.
+- `Menu`의 가격은 `Menu Product`의 금액의 합보다 적거나 같아야 한다.
+- `Menu`의 가격이 `Menu Product`의 금액의 합보다 크면 `Menu Not Displayed`가 된다.
+- `Menu Product`는 가격과 수량을 가진다.
+- `Menu Name`에는 `Profanity`가 포함될 수 없다.
+
+### 매장 주문
+
+- `Order Table `은 `UUID` `Order Table Name`, `Number Of Guests`를 가지고 있다.
+- `Order Table `의 추가 `Order`는 `Order Table`에 쌓이며 모든 `Order`가 완료되면 `Not Occupied`이 된다.
+- `Not Occupied`인 경우 `Number Of Guests`는 0이며 변경할 수 없다.
+- `Order`는 식별자와 `Order Status`, 주문 시간, `Order Line Items`를 가지고 있다.
+- `Menu`가 `Menu Displayed`이며 메뉴 가격과 일치하면 `Order`가 생성한다.
+- `Order`는 접수 대기중 ➜ 접수 완료 ➜ 서빙 완료 ➜ 주문 완료 순서로 진행한다.
+- `Order Line Items`는 가격과 수량을 가지고 있다.
+
+### 배달 주문
+
+- `Order`는 `UUID` `OrderStatus`, 주문 시간, `Delivery Address`, `Order Line Item`를 가진다.
+- `Menu`가 `Menu Displayed`이며 메뉴 가격과 일치하면 `Order`가 생성된다.
+- `Order`는 접수 대기중 ➜ 접수 완료 ➜ 준비 완료 ➜ 배달 중 ➜ 배달 완료 ➜ 주문 완료 순서로 진행된다.
+- `Order`가 접수되면 `Delivery Agent`가 호출된다.
+- `Order Line Item`는 가격과 수량을 가진다.
+- `Order Line Item`의 수량은 1보다 커야 한다.
+
+### 포장 주문
+
+- `Order`는 식별자와 `OrderStatus`, 주문 시간, `OrderLineItems`를 가진다.
+- `Menu`가 `Menu Displayed`이며 메뉴 가격과 일치하면 `Order`가 생성된다.
+- `Order`는 접수 대기중 ➜ 접수 완료 ➜ 서빙 완료 ➜ 주문 완료 순서로 진행된다.
+- `Order Line Item`는 가격과 수량을 가진다.
+- `Order Line Item`의 수량은 1보다 커야 한다.
