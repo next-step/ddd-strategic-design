@@ -1,7 +1,7 @@
-package kitchenpos.order.order.infrastructure.persistence;
+package kitchenpos.order.common.infrastructure.persistence;
 
-import kitchenpos.order.order.model.Order;
-import kitchenpos.order.order.repository.OrderRepository;
+import kitchenpos.order.common.model.Order;
+import kitchenpos.order.common.repository.OrderRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

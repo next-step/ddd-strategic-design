@@ -1,4 +1,4 @@
-package kitchenpos.order.order.ui;
+package kitchenpos.order.common.ui;
 
 import kitchenpos.order.eatin.application.OrderTableService;
 import kitchenpos.order.eatin.model.OrderTable;

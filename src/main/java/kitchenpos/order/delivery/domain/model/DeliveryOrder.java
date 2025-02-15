@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.order.order.model.OrderLineItem;
+import kitchenpos.order.common.model.OrderLineItem;
 
 @Entity
 public class DeliveryOrder {

@@ -1,10 +1,10 @@
-package kitchenpos.order.order.repository;
+package kitchenpos.order.common.repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.order.order.model.Order;
-import kitchenpos.order.order.model.OrderStatus;
+import kitchenpos.order.common.model.Order;
+import kitchenpos.order.common.model.OrderStatus;
 import kitchenpos.order.eatin.model.OrderTable;
 
 public interface OrderRepository {

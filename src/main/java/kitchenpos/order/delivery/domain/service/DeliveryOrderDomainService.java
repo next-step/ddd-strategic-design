@@ -2,7 +2,7 @@ package kitchenpos.order.delivery.domain.service;
 
 import kitchenpos.order.delivery.domain.model.DeliveryOrder;
 import kitchenpos.order.delivery.domain.port.RiderPort;
-import kitchenpos.order.order.model.OrderStatus;
+import kitchenpos.order.common.model.OrderStatus;
 
 public class DeliveryOrderDomainService {
 

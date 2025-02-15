@@ -1,14 +1,14 @@
-package kitchenpos.order.order.application;
+package kitchenpos.order.common.application;
 
 import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.repository.MenuRepository;
-import kitchenpos.order.order.model.Order;
-import kitchenpos.order.order.model.OrderLineItem;
-import kitchenpos.order.order.repository.OrderRepository;
-import kitchenpos.order.order.model.OrderStatus;
+import kitchenpos.order.common.model.Order;
+import kitchenpos.order.common.model.OrderLineItem;
+import kitchenpos.order.common.model.OrderStatus;
+import kitchenpos.order.common.model.OrderType;
+import kitchenpos.order.common.repository.OrderRepository;
+import kitchenpos.order.common.repository.OrderTableRepository;
 import kitchenpos.order.eatin.model.OrderTable;
-import kitchenpos.order.order.repository.OrderTableRepository;
-import kitchenpos.order.order.model.OrderType;
 import kitchenpos.order.delivery.infra.external.KitchenridersClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package kitchenpos.order.order.infrastructure.persistence;
 
 import kitchenpos.order.eatin.model.OrderTable;
-import kitchenpos.order.order.repository.OrderTableRepository;
+import kitchenpos.order.common.repository.OrderTableRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
