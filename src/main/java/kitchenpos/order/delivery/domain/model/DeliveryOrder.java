@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import kitchenpos.order.order.model.OrderLineItem;
-import kitchenpos.order.order.model.OrderStatus;
 
 @Entity
 public class DeliveryOrder {
@@ -39,7 +38,7 @@ public class DeliveryOrder {
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
-    public boolean validateOrderFlowAndFindNextStep(OrderStatus orderStatus) {
+    public boolean validateOrderFlowAndFindNextStep(DeliveryOrderStatus orderStatus) {
         if (orderFlow.validateOrderStatus(orderStatus)) {
             throw new IllegalArgumentException();
         }

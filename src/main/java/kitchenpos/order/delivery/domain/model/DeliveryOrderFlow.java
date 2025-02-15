@@ -1,28 +1,27 @@
 package kitchenpos.order.delivery.domain.model;
 
 import java.util.Arrays;
-import kitchenpos.order.order.model.OrderStatus;
 
 public enum DeliveryOrderFlow {
-    ACCEPTED(OrderStatus.ACCEPTED, OrderStatus.WAITING),
-    SERVED(OrderStatus.SERVED, OrderStatus.ACCEPTED),
-    DELIVERING(OrderStatus.DELIVERING, OrderStatus.SERVED),
-    DELIVERED(OrderStatus.DELIVERED, OrderStatus.DELIVERING),
-    COMPLETED(OrderStatus.COMPLETED, OrderStatus.DELIVERED);
+    ACCEPTED(DeliveryOrderStatus.ACCEPTED, DeliveryOrderStatus.WAITING),
+    SERVED(DeliveryOrderStatus.SERVED, DeliveryOrderStatus.ACCEPTED),
+    DELIVERING(DeliveryOrderStatus.DELIVERING, DeliveryOrderStatus.SERVED),
+    DELIVERED(DeliveryOrderStatus.DELIVERED, DeliveryOrderStatus.DELIVERING),
+    COMPLETED(DeliveryOrderStatus.COMPLETED, DeliveryOrderStatus.DELIVERED);
 
-    private final OrderStatus nextStatus;
-    private final OrderStatus previousStatus;
+    private final DeliveryOrderStatus nextStatus;
+    private final DeliveryOrderStatus previousStatus;
 
-    DeliveryOrderFlow(OrderStatus nextStatus, OrderStatus previousStatus) {
+    DeliveryOrderFlow(DeliveryOrderStatus nextStatus, DeliveryOrderStatus previousStatus) {
         this.nextStatus = nextStatus;
         this.previousStatus = previousStatus;
     }
 
-    public static DeliveryOrderFlow from(OrderStatus status) {
+    public static DeliveryOrderFlow from(DeliveryOrderStatus status) {
         return valueOf(status.name());
     }
 
-    public boolean validateOrderStatus(OrderStatus nextOrderStatus) {
+    public boolean validateOrderStatus(DeliveryOrderStatus nextOrderStatus) {
         DeliveryOrderFlow nextStatus = Arrays.stream(values())
                 .filter(v -> v.nextStatus == nextOrderStatus)
                 .findFirst()
@@ -30,7 +29,7 @@ public enum DeliveryOrderFlow {
         return nextStatus.previousStatus != (this.nextStatus);
     }
 
-    public boolean isRiderNecessary(OrderStatus orderStatus) {
-        return orderStatus == OrderStatus.SERVED;
+    public boolean isRiderNecessary(DeliveryOrderStatus orderStatus) {
+        return orderStatus == DeliveryOrderStatus.SERVED;
     }
 }
