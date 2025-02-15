@@ -17,8 +17,7 @@ public class DeliveryOrderDomainService {
     public void doRide(OrderStatus orderStatus) {
         boolean existsNextStep = deliveryOrder.validateOrderFlowAndFindNextStep(orderStatus);
         if (existsNextStep) {
-            String deliveryAddress = deliveryOrder.getDeliveryAddress();
-            riderPort.requestRider(deliveryOrder, deliveryAddress);
+            riderPort.requestRider(deliveryOrder);
         }
     }
 }

@@ -46,11 +46,11 @@ public class DeliveryOrder {
         return orderFlow.isRiderNecessary(orderStatus);
     }
 
-    public String getDeliveryAddress() {
-        return this.deliveryAddress;
-    }
-
     public UUID getId() {
         return id;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 }

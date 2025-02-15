@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface RiderPort {
 
-    void requestRider(DeliveryOrder order, String deliveryAddress);
+    void requestRider(DeliveryOrder order);
 }

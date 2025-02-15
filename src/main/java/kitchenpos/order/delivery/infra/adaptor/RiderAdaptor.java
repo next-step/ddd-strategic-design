@@ -10,7 +10,7 @@ public class RiderAdaptor implements RiderPort {
     private KitchenridersClient kitchenridersClient;
 
     @Override
-    public void requestRider(DeliveryOrder order, String deliveryAddress) {
-        kitchenridersClient.requestDelivery(order.getId(), BigDecimal.ONE, deliveryAddress);
+    public void requestRider(DeliveryOrder order) {
+        kitchenridersClient.requestDelivery(order.getId(), BigDecimal.ONE, order.getDeliveryAddress());
     }
 }
