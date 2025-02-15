@@ -1,8 +1,8 @@
 package kitchenpos.order.delivery.domain.service;
 
 import kitchenpos.order.delivery.domain.model.DeliveryOrder;
+import kitchenpos.order.delivery.domain.model.DeliveryOrderStatus;
 import kitchenpos.order.delivery.domain.port.RiderPort;
-import kitchenpos.order.common.model.OrderStatus;
 
 public class DeliveryOrderDomainService {
 
@@ -14,7 +14,7 @@ public class DeliveryOrderDomainService {
         this.deliveryOrder = deliveryOrder;
     }
 
-    public void doRide(OrderStatus orderStatus) {
+    public void doRide(DeliveryOrderStatus orderStatus) {
         boolean existsNextStep = deliveryOrder.validateOrderFlowAndFindNextStep(orderStatus);
         if (existsNextStep) {
             riderPort.requestRider(deliveryOrder);
