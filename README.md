@@ -187,9 +187,3 @@ docker compose -p kitchenpos up -d
 - `TableStatus`는 테이블의 사용 상태를 표현한다.
 - `EmptyTable`은 `GuestCount`가 0인 빈 테이블 상태를 표현한다.
 - `OccupiedTable`은 `GuestCount`가 0보다 큰 사용 중인 테이블 상태를 표현한다.
-
-
-
-
-
-
