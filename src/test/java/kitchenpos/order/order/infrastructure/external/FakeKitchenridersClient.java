@@ -2,7 +2,7 @@ package kitchenpos.order.order.infrastructure.external;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import kitchenpos.order.infrastructure.external.KitchenridersClient;
+import kitchenpos.order.delivery.infra.external.KitchenridersClient;
 
 public class FakeKitchenridersClient implements KitchenridersClient {
     private UUID orderId;
