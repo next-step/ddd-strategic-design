@@ -8,7 +8,7 @@ import kitchenpos.order.common.model.OrderStatus;
 import kitchenpos.order.common.model.OrderType;
 import kitchenpos.order.common.repository.OrderRepository;
 import kitchenpos.order.common.repository.OrderTableRepository;
-import kitchenpos.order.eatin.model.OrderTable;
+import kitchenpos.order.eatin.domain.model.OrderTable;
 import kitchenpos.order.delivery.infra.external.KitchenridersClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

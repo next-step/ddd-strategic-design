@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import kitchenpos.order.common.model.Order;
 import kitchenpos.order.common.model.OrderStatus;
-import kitchenpos.order.eatin.model.OrderTable;
+import kitchenpos.order.eatin.domain.model.OrderTable;
 
 public interface OrderRepository {
     Order save(Order order);

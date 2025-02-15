@@ -3,7 +3,7 @@ package kitchenpos.order.common.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.order.eatin.model.OrderTable;
+import kitchenpos.order.eatin.domain.model.OrderTable;
 
 public interface OrderTableRepository {
     OrderTable save(OrderTable orderTable);

@@ -2,7 +2,7 @@ package kitchenpos.order.eatin.application;
 
 import kitchenpos.order.common.repository.OrderRepository;
 import kitchenpos.order.common.model.OrderStatus;
-import kitchenpos.order.eatin.model.OrderTable;
+import kitchenpos.order.eatin.domain.model.OrderTable;
 import kitchenpos.order.common.repository.OrderTableRepository;
 import kitchenpos.order.order.infrastructure.persistence.InMemoryOrderRepository;
 import kitchenpos.order.order.infrastructure.persistence.InMemoryOrderTableRepository;
