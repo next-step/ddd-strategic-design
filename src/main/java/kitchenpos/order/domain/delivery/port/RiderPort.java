@@ -1,8 +1,10 @@
 package kitchenpos.order.domain.delivery.port;
 
-import kitchenpos.order.domain.order.model.Order;
+import kitchenpos.order.domain.delivery.model.DeliveryOrder;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface RiderPort {
 
-    void requestRider(Order order);
+    void requestRider(DeliveryOrder order);
 }

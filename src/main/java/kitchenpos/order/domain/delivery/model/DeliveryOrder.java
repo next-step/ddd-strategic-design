@@ -1,22 +1,32 @@
 package kitchenpos.order.domain.delivery.model;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import kitchenpos.order.domain.delivery.flow.DeliveryOrderFlow;
-import kitchenpos.order.domain.order.model.CustomOrderType;
-import kitchenpos.order.domain.order.model.OrderFlow;
+import java.util.UUID;
+import kitchenpos.order.domain.order.model.OrderStatus;
 
 @Entity
-@DiscriminatorValue("DELIVERY")
-public class DeliveryOrder implements CustomOrderType {
+public class DeliveryOrder {
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
-    @Override
-    public OrderFlow getOrderFlow() {
-        return new DeliveryOrderFlow();
+    @Enumerated
+    private DeliveryOrderFlow orderFlow;
+
+    @Enumerated
+    private OrderStatus currentOrderStatus;
+
+    public boolean validateOrderFlowAndFindNextStep(OrderStatus orderStatus) {
+        if (orderFlow.validateOrderStatus(orderStatus)) {
+            throw new IllegalArgumentException();
+        }
+        return orderFlow.isRiderNeccessary(orderStatus);
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
