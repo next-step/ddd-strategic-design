@@ -123,16 +123,16 @@ docker compose -p kitchenpos up -d
 | 주문 | Order | 고객이 요청한 `메뉴`들의 집합 |
 | 주문 내역 | Order Item | `주문`에 포함된 개별 `메뉴`와 수량의 정보 |
 | 주문 유형 | Order Type | `주문`의 처리 방식을 구분하는 값 |
-| 배달 주문 | Delivery Order | `배달`기사가 배달해야 하는 `주문` |
-| 포장 주문 | Takeout Order | `손님`이 직접 방문해서 가져가는 `주문` |
-| 매장 주문 | Eat In Order | 매장 내 식사가 필요한 `주문` |
-| 주문 상태 | Order Status | 주문의 처리 단계를 나타내는 값으로, 주문 유형별로 다른 흐름을 가짐 |
-| 접수 대기 | Waiting | 주문을 받은 뒤 접수 완료 전의 주문 상태. 모든 주문 유형의 초기 상태 |
-| 접수 완료 | Accepted | 접수가 완료되었고 주문 처리를 시작한 상태 |
+| 배달 주문 | Delivery Order | `배달`기사가 배달해야 하는 `주문` (진행순서: 접수 대기 > 접수 > 서빙 > 배달 중 > 배달 완료 > 완료) |
+| 포장 주문 | Takeout Order | `손님`이 직접 방문해서 가져가는 `주문` (진행순서: 접수 대기 > 접수 > 서빙 > 완료) |
+| 매장 주문 | Eat In Order | 매장 내 식사가 필요한 `주문` (진행순서: 접수 대기 > 접수 > 서빙 > 완료) |
+| 주문 상태 | Order Status | 주문의 처리 단계를 나타내는 값 |
+| 접수 대기 | Waiting | 주문을 받은 뒤 접수 완료 전의 주문 상태 |
+| 접수 완료 | Accepted | 접수가 완료되었고 서빙 완료 전의 주문 상태 |
 | 서빙 완료 | Served | 서빙이 완료된 주문 상태 |
-| 배달 중 | Delivering | 배달 주문에서만 사용되는 상태로, 배달 기사가 배달을 시작한 상태 |  
-| 배달 완료 | Delivered | 배달 주문에서만 사용되는 상태로, 배달 기사가 배달을 완료한 상태 |
-| 완료 | Completed | 모든 주문 처리가 완료된 최종 상태 |
+| 배달 중 | Delivering | 배달 중인 주문 상태 |  
+| 배달 완료 | Delivered | 배달이 완료된 주문 상태 |
+| 완료 | Completed | 주문이 완료된 주문 상태 |
 | 배달 정보 | Delivery Info | 배달 주문에 필요한 정보 |
 | 배달 대행사 | Kitchen Rider | 외부 배달 대행사 시스템 |
 
@@ -149,3 +149,47 @@ docker compose -p kitchenpos up -d
 | 손님 수 | Guest Count | 테이블에 착석한 손님의 수 |
 
 ## 모델링
+### 상품 관리
+- `Product`는 식별자와 이름, 가격을 가진다.
+- `Product`는 여러 개의 `Menu`에 속할 수 있다.
+- `Product`는 여러 개의 `OrderItem`에 속할 수 있다.
+- `Menu`는 식별자와 이름, 가격, 상태를 가진다.
+- `Menu`는 하나의 `MenuGroup`에 속한다.
+- `Menu`는 여러 개의 `MenuProduct`를 가진다.
+- `Menu`는 자신의 노출 여부를 결정할 수 있다.
+- `MenuGroup`은 식별자와 이름을 가진다.
+- `MenuProduct`는 `Product`와 수량 정보를 가진다.
+- `DisplayedMenu`는 `Menu`의 노출 여부를 결정할 수 있다.
+- `HiddenMenu`는 `Menu`가 노출되지 않는 상태를 표현한다.
+- `PurgoMalum`은 비속어 필터링 시스템이다.
+
+### 주문 관리
+- `Order`는 식별자와 주문 유형, 주문 상태를 가진다.
+- `Order`는 여러 개의 `OrderItem`을 가진다.
+- `Order`는 주문 유형에 따라 진행 상태를 변경할 수 있다.
+- `OrderItem`은 `Menu`와 수량 정보를 가진다.
+- `OrderStatus`는 주문의 처리 단계를 표현한다.
+- `OrderType`은 주문의 처리 방식을 구분한다.
+- `DeliveryOrder`는 배달 주소 정보를 추가로 가진다.
+- `DeliveryOrder`는 배달 대행사를 호출한다.
+- `DeliveryOrders`는 접수 대기 > 접수 > 서빙 > 배달 중 > 배달 완료 > 완료 순으로 진행된다.
+- `TakeoutOrder`는 포장 주문 정보를 추가로 가진다.
+- `TakeoutOrders`는 접수 대기 > 접수 > 서빙 > 완료 순으로 진행된다.
+- `EatInOrder`는 매장 주문 정보를 추가로 가진다.
+- `EatInOrders`는 접수 대기 > 접수 > 서빙 > 완료 순으로 진행된다.
+
+
+### 테이블 관리
+- `OrderTable`은 식별자와 이름, 테이블 상태를 가진다.
+- `OrderTable`은 손님 수를 가진다.
+- `OrderTable`은 여러 개의 `Order`를 가질 수 있다.
+- `OrderTable`은 테이블의 상태를 변경할 수 있다.
+- `TableStatus`는 테이블의 사용 상태를 표현한다.
+- `EmptyTable`은 `GuestCount`가 0인 빈 테이블 상태를 표현한다.
+- `OccupiedTable`은 `GuestCount`가 0보다 큰 사용 중인 테이블 상태를 표현한다.
+
+
+
+
+
+
