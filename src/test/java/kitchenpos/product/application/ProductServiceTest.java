@@ -5,7 +5,7 @@ import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.repository.MenuRepository;
 import kitchenpos.product.domain.model.Product;
 import kitchenpos.product.domain.repository.ProductRepository;
-import kitchenpos.menu.domain.service.PurgomalumClient;
+import kitchenpos.menu.application.external.PurgomalumClient;
 import kitchenpos.menu.infrastructure.persistence.InMemoryMenuRepository;
 import kitchenpos.product.infrastructure.InMemoryProductRepository;
 import org.junit.jupiter.api.BeforeEach;
