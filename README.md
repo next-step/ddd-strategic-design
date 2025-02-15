@@ -134,17 +134,18 @@ docker compose -p kitchenpos up -d
 
 
 ### 주문 테이블 (order table)
-| 한글명            | 영문명                     | 설명                            |
-|----------------|-------------------------|-------------------------------|
-| 주문 테이블         | order table             | 매장 내에서 고객이 식사하는 `테이블`|
-| 주문 테이블 이름      | order table name        | `주문 테이블`의 고유한 이름 (비워 둘 수 없음)|
-| 방문 손님 수        | number of guests        | `주문 테이블`에 앉은 손님 수 (0 이상)|
-| 주문 테이블 목록      | order table list        | 등록된 `주문 테이블`들의 전체 목록|
-| 주문 테이블 등록하기    | create order table      | 새로운 `주문 테이블`을 등록하는 기능|
-| 빈 테이블에 앉기      | sit order table         | 빈 `테이블`을 해지하는 기능 (손님이 테이블에 앉은 상태)|
-| 주문 테이블 치우기     | clear order table       | 빈 `테이블`로 설정하는 기능 (손님이 테이블에 없는 상태)|
-| 방문 손님 수 변경하기   | change number of guests | `주문 테이`블의 방문한 손님 수를 수정하는 기능|
-| 주문 테이블 목록 조회하기 | find order table list   | 등록된 `주문 테이블` 목록을 조회하는 기능|
+| 한글명            | 영문명                     | 설명                                 |
+|----------------|-------------------------|------------------------------------|
+| 주문 테이블         | order table             | 매장 내에서 고객이 식사하는 `테이블`              |
+| 주문 테이블 이름      | order table name        | `주문 테이블`의 고유한 이름 (비워 둘 수 없음)       |
+| 주문 테이블 상태      | order table status      | `주문 테이블`이 빈 상태인지, 손님이 채워진 상태인지의 여부 |
+| 방문 손님 수        | number of guests        | `주문 테이블`에 앉은 손님 수 (0 이상)           |
+| 주문 테이블 목록      | order table list        | 등록된 `주문 테이블`들의 전체 목록               |
+| 주문 테이블 등록하기    | create order table      | 새로운 `주문 테이블`을 등록하는 기능              |
+| 빈 테이블에 앉기      | sit order table         | 빈 `테이블`을 해지하는 기능 (손님이 테이블에 앉은 상태)  |
+| 주문 테이블 치우기     | clear order table       | 빈 `테이블`로 설정하는 기능 (손님이 테이블에 없는 상태)  |
+| 방문 손님 수 변경하기   | change number of guests | `주문 테이`블의 방문한 손님 수를 수정하는 기능        |
+| 주문 테이블 목록 조회하기 | find order table list   | 등록된 `주문 테이블` 목록을 조회하는 기능           |
 
 
 ### 주문 (order)
@@ -245,8 +246,8 @@ docker compose -p kitchenpos up -d
 ### `빈 테이블에 앉기(sit order table)` 정책
 - `주문 테이블(order table)`을 사용 중 상태로 변경할 수 있다.
 
-### `주문 테이블 치우기(clear order table)` 정책
-- 완료되지 않은 `주문(order)`이 있는 경우 `주문 테이블 치우기(clear order table)`로 설정할 수 없다.
+### `주문 테이블 빈 상태로 설정하기(clear order table)` 정책
+- 완료되지 않은 `주문(order)`이 있는 경우 `주문 테이블 빈 상태로 설정하기(clear order table)`로 설정할 수 없다.
 
 ### `방문 손님 수 변경하기(change number of guests)` 정책
 - `방문 손님 수(number of guests)`가 0 이상인 경우에만 변경할 수 있다.
@@ -258,31 +259,36 @@ docker compose -p kitchenpos up -d
 - `주문 목록(find order list)`을 조회할 수 있다.
 
 ### `주문 등록(create order)`하기 정책
-- 하나 이상의 `메뉴(menu)`가 포함된 경우에만 `주문(order)`을 등록할 수 있다.
+- 하나 이상의 `주문 항목 (order item)`가 포함된 경우에만 `주문(order)`을 등록할 수 있다.
 - `숨겨진 메뉴(hide menu)`를 주문할 수 없다.
 
 ### 주문 상태 (order status) 변경 정책
-- `대기(waiting)` 상태의 주문만 `주문 수락(accepted)`할 수 있다.
-- `주문 수락(accepted)`된 주문만 `주문 제공(served)`할 수 있다.
-- `주문 제공(served)`된 주문만 `배달 중(delivering)`으로 변경할 수 있다.
-- `배달 중(delivering)`인 주문만 `배달 완료(delivered)`할 수 있다.
-- `배달 완료(delivered)`된 주문만 `주문 완료(completed)`할 수 있다.
-- `포장 주문(take out order)` 및 `매장 주문(table order)`의 경우 `주문 제공(served)`된 주문만 `주문 완료(completed)`할 수 있다.
+- 주문이 접수되면, `대기(waiting)` 상태가 된다.
+- 직원은 `대기(waiting)` 상태의 주문을 `주문 수락(accepted)`할 수 있다.
+- 직원은 `주문 수락(accepted)` 상태 주무을 `주문 제공(served)`할 수 있다.
+- 직원은 `주문 제공(served)`상태 주문을 `배달 중(delivering)`으로 변경할 수 있다.
+- `배달 중(delivering)`상태인 주문을 `배달 완료(delivered)`상태로 변경할 수 있다.
+- `배달 완료(delivered)` 된 주문을 `주문 완료(completed)` 할 수 있다.
+- `주문 제공(served)` 된 주문을  `주문 완료(completed)` 할 수 있다.
 
 ---
 
 ## `주문 유형 (order type)`
 
 ### `배달 주문 (delivery order)`
-- `배달 주문(delivery order)`은 `배달 주소(delivery address)`를 가진다.
-- `배달 대행사 호출하기(call delivery agency)`를 통해 배달을 요청할 수 있다.
-- `배달 주소(delivery address)`는 비워 둘 수 없다.
+- 속성 
+  - 주문 유형(order type), 주문 상태(order status), 주문 항목(order item), 배달 주소(delivery address)를 가진다. 
+  - `배달 주소(delivery address)`는 비워 둘 수 없다.
+
+- 기능
+  - `배달 대행사 호출하기(call delivery agency)`를 통해 배달을 요청할 수 있다.
 
 ### `포장 주문 (takeout order)`
 
 ### `매장 주문 (table order)`
-- `매장 주문(table order)`은 `주문 테이블(order table)`을 가진다.
-- `주문 테이블 상태(order table status)`가 사용 중이어야 한다.
+- 속성
+  - `매장 주문(table order)`은 `주문 테이블(order table)`을 가진다.
+  - `주문 테이블 상태(order table status)`가 사용 중이어야 한다.
 
 
 
