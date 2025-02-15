@@ -1,4 +1,4 @@
-package kitchenpos.common.external;
+package kitchenpos.common.application;
 
 public interface PurgomalumClient {
     boolean containsProfanity(String text);

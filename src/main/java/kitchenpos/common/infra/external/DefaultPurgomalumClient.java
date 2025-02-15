@@ -1,5 +1,6 @@
-package kitchenpos.common.external;
+package kitchenpos.common.infra.external;
 
+import kitchenpos.common.application.PurgomalumClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
