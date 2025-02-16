@@ -1,4 +1,4 @@
-package kitchenpos.order.order.infrastructure.persistence;
+package kitchenpos.order.common.infrastructure.persistence;
 
 import kitchenpos.order.common.model.Order;
 import kitchenpos.order.common.repository.OrderRepository;

@@ -1,4 +1,4 @@
-package kitchenpos.menu.infrastructure.external;
+package kitchenpos.common.infra.external;
 
 import java.util.Arrays;
 import java.util.List;

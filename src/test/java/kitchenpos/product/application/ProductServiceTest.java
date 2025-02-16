@@ -1,6 +1,6 @@
 package kitchenpos.product.application;
 
-import kitchenpos.menu.infrastructure.external.FakePurgomalumClient;
+import kitchenpos.common.infra.external.FakePurgomalumClient;
 import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.repository.MenuRepository;
 import kitchenpos.product.domain.model.Product;
