@@ -3,7 +3,7 @@ package kitchenpos.order.eatin.application;
 import kitchenpos.order.common.repository.OrderRepository;
 import kitchenpos.order.common.model.OrderStatus;
 import kitchenpos.order.eatin.domain.model.OrderTable;
-import kitchenpos.order.common.repository.OrderTableRepository;
+import kitchenpos.order.eatin.domain.repository.OrderTableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
