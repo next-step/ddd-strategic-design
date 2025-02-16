@@ -6,7 +6,7 @@ import kitchenpos.menu.domain.model.MenuProduct;
 import kitchenpos.order.common.model.Order;
 import kitchenpos.order.common.model.OrderLineItem;
 import kitchenpos.order.common.model.OrderStatus;
-import kitchenpos.order.eatin.domain.model.OrderTable;
+import kitchenpos.order.eatinorder.domain.model.OrderTable;
 import kitchenpos.order.common.model.OrderType;
 import kitchenpos.product.domain.model.Product;
 

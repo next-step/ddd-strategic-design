@@ -1,17 +1,17 @@
 package kitchenpos.order.common.application;
 
-import kitchenpos.order.delivery.infra.external.FakeKitchenridersClient;
+import kitchenpos.order.deliveryorder.infra.external.FakeKitchenridersClient;
 import kitchenpos.menu.infra.persistence.InMemoryMenuRepository;
 import kitchenpos.menu.domain.repository.MenuRepository;
 import kitchenpos.order.common.model.Order;
 import kitchenpos.order.common.model.OrderLineItem;
 import kitchenpos.order.common.repository.OrderRepository;
 import kitchenpos.order.common.model.OrderStatus;
-import kitchenpos.order.eatin.domain.model.OrderTable;
-import kitchenpos.order.eatin.domain.repository.OrderTableRepository;
+import kitchenpos.order.eatinorder.domain.model.OrderTable;
+import kitchenpos.order.eatinorder.domain.repository.OrderTableRepository;
 import kitchenpos.order.common.model.OrderType;
 import kitchenpos.order.common.infra.persistence.InMemoryOrderRepository;
-import kitchenpos.order.eatin.infra.persistence.InMemoryOrderTableRepository;
+import kitchenpos.order.eatinorder.infra.persistence.InMemoryOrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
