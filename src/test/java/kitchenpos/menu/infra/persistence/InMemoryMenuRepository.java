@@ -1,4 +1,4 @@
-package kitchenpos.menu.infrastructure.persistence;
+package kitchenpos.menu.infra.persistence;
 
 import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.repository.MenuRepository;
