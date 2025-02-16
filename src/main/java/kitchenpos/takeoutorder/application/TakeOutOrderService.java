@@ -1,15 +1,10 @@
 package kitchenpos.takeoutorder.application;
 
+import kitchenpos.deliveryorder.infra.KitchenridersClient;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuRepository;
-import kitchenpos.eatinorder.domain.EatInOrder;
-import kitchenpos.eatinorder.domain.OrderLineItem;
-import kitchenpos.eatinorder.domain.OrderRepository;
-import kitchenpos.eatinorder.domain.OrderStatus;
-import kitchenpos.eatinorder.domain.OrderTable;
-import kitchenpos.eatinorder.domain.OrderTableRepository;
-import kitchenpos.eatinorder.domain.OrderType;
-import kitchenpos.infra.KitchenridersClient;
+
+import kitchenpos.takeoutorder.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,26 +17,23 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class OrderService {
-    private final OrderRepository orderRepository;
+public class TakeOutOrderService {
+    private final TakeOutOrderRepository takeOutOrderRepository;
     private final MenuRepository menuRepository;
-    private final OrderTableRepository orderTableRepository;
     private final KitchenridersClient kitchenridersClient;
 
-    public OrderService(
-        final OrderRepository orderRepository,
+    public TakeOutOrderService(
+        final TakeOutOrderRepository takeOutOrderRepository,
         final MenuRepository menuRepository,
-        final OrderTableRepository orderTableRepository,
         final KitchenridersClient kitchenridersClient
     ) {
-        this.orderRepository = orderRepository;
+        this.takeOutOrderRepository = takeOutOrderRepository;
         this.menuRepository = menuRepository;
-        this.orderTableRepository = orderTableRepository;
         this.kitchenridersClient = kitchenridersClient;
     }
 
     @Transactional
-    public EatInOrder create(final EatInOrder request) {
+    public TakeOutOrder create(final TakeOutOrder request) {
         final OrderType type = request.getType();
         if (Objects.isNull(type)) {
             throw new IllegalArgumentException();
@@ -79,7 +71,7 @@ public class OrderService {
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
         }
-        EatInOrder order = new EatInOrder();
+        TakeOutOrder order = new TakeOutOrder();
         order.setId(UUID.randomUUID());
         order.setType(type);
         order.setStatus(OrderStatus.WAITING);
@@ -92,20 +84,13 @@ public class OrderService {
             }
             order.setDeliveryAddress(deliveryAddress);
         }
-        if (type == OrderType.EAT_IN) {
-            final OrderTable orderTable = orderTableRepository.findById(request.getOrderTableId())
-                .orElseThrow(NoSuchElementException::new);
-            if (!orderTable.isOccupied()) {
-                throw new IllegalStateException();
-            }
-            order.setOrderTable(orderTable);
-        }
-        return orderRepository.save(order);
+
+        return takeOutOrderRepository.save(order);
     }
 
     @Transactional
-    public EatInOrder accept(final UUID orderId) {
-        final EatInOrder order = orderRepository.findById(orderId)
+    public TakeOutOrder accept(final UUID orderId) {
+        final TakeOutOrder order = takeOutOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.WAITING) {
             throw new IllegalStateException();
@@ -124,8 +109,8 @@ public class OrderService {
     }
 
     @Transactional
-    public EatInOrder serve(final UUID orderId) {
-        final EatInOrder order = orderRepository.findById(orderId)
+    public TakeOutOrder serve(final UUID orderId) {
+        final TakeOutOrder order = takeOutOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.ACCEPTED) {
             throw new IllegalStateException();
@@ -135,8 +120,8 @@ public class OrderService {
     }
 
     @Transactional
-    public EatInOrder startDelivery(final UUID orderId) {
-        final EatInOrder order = orderRepository.findById(orderId)
+    public TakeOutOrder startDelivery(final UUID orderId) {
+        final TakeOutOrder order = takeOutOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getType() != OrderType.DELIVERY) {
             throw new IllegalStateException();
@@ -149,8 +134,8 @@ public class OrderService {
     }
 
     @Transactional
-    public EatInOrder completeDelivery(final UUID orderId) {
-        final EatInOrder order = orderRepository.findById(orderId)
+    public TakeOutOrder completeDelivery(final UUID orderId) {
+        final TakeOutOrder order = takeOutOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.DELIVERING) {
             throw new IllegalStateException();
@@ -160,8 +145,8 @@ public class OrderService {
     }
 
     @Transactional
-    public EatInOrder complete(final UUID orderId) {
-        final EatInOrder order = orderRepository.findById(orderId)
+    public TakeOutOrder complete(final UUID orderId) {
+        final TakeOutOrder order = takeOutOrderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         final OrderType type = order.getType();
         final OrderStatus status = order.getStatus();
@@ -176,18 +161,11 @@ public class OrderService {
             }
         }
         order.setStatus(OrderStatus.COMPLETED);
-        if (type == OrderType.EAT_IN) {
-            final OrderTable orderTable = order.getOrderTable();
-            if (!orderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
-                orderTable.setNumberOfGuests(0);
-                orderTable.setOccupied(false);
-            }
-        }
         return order;
     }
 
     @Transactional(readOnly = true)
-    public List<EatInOrder> findAll() {
-        return orderRepository.findAll();
+    public List<TakeOutOrder> findAll() {
+        return takeOutOrderRepository.findAll();
     }
 }

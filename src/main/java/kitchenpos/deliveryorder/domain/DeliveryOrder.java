@@ -12,10 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import kitchenpos.eatinorder.domain.OrderLineItem;
-import kitchenpos.eatinorder.domain.OrderStatus;
+
 import kitchenpos.eatinorder.domain.OrderTable;
-import kitchenpos.eatinorder.domain.OrderType;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +22,7 @@ import java.util.UUID;
 
 @Table(name = "orders")
 @Entity
-public class Order {
+public class DeliveryOrder {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
@@ -62,7 +61,7 @@ public class Order {
     @Transient
     private UUID orderTableId;
 
-    public Order() {
+    public DeliveryOrder() {
     }
 
     public UUID getId() {
