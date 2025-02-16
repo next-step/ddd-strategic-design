@@ -1,14 +1,14 @@
-package kitchenpos.application;
+package kitchenpos.eatinorder.application;
 
-import kitchenpos.domain.Menu;
-import kitchenpos.domain.MenuRepository;
-import kitchenpos.domain.Order;
-import kitchenpos.domain.OrderLineItem;
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
-import kitchenpos.domain.OrderType;
+import kitchenpos.menu.domain.Menu;
+import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.eatinorder.domain.EatInOrder;
+import kitchenpos.eatinorder.domain.OrderLineItem;
+import kitchenpos.eatinorder.domain.OrderRepository;
+import kitchenpos.eatinorder.domain.OrderStatus;
+import kitchenpos.eatinorder.domain.OrderTable;
+import kitchenpos.eatinorder.domain.OrderTableRepository;
+import kitchenpos.eatinorder.domain.OrderType;
 import kitchenpos.infra.KitchenridersClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order create(final Order request) {
+    public EatInOrder create(final EatInOrder request) {
         final OrderType type = request.getType();
         if (Objects.isNull(type)) {
             throw new IllegalArgumentException();
@@ -79,7 +79,7 @@ public class OrderService {
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
         }
-        Order order = new Order();
+        EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setType(type);
         order.setStatus(OrderStatus.WAITING);
@@ -104,8 +104,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order accept(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+    public EatInOrder accept(final UUID orderId) {
+        final EatInOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.WAITING) {
             throw new IllegalStateException();
@@ -124,8 +124,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order serve(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+    public EatInOrder serve(final UUID orderId) {
+        final EatInOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.ACCEPTED) {
             throw new IllegalStateException();
@@ -135,8 +135,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order startDelivery(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+    public EatInOrder startDelivery(final UUID orderId) {
+        final EatInOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getType() != OrderType.DELIVERY) {
             throw new IllegalStateException();
@@ -149,8 +149,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order completeDelivery(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+    public EatInOrder completeDelivery(final UUID orderId) {
+        final EatInOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         if (order.getStatus() != OrderStatus.DELIVERING) {
             throw new IllegalStateException();
@@ -160,8 +160,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order complete(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+    public EatInOrder complete(final UUID orderId) {
+        final EatInOrder order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         final OrderType type = order.getType();
         final OrderStatus status = order.getStatus();
@@ -187,7 +187,7 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<Order> findAll() {
+    public List<EatInOrder> findAll() {
         return orderRepository.findAll();
     }
 }
