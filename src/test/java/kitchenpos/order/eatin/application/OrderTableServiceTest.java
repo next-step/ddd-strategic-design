@@ -5,7 +5,7 @@ import kitchenpos.order.common.model.OrderStatus;
 import kitchenpos.order.eatin.domain.model.OrderTable;
 import kitchenpos.order.eatin.domain.repository.OrderTableRepository;
 import kitchenpos.order.common.infra.persistence.InMemoryOrderRepository;
-import kitchenpos.order.eatin.infra.InMemoryOrderTableRepository;
+import kitchenpos.order.eatin.infra.persistence.InMemoryOrderTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

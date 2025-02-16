@@ -1,4 +1,4 @@
-package kitchenpos.product.infra;
+package kitchenpos.product.infra.persistence;
 
 import kitchenpos.product.domain.model.Product;
 import kitchenpos.product.domain.repository.ProductRepository;
