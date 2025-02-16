@@ -102,6 +102,7 @@ docker compose -p kitchenpos up -d
 | 상품  |   product   | 키친포스에서 손님에게 제공되는 개별적인 상품. ex) 기본짬뽕/해물짬뽕/차돌짬뽕 |
 | 가격  |    price    | 손님이 해당 상품을 주문하게 되었을때 1개의 상품에 대한 가격.          |
 | 이름  | productName | 손님에게 제공되는 음식의 이름.                            |
+| 비속어 |  profanity  | 상품 이름에 포함될수 없는 비속어 단어. 외부 서비스                |
 ## 메뉴
 | 한글명       |      영문명      | 설명                                |
 |:----------|:-------------:|:----------------------------------|
@@ -157,10 +158,10 @@ docker compose -p kitchenpos up -d
   - `product`의 `price` 0원 이상이어야 한다.
 - `product`의 `productName`이 올바르지 않으면 등록할 수 없다.
   - `product`의 `productName`에는 비속어가 포함될 수 없다.
-- `product`의 `price`을 변경할 수 있다.
-- `product`의 `price`이 올바르지 않으면 변경할 수 없다.
-  - `product`의 `price` 0원 이상이어야 한다.
-- `product`의 `price`이 변경될 때 `menu`의 `amount`는 `menuProduct`의 `price`의 합보다 크면 `menu`의 `displayed` 가 `false` 가 된다.
+- `product`의 `price`를 변경할 수 있다.
+- `product`의 `price`가 올바르지 않으면 변경할 수 없다.
+  - `product`의 `price`는 0원 이상이어야 한다.
+- `product`의 `price`가 변경될 때 `menu`의 `amount`는 `menuProduct`의 `price`의 합보다 크면 `menu`의 `displayed` 가 `false` 가 된다.
 - `product`의 목록을 조회할 수 있다.
 
 ### 메뉴 그룹
