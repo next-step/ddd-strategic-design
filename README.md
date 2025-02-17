@@ -192,3 +192,389 @@ docker compose -p kitchenpos up -d
 | 가게 테이블 고객 수  | Restaurant Table numberOfGuest | - 해당 테이블을 사용중인 고객 수를 의미한다.                     |
 
 ## 모델링
+
+### 상품
+
+- 상태
+    - 상품 가격을 가진다.
+    - 상품 이름을 가진다.
+- 행위
+    - 상품 가격을 등록할 수 있다.
+    - 상품 가격을 변경할 수 있다.
+    - 상품 이름을 등록할 수 있다.
+    - 상품 목록을 조회할 수 있다.
+- 조건
+    - 상품 가격은 0원 이상 이어야 한다.
+    - 상품 이름은 공백으로 비워둘 수 없다.
+    - 상품 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
+
+```mermaid
+classDiagram
+    class Product {
+        UUID id
+        String name
+        BigDecimal price
+    }
+
+```
+
+### 메뉴 그룹
+
+- 상태
+    - 메뉴 그룹 이름을 가진다.
+- 행위
+    - 메뉴 그룹 이름을 등록할 수 있다.
+    - 메뉴 그룹 목록을 조회할 수 있다.
+- 조건
+    - 메뉴 그룹 이름은 공백으로 비워둘 수 없다.
+
+```mermaid
+classDiagram
+    class MenuGroup {
+        UUID id
+        String name
+    }
+```
+
+### 메뉴
+
+- 상태
+    - 메뉴 이름을 가진다.
+    - 메뉴 가격을 가진다.
+    - 메뉴 노출 상태를 가진다.
+    - 메뉴 그룹을 가진다.
+    - 메뉴 상품을 가진다.
+- 행위
+    - 메뉴 이름을 등록할 수 있다.
+    - 메뉴 가격을 등록할 수 있다.
+    - 메뉴 가격을 변경할 수 있다.
+    - 메뉴 상태를 `노출` 처리할 수 있다.
+    - 메뉴 상태를 `숨김` 처리할 수 있다.
+    - 메뉴 목록을 조회할 수 있다.
+- 조건
+    - 메뉴 이름은 공백으로 비워둘 수 없다.
+    - 메뉴 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
+    - 메뉴 가격은 0원 이상이어야 한다.
+    - 메뉴 노출 상태는 `노출`, `숨김`을 사용한다.
+    - 메뉴 상품의 수량은 0개 이상이어야 한다.
+    - 메뉴 가격이 메뉴에 속한 메뉴 상품 금액의 합보다 높을 경우 메뉴를 노출할 수 없다.
+    - 메뉴에 속한 메뉴 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
+
+```mermaid
+classDiagram
+    class Menu {
+        UUID id
+        String name
+        BigDecimal price
+        boolean displayed
+        UUID menuGroupId
+    }
+
+    class MenuProduct {
+        Long seq
+        Long quantity
+        UUID productId
+        UUID menuId
+    }
+
+    class MenuGroup {
+        UUID id
+        String name
+    }
+
+    %% 관계 정의
+    Menu "*" --> "1" MenuGroup : references
+    Menu "1" <-- "*" MenuProduct : references
+
+```
+
+### 주문
+
+- 상태
+    - 주문 유형을 가진다. ( `배달 주문`, `매장 주문`, `포장 주문`을 사용한다.)
+    - 주문 항목을 가진다.
+    - 주문 상태를 가진다.
+- 행위
+    - 주문을 등록할 수 있다.
+    - 주문을 접수할 수 있다.
+    - 주문을 전달할 수 있다.
+    - 주문을 완료할 수 있다.
+    - 주문 목록을 조회할 수 있다.
+- 조건
+    - 주문 유형이 올바르지 않으면 등록할 수 없다.
+    - 주문 유형은 `배달 주문`, `매장 주문`, `포장 주문`을 사용한다.
+    - 주문 메뉴가 없으면 등록할 수 없다.
+    - 숨겨진 주문 메뉴는 주문할 수 없다.
+    - 주문 메뉴의 가격은 실제 메뉴 가격과 일치해야 한다.
+    - 주문이 등록되면 `대기중`으로 상태가 변경된다.
+    - `대기중` 상태인 주문만 `접수됨`으로 상태를 변경할 수 있다.
+    - 주문이 접수되면 `접수됨`으로 상태가 변경된다.
+    - `접수됨` 상태인 주문만 `전달됨` 으로 상태를 변경할 수 있다.
+    - 주문 메뉴가 전달되면 `전달됨`으로 상태가 변경된다.
+
+```mermaid
+classDiagram
+    class Orders {
+        UUID id
+        OrderType type
+        OrderStatus status
+        List~OrderLineItem~ orderLineItems
+        String deliveryAddress
+        LocalDateTime orderDateTime
+        UUID restaurantTableId
+    }
+
+    class OrderLineItem {
+        Long seq
+        Long quantity
+        BigDecimal price
+        OrderLineItemMenu orderLineItemMenu
+    }
+
+    class OrderLineItemMenu {
+        Long seq
+        BigDecimal price
+        UUID menuId
+    }
+
+    class RestaurantTable {
+        UUID id
+        String name
+        int numberOfGuests
+        boolean occupied
+    }
+
+    %% 열거형 정의
+    class OrderType {
+        <<enumeration>>
+        DELIVERY
+        TAKEOUT
+        DINE_IN
+    }
+
+    class OrderStatus {
+        <<enumeration>>
+        WAITING
+        ACCEPTED
+        DELIVERING
+        DELIVERED
+        COMPLETED
+    }
+
+    %% 관계 정의
+    Orders "*" --> "1" RestaurantTable : references
+    Orders "1" *-- "*" OrderLineItem : contains
+    OrderLineItem "1" *-- "1" OrderLineItemMenu : contains
+
+```
+
+### 배달 주문
+
+- 상태
+    - 배달 주소를 가진다.
+    - 배달 주문 상태를 가진다. (`대기중(WAITING)`→`접수됨(ACCEPTED)`→`전달됨(SERVED)`→`배달중(DELIVERING)`->
+      `배달됨(DELIVERED)`→`완료됨(COMPLETED)` 순서로 변경된다.)
+- 행위
+    - 배달 주문을 등록할 수 있다.
+    - 배달 주문이 접수되면 배달 기사를 호출할 수 있다.
+    - 주문을 배달할 수 있다.
+    - 주문을 배달 완료할 수 있다.
+- 조건
+    - 주문 유형이 `배달 주문`이어야 한다.
+    - 주문 항목의 수량은 0 이상이어야 한다.
+    - 배달 주문만 배달할 수 있다.
+    - 배달 주소는 비워 둘 수 없다.
+    - 상품이 전달된 주문만 `배달중`으로 상태를 변경할 수 있다.
+    - 상품이 전달되면 `배달중`으로 상태가 변경된다.
+    - `배달중`상태인 주문만 `배달됨`으로 상태를 변경할 수 있다.
+    - 배달이 완료되면 `배달됨`으로 상태가 변경된다.
+    - `배달됨` 상태인 주문만 `완료됨` 으로 상태를 변경할 수 있다.
+
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    participant DeliveryRider as 배달 기사
+    
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+    System->>+DeliveryRider: 배달 요청 
+    DeliveryRider-->>-System: 배달 요청 완료
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+    RestaurantOwner->>+DeliveryRider: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '배달 시작' 변경 요청 
+    System-->>-RestaurantOwner: 주문 상태 '배달 시작' 변경 성공
+    DeliveryRider-->>-RestaurantOwner: 주문 메뉴 전달 완료
+    DeliveryRider->>+Customer: 주문 메뉴 전달 
+    Customer-->>-DeliveryRider: 주문 메뉴 전달 완료
+    DeliveryRider->>+RestaurantOwner: 배달 완료 상황 전달
+    RestaurantOwner->>+System: 주문 상태 '배달 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '배달 완료' 변경 성공
+    RestaurantOwner->>-DeliveryRider: 배달 완료 상황 전달
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
+
+    
+```
+
+```mermaid
+stateDiagram-v2
+    state 배달_주문_상태 {
+        [*] --> 대기중(WAITING) : 고객 주문 등록
+        대기중(WAITING) --> 접수됨(ACCEPTED) : 사장님 주문 접수
+        접수됨(ACCEPTED) --> 전달됨(SERVED) : 사장님 상품 전달
+        전달됨(SERVED) --> 배달중(DELIVERING) : 배달기사 배달 시작
+        배달중(DELIVERING) --> 배달됨(DELIVERED) : 배달기사 배달 완료
+        배달됨(DELIVERED) --> 완료됨(COMPLETED) : 사장님 주문 완료
+        완료됨(COMPLETED) --> [*] : 주문 종료
+    }
+    
+```
+
+### 포장 주문
+
+- 상태
+    - 포장 주문 상태를 가진다. (`대기중(WAITING)`→`접수됨(ACCEPTED)`→`전달됨(SERVED)`→`완료됨(COMPLETED)` 순서로 변경된다.)
+- 행위
+    - 포장 주문을 등록할 수 있다.
+- 조건
+    - 주문 유형이 `포장 주문`이어야 한다.
+    - 주문 항목의 수량은 0 이상이어야 한다.
+    - 상품이 전달된 주문만 `완료됨` 으로 상태를 변경할 수 있다.
+
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+    
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+    RestaurantOwner->>+Customer: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
+    Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
+    
+    
+```
+
+```mermaid
+stateDiagram-v2
+    state 포장_주문_상태 {
+        [*] --> 대기중(WAITING) : 고객 주문 등록
+        대기중(WAITING) --> 접수됨(ACCEPTED) : 사장님 주문 접수
+        접수됨(ACCEPTED) --> 전달됨(SERVED) : 사장님 상품 전달
+        전달됨(SERVED) --> 완료됨(COMPLETED) : 사장님 주문 완료
+        완료됨(COMPLETED) --> [*] : 주문 종료
+    }
+
+```
+
+### 매장 주문
+
+- 상태
+    - 가게 테이블을 가진다.
+    - 매장 주문 상태를 가진다. (`대기중(WAITING)`→`접수됨(ACCEPTED)`→`전달됨(SERVED)`→`완료됨(COMPLETED)` 순서로 변경된다.)
+- 행위
+    - 매장 주문을 등록할 수 있다.
+    - 가게 테이블을 `사용` 설정할 수 있다.
+    - 가게 테이블을 `미사용` 설정할 수 있다.
+- 조건
+    - 주문 유형이 `매장 주문`이어야 한다.
+    - 매장 주문은 주문 항목의 수량이 0 미만일 수 있다.
+    - 사용하지 않는 가게 테이블에는 매장 주문을 등록할 수 없다.
+    - `완료됨` 으로 상태이면, 가게 테이블을 `미사용` 설정할 수 있다.
+    - 상품이 전달된 주문만 `완료됨` 으로 상태를 변경할 수 있다.
+
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>Customer: 가게 방문
+    Customer->>+RestaurantOwner: 가게 테이블 사용 요청
+    RestaurantOwner-->>+System: 가게 테이블 '사용중' 상태 변경 요청 
+    System-->>-RestaurantOwner: 가게 테이블 '사용중' 상태 변경 요청 완료
+    RestaurantOwner-->>-Customer: 가게 테이블 사용 요청 완료
+    
+    RestaurantOwner->>System: 가게 테이블 '고객 수' 변경 요청 
+    System-->>RestaurantOwner: 가게 테이블 '고객 수' 변경 요청 완료
+    
+    loop 매장 주문 요청
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+    
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+    RestaurantOwner->>+Customer: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
+    Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
+    end
+    Customer->>Customer: 가게 퇴장
+    RestaurantOwner->>+System: 테이블 사용 해지 요청
+    System-->>-RestaurantOwner: 테이블 사용 해지 요청 완료  
+    
+```
+
+```mermaid
+stateDiagram-v2
+    state 매장_주문_상태 {
+        [*] --> 대기중(WAITING) : 고객 주문 등록
+        대기중(WAITING) --> 접수됨(ACCEPTED) : 사장님 주문 접수
+        접수됨(ACCEPTED) --> 전달됨(SERVED) : 사장님 상품 전달
+        전달됨(SERVED) --> 완료됨(COMPLETED) : 사장님 주문 완료
+        완료됨(COMPLETED) --> [*] : 주문 종료
+    }
+
+```
+
+### 가게 테이블
+
+- 상태
+    - 이름을 가진다.
+    - 사용 여부를 가진다.
+    - 고객 수 정보를 가진다.
+- 행위
+    - 가게 테이블을 등록할 수 있다.
+    - 가게 테이블을 `사용 설정`할 수 있다.
+    - 가게 테이블을 `사용 해지`할 수 있다.
+    - 가게 테이블 목록을 조회할 수 있다.
+- 조건
+    - 가게 테이블의 이름은 비워 둘 수 없다.
+    - 사용하지 않는 가게 테이블에는 매장 주문을 등록할 수 없다.
+    - 가게 테이블은 고객 수는 0명 이상이어야 한다.
+    - 주문이 `완료됨` 으로 상태가 될 때까지 가게 테이블을 `사용 해지`할 수 없다.
+    - `사용 해지`인 가게 테이블은 고객 수를 변경할 수 없다.
+
+```mermaid
+classDiagram
+    class RestaurantTable {
+        UUID id
+        String name
+        int numberOfGuests
+        boolean occupied
+    }
+
+```
