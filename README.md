@@ -39,7 +39,6 @@ docker compose -p kitchenpos up -d
 - 메뉴의 가격을 변경할 수 있다.
 - 메뉴의 가격이 올바르지 않으면 변경할 수 없다.
   - 메뉴의 가격은 0원 이상이어야 한다.
-- 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
 - 메뉴를 노출할 수 있다.
 - 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 노출할 수 없다.
 - 메뉴를 숨길 수 있다.
@@ -106,44 +105,124 @@ docker compose -p kitchenpos up -d
 | 메뉴 그룹 목록 | Menu Group List | 등록된 메뉴 그룹을 확인할 수 있는 목록                    |
 
 ### 메뉴
- 한글명             | 영문명                      | 설명                                                  |
-|-----------------|--------------------------|-----------------------------------------------------|
-| 메뉴              | Menu                     | 손님이 주문할 수 있는 메뉴                                     |
-| 메뉴 가격           | Menu Price               | 메뉴의 가격으로, 메뉴에 속한 상품 금액의 합보다 같거나 작아야 한다.             |
-| 메뉴 이름           | Menu Name                | 메뉴의 이름으로, 비속어가 포함되어 있어서는 안된다.                       |
-| 비속어             | Profanity                | 비속어 감지 API 에서 비속어라고 판단하는 단어                         |
-| 메뉴에 속한 상품       | Menu Product             | 메뉴에 포함된 상품 <br> **ex, 혼국세트 = 국밥 + 음료수**             |
-| 메뉴에 속한 상품 금액의 합 | Menu Product Total Price | 메뉴에 포함된 각 상품 금액의 합 <br> (상품 금액의 합 = 상품 금액 \* 상품 개수) |
-| 노출된 메뉴          | Menu Display On          | 주문 가능한 메뉴                                           |
-| 숨겨진 메뉴          | Menu Display Off         | 주문 불가능한 메뉴                                          |
-| 메뉴 목록           | Menu List                | 등록된 메뉴를 확인할 수 있는 목록                                 |
+ 한글명             | 영문명                      | 설명                                                 |
+|-----------------|--------------------------|----------------------------------------------------|
+| 메뉴              | Menu                     | 손님이 주문할 수 있는 메뉴                                    |
+| 메뉴 가격           | Menu Price               | 메뉴의 가격으로, 메뉴에 속한 상품 금액의 합보다 같거나 작아야 한다.            |
+| 메뉴 이름           | Menu Name                | 메뉴의 이름으로, 비속어가 포함되어 있어서는 안된다.                      |
+| 비속어             | Profanity                | 비속어 감지 API 에서 비속어라고 판단하는 단어                        |
+| 메뉴에 속한 상품       | Menu Product             | 메뉴에 포함된 상품 <br> **ex, 혼국세트 = 국밥 + 음료수**            |
+| 메뉴에 속한 상품 수     | Menu Product Qnantity    | 메뉴에 포함된 각 상품 수                                     |
+| 메뉴에 속한 상품 금액의 합 | Menu Product Total Price | 메뉴에 포함된 각 상품 금액의 합 <br> (상품 금액의 합 = 상품 금액 \* 상품 수) |
+| 노출된 메뉴          | Menu Display On          | 주문 가능한 메뉴                                          |
+| 숨겨진 메뉴          | Menu Display Off         | 주문 불가능한 메뉴                                         |
+| 메뉴 목록           | Menu List                | 등록된 메뉴를 확인할 수 있는 목록                                |
 
 ### 주문 테이블 
- 한글명       | 영문명               | 설명                        |
-|-----------|-------------------|---------------------------|
-| 주문 테이블    | Order Table       | 매장 주문 시, 사용하는 테이블         |
+ 한글명       | 영문명               | 설명                         |
+|-----------|-------------------|----------------------------|
+| 주문 테이블    | Order Table       | 매장 주문 시, 사용하는 테이블          |
 | 주문 테이블 이름 | Order Table Name  | 주문 테이블의 이름으로, 값이 포함되어야 한다. |
-| 빈 테이블     | Empty Order Table | 미사용중인 테이블                 |
-| 방문한 손님    | Guest             | 주문 테이블을 사용하는 손님           |
-| 주문 테이블 목록 | Order Table List  | 등록된 주문 테이블을 확인할 수 있는 목록   |
+| 빈 테이블     | Empty Order Table | 미사용중인 테이블                  |
+| 방문한 손님 수  | Guest Quantity    | 주문 테이블을 사용하는 손님 수          |
+| 주문 테이블 목록 | Order Table List  | 등록된 주문 테이블을 확인할 수 있는 목록    |
 
 ### 주문
-| 한글명                     | 영문명                   | 설명                                                                                                                                    |
-| -------------------------- | ------------------------ |---------------------------------------------------------------------------------------------------------------------------------------|
-| 주문                       | Order                    | 메뉴를 주문하는 행위                                                                                                                           |
-| 주문 유형                  | Order Type               | 주문은 배달 주문, 포장 주문, 매장 주문의 유형을 가진다.                                                                                                     |
-| 배달 주문                  | Delivery Order           | 배달을 통해 메뉴를 주문하는 행위                                                                                                                    |
-| 배달 주소                  | Delivery Address         | 손님이 주문한 메뉴를 받고자 하는 주소                                                                                                                 |
-| 배달 대행사                | Rider Client             | 서빙된 주문을 손님에게 배달해주는 주체                                                                                                                 |
-| 포장 주문                  | Takeout Order            | 포장을 통해 메뉴를 주문하는 행위                                                                                                                    |
-| 매장 주문                  | EatIn Order              | 매장에서 메뉴를 주문하는 행위                                                                                                                      |
-| 주문 항목                  | OrderlineItem            | 주문에 포함된 메뉴 항목 <br> **ex, 주문1 = (돼지국밥 \* 2) + (소주 \* 1)**                                                                              |
-| 주문 상태                  | Order Status             | 주문 상태는 6개의 상태를 갖는다. <br> **(접수 대기중 상태, 접수된 상태, 서빙된 상태, 배달중 상태, 배달 완료된 상태, 완료된 상태)**                                                   |
-| 접수 대기 중 상태          | WATING                   | 주문 생성 시 기본 상태                                                                                                                         |
-| 접수된 상태                | ACCEPTED                 | 생성된 주문을 확인한 상태                                                                                                                        |
-| 서빙된 상태                | SERVED                   | 서빙은 주문 유형에 따라 다르게 해석될 수 있다. <br> **🛵 배달 주문: 배달 대행사에게 메뉴가 전달된 상태 <br> 🍱 포장 주문: 포장 손님에게 메뉴가 전달된 상태 <br> 🛎 매장 주문: 주문 테이블에 메뉴가 서빙된 상태** |
-| 배달중 상태                | DELIVERING               | 배달 대행사가 배달중인 상태                                                                                                                       |
-| 배달 완료된 상태           | DELIVERED                | 배달 대행사가 손님에게 메뉴를 전달한 상태                                                                                                               |
-| 완료된 상태                | COMPLETED                | 주문이 완료된 상태                                                                                                                            |
+| 한글명        | 영문명                   | 설명                                                                                                                                    |
+|------------| ------------------------ |---------------------------------------------------------------------------------------------------------------------------------------|
+| 주문         | Order                    | 메뉴를 주문하는 행위                                                                                                                           |
+| 주문 유형      | Order Type               | 주문은 배달 주문, 포장 주문, 매장 주문의 유형을 가진다.                                                                                                     |
+| 배달 주문      | Delivery Order           | 배달을 통해 메뉴를 주문하는 행위                                                                                                                    |
+| 배달 주소      | Delivery Address         | 손님이 주문한 메뉴를 받고자 하는 주소                                                                                                                 |
+| 배달 대행사     | Rider Client             | 서빙된 주문을 손님에게 배달해주는 주체                                                                                                                 |
+| 포장 주문      | Takeout Order            | 포장을 통해 메뉴를 주문하는 행위                                                                                                                    |
+| 매장 주문      | EatIn Order              | 매장에서 메뉴를 주문하는 행위                                                                                                                      |
+| 주문 항목      | OrderlineItem            | 주문에 포함된 메뉴 항목 <br> **ex, 주문1 = (돼지국밥 \* 2) + (소주 \* 1)**                                                                              |
+| 주문 상태      | Order Status             | 주문 상태는 6개의 상태를 갖는다. <br> **(접수 대기중 상태, 접수된 상태, 서빙된 상태, 배달중 상태, 배달 완료된 상태, 완료된 상태)**                                                   |
+| 접수 대기 중 상태 | WATING                   | 주문 생성 시 기본 상태                                                                                                                         |
+| 접수된 상태     | ACCEPTED                 | 생성된 주문을 확인한 상태                                                                                                                        |
+| 서빙된 상태     | SERVED                   | 서빙은 주문 유형에 따라 다르게 해석될 수 있다. <br> **🛵 배달 주문: 배달 대행사에게 메뉴가 전달된 상태 <br> 🍱 포장 주문: 포장 손님에게 메뉴가 전달된 상태 <br> 🛎 매장 주문: 주문 테이블에 메뉴가 서빙된 상태** |
+| 배달중 상태     | DELIVERING               | 배달 대행사가 배달중인 상태                                                                                                                       |
+| 배달 완료된 상태  | DELIVERED                | 배달 대행사가 손님에게 메뉴를 전달한 상태                                                                                                               |
+| 완료된 상태     | COMPLETED                | 주문이 완료된 상태                                                                                                                            |
+| 주문 목록      | Order List  | 등록된 주문을 확인할 수 있는 목록   |
 
 ## 모델링
+### 상품
+- `Product`을 등록할 수 있다.
+- `Product Price`이 올바르지 않으면 등록할 수 없다.
+  - `Product Price`은 0원 이상이어야 한다.
+- `Product Name`이 올바르지 않으면 등록할 수 없다.
+  - `Product Name`에는 `Profanity`가 포함될 수 없다.
+- `Product Price`을 변경할 수 있다.
+- `Product Price`이 올바르지 않으면 변경할 수 없다.
+  - `Product Price`은 0원 이상이어야 한다.
+- `Product Price`이 변경될 때 `Menu Price`이 `Menu Product Total Price`보다 크면 `Menu Display Off` 된다.
+- `Product List`을 조회할 수 있다.
+
+### 메뉴 그룹
+- `Menu Group`을 등록할 수 있다.
+- `Menu Group Name`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Group Name`은 비워 둘 수 없다.
+- `Menu Group List`을 조회할 수 있다.
+
+### 메뉴
+- 1 개 이상의 등록된 `Product`으로 `Menu`를 등록할 수 있다.
+- `Product`이 없으면 등록할 수 없다.
+- `Menu Product Quantity`은 0 이상이어야 한다.
+- `Menu Price`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Price`은 0원 이상이어야 한다.
+- `Menu Product Total Price`은 `Menu Price`보다 크거나 같아야 한다.
+- `Menu`는 특정 `Menu Group`에 속해야 한다.
+- `Menu Name`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Name`에는 `Profanity`가 포함될 수 없다.
+- `Menu Price`을 변경할 수 있다.
+- `Menu Price`이 올바르지 않으면 변경할 수 없다.
+  - `Menu Price`은 0원 이상이어야 한다.
+- `Menu`를 `Menu Display On`로 변경할 수 있다. 
+- `Menu Price`이 `Meny Product Total Price`보다 높을 경우 `Menu Display Off`가 된다.
+- `Menu`를 `Menu Display Off`로 변경할 수 있다.
+- `Menu List`을 조회할 수 있다.
+
+### 주문 테이블
+- `Order Table`을 등록할 수 있다.
+- `Order Table Name`이 올바르지 않으면 등록할 수 없다.
+  - `Order Table Name`은 비워 둘 수 없다.
+- `Empty Order Table`을 해지할 수 있다.
+- `Empty Order Table`로 설정할 수 있다.
+- `Order`의 `Order Status`가 `COMPLETED`가 아닌 경우 `Order Table`은 `Empty Order Table`로 설정할 수 없다.
+- `Guest Quantity`를 변경할 수 있다.
+- `Guest Quantity`가 올바르지 않으면 변경할 수 없다.
+  - `Guest Quantity`는 0 이상이어야 한다.
+- `Empty Order Table`은 `Guest Quantity`를 변경할 수 없다.
+- `Order Table List`을 조회할 수 있다.
+
+### 주문
+- 1개 이상의 등록된 `Menu`로 `Delivery Order`을 등록할 수 있다.
+- 1개 이상의 등록된 `Menu`로 `Takeout Order`을 등록할 수 있다.
+- 1개 이상의 등록된 `Menu`로 `EatIn Order`을 등록할 수 있다.
+- `Order Type`이 올바르지 않으면 등록할 수 없다.
+- `Menu`가 없으면 등록할 수 없다.
+- `EatIn Order`은 `OrderlineItem`의 수량이 0 미만일 수 있다.
+- `EatIn Order`을 제외한 `Order`의 경우 `OrderlineItem`의 수량은 0 이상이어야 한다.
+- `Delivery Address`가 올바르지 않으면 `Delivery Order`을 등록할 수 없다.
+  - `Delivery Address`는 비워 둘 수 없다.
+- `Empty Order Table`에는 `EatIn Order`을 등록할 수 없다.
+- `Menu Display Off`는 `Order`할 수 없다.
+- `Order`한 `Menu Price`은 실제 `Menu Price`과 일치해야 한다.
+- `Order`의 `Order Status`를 `ACCEPTED`로 변경한다.   
+  - `Order`의 `Order Status`가 `WATING`인 경우만 `ACCEPTED`로 변경할 수 있다. 
+  - `Delivery Order`의 `Order Status`가 `ACCEPTED` 가 되면 `Rider Client`를 호출한다.
+- `Order`의 `Order Status`를 `SERVED`로 변경한다.
+  - `Order`의 `Order Status`가 `ACCEPTED`인 경우만 `SERVED`로 변경할 수 있다. 
+- `Order`의 `Order Status`를 `DELIVERING`로 변경한다.
+  - `Delivery Order`만 `Order Status`를 `DELIVERING`로 변경할 수 있다.
+  - `Order`의 `Order Status`가 `SERVED`인 경우만 `DELIVERING`로 변경할 수 있다.
+- `Order`의 `Order Status`를 `DELIVERED`로 변경한다.
+  - `Order`의 `Order Status`가 `DELIVERING`인 경우만 `DELIVERED`로 변경할 수 있다.
+- `Order`의 `Order Status`를 `COMPLETED`로 변경한다.
+  - `Delivery Order`의 경우 `Order Status`가 `DELIVERED`인 경우만 `COMPLETED`로 변경할 수 있다.
+  - `Takeout Order` 또는 `EatIn Order`의 경우 `Order Status`가 `SERVED`인 경우만 `COMPLETED`로 변경할 수 있다.
+- `Order Table`의 모든 `Order Status`가 `COMPLETED`가 되면 `Empty Order Table`로 설정한다.
+- `Order Table`의 모든 `Order Status`가 `COMPLETED`가 아니라면 `Empty Order Table`로 설정하지 않는다.
+- `Order List`을 조회할 수 있다. 
