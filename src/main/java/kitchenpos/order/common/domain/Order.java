@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.order.common.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +16,7 @@ import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import kitchenpos.order.eatinorder.domain.OrderTable;
 
 @Table(name = "orders")
 @Entity
