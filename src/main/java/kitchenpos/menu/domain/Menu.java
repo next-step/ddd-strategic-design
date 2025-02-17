@@ -14,7 +14,6 @@ import jakarta.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import kitchenpos.menugroup.domain.MenuGroup;
 
 @Table(name = "menu")
 @Entity
