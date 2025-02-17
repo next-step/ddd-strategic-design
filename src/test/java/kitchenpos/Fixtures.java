@@ -3,7 +3,7 @@ package kitchenpos;
 import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.model.MenuGroup;
 import kitchenpos.menu.domain.model.MenuProduct;
-import kitchenpos.order.domain.model.*;
+import kitchenpos.order.common.model.*;
 import kitchenpos.product.domain.model.Product;
 
 import java.math.BigDecimal;

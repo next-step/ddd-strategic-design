@@ -1,7 +1,7 @@
 package kitchenpos.order.infra.repository;
 
-import kitchenpos.order.domain.model.OrderTable;
-import kitchenpos.order.domain.repository.OrderTableRepository;
+import kitchenpos.order.common.model.OrderTable;
+import kitchenpos.order.eatinorder.domain.repository.OrderTableRepository;
 
 import java.util.*;
 

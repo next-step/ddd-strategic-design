@@ -1,9 +1,9 @@
 package kitchenpos.order.infra.repository;
 
-import kitchenpos.order.domain.model.Order;
-import kitchenpos.order.domain.model.OrderStatus;
-import kitchenpos.order.domain.model.OrderTable;
-import kitchenpos.order.domain.repository.OrderRepository;
+import kitchenpos.order.common.domain.repository.OrderRepository;
+import kitchenpos.order.common.model.Order;
+import kitchenpos.order.common.model.OrderStatus;
+import kitchenpos.order.common.model.OrderTable;
 
 import java.util.*;
 
