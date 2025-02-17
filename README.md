@@ -39,7 +39,6 @@ docker compose -p kitchenpos up -d
 - 메뉴의 가격을 변경할 수 있다.
 - 메뉴의 가격이 올바르지 않으면 변경할 수 없다.
   - 메뉴의 가격은 0원 이상이어야 한다.
-- 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
 - 메뉴를 노출할 수 있다.
 - 메뉴의 가격이 메뉴에 속한 상품 금액의 합보다 높을 경우 메뉴를 노출할 수 없다.
 - 메뉴를 숨길 수 있다.
@@ -147,3 +146,81 @@ docker compose -p kitchenpos up -d
 | 완료된 상태                | COMPLETED                | 주문이 완료된 상태                                                                                                                            |
 
 ## 모델링
+### 상품
+- `Product`을 등록할 수 있다.
+- `Product Price`이 올바르지 않으면 등록할 수 없다.
+  - `Product Price`은 0원 이상이어야 한다.
+- `Product Name`이 올바르지 않으면 등록할 수 없다.
+  - `Product Name`에는 `Profanity`가 포함될 수 없다.
+- `Product Price`을 변경할 수 있다.
+- `Product Price`이 올바르지 않으면 변경할 수 없다.
+  - `Product Price`은 0원 이상이어야 한다.
+- `Product Price`이 변경될 때 `Menu Price`이 `Menu Product Total Price`보다 크면 `Menu Display Off` 된다.
+- `Product List`을 조회할 수 있다.
+
+### 메뉴 그룹
+- `Menu Group`을 등록할 수 있다.
+- `Menu Group Name`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Group Name`은 비워 둘 수 없다.
+- `Menu Group List`을 조회할 수 있다.
+
+### 메뉴
+- 1 개 이상의 등록된 `Product`으로 `Menu`를 등록할 수 있다.
+- `Product`이 없으면 등록할 수 없다.
+- `Menu Product Quantity`은 0 이상이어야 한다.
+- `Menu Price`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Price`은 0원 이상이어야 한다.
+- `Menu Product Total Price`은 `Menu Price`보다 크거나 같아야 한다.
+- `Menu`는 특정 `Menu Group`에 속해야 한다.
+- `Menu Name`이 올바르지 않으면 등록할 수 없다.
+  - `Menu Name`에는 `Profanity`가 포함될 수 없다.
+- `Menu Price`을 변경할 수 있다.
+- `Menu Price`이 올바르지 않으면 변경할 수 없다.
+  - `Menu Price`은 0원 이상이어야 한다.
+- `Menu`를 `Menu Display On` 상태로 변경할 수 있다. 
+- `Menu Price`이 `Meny Product Total Price`보다 높을 경우 `Menu Display Off`가 된다.
+- `Menu`를 `Menu Display Off` 상태로 변경할 수 있다.
+- `Menu List`을 조회할 수 있다.
+
+### 주문 테이블
+- `Order Table`을 등록할 수 있다.
+- `Order Table Name`이 올바르지 않으면 등록할 수 없다.
+  - `Order Table Name`은 비워 둘 수 없다.
+- `Empty Order Table`을 해지할 수 있다.
+- `Empty Order Table`로 설정할 수 있다.
+- `COMPLETED`가 아닌 `Order`이 있는 `Order Table`은 `Empty Order Table`로 설정할 수 없다.
+- `Guest Quantity`를 변경할 수 있다.
+- `Guest Quantity`가 올바르지 않으면 변경할 수 없다.
+  - `Guest Quantity`는 0 이상이어야 한다.
+- `Empty Order Table`은 `Guest Quantity`를 변경할 수 없다.
+- `Order Table List`을 조회할 수 있다.
+
+### 주문
+- 1개 이상의 등록된 메뉴로 `Delivery Order`을 등록할 수 있다.
+- 1개 이상의 등록된 메뉴로 `Takeout Order`을 등록할 수 있다.
+- 1개 이상의 등록된 메뉴로 `EatIn Order`을 등록할 수 있다.
+- `Order Type`이 올바르지 않으면 등록할 수 없다.
+- `Menu`가 없으면 등록할 수 없다.
+- `EatIn Order`은 `OrderlineItem`의 수량이 0 미만일 수 있다.
+- `EatIn Order`을 제외한 `Order`의 경우 `OrderlineItem`의 수량은 0 이상이어야 한다.
+- `Delivery Address`가 올바르지 않으면 `Delivery Order`을 등록할 수 없다.
+  - `Delivery Address`는 비워 둘 수 없다.
+- `Empty Order Table`에는 `EatIn Order`을 등록할 수 없다.
+- `Menu Display Off`는 `Order`할 수 없다.
+- `Order`한 `Menu Price`은 실제 `Menu Price`과 일치해야 한다.
+- `Order`의 `Order Status`를 `ACCEPTED`로 변경한다.   
+- `Order`의 `Order Status`가 `WATING`인 경우만 `ACCEPTED`로 변경할 수 있다. 
+- `Delivery Order`의 `Order Status`가 `ACCEPTED` 가 되면 `Rider Client`를 호출한다.
+- `Order`의 `Order Status`를 `SERVED`로 변경한다.
+- `Order`의 `Order Status`가 `ACCEPTED`인 경우만 `SERVED`로 변경할 수 있다. 
+- `Order`의 `Order Status`를 `DELIVERING`로 변경한다.
+- `Delivery Order`만 `Order Status`를 `DELIVERING`로 변경할 수 있다.
+- `Order`의 `Order Status`가 `SERVED`인 경우만 `DELIVERING`로 변경할 수 있다.
+- `Order`의 `Order Status`를 `DELIVERED`로 변경한다.
+- `Order`의 `Order Status`가 `DELIVERING`인 경우만 `DELIVERED`로 변경할 수 있다.
+- `Order`의 `Order Status`를 `COMPLETED`로 변경한다.
+- `Delivery Order`의 경우 `Order Status`가 `DELIVERED`인 경우만 `COMPLETED`로 변경할 수 있다.
+- `Takeout Order` 또는 `EatIn Order`의 경우 `Order Status`가 `SERVED`인 경우만 `COMPLETED`로 변경할 수 있다.
+- `Order Table`의 모든 `EatIn Order`의 `Order Status`가 `COMPLETED`가 되면 `Empty Order Table`로 설정한다.
+- `Order Table`의 모든 `EatIn Order`의 `Order Status`가 `COMPLETED`가 아니라면 `Empty Order Table`로 설정하지 않는다.
+- `Order List`을 조회할 수 있다. 
