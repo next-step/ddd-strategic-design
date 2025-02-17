@@ -129,6 +129,8 @@ docker compose -p kitchenpos up -d
 | 메뉴 가격    | Menu Price     | - 메뉴의 단위 가격을 의미한다. <br/>- 메뉴 가격은 0원 이상이어야 합니다. <br/>- 메뉴를 구성하는 메뉴 상품의 총합을 넘을 수 없다. |
 | 메뉴 이름    | Menu Name      | - 메뉴의 이름을 의미한다. <br/>- 메뉴 이름은 1자 이상이어야 합니다. <br/>- 메뉴 이름은 비속어나 욕설을 사용할 수 없습니다.     |
 | 메뉴 노출 상태 | Menu Displayed | - 메뉴를 고객에게 노출 시키는 상태를 의미한다. (노출/숨김)                                                |
+| 노출 메뉴    | Displayed Menu | - 고객에게 노출된 메뉴를 의미한다.                                                               |
+| 숨김 메뉴    | Hide Menu      | - 고객에게 숨겨진 메뉴를 의미한다.                                                               |
 
 ### 주문
 
@@ -183,6 +185,7 @@ docker compose -p kitchenpos up -d
 |--------------|--------------------------------|------------------------------------------------|
 | 가게 테이블       | Restaurant Table               | - 가게의 테이블을 의미한다.                               |
 | 가게 테이블 이름    | Restaurant Table Name          | - 테이블의 이름을 의미한다. 1번, 2번 등 번호로 테이블 이름을 부르기도 한다. |
+| 가게 테이블 사용 상태 | Restaurant Occupied            | - 테이블을 사용중인지를 의미한다.                            |
 | 사용중인 가게 테이블  | Occupied Restaurant Table      | - 고객이 사용중인 테이블을 나타낸다.                          |
 | 미사용중인 가게 테이블 | UnOccupied Restaurant Table    | - 미사용 테이블을 나타낸다.                               |
 | 가게 테이블 고객 수  | Restaurant Table numberOfGuest | - 해당 테이블을 사용중인 고객 수를 의미한다.                     |
