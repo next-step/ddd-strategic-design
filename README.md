@@ -179,9 +179,9 @@ docker compose -p kitchenpos up -d
 - `Menu Price`을 변경할 수 있다.
 - `Menu Price`이 올바르지 않으면 변경할 수 없다.
   - `Menu Price`은 0원 이상이어야 한다.
-- `Menu`를 `Menu Display On` 상태로 변경할 수 있다. 
+- `Menu`를 `Menu Display On`로 변경할 수 있다. 
 - `Menu Price`이 `Meny Product Total Price`보다 높을 경우 `Menu Display Off`가 된다.
-- `Menu`를 `Menu Display Off` 상태로 변경할 수 있다.
+- `Menu`를 `Menu Display Off`로 변경할 수 있다.
 - `Menu List`을 조회할 수 있다.
 
 ### 주문 테이블
@@ -190,7 +190,7 @@ docker compose -p kitchenpos up -d
   - `Order Table Name`은 비워 둘 수 없다.
 - `Empty Order Table`을 해지할 수 있다.
 - `Empty Order Table`로 설정할 수 있다.
-- `COMPLETED`가 아닌 `Order`이 있는 `Order Table`은 `Empty Order Table`로 설정할 수 없다.
+- `Order`의 `Order Status`가 `COMPLETED`가 아닌 경우 `Order Table`은 `Empty Order Table`로 설정할 수 없다.
 - `Guest Quantity`를 변경할 수 있다.
 - `Guest Quantity`가 올바르지 않으면 변경할 수 없다.
   - `Guest Quantity`는 0 이상이어야 한다.
@@ -198,9 +198,9 @@ docker compose -p kitchenpos up -d
 - `Order Table List`을 조회할 수 있다.
 
 ### 주문
-- 1개 이상의 등록된 메뉴로 `Delivery Order`을 등록할 수 있다.
-- 1개 이상의 등록된 메뉴로 `Takeout Order`을 등록할 수 있다.
-- 1개 이상의 등록된 메뉴로 `EatIn Order`을 등록할 수 있다.
+- 1개 이상의 등록된 `Menu`로 `Delivery Order`을 등록할 수 있다.
+- 1개 이상의 등록된 `Menu`로 `Takeout Order`을 등록할 수 있다.
+- 1개 이상의 등록된 `Menu`로 `EatIn Order`을 등록할 수 있다.
 - `Order Type`이 올바르지 않으면 등록할 수 없다.
 - `Menu`가 없으면 등록할 수 없다.
 - `EatIn Order`은 `OrderlineItem`의 수량이 0 미만일 수 있다.
@@ -211,18 +211,18 @@ docker compose -p kitchenpos up -d
 - `Menu Display Off`는 `Order`할 수 없다.
 - `Order`한 `Menu Price`은 실제 `Menu Price`과 일치해야 한다.
 - `Order`의 `Order Status`를 `ACCEPTED`로 변경한다.   
-- `Order`의 `Order Status`가 `WATING`인 경우만 `ACCEPTED`로 변경할 수 있다. 
-- `Delivery Order`의 `Order Status`가 `ACCEPTED` 가 되면 `Rider Client`를 호출한다.
+  - `Order`의 `Order Status`가 `WATING`인 경우만 `ACCEPTED`로 변경할 수 있다. 
+  - `Delivery Order`의 `Order Status`가 `ACCEPTED` 가 되면 `Rider Client`를 호출한다.
 - `Order`의 `Order Status`를 `SERVED`로 변경한다.
-- `Order`의 `Order Status`가 `ACCEPTED`인 경우만 `SERVED`로 변경할 수 있다. 
+  - `Order`의 `Order Status`가 `ACCEPTED`인 경우만 `SERVED`로 변경할 수 있다. 
 - `Order`의 `Order Status`를 `DELIVERING`로 변경한다.
-- `Delivery Order`만 `Order Status`를 `DELIVERING`로 변경할 수 있다.
-- `Order`의 `Order Status`가 `SERVED`인 경우만 `DELIVERING`로 변경할 수 있다.
+  - `Delivery Order`만 `Order Status`를 `DELIVERING`로 변경할 수 있다.
+  - `Order`의 `Order Status`가 `SERVED`인 경우만 `DELIVERING`로 변경할 수 있다.
 - `Order`의 `Order Status`를 `DELIVERED`로 변경한다.
-- `Order`의 `Order Status`가 `DELIVERING`인 경우만 `DELIVERED`로 변경할 수 있다.
+  - `Order`의 `Order Status`가 `DELIVERING`인 경우만 `DELIVERED`로 변경할 수 있다.
 - `Order`의 `Order Status`를 `COMPLETED`로 변경한다.
-- `Delivery Order`의 경우 `Order Status`가 `DELIVERED`인 경우만 `COMPLETED`로 변경할 수 있다.
-- `Takeout Order` 또는 `EatIn Order`의 경우 `Order Status`가 `SERVED`인 경우만 `COMPLETED`로 변경할 수 있다.
-- `Order Table`의 모든 `EatIn Order`의 `Order Status`가 `COMPLETED`가 되면 `Empty Order Table`로 설정한다.
-- `Order Table`의 모든 `EatIn Order`의 `Order Status`가 `COMPLETED`가 아니라면 `Empty Order Table`로 설정하지 않는다.
+  - `Delivery Order`의 경우 `Order Status`가 `DELIVERED`인 경우만 `COMPLETED`로 변경할 수 있다.
+  - `Takeout Order` 또는 `EatIn Order`의 경우 `Order Status`가 `SERVED`인 경우만 `COMPLETED`로 변경할 수 있다.
+- `Order Table`의 모든 `Order Status`가 `COMPLETED`가 되면 `Empty Order Table`로 설정한다.
+- `Order Table`의 모든 `Order Status`가 `COMPLETED`가 아니라면 `Empty Order Table`로 설정하지 않는다.
 - `Order List`을 조회할 수 있다. 
