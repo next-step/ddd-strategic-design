@@ -109,11 +109,12 @@ docker compose -p kitchenpos up -d
 
 
 # 상품
-| 한글명      | 영문명                  | 설명                        |
-|----------|----------------------|---------------------------|
-| 상품       | product              |메뉴에 포함되어 있는 개별 상품 : 새우버거, 감자튀김, 콜라  |
-| 상품 가격    | price                | 판매되는 상품의 가격               |
-| 상품 명     | name                 | 상품의 이름                    |
+| 한글명   | 영문명       | 설명                                 |
+|-------|-----------|------------------------------------|
+| 상품    | product   | 메뉴에 포함되어 있는 개별 상품 : 새우버거, 감자튀김, 콜라 |
+| 상품 가격 | price     | 판매되는 상품의 가격                        |
+| 상품 명  | name      | 상품의 이름                             |
+| 상품 번호 | productId | 상품 식별을 위한 고유한 번호                   |
 
 
 
@@ -128,17 +129,19 @@ docker compose -p kitchenpos up -d
 | 메뉴 검증  | menu validation | 메뉴의 정보와 메뉴를 구성하는 메뉴 상품들의 정보가 동일한지, <br/>메뉴 정보에 문제는 없는지 검증합니다.                |
 
 # 메뉴 상품
-| 한글명      | 영문명         | 설명                                  |
-|----------|-------------|-------------------------------------|
-| 메뉴 상품    | menuProduct | 한 메뉴의 상품, 그리고 그 상품의 수량을 포함하는 개념입니다. |
-| 메뉴 상품 수량 | quantity    | 메뉴 상품의 수량                           |
-|메뉴 상품 총합	|totalMenuProductPrice|	메뉴를 구성하는 상품의 가격 총합|
+| 한글명          | 영문명                   | 설명                                  |
+|--------------|-----------------------|-------------------------------------|
+| 메뉴 상품        | menuProduct           | 한 메뉴의 상품, 그리고 그 상품의 수량을 포함하는 개념입니다. |
+| 메뉴 상품 수량     | quantity              | 메뉴 상품의 수량                           |
+| 메뉴 상품 총합 금액	 | totalMenuProductPrice | 	메뉴를 구성하는 상품의 가격 총합                 |
+| 메뉴 번호	       | menuId                | 	메뉴를 구분하기 위한 고유 번호                  |
 
 # 메뉴 그룹
-| 한글명    | 영문명       | 설명               |
-|--------|-----------|------------------|
-| 메뉴 그룹  | menuGroup |1개 이상의 메뉴를 묶어서 그룹으로 만든 것<br/> ex) 햄버거 : 새우버거,치킨버거<br/> 사이드 : 감자튀김, 치즈스틱<br/> 음료 : 콜라, 사이다 |
-| 메뉴 그룹명 | name      | 메뉴 그룹의 이름 |
+| 한글명     | 영문명         | 설명                                                                                        |
+|---------|-------------|-------------------------------------------------------------------------------------------|
+| 메뉴 그룹   | menuGroup   | 1개 이상의 메뉴를 묶어서 그룹으로 만든 것<br/> ex) 햄버거 : 새우버거,치킨버거<br/> 사이드 : 감자튀김, 치즈스틱<br/> 음료 : 콜라, 사이다 |
+| 메뉴 그룹명  | name        | 메뉴 그룹의 이름                                                                                 |
+| 메뉴 그룹번호 | menuGroupId | 메뉴 그룹 번호                                                                                  |
 
 
 # 주문
@@ -151,7 +154,7 @@ docker compose -p kitchenpos up -d
 | 주문 메뉴 개수 | quantity      | 주문에 포함된 메뉴의 개수를 의미합니다.                                                                                                                                                                      |
 | 주문 상품 금액 | price         | 주문에 포함된 메뉴의 금액을 의미합니다. ex: 후라이드 치킨 가격이 12000원이고 2개라면 24000원이 됩니다.                                                                                                                           |
 | 주문 상태    | orderStatus   | 주문의 현재 상태를 의미합니다.                                                                                                                                                                           |
-| 주문 id     | orderId       | 주문을 식별할 수 있는 id를 의미합니다.                                                                                                                                                                     |
+| 주문 번호    | orderId       | 주문을 식별할 수 있는 번호를 의미합니다.                                                                                                                                                                     |
 
 
 ## 주문 유형
@@ -214,8 +217,8 @@ docker compose -p kitchenpos up -d
 | 빈 테이블          | clearedTable       | 고객이 없는 주문 테이블이며, 고객이 없는 주문 테이블은 고객을 배정하여 주문을 받을 수 있다.                   |
 | 배정             | sit                | 매장내 식사 주문 고객에게 빈 테이블을 할당합니다.                                            |
 | 회수             | clear              | 매장내 식사 주문 고객의 식사가 완료되었을때, 테이블을 정리하고 배정가능 상태로 만듭니다.                      |
-| 고객이 배정된 테이블	   | assignedTable	     |고객이 배정된 테이블이며, 고객 배정 이후 주문을 등록할 수 있다
-| 미완료 주문 테이블     | 	pendingOrderTable |	완료되지 않은 주문이 있는 주문 테이블
+| 고객이 배정된 테이블	   | assignedTable	     |고객이 배정된 테이블이며, 고객 배정 이후 주문을 등록할 수 있다|
+| 미완료 주문 테이블     | 	pendingOrderTable |	완료되지 않은 주문이 있는 주문 테이블|
 
 
 
@@ -244,7 +247,7 @@ docker compose -p kitchenpos up -d
     - `product`의 `price`이 0원 이상이어야 합니다.
     - `product`의 `name`에는 `profanity`가 포함될 수 없습니다.<br/><br/>
 ### `product`의 `price`을 변경할 수 있습니다.<br/>
-- 등록되어 있는 `product`의 `id`와 변경할 `product`의 `name`,`price`,`id`를 입력받습니다.<br/>
+- 등록되어 있는 `product`의 `productId`와 변경할 `product`의 `name`,`price`,`productId`를 입력받습니다.<br/>
   - ### 검증
     - `product`의 `price`가 0원 이상이어야 합니다.
     - `menu`의 `price`가 `menu`가 속한 `Product`의 `price`들의 총합보다 크면 `hiddenMenu`가 됩니다.
@@ -268,20 +271,20 @@ docker compose -p kitchenpos up -d
       - 등록하려는 `menu`의 `price`가 `menu`에 포함된 `product`의 총 `price`보다 높으면 안됩니다.
       - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
       - `menu`의 `menuProduct`들 총 갯수와 `menuProduct`들 각각을 구성하는 `product`들의 총 갯수는 같아야 합니다.
-      - `menu`의 `price`는 `totalMentProductPrice`이하여야 합니다. 
+      - `menu`의 `price`는 `totalMenuProductPrice`이하여야 합니다. 
   <br/>
 ### `menu`의 `price`를 변경할 수 있습니다.
-  - `menu` 의 id와 변경할 `menu`의 `name`,`price`,`menuGroup`,`menuProduct`들을 입력받습니다.
+  - `menu` 의 `menuId`와 변경할 `menu`의 `name`,`price`,`menuGroup`,`menuProduct`들을 입력받습니다.
     - ### 검증
       - `price`를 수정하려는 `menu`는 이미 등록이 되어 있는 `menu`여야 합니다.
       - `menu`의 `price`는 0원 이상 이어야 합니다.
-      - `menu`의 `price`가 `menuProduct`들의 총`price`보다 높으면 안됩니다.
+      - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
       - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
       
 ### `menu`를 `visibleMenu`로 설정할 수 있습니다.
   - ### 검증
       - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
-      - `menu`의 `price`가 `menuProduct`들의 총 `price`보다 높으면 안됩니다.
+      - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
 <br/>
 ### `menu`를 `hiddenMenu`로 설정할 수 있습니다.
   - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
@@ -299,11 +302,11 @@ docker compose -p kitchenpos up -d
 
 ### `menuGroup`을 등록할 수 있습니다.
 - `menuGroup`의 `name`을 입력하여 등록합니다.
-- `menuGroup`은 랜덤한 `id`를 사용하여 등록합니다.
+- `menuGroup`은 랜덤한 `menuGroupId`를 사용하여 등록합니다.
   - ### 검증
     - `menuGroup`의 `name`은 비워 둘 수 없습니다.
 <br/>
-### `menuGroup`의 목록을 `조회`할 수 있습니다.
+### `menuGroup`의 목록을 조회할 수 있습니다.
 
 
 ## 7.orderTable
@@ -351,8 +354,6 @@ docker compose -p kitchenpos up -d
 `orderType`에는 `deliveryOrder`, `takeOutOrder`, `eatInOrder`가 있습니다.
 
 
-## orderType별 orderStatus 변화
-![orderStatusFlow.png](assets/images/orderStatusFlow.png)
 
 ## 주문 등록 공통 기능 
 - `order`의 `orderType`, `orderDateTime`, `orderMenu`, `quantity`, `price`을 입력하여 등록합니다.
@@ -370,7 +371,16 @@ docker compose -p kitchenpos up -d
 
 
 ### 9. 배달 주문
-### `takeOutOrder`를 등록합니다.
+```mermaid
+stateDiagram-v2
+배달&nbsp;주문시작 --> 접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder
+접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder --> 접수된&nbsp;주문<br/>acceptedOrder
+접수된&nbsp;주문<br/>acceptedOrder --> 제공된&nbsp;주문<br/>servedOrder
+제공된&nbsp;주문<br/>servedOrder --> 배달중인&nbsp;주문<br/>deliveringOrder  
+배달중인&nbsp;주문<br/>deliveringOrder --> 배달완료된&nbsp;주문<br/>deliveredOrder  
+배달완료된&nbsp;주문<br/>deliveredOrder --> 완료된&nbsp;주문<br/>completedOrder
+```
+### `deliveryOrder`를 등록합니다.
 - 주문 등록 공통 기능을 진행합니다.
 - ### 검증
   - 공통 주문 등록 정책을 만족해야 합니다.
@@ -407,6 +417,13 @@ docker compose -p kitchenpos up -d
 
 
 ## 10. 포장 주문
+```mermaid
+stateDiagram-v2
+포장&nbsp;주문시작 --> 접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder
+접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder --> 접수된&nbsp;주문<br/>acceptedOrder
+접수된&nbsp;주문<br/>acceptedOrder --> 제공된&nbsp;주문<br/>servedOrder
+제공된&nbsp;주문<br/>servedOrder -->  완료된&nbsp;주문<br/>completedOrder
+```
 ### `takeOutOrder`를 등록합니다.
 - 주문 등록 공통 기능을 진행합니다.
   - ### 검증
@@ -428,7 +445,14 @@ docker compose -p kitchenpos up -d
   - `order`의 현재 `orderStatus`가 `servedOrder`일 때만 `order`를 완료할 수 있습니다.
 
 
-## 11. eatInOrder 주문 과정
+## 11. eatInOrder 주문
+```mermaid
+stateDiagram-v2
+매장내&nbsp;식사주문시작 --> 접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder
+접수&nbsp;대기중인&nbsp;주문<br/>waitingOrder --> 접수된&nbsp;주문<br/>acceptedOrder
+접수된&nbsp;주문<br/>acceptedOrder --> 제공된&nbsp;주문<br/>servedOrder
+제공된&nbsp;주문<br/>servedOrder -->  완료된&nbsp;주문<br/>completedOrder
+```
 ### `eatInorder`를 등록합니다.
 `orderTable`을 `order`에 설정합니다.
 - 주문 등록 공통 기능을 진행합니다.
