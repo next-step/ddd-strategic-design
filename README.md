@@ -137,4 +137,25 @@ docker compose -p kitchenpos up -d
 | 포장 주문 | Takeout Order | 매장에서 포장되어 고객이 직접 수령하는 주문 유형 |
 | 매장 주문 | Eat-in Order | 매장 내 주문 테이블에서 이루어지는 주문 유형 |
 
+### 주문 상태
+
+| 주문 상태 | Order Status | 설명 |
+|---------|--------------|------|
+| 접수 대기 | PENDING | 고객이 주문을 완료했으나, 매장에서 아직 접수하지 않은 상태 |
+| 접수 | ACCEPTED | 매장에서 주문을 확인하고 접수한 상태 |
+| 준비 중 | PREPARING | 주문한 음식을 조리/준비하고 있는 상태 |
+| 서빙 중 | SERVING | (매장 내 주문) 음식이 준비되어 테이블로 서빙되는 중 |
+| 배달 중 | DELIVERING | (배달 주문) 배달원이 음식을 배달하는 중 |
+| 배달 완료 | DELIVERED | (배달 주문) 배달이 완료된 상태 |
+| 완료 | COMPLETED | 주문이 최종적으로 완료된 상태 |
+| 취소 | CANCELLED | 주문이 취소된 상태 |
+
+주문 상태 흐름:
+1. 매장 내 주문:
+   PENDING → ACCEPTED → PREPARING → SERVING → COMPLETED
+
+2. 배달 주문:
+   PENDING → ACCEPTED → PREPARING → DELIVERING → DELIVERED → COMPLETED
+
+※ 모든 상태에서 CANCELLED로 변경될 수 있음
 ## 모델링
