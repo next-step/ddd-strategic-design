@@ -123,16 +123,6 @@ docker compose -p kitchenpos up -d
 | 메뉴 노출 | Display Menu | 메뉴를 화면이나 목록에 노출하는 것.                 |
 | 메뉴 숨김 | Not Display Menu | 메뉴를 화면에서 숨김 처리하는 것.                  |
 
-
-### 주문 테이블
-
-| 한글명       | 영문명               | 설명                        |
-|-----------|-------------------|---------------------------|
-| 주문 테이블    | Order Table       | 매장 내에서 손님에게 음식을 제공하는 테이블. |
-| 주문 테이블 이름 | Order Table Name  | 매장 내 테이블을 구분하기 위해 사용하는 단어. |
-| 빈 주문 테이블  | Empty Order Table | 현재 사용 중이지 않은 주문 테이블.      |
-| 방문 손님 수   | Number Of Guest   | 해당 주문 테이블에 앉아 있는 손님 수.    |
-
 ### 매장 주문
 
 | 한글명     | 영문명               | 설명                                                                                                                                |
@@ -145,8 +135,16 @@ docker compose -p kitchenpos up -d
 | 홀 주문    | EatIn Order       | 매장에서 주문하고 식사하는 방식.                                                                                                                |
 | 포장 주문   | Takeout Order     | 주문한 음식을 포장하여 매장에서 직접 수령하는 방식.                                                                                                     |
 
+### 주문 테이블 (매장 주문 전용)
 
-### 배달 주문 
+| 한글명       | 영문명               | 설명                        |
+|-----------|-------------------|---------------------------|
+| 주문 테이블    | Order Table       | 매장 내에서 손님에게 음식을 제공하는 테이블. |
+| 주문 테이블 이름 | Order Table Name  | 매장 내 테이블을 구분하기 위해 사용하는 단어. |
+| 빈 주문 테이블  | Empty Order Table | 현재 사용 중이지 않은 주문 테이블.      |
+| 방문 손님 수   | Number Of Guest   | 해당 주문 테이블에 앉아 있는 손님 수.    |
+
+### 배달 주문
 | 한글명       | 영문명      | 설명        |
 |-----------|----------|-----------|
 | 주문 종류(배달) | DELIVERY | 배달 주문 종류. |
@@ -158,10 +156,77 @@ docker compose -p kitchenpos up -d
 | 완료된 주문    | Completed Order | 주문의 모든 처리가 종료되고 결제 및 후속 작업이 마무리된 최종 상태 |
 | 미완료된 주문   | Uncompleted Order | 주문 처리 과정 중 일부 단계가 완료되지 않은 상태 |
 | 배달 대행사  | Delivery Agency   | 외부 음식 배달 서비스 제공 파트너.      |
- 
-### 공통 
+
+### 공통
 | 한글명       | 영문명      | 설명        |
 |-----------|----------|-----------|
 | 비속어   | Profanity | 모욕적이거나 불쾌감을 주는 단어나 문구.                    |
 
 ## 모델링
+### Product
+- `Product`는 `name`과 `price`를 가지고 있다.
+- `Product`는 `name`과 `price`를 입력하여 등록 가능하다.
+  - 등록 정책
+    - `name`과 `price`은 반드시 입력되어야 한다.
+    - `name`은 `Profanity`가 포함될 수 없다.
+    - `price`은 0원 이상이어야 한다.
+- `Product`의 `price`을 변경할 수 있다.
+  - 변경 정책
+    - `price`은 0원 이상이어야 한다.
+  - `Menu`의 `price`이 속한 `product`의 가격 총합을 초과하면, `Not Display Menu`가 된다.
+- `Product` 목록을 조회할 수 있다.
+
+### MenuGroup
+- `MenuGroup`은 `name`을 가지고 있다.
+- `MenuGroup`을 `name`을 입력하여 등록할 수 있다.
+  - 등록 정책
+    - `name`은 공백만 입력할 수 없으며 반드시 입력되어야 한다.
+- `MenuGroup` 목록을 조회할 수 있다.
+
+### Menu
+- `Menu`는 `name`, `price`, `menuGroup`, `displayed`, `menuProduct`를 가지고 있다.
+- `Menu`를 등록할 수 있다.
+  - `name`, `price`, `menuGroup`, `displayed`를 입력하여 등록한다.
+  - 등록 정책
+    - 1개 이상의 `MenuProduct`가 있어야 한다.
+    - `MenuProduct`의 `quantity`는 0이상이어야 한다.
+    - `name`, `price`, `menuGroup`은 반드시 입력되어야 한다.
+    - `name`은 `profanity`가 포함될 수 없다.
+      - `PurgomalumClient`을 사용하여 올바른 `name`인지 확인한다.
+    - `price`는 0 이상이어야 한다.
+    - `Menu`의 `price`는 해당 `Menu`가 속한 `Product`들의 총 가격을 초과할 수 없다.
+- `Menu`의 가격을 변경할 수 있다.
+  - 변경 정책
+    - `price`은 반드시 입력되어야 하며 0원 이상이어야 한다.
+    - `Menu`의 `price`는 해당 `Menu`가 속한 `Product`들의 총 가격을 초과할 수 없다.
+- `Not Display Menu`가 된다.
+  - `displayed`를 `false`로 변경하여 `Not Display Menu`로 만든다.
+  - 변경 정책
+    - `Menu`의 `price`는 해당 `Menu`가 속한 `Product`들의 총 가격을 초과할 수 없다.
+- `Display Menu`가 된다.
+  - `dispayed`를 `true`로 변경하여 `Display Menu`로 만든다.
+- `Menu`의 목록을 조회할 수 있다.
+
+### OrderTable
+- `OrderTable`은 `name`, `numberOfCustomer`, `occupied`를 가지고 있다.
+- `OrderTable`은 `name`을 입력하여 등록할 수 있다.
+  - `numberOfCustomer`을 0으로 등록한다.
+  - `occupied`를 false로 등록한다.
+  - 정책
+    - `OrderTableName`은 공백만 입력할 수 없으며 반드시 입력되어야 한다.
+- `OrderTable`이 `Occupied Order Table`로 된다.
+  - `occupied`가 true로 변경된다.
+- `OrderTable`이 `Empty Order Table`로 된다.
+  - `numberOfCustomer`을 0으로 변경한다.
+  - `occupied`를 false로 변경한다.
+  - 정책
+    - `Occupied Order Table`은 `Empty Order Table`가 될 수 없다.
+- `numberOfCustomer`를 변경할 수 있다.
+  - 정책
+    - 음수로는 변경할 수 없다.
+    - `Empty Order Table`이면 변경할 수 없다.
+- `OrderTable` 목록을 조회할 수 있다.
+
+### Order
+- `Order`는 `orderType`, `orderStatus`, `orderDateTime`, `OrderLineItem`, `deliveryAddress`, `OrderTable`을 가진다.
+- `Order` 목록을 조회할 수 있다.
