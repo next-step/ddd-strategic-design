@@ -228,7 +228,7 @@ docker compose -p kitchenpos up -d
 
 ### `메뉴 등록하기(create menu)` 정책
 - 하나 이상의 `상품(product)`이 포함된 경우에만 `메뉴(menu)`를 등록할 수 있다.
-- `메뉴 가격(menu price)`이 `메뉴 상품(menu product)` 가격 합보다 크거나 같아야 등록이 가능하다.
+- `메뉴(menu)`에 속한 `메뉴 상품(menu product)` 금액의 합은 `메뉴 가격(menu price)`보다 크거나 같아야 등록이 가능하다.
 
 ### `메뉴 가격 변경하기(change menu price)` 정책
 - `메뉴 가격(menu price)`이 0원 이상인 경우에만 변경할 수 있다.
