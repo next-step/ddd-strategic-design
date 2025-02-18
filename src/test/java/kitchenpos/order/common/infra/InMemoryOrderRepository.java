@@ -10,9 +10,10 @@ import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 
-public class InMemoryOrderRepository implements OrderRepository {
+public class InMemoryOrderRepository implements OrderRepository, EatInOrderRepository {
 
     private final Map<UUID, Order> orders = new HashMap<>();
 

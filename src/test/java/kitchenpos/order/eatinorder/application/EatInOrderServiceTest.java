@@ -24,6 +24,7 @@ import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
 import kitchenpos.order.eatinorder.infra.InMemoryOrderTableRepository;
@@ -39,16 +40,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 class EatInOrderServiceTest {
 
     private OrderRepository orderRepository;
+    private EatInOrderRepository eatInOrderRepository;
     private MenuRepository menuRepository;
     private OrderTableRepository orderTableRepository;
     private EatInOrderService eatInOrderService;
 
     @BeforeEach
     void setUp() {
-        orderRepository = new InMemoryOrderRepository();
+        InMemoryOrderRepository inMemoryOrderRepository = new InMemoryOrderRepository();
+        orderRepository = inMemoryOrderRepository;
+        eatInOrderRepository = inMemoryOrderRepository;
         menuRepository = new InMemoryMenuRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
-        eatInOrderService = new EatInOrderService(orderRepository, menuRepository, orderTableRepository);
+        eatInOrderService = new EatInOrderService(orderRepository, eatInOrderRepository, menuRepository,
+            orderTableRepository);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 매장 주문을 등록할 수 있다.")

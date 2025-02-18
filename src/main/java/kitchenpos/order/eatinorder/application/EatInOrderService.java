@@ -18,6 +18,7 @@ import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,14 @@ import org.springframework.stereotype.Service;
 public class EatInOrderService implements CreateOrder, AcceptOrder, ServeOrder, CompleteOrder {
 
     private final OrderRepository orderRepository;
+    private final EatInOrderRepository eatInOrderRepository;
     private final MenuRepository menuRepository;
     private final OrderTableRepository orderTableRepository;
 
-    public EatInOrderService(OrderRepository orderRepository, MenuRepository menuRepository,
-        OrderTableRepository orderTableRepository) {
+    public EatInOrderService(OrderRepository orderRepository, EatInOrderRepository eatInOrderRepository,
+        MenuRepository menuRepository, OrderTableRepository orderTableRepository) {
         this.orderRepository = orderRepository;
+        this.eatInOrderRepository = eatInOrderRepository;
         this.menuRepository = menuRepository;
         this.orderTableRepository = orderTableRepository;
     }
@@ -127,7 +130,7 @@ public class EatInOrderService implements CreateOrder, AcceptOrder, ServeOrder, 
         order.setStatus(OrderStatus.COMPLETED);
         if (order instanceof EatInOrder eatInOrder) {
             final OrderTable orderTable = eatInOrder.getOrderTable();
-            if (!orderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
+            if (!eatInOrderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
                 orderTable.setNumberOfGuests(0);
                 orderTable.setOccupied(false);
             }

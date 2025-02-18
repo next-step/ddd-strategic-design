@@ -1,8 +1,17 @@
 package kitchenpos.order.eatinorder.application;
 
+import static kitchenpos.Fixtures.order;
+import static kitchenpos.Fixtures.orderTable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+import java.util.UUID;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
 import kitchenpos.order.eatinorder.infra.InMemoryOrderTableRepository;
@@ -13,25 +22,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
-import java.util.UUID;
-
-import static kitchenpos.Fixtures.order;
-import static kitchenpos.Fixtures.orderTable;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 class OrderTableServiceTest {
+
     private OrderTableRepository orderTableRepository;
     private OrderRepository orderRepository;
+    private EatInOrderRepository eatInOrderRepository;
     private OrderTableService orderTableService;
+
 
     @BeforeEach
     void setUp() {
+        InMemoryOrderRepository inMemoryOrderRepository = new InMemoryOrderRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
-        orderRepository = new InMemoryOrderRepository();
-        orderTableService = new OrderTableService(orderTableRepository, orderRepository);
+        orderRepository = inMemoryOrderRepository;
+        eatInOrderRepository = inMemoryOrderRepository;
+        orderTableService = new OrderTableService(orderTableRepository, orderRepository, eatInOrderRepository);
     }
 
     @DisplayName("주문 테이블을 등록할 수 있다.")
