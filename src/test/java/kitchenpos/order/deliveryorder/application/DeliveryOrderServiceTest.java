@@ -21,8 +21,8 @@ import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
-import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
 import kitchenpos.order.deliveryorder.infra.FakeKitchenridersClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 
 class DeliveryOrderServiceTest {
 
@@ -53,10 +52,10 @@ class DeliveryOrderServiceTest {
     @Test
     void createDeliveryOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final Order expected = createOrderRequest(
-            OrderType.DELIVERY, "서울시 송파구 위례성대로 2", createOrderLineItemRequest(menuId, 19_000L, 3L)
+        final DeliveryOrder expected = createOrderRequest(
+            "서울시 송파구 위례성대로 2", createOrderLineItemRequest(menuId, 19_000L, 3L)
         );
-        final Order actual = deliveryOrderService.create(expected);
+        final DeliveryOrder actual = (DeliveryOrder) deliveryOrderService.create(expected);
         assertThat(actual).isNotNull();
         assertAll(
             () -> assertThat(actual.getId()).isNotNull(),
@@ -68,21 +67,11 @@ class DeliveryOrderServiceTest {
         );
     }
 
-    @DisplayName("주문 유형이 올바르지 않으면 등록할 수 없다.")
-    @NullSource
-    @ParameterizedTest
-    void create(final OrderType type) {
-        final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final Order expected = createOrderRequest(type, createOrderLineItemRequest(menuId, 19_000L, 3L));
-        assertThatThrownBy(() -> deliveryOrderService.create(expected))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("메뉴가 없으면 등록할 수 없다.")
     @MethodSource("orderLineItems")
     @ParameterizedTest
     void create(final List<OrderLineItem> orderLineItems) {
-        final Order expected = createOrderRequest(OrderType.TAKEOUT, orderLineItems);
+        final Order expected = createOrderRequest("주소", orderLineItems);
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -101,7 +90,7 @@ class DeliveryOrderServiceTest {
     void create(final String deliveryAddress) {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
         final Order expected = createOrderRequest(
-            OrderType.DELIVERY, deliveryAddress, createOrderLineItemRequest(menuId, 19_000L, 3L)
+            deliveryAddress, createOrderLineItemRequest(menuId, 19_000L, 3L)
         );
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
@@ -111,7 +100,7 @@ class DeliveryOrderServiceTest {
     @Test
     void createNotDisplayedMenuOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, false, menuProduct())).getId();
-        final Order expected = createOrderRequest(OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 19_000L, 3L));
+        final Order expected = createOrderRequest("주소", createOrderLineItemRequest(menuId, 19_000L, 3L));
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -120,7 +109,7 @@ class DeliveryOrderServiceTest {
     @Test
     void createNotMatchedMenuPriceOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
-        final Order expected = createOrderRequest(OrderType.TAKEOUT, createOrderLineItemRequest(menuId, 16_000L, 3L));
+        final Order expected = createOrderRequest("주소", createOrderLineItemRequest(menuId, 16_000L, 3L));
         assertThatThrownBy(() -> deliveryOrderService.create(expected))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -230,38 +219,20 @@ class DeliveryOrderServiceTest {
             .isInstanceOf(IllegalStateException.class);
     }
 
-    private Order createOrderRequest(
-        final OrderType type,
+    private DeliveryOrder createOrderRequest(
         final String deliveryAddress,
         final OrderLineItem... orderLineItems
     ) {
-        final Order order = new Order();
-        order.setType(type);
-        order.setDeliveryAddress(deliveryAddress);
-        order.setOrderLineItems(Arrays.asList(orderLineItems));
-        return order;
+        return createOrderRequest(deliveryAddress, Arrays.asList(orderLineItems));
     }
 
-    private Order createOrderRequest(final OrderType orderType, final OrderLineItem... orderLineItems) {
-        return createOrderRequest(orderType, Arrays.asList(orderLineItems));
-    }
-
-    private Order createOrderRequest(final OrderType orderType, final List<OrderLineItem> orderLineItems) {
-        final Order order = new Order();
-        order.setType(orderType);
-        order.setOrderLineItems(orderLineItems);
-        return order;
-    }
-
-    private Order createOrderRequest(
-        final OrderType type,
-        final UUID orderTableId,
-        final OrderLineItem... orderLineItems
+    private DeliveryOrder createOrderRequest(
+        final String deliveryAddress,
+        final List<OrderLineItem> orderLineItems
     ) {
-        final Order order = new Order();
-        order.setType(type);
-        order.setOrderTableId(orderTableId);
-        order.setOrderLineItems(Arrays.asList(orderLineItems));
+        final DeliveryOrder order = new DeliveryOrder();
+        order.setDeliveryAddress(deliveryAddress);
+        order.setOrderLineItems(orderLineItems);
         return order;
     }
 

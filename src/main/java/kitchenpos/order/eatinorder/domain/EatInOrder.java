@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import java.util.UUID;
 import kitchenpos.order.common.domain.Order;
+import kitchenpos.order.common.domain.OrderType;
 
 @Entity
 @DiscriminatorValue("EAT_IN")
@@ -24,6 +25,13 @@ public class EatInOrder extends Order {
     @Transient
     private UUID orderTableId;
 
+    public EatInOrder() {
+    }
+
+    @Override
+    public OrderType getType() {
+        return OrderType.EAT_IN;
+    }
 
     public OrderTable getOrderTable() {
         return orderTable;
@@ -41,6 +49,5 @@ public class EatInOrder extends Order {
         this.orderTableId = orderTableId;
     }
 
-    public EatInOrder() {
-    }
+
 }

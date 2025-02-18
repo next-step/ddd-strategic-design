@@ -17,6 +17,7 @@ import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
 import org.springframework.stereotype.Service;
@@ -74,14 +75,13 @@ public class EatInOrderService implements CreateOrder, AcceptOrder, ServeOrder, 
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
         }
-        Order order = new Order();
+        EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
-        order.setType(type);
         order.setStatus(OrderStatus.WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);
-        if (type == OrderType.EAT_IN) {
-            final OrderTable orderTable = orderTableRepository.findById(request.getOrderTableId())
+        if (request instanceof EatInOrder eatInOrderRequest) {
+            final OrderTable orderTable = orderTableRepository.findById(eatInOrderRequest.getOrderTableId())
                 .orElseThrow(NoSuchElementException::new);
             if (!orderTable.isOccupied()) {
                 throw new IllegalStateException();
@@ -125,8 +125,8 @@ public class EatInOrderService implements CreateOrder, AcceptOrder, ServeOrder, 
             }
         }
         order.setStatus(OrderStatus.COMPLETED);
-        if (type == OrderType.EAT_IN) {
-            final OrderTable orderTable = order.getOrderTable();
+        if (order instanceof EatInOrder eatInOrder) {
+            final OrderTable orderTable = eatInOrder.getOrderTable();
             if (!orderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
                 orderTable.setNumberOfGuests(0);
                 orderTable.setOccupied(false);

@@ -17,6 +17,7 @@ import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
+import kitchenpos.order.takeoutorder.domain.TakeoutOrder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,9 +65,8 @@ public class TakeoutOrderService implements CreateOrder, AcceptOrder, ServeOrder
             orderLineItem.setQuantity(quantity);
             orderLineItems.add(orderLineItem);
         }
-        Order order = new Order();
+        TakeoutOrder order = new TakeoutOrder();
         order.setId(UUID.randomUUID());
-        order.setType(type);
         order.setStatus(OrderStatus.WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);

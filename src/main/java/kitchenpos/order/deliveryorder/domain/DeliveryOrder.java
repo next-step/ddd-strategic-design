@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import kitchenpos.order.common.domain.Order;
+import kitchenpos.order.common.domain.OrderType;
 
 @Entity
 @DiscriminatorValue("DELIVERY")
@@ -21,5 +22,10 @@ public class DeliveryOrder extends Order {
     }
 
     public DeliveryOrder() {
+    }
+
+    @Override
+    public OrderType getType() {
+        return OrderType.DELIVERY;
     }
 }

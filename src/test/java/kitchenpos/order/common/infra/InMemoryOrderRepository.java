@@ -1,18 +1,19 @@
 package kitchenpos.order.common.infra;
 
-import kitchenpos.order.common.domain.Order;
-import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
-import kitchenpos.order.eatinorder.domain.OrderTable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import kitchenpos.order.common.domain.Order;
+import kitchenpos.order.common.domain.OrderRepository;
+import kitchenpos.order.common.domain.OrderStatus;
+import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.OrderTable;
 
 public class InMemoryOrderRepository implements OrderRepository {
+
     private final Map<UUID, Order> orders = new HashMap<>();
 
     @Override
@@ -35,6 +36,12 @@ public class InMemoryOrderRepository implements OrderRepository {
     public boolean existsByOrderTableAndStatusNot(final OrderTable orderTable, final OrderStatus status) {
         return orders.values()
             .stream()
-            .anyMatch(order -> order.getOrderTable().equals(orderTable) && order.getStatus() != status);
+            .anyMatch(order -> {
+                    if (order instanceof EatInOrder eatInOrder) {
+                        return eatInOrder.getOrderTable().equals(orderTable) && order.getStatus() != status;
+                    }
+                    return false;
+                }
+            );
     }
 }
