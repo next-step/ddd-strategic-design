@@ -1,4 +1,6 @@
-package kitchenpos.menu.domain;
+package kitchenpos.menu.domain.repository;
+
+import kitchenpos.menu.domain.model.Menu;
 
 import java.util.List;
 import java.util.Optional;

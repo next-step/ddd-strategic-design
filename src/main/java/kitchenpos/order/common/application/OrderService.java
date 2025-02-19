@@ -1,7 +1,7 @@
 package kitchenpos.order.common.application;
 
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.domain.MenuRepository;
+import kitchenpos.menu.domain.model.Menu;
+import kitchenpos.menu.domain.repository.MenuRepository;
 import kitchenpos.order.common.domain.*;
 import kitchenpos.order.deliveryorder.infra.KitchenridersClient;
 import kitchenpos.order.eatinorder.domain.OrderTable;
