@@ -210,7 +210,7 @@ docker compose -p kitchenpos up -d
   - 상품 이름은 공백으로 비워둘 수 없다.
   - 상품 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
 
-### 시각화 모델링
+#### 시각화 모델링
 [상품](./asset/01-product-model.png)
 ```mermaid
 classDiagram
@@ -221,7 +221,7 @@ classDiagram
     }
 ```
 
-### 클래스 모델링
+#### 클래스 모델링
 ```mermaid
 classDiagram
     class Product {
@@ -241,7 +241,7 @@ classDiagram
 - 조건
   - 메뉴 그룹 이름은 공백으로 비워둘 수 없다.
 
-### 시각화 모델링
+#### 시각화 모델링
 [메뉴 그룹](./asset/02-menu-group.png)
 ```mermaid
 classDiagram
@@ -251,7 +251,7 @@ classDiagram
     }
 ```
 
-### 클래스 모델링
+#### 클래스 모델링
 ```mermaid
 classDiagram
     class MenuGroup {
@@ -286,7 +286,7 @@ classDiagram
 
 
 
-### 시각화 모델링
+#### 시각화 모델링
 [메뉴](./asset/03-menu.png)
 ```mermaid
 classDiagram
@@ -314,7 +314,7 @@ classDiagram
     메뉴 "1" <-- "*" 메뉴 상품 : 식별자 참조
 ```
 
-### 클래스 모델링
+#### 클래스 모델링
 ```mermaid
 classDiagram
     class Menu {
@@ -366,7 +366,7 @@ classDiagram
   - `접수됨` 상태인 주문만 `전달됨` 으로 상태를 변경할 수 있다.
   - 주문 메뉴가 전달되면 `전달됨`으로 상태가 변경된다.
 
-### 시각화 모델링
+#### 시각화 모델링
 [주문](./asset/04-order.png)
 ```mermaid
 classDiagram
@@ -423,7 +423,7 @@ classDiagram
     주문 항목 "1" *-- "1" 주문 항목 메뉴 : 포함 관계
 ```
 
-### 클래스 모델링
+#### 클래스 모델링
 ```mermaid
 classDiagram
     class Orders {
@@ -879,7 +879,7 @@ stateDiagram-v2
   - 주문이 `완료됨` 으로 상태가 될 때까지 가게 테이블을 `사용 해지`할 수 없다.
   - `사용 해지`인 가게 테이블은 고객 수를 변경할 수 없다.
 
-### 시각화 모델링
+#### 시각화 모델링
 [가게 테이블](./asset/05-restaurant-table.png)
 ```mermaid
 classDiagram
@@ -891,7 +891,7 @@ classDiagram
     }
 ```
 
-### 클래스 모델링
+#### 클래스 모델링
 ```mermaid
 classDiagram
     class RestaurantTable {
