@@ -1,6 +1,6 @@
 package kitchenpos.application;
 
-import kitchenpos.tobe.external.port.out.KitchenridersClient;
+import kitchenpos.external.port.out.KitchenridersClient;
 
 import java.math.BigDecimal;
 import java.util.UUID;
