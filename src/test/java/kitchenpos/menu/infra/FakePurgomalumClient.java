@@ -1,5 +1,7 @@
 package kitchenpos.menu.infra;
 
+import kitchenpos.common.domain.model.PurgomalumClient;
+
 import java.util.Arrays;
 import java.util.List;
 
