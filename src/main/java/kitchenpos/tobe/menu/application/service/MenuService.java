@@ -1,13 +1,13 @@
-package kitchenpos.application;
+package kitchenpos.tobe.menu.application.service;
 
-import kitchenpos.domain.Menu;
-import kitchenpos.domain.MenuGroup;
-import kitchenpos.domain.MenuGroupRepository;
-import kitchenpos.domain.MenuProduct;
-import kitchenpos.domain.MenuRepository;
-import kitchenpos.domain.Product;
-import kitchenpos.domain.ProductRepository;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.tobe.menu.domain.Menu;
+import kitchenpos.tobe.menu.domain.MenuGroup;
+import kitchenpos.tobe.menu.application.port.out.MenuGroupRepository;
+import kitchenpos.tobe.menu.domain.MenuProduct;
+import kitchenpos.tobe.menu.application.port.out.MenuRepository;
+import kitchenpos.tobe.product.domain.Product;
+import kitchenpos.tobe.product.application.port.out.ProductRepository;
+import kitchenpos.tobe.external.port.out.PurgomalumClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

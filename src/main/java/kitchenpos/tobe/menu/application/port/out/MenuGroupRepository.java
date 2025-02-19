@@ -1,4 +1,6 @@
-package kitchenpos.domain;
+package kitchenpos.tobe.menu.application.port.out;
+
+import kitchenpos.tobe.menu.domain.MenuGroup;
 
 import java.util.List;
 import java.util.Optional;
