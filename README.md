@@ -33,7 +33,7 @@ docker compose -p kitchenpos up -d
 
 - 1개 이상의 등록된 상품으로 메뉴를 등록할 수 있다.
 - 상품이 없으면 등록할 수 없다.
-- 메뉴에 속한 상품의 수량은 0 이상이어야 한다.
+- 메뉴에 속한 상품의 수량은 0개 이상이어야 한다.
 - 메뉴의 가격이 올바르지 않으면 등록할 수 없다.
   - 메뉴의 가격은 0원 이상이어야 한다.
 - 메뉴에 속한 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
@@ -71,7 +71,7 @@ docker compose -p kitchenpos up -d
 - 주문 유형이 올바르지 않으면 등록할 수 없다.
 - 메뉴가 없으면 등록할 수 없다.
 - 매장 주문은 주문 항목의 수량이 0 미만일 수 있다.
-- 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0 이상이어야 한다.
+- 매장 주문을 제외한 주문의 경우 주문 항목의 수량은 0개 이상이어야 한다.
 - 배달 주소가 올바르지 않으면 배달 주문을 등록할 수 없다.
   - 배달 주소는 비워 둘 수 없다.
 - 사용하지 않는 가게 테이블에는 매장 주문을 등록할 수 없다.
@@ -134,20 +134,22 @@ docker compose -p kitchenpos up -d
 
 ### 주문
 
-| 한글명      | 영문명                      | 설명                                                     |
-|----------|--------------------------|--------------------------------------------------------|
-| 주문       | Order                    | - 메뉴를 구매하기 위한 행위이다.                                    |
-| 주문 항목    | Order Line Item          | - 주문에서 요청한 메뉴를 나타내는 항목을 의미한다.                          |
-| 주문 항목 메뉴 | Order Line Item Menu     | - 주문 항목에서 요청한 메뉴를 의미한다.                                |
-| 주문 항목 수량 | Order Line Item Quantity | - 주문 항목의 단위 수량을 의미한다.                                  |
-| 주문 항목 가격 | Order Line Item Price    | - 주문 항목의 단위 가격을 의미한다.                                  |
-| 주문 금액    | Order Price              | - 주문에 대한 금액을 의미한다. <br/>- 주문에 대한 금액은 주문 항목의 총 합산 금액이다. |
-| 주문 시간    | Order Date Time          | - 주문 요청을 생성한 시각(년월일시분초)을 의미한다.                         |
-| 주문 상태    | Order Status             | - 주문의 진행 상태를 의미한다. <br/>(대기중, 접수됨, 전달됨, 배달중, 배달됨, 완료됨) |
-| 주문 유형    | Order Type               | - 주문 유형을 의미한다.                                         |
-| 배달 주문    | Delivery Order           | - 상품 배달 서비스를 위한 주문을 의미한다.                              |
-| 매장 주문    | EatIn Order              | - 매장 내 식사 서비스를 위한 주문을 의미한다.                            |
-| 포장 주문    | Takeout Order            | - 매장 외 식사 서비스를 위한 주문을 의미한다.                            |
+| 한글명         | 영문명                       | 설명                                                     |
+|-------------|---------------------------|--------------------------------------------------------|
+| 주문          | Order                     | - 메뉴를 구매하기 위한 행위이다.                                    |
+| 주문 항목       | Order Line Item           | - 주문에서 요청한 메뉴를 나타내는 항목을 의미한다.                          |
+| 주문 항목 메뉴    | Order Line Item Menu      | - 주문 항목에서 요청한 메뉴를 의미한다.                                |
+| 주문 항목 메뉴 가격 | Order Line Item Menu Price | - 주문 항목에서 요청한 메뉴의 가격을 의미한다.                            |
+| 주문 항목 메뉴 이름 | Order Line Item Menu Name | - 주문 항목에서 요청한 메뉴의 이름을 의미한다.                            |
+| 주문 항목 수량    | Order Line Item Quantity  | - 주문 항목의 단위 수량을 의미한다.                                  |
+| 주문 항목 가격    | Order Line Item Price     | - 주문 항목의 단위 가격을 의미한다.                                  |
+| 주문 금액       | Order Price               | - 주문에 대한 금액을 의미한다. <br/>- 주문에 대한 금액은 주문 항목의 총 합산 금액이다. |
+| 주문 시간       | Order Date Time           | - 주문 요청을 생성한 시각(년월일시분초)을 의미한다.                         |
+| 주문 상태       | Order Status              | - 주문의 진행 상태를 의미한다. <br/>(대기중, 접수됨, 전달됨, 배달중, 배달됨, 완료됨) |
+| 주문 유형       | Order Type                | - 주문 유형을 의미한다.                                         |
+| 배달 주문       | Delivery Order            | - 상품 배달 서비스를 위한 주문을 의미한다.                              |
+| 매장 주문       | EatIn Order               | - 매장 내 식사 서비스를 위한 주문을 의미한다.                            |
+| 포장 주문       | Takeout Order             | - 매장 외 식사 서비스를 위한 주문을 의미한다.                            |
 
 ### 배달 주문
 
@@ -285,7 +287,6 @@ classDiagram
     %% 관계 정의
     Menu "*" --> "1" MenuGroup : references
     Menu "1" <-- "*" MenuProduct : references
-
 ```
 
 ### 주문
@@ -333,6 +334,7 @@ classDiagram
 
     class OrderLineItemMenu {
         Long seq
+        String name
         BigDecimal price
         UUID menuId
     }
@@ -365,7 +367,6 @@ classDiagram
     Orders "*" --> "1" RestaurantTable : references
     Orders "1" *-- "*" OrderLineItem : contains
     OrderLineItem "1" *-- "1" OrderLineItemMenu : contains
-
 ```
 
 ### 배달 주문
@@ -376,12 +377,12 @@ classDiagram
     `배달됨(DELIVERED)`→`완료됨(COMPLETED)` 순서로 변경된다.)
 - 행위
   - 배달 주문을 등록할 수 있다.
-  - 배달 주문이 접수되면 배달 기사를 호출할 수 있다.
+  - 배달 주문이 접수되면 배달 기사를 호출할 수 있고 배달 주문 상태가 `접수됨`이 된다.
   - 주문을 배달할 수 있다.
   - 주문을 배달 완료할 수 있다.
 - 조건
   - 주문 유형이 `배달 주문`이어야 한다.
-  - 주문 항목의 수량은 0 이상이어야 한다.
+  - 주문 항목의 수량은 0개 이상이어야 한다.
   - 배달 주문만 배달할 수 있다.
   - 배달 주소는 비워 둘 수 없다.
   - 상품이 전달된 주문만 `배달중`으로 상태를 변경할 수 있다.
@@ -390,6 +391,84 @@ classDiagram
   - 배달이 완료되면 `배달됨`으로 상태가 변경된다.
   - `배달됨` 상태인 주문만 `완료됨` 으로 상태를 변경할 수 있다.
 
+#### 배달 주문 요청 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료
+```
+
+#### 배달 주문 접수 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    participant DeliveryRider as 배달 기사
+    
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+    System->>+DeliveryRider: 배달 요청 
+    DeliveryRider-->>-System: 배달 요청 완료
+```
+
+#### 배달 주문 전달 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+  
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+```
+
+#### 배달 주문 배달 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    participant DeliveryRider as 배달 기사
+    
+    RestaurantOwner->>+DeliveryRider: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '배달 시작' 변경 요청 
+    System-->>-RestaurantOwner: 주문 상태 '배달 시작' 변경 성공
+    DeliveryRider-->>-RestaurantOwner: 주문 메뉴 전달 완료
+```
+
+#### 배달 주문 배달 완료 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    participant DeliveryRider as 배달 기사
+    
+    DeliveryRider->>+Customer: 주문 메뉴 전달 
+    Customer-->>-DeliveryRider: 주문 메뉴 전달 완료
+    DeliveryRider->>+RestaurantOwner: 배달 완료 상황 전달
+    RestaurantOwner->>+System: 주문 상태 '배달 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '배달 완료' 변경 성공
+    RestaurantOwner->>-DeliveryRider: 배달 완료 상황 전달 
+```
+
+#### 배달 주문 완료 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공
+```
+
+#### 배달 주문 전체 시나리오 
 ```mermaid
 sequenceDiagram
     participant Customer as 고객
@@ -420,10 +499,9 @@ sequenceDiagram
     RestaurantOwner->>-DeliveryRider: 배달 완료 상황 전달
     RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
     System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
-
-    
 ```
 
+#### 배달 주문 상태 흐름도
 ```mermaid
 stateDiagram-v2
     state 배달_주문_상태 {
@@ -435,7 +513,6 @@ stateDiagram-v2
         배달됨(DELIVERED) --> 완료됨(COMPLETED) : 사장님 주문 완료
         완료됨(COMPLETED) --> [*] : 주문 종료
     }
-    
 ```
 
 ### 포장 주문
@@ -446,9 +523,57 @@ stateDiagram-v2
   - 포장 주문을 등록할 수 있다.
 - 조건
   - 주문 유형이 `포장 주문`이어야 한다.
-  - 주문 항목의 수량은 0 이상이어야 한다.
+  - 주문 항목의 수량은 0개 이상이어야 한다.
   - 상품이 전달된 주문만 `완료됨` 으로 상태를 변경할 수 있다.
 
+#### 포장 주문 요청 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료
+```
+
+#### 포장 주문 접수 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+```
+
+#### 포장 주문 전달 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+```
+
+#### 포장 주문 완료 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+
+    RestaurantOwner->>+Customer: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
+    Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
+```
+
+#### 포장 주문 전체 시나리오
 ```mermaid
 sequenceDiagram
     participant Customer as 고객
@@ -469,10 +594,9 @@ sequenceDiagram
     RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
     System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
     Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
-    
-    
 ```
 
+#### 포장 주문 상태 흐름도
 ```mermaid
 stateDiagram-v2
     state 포장_주문_상태 {
@@ -482,7 +606,6 @@ stateDiagram-v2
         전달됨(SERVED) --> 완료됨(COMPLETED) : 사장님 주문 완료
         완료됨(COMPLETED) --> [*] : 주문 종료
     }
-
 ```
 
 ### 매장 주문
@@ -501,6 +624,92 @@ stateDiagram-v2
   - `완료됨` 으로 상태이면, 가게 테이블을 `미사용` 설정할 수 있다.
   - 상품이 전달된 주문만 `완료됨` 으로 상태를 변경할 수 있다.
 
+#### 가게 테이블 사용 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>Customer: 가게 방문
+    Customer->>+RestaurantOwner: 가게 테이블 사용 요청
+    RestaurantOwner-->>+System: 가게 테이블 '사용중' 상태 변경 요청 
+    System-->>-RestaurantOwner: 가게 테이블 '사용중' 상태 변경 요청 완료
+    RestaurantOwner-->>-Customer: 가게 테이블 사용 요청 완료 
+```
+
+#### 가게 테이블 고객 수 변경 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+  
+    RestaurantOwner->>System: 가게 테이블 '고객 수' 변경 요청 
+    System-->>RestaurantOwner: 가게 테이블 '고객 수' 변경 요청 완료
+```
+
+#### 매장 주문 요청 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    Customer->>+RestaurantOwner: 주문 요청
+    RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
+    System->>-RestaurantOwner: 주문 및 주문 상태 '대기중' 생성 성공
+    RestaurantOwner-->>-Customer: 주문 완료  
+```
+
+#### 매장 주문 접수 시나리오
+```mermaid
+sequenceDiagram
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
+```
+
+#### 매장 주문 전달 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+   
+    
+    RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
+    RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
+```
+
+#### 매장 주문 완료 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+    
+    RestaurantOwner->>+Customer: 주문 메뉴 전달
+    RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
+    System-->>-RestaurantOwner: 주문 상태 '주문 완료' 변경 성공 
+    Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
+```
+
+#### 모든 매장 주문 완료시 가게 테이블 사용 해지 시나리오
+```mermaid
+sequenceDiagram
+    participant Customer as 고객
+    participant RestaurantOwner as 사장님
+    participant System as 주문 시스템
+
+    Customer->>Customer: 가게 퇴장
+    RestaurantOwner->>+System: 가게 테이블 사용 해지 요청
+    System-->>-RestaurantOwner: 가게 테이블 사용 해지 요청 완료  
+```
+
+#### 매장 주문 전체 시나리오
 ```mermaid
 sequenceDiagram
     participant Customer as 고객
@@ -533,11 +742,11 @@ sequenceDiagram
     Customer-->>-RestaurantOwner: 주문 메뉴 전달 완료
     end
     Customer->>Customer: 가게 퇴장
-    RestaurantOwner->>+System: 테이블 사용 해지 요청
-    System-->>-RestaurantOwner: 테이블 사용 해지 요청 완료  
-    
+    RestaurantOwner->>+System: 가게 테이블 사용 해지 요청
+    System-->>-RestaurantOwner: 가게 테이블 사용 해지 요청 완료  
 ```
 
+#### 매장 주문 상태 흐름도
 ```mermaid
 stateDiagram-v2
     state 매장_주문_상태 {
@@ -547,7 +756,6 @@ stateDiagram-v2
         전달됨(SERVED) --> 완료됨(COMPLETED) : 사장님 주문 완료
         완료됨(COMPLETED) --> [*] : 주문 종료
     }
-
 ```
 
 ### 가게 테이블
@@ -576,5 +784,4 @@ classDiagram
         int numberOfGuests
         boolean occupied
     }
-
 ```
