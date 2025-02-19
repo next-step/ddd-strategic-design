@@ -210,6 +210,18 @@ docker compose -p kitchenpos up -d
   - 상품 이름은 공백으로 비워둘 수 없다.
   - 상품 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
 
+### 시각화 모델링
+[상품](./asset/01-product-model.png)
+```mermaid
+classDiagram
+    class 상품 {
+        상품 식별자
+        상품 이름
+        상품 가격 
+    }
+```
+
+### 클래스 모델링
 ```mermaid
 classDiagram
     class Product {
@@ -217,7 +229,6 @@ classDiagram
         String name
         BigDecimal price
     }
-
 ```
 
 ### 메뉴 그룹
@@ -230,6 +241,17 @@ classDiagram
 - 조건
   - 메뉴 그룹 이름은 공백으로 비워둘 수 없다.
 
+### 시각화 모델링
+[메뉴 그룹](./asset/02-menu-group.png)
+```mermaid
+classDiagram
+    class 메뉴 그룹 {
+        메뉴 그룹 식별자
+        메뉴 그룹 이름 
+    }
+```
+
+### 클래스 모델링
 ```mermaid
 classDiagram
     class MenuGroup {
@@ -262,6 +284,37 @@ classDiagram
   - 메뉴 가격이 메뉴에 속한 메뉴 상품 금액의 합보다 높을 경우 메뉴를 노출할 수 없다.
   - 메뉴에 속한 메뉴 상품 금액의 합은 메뉴의 가격보다 크거나 같아야 한다.
 
+
+
+### 시각화 모델링
+[메뉴](./asset/03-menu.png)
+```mermaid
+classDiagram
+    class 메뉴 {
+        메뉴 식별자
+        메뉴 이름 
+        메뉴 가격
+        메뉴 노출 상태
+        메뉴 그룹 식별자
+    }
+
+    class 메뉴 상품 {
+        메뉴 상품 수량
+        상품 식별자 
+        메뉴 식별자
+    }
+
+    class 메뉴 그룹 {
+        메뉴 그룹 식별자
+        메뉴 그룹 이름
+    }
+
+    %% 관계 정의
+    메뉴 "*" --> "1" 메뉴 그룹 : 식별자 참조 
+    메뉴 "1" <-- "*" 메뉴 상품 : 식별자 참조
+```
+
+### 클래스 모델링
 ```mermaid
 classDiagram
     class Menu {
@@ -313,6 +366,64 @@ classDiagram
   - `접수됨` 상태인 주문만 `전달됨` 으로 상태를 변경할 수 있다.
   - 주문 메뉴가 전달되면 `전달됨`으로 상태가 변경된다.
 
+### 시각화 모델링
+[주문](./asset/04-order.png)
+```mermaid
+classDiagram
+    class 주문 {
+        주문 식별자
+        주문 유형
+        주문 상태
+        주문 항목들
+        배달 주소 
+        주문 시간
+        가게 테이블 식별자
+    }
+
+    class 주문 항목 {
+        주문 항목 수량 
+        주문 항목 가격
+        주문 항목 메뉴 
+    }
+
+    class 주문 항목 메뉴 {
+        주문 항목 메뉴 이름 
+        주문 항목 메뉴 가격 
+        메뉴 식별자
+    }
+
+    class 가게 테이블 {
+        가게 테이블 식별자
+        가게 테이블 이름 
+        가게 테이블 고객 수 
+        가게 테이블 사용 상태
+    }
+
+    %% 열거형 정의
+    class 주문 유형 {
+        <<enumeration>>
+        배달 주문
+        포장 주문
+        매장 주문 
+    }
+
+    class 주문 상태 {
+        <<enumeration>>
+        대기중
+        접수됨
+        전달됨
+        배달중
+        배달됨
+        완료됨
+    }
+
+    %% 관계 정의
+    주문 "*" --> "1" 가게 테이블 : 식별자 참조 
+    주문 "1" *-- "*" 주문 항목 : 포함 관계 
+    주문 항목 "1" *-- "1" 주문 항목 메뉴 : 포함 관계
+```
+
+### 클래스 모델링
 ```mermaid
 classDiagram
     class Orders {
@@ -324,45 +435,40 @@ classDiagram
         LocalDateTime orderDateTime
         UUID restaurantTableId
     }
-
     class OrderLineItem {
         Long seq
         Long quantity
         BigDecimal price
         OrderLineItemMenu orderLineItemMenu
     }
-
     class OrderLineItemMenu {
         Long seq
         String name
         BigDecimal price
         UUID menuId
     }
-
     class RestaurantTable {
         UUID id
         String name
         int numberOfGuests
         boolean occupied
     }
-
     %% 열거형 정의
     class OrderType {
         <<enumeration>>
         DELIVERY
         TAKEOUT
-        DINE_IN
+        EAT_IN
     }
-
     class OrderStatus {
         <<enumeration>>
         WAITING
         ACCEPTED
+        SERVED
         DELIVERING
         DELIVERED
         COMPLETED
     }
-
     %% 관계 정의
     Orders "*" --> "1" RestaurantTable : references
     Orders "1" *-- "*" OrderLineItem : contains
@@ -431,7 +537,6 @@ sequenceDiagram
 #### 배달 주문 배달 시나리오
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
     participant RestaurantOwner as 사장님
     participant System as 주문 시스템
     participant DeliveryRider as 배달 기사
@@ -674,11 +779,9 @@ sequenceDiagram
 #### 매장 주문 전달 시나리오
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
     participant RestaurantOwner as 사장님
     participant System as 주문 시스템
    
-    
     RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
     RestaurantOwner->>+System: 주문 상태 '전달됨' 변경 요청
     System-->>-RestaurantOwner: 주문 상태 '전달됨' 변경 성공
@@ -776,6 +879,19 @@ stateDiagram-v2
   - 주문이 `완료됨` 으로 상태가 될 때까지 가게 테이블을 `사용 해지`할 수 없다.
   - `사용 해지`인 가게 테이블은 고객 수를 변경할 수 없다.
 
+### 시각화 모델링
+[가게 테이블](./asset/05-restaurant-table.png)
+```mermaid
+classDiagram
+    class 가게 테이블 {
+        가게 테이블 식별자
+        가게 테이블 이름 
+        가게 테이블 고객 수 
+        가게 테이블 사용 상태
+    }
+```
+
+### 클래스 모델링
 ```mermaid
 classDiagram
     class RestaurantTable {
