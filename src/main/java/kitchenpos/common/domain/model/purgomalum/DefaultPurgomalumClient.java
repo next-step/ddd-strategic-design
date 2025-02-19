@@ -1,4 +1,4 @@
-package kitchenpos.common.domain.model;
+package kitchenpos.common.domain.model.purgomalum;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package kitchenpos.order.eatinorder.ui;
 
 import kitchenpos.order.eatinorder.application.OrderTableService;
-import kitchenpos.order.eatinorder.domain.OrderTable;
+import kitchenpos.order.eatinorder.domain.model.OrderTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
