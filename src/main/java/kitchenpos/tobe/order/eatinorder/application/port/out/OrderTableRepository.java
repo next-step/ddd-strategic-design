@@ -1,4 +1,6 @@
-package kitchenpos.domain;
+package kitchenpos.tobe.order.eatinorder.application.port.out;
+
+import kitchenpos.tobe.order.eatinorder.domain.OrderTable;
 
 import java.util.List;
 import java.util.Optional;

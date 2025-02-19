@@ -1,7 +1,7 @@
-package kitchenpos.ui;
+package kitchenpos.tobe.order.deliveryorder.adaptor.in.web;
 
-import kitchenpos.application.OrderService;
-import kitchenpos.domain.Order;
+import kitchenpos.tobe.order.eatinorder.application.service.EatInOrderService;
+import kitchenpos.tobe.order.domain.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +15,12 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/orders")
+@RequestMapping("/api/delivery-orders")
 @RestController
-public class OrderRestController {
-    private final OrderService orderService;
+public class DeliveryOrderRestController {
+    private final EatInOrderService orderService;
 
-    public OrderRestController(final OrderService orderService) {
+    public DeliveryOrderRestController(final EatInOrderService orderService) {
         this.orderService = orderService;
     }
 

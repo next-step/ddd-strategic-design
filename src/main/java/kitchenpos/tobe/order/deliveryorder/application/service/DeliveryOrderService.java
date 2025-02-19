@@ -1,34 +1,30 @@
-package kitchenpos.application;
+package kitchenpos.tobe.order.deliveryorder.application.service;
 
-import kitchenpos.domain.Menu;
-import kitchenpos.domain.MenuRepository;
-import kitchenpos.domain.Order;
-import kitchenpos.domain.OrderLineItem;
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
-import kitchenpos.domain.OrderType;
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.tobe.order.deliveryorder.application.port.out.OrderRepository;
+import kitchenpos.tobe.external.port.out.KitchenridersClient;
+import kitchenpos.tobe.menu.application.port.out.MenuRepository;
+import kitchenpos.tobe.menu.domain.Menu;
+import kitchenpos.tobe.order.domain.Order;
+import kitchenpos.tobe.order.domain.OrderLineItem;
+import kitchenpos.tobe.order.domain.OrderStatus;
+import kitchenpos.tobe.order.domain.OrderType;
+import kitchenpos.tobe.order.eatinorder.application.port.out.OrderTableRepository;
+import kitchenpos.tobe.order.eatinorder.domain.OrderTable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
-public class OrderService {
+public class DeliveryOrderService {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
     private final OrderTableRepository orderTableRepository;
     private final KitchenridersClient kitchenridersClient;
 
-    public OrderService(
+    public DeliveryOrderService(
         final OrderRepository orderRepository,
         final MenuRepository menuRepository,
         final OrderTableRepository orderTableRepository,
