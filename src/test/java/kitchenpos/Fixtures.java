@@ -4,8 +4,10 @@ import kitchenpos.menu.domain.model.Menu;
 import kitchenpos.menu.domain.model.MenuGroup;
 import kitchenpos.menu.domain.model.MenuProduct;
 import kitchenpos.order.common.domain.*;
+import kitchenpos.order.common.domain.model.Order;
+import kitchenpos.order.common.domain.model.OrderLineItem;
 import kitchenpos.order.eatinorder.domain.OrderTable;
-import kitchenpos.product.domain.Product;
+import kitchenpos.product.domain.model.Product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

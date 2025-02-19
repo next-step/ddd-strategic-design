@@ -2,9 +2,9 @@ package kitchenpos.order.common.application;
 
 import kitchenpos.menu.application.InMemoryMenuRepository;
 import kitchenpos.menu.domain.repository.MenuRepository;
-import kitchenpos.order.common.domain.Order;
-import kitchenpos.order.common.domain.OrderLineItem;
-import kitchenpos.order.common.domain.OrderRepository;
+import kitchenpos.order.common.domain.model.Order;
+import kitchenpos.order.common.domain.model.OrderLineItem;
+import kitchenpos.order.common.domain.repository.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.deliveryorder.infra.FakeKitchenridersClient;
 import kitchenpos.order.eatinorder.application.InMemoryOrderTableRepository;
