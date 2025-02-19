@@ -1,4 +1,4 @@
-package kitchenpos.infra;
+package kitchenpos.tobe.external.port.out;
 
 import java.math.BigDecimal;
 import java.util.UUID;
