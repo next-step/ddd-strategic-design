@@ -211,7 +211,6 @@ docker compose -p kitchenpos up -d
   - 상품 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
 
 #### 시각화 모델링
-[상품](./asset/01-product-model.png)
 ```mermaid
 classDiagram
     class 상품 {
@@ -242,7 +241,6 @@ classDiagram
   - 메뉴 그룹 이름은 공백으로 비워둘 수 없다.
 
 #### 시각화 모델링
-[메뉴 그룹](./asset/02-menu-group.png)
 ```mermaid
 classDiagram
     class 메뉴 그룹 {
@@ -287,7 +285,6 @@ classDiagram
 
 
 #### 시각화 모델링
-[메뉴](./asset/03-menu.png)
 ```mermaid
 classDiagram
     class 메뉴 {
@@ -367,7 +364,6 @@ classDiagram
   - 주문 메뉴가 전달되면 `전달됨`으로 상태가 변경된다.
 
 #### 시각화 모델링
-[주문](./asset/04-order.png)
 ```mermaid
 classDiagram
     class 주문 {
@@ -880,7 +876,6 @@ stateDiagram-v2
   - `사용 해지`인 가게 테이블은 고객 수를 변경할 수 없다.
 
 #### 시각화 모델링
-[가게 테이블](./asset/05-restaurant-table.png)
 ```mermaid
 classDiagram
     class 가게 테이블 {
