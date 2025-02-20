@@ -45,7 +45,7 @@ class DeliveryOrderServiceTest {
         orderRepository = new InMemoryOrderRepository();
         menuRepository = new InMemoryMenuRepository();
         kitchenridersClient = new FakeKitchenridersClient();
-        deliveryOrderService = new DeliveryOrderService(orderRepository, menuRepository, kitchenridersClient);
+        deliveryOrderService = new DefaultDeliveryOrderService(orderRepository, menuRepository, kitchenridersClient);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.")

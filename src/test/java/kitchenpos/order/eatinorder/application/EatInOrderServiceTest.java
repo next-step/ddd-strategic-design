@@ -52,7 +52,7 @@ class EatInOrderServiceTest {
         eatInOrderRepository = inMemoryOrderRepository;
         menuRepository = new InMemoryMenuRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
-        eatInOrderService = new EatInOrderService(orderRepository, eatInOrderRepository, menuRepository,
+        eatInOrderService = new DefaultEatInOrderService(orderRepository, eatInOrderRepository, menuRepository,
             orderTableRepository);
     }
 

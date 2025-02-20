@@ -22,9 +22,6 @@ import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
 import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
-import kitchenpos.order.deliveryorder.infra.FakeKitchenridersClient;
-import kitchenpos.order.eatinorder.domain.OrderTableRepository;
-import kitchenpos.order.eatinorder.infra.InMemoryOrderTableRepository;
 import kitchenpos.order.takeoutorder.domain.TakeoutOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,17 +35,13 @@ class TakeoutOrderServiceTest {
 
     private OrderRepository orderRepository;
     private MenuRepository menuRepository;
-    private OrderTableRepository orderTableRepository;
-    private FakeKitchenridersClient kitchenridersClient;
     private TakeoutOrderService takeoutOrderService;
 
     @BeforeEach
     void setUp() {
         orderRepository = new InMemoryOrderRepository();
         menuRepository = new InMemoryMenuRepository();
-        orderTableRepository = new InMemoryOrderTableRepository();
-        kitchenridersClient = new FakeKitchenridersClient();
-        takeoutOrderService = new TakeoutOrderService(orderRepository, menuRepository);
+        takeoutOrderService = new DefaultTakeoutOrderService(orderRepository, menuRepository);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 포장 주문을 등록할 수 있다.")
