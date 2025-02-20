@@ -2,12 +2,13 @@ package kitchenpos.order.common.application;
 
 import static kitchenpos.Fixtures.order;
 import static kitchenpos.Fixtures.orderTable;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.DELIVERED;
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.SERVED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
@@ -33,8 +34,8 @@ class OrderServiceTest {
     @Test
     void findAll() {
         final OrderTable orderTable = orderTableRepository.save(orderTable(true, 4));
-        orderRepository.save(order(OrderStatus.SERVED, orderTable));
-        orderRepository.save(order(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
+        orderRepository.save(order(SERVED, orderTable));
+        orderRepository.save(order(DELIVERED, "서울시 송파구 위례성대로 2"));
         final List<Order> actual = orderService.findAll();
         assertThat(actual).hasSize(2);
     }

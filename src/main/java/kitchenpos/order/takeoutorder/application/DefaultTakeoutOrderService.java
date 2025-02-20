@@ -1,5 +1,10 @@
 package kitchenpos.order.takeoutorder.application;
 
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.ACCEPTED;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.COMPLETED;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.SERVED;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.WAITING;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +16,6 @@ import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.takeoutorder.domain.TakeoutOrder;
 import org.springframework.stereotype.Service;
@@ -63,7 +67,7 @@ public class DefaultTakeoutOrderService implements TakeoutOrderService {
         }
         TakeoutOrder order = new TakeoutOrder();
         order.setId(UUID.randomUUID());
-        order.setStatus(OrderStatus.WAITING);
+        order.setStatus(WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);
         return orderRepository.save(order);
@@ -71,38 +75,38 @@ public class DefaultTakeoutOrderService implements TakeoutOrderService {
 
     @Override
     public Order accept(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final TakeoutOrder order = (TakeoutOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.WAITING) {
+        if (order.getStatus() != WAITING) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.ACCEPTED);
+        order.setStatus(ACCEPTED);
         return order;
     }
 
     @Override
     public Order serve(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final TakeoutOrder order = (TakeoutOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.ACCEPTED) {
+        if (order.getStatus() != ACCEPTED) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.SERVED);
+        order.setStatus(SERVED);
         return order;
     }
 
     @Override
     public Order complete(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final TakeoutOrder order = (TakeoutOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         final OrderType type = order.getType();
-        final OrderStatus status = order.getStatus();
+
         if (type == OrderType.TAKEOUT) {
-            if (status != OrderStatus.SERVED) {
+            if (order.getStatus() != SERVED) {
                 throw new IllegalStateException();
             }
         }
-        order.setStatus(OrderStatus.COMPLETED);
+        order.setStatus(COMPLETED);
         return order;
     }
 

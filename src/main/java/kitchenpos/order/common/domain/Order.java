@@ -7,8 +7,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
@@ -28,10 +26,6 @@ public abstract class Order {
     @Column(name = "id", columnDefinition = "binary(16)")
     @Id
     private UUID id;
-
-    @Column(name = "status", nullable = false, columnDefinition = "varchar(255)")
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
 
     @Column(name = "order_date_time", nullable = false)
     private LocalDateTime orderDateTime;
@@ -56,15 +50,6 @@ public abstract class Order {
 
     public void setId(final UUID id) {
         this.id = id;
-    }
-
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(final OrderStatus status) {
-        this.status = status;
     }
 
     public LocalDateTime getOrderDateTime() {

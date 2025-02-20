@@ -1,5 +1,13 @@
 package kitchenpos.order.deliveryorder.application;
 
+import static kitchenpos.order.common.domain.OrderType.DELIVERY;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.ACCEPTED;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.COMPLETED;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.DELIVERED;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.DELIVERING;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.SERVED;
+import static kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus.WAITING;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +20,6 @@ import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
 import kitchenpos.order.deliveryorder.domain.KitchenridersClient;
@@ -69,7 +76,7 @@ public class DefaultDeliveryOrderService implements DeliveryOrderService {
         }
         DeliveryOrder order = new DeliveryOrder();
         order.setId(UUID.randomUUID());
-        order.setStatus(OrderStatus.WAITING);
+        order.setStatus(WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);
         if (request instanceof DeliveryOrder deliveryOrderRequest) {
@@ -85,9 +92,9 @@ public class DefaultDeliveryOrderService implements DeliveryOrderService {
     @Transactional
     @Override
     public Order accept(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final DeliveryOrder order = (DeliveryOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.WAITING) {
+        if (order.getStatus() != WAITING) {
             throw new IllegalStateException();
         }
         if (order instanceof DeliveryOrder deliveryOrder) {
@@ -99,19 +106,19 @@ public class DefaultDeliveryOrderService implements DeliveryOrderService {
             }
             kitchenridersClient.requestDelivery(orderId, sum, deliveryOrder.getDeliveryAddress());
         }
-        order.setStatus(OrderStatus.ACCEPTED);
+        order.setStatus(ACCEPTED);
         return order;
     }
 
     @Transactional
     @Override
     public Order serve(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final DeliveryOrder order = (DeliveryOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.ACCEPTED) {
+        if (order.getStatus() != ACCEPTED) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.SERVED);
+        order.setStatus(SERVED);
         return order;
 
     }
@@ -121,13 +128,13 @@ public class DefaultDeliveryOrderService implements DeliveryOrderService {
     public Order startDelivery(final UUID orderId) {
         final Order order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getType() != OrderType.DELIVERY) {
+        if (!(order instanceof DeliveryOrder deliveryOrder)) {
             throw new IllegalStateException();
         }
-        if (order.getStatus() != OrderStatus.SERVED) {
+        if (deliveryOrder.getStatus() != SERVED) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.DELIVERING);
+        deliveryOrder.setStatus(DELIVERING);
         return order;
 
     }
@@ -135,28 +142,27 @@ public class DefaultDeliveryOrderService implements DeliveryOrderService {
     @Transactional
     @Override
     public Order completeDelivery(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final DeliveryOrder order = (DeliveryOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.DELIVERING) {
+        if (order.getStatus() != DELIVERING) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.DELIVERED);
+        order.setStatus(DELIVERED);
         return order;
     }
 
     @Transactional
     @Override
     public Order complete(final UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final DeliveryOrder order = (DeliveryOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         final OrderType type = order.getType();
-        final OrderStatus status = order.getStatus();
-        if (type == OrderType.DELIVERY) {
-            if (status != OrderStatus.DELIVERED) {
+        if (type == DELIVERY) {
+            if (order.getStatus() != DELIVERED) {
                 throw new IllegalStateException();
             }
         }
-        order.setStatus(OrderStatus.COMPLETED);
+        order.setStatus(COMPLETED);
         return order;
 
     }

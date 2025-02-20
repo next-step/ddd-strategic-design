@@ -1,5 +1,10 @@
 package kitchenpos.order.eatinorder.application;
 
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.ACCEPTED;
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.COMPLETED;
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.SERVED;
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.WAITING;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +16,6 @@ import kitchenpos.menu.domain.MenuRepository;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.domain.OrderType;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
@@ -76,7 +80,7 @@ public class DefaultEatInOrderService implements EatInOrderService {
         }
         EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
-        order.setStatus(OrderStatus.WAITING);
+        order.setStatus(WAITING);
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderLineItems(orderLineItems);
         if (request instanceof EatInOrder eatInOrderRequest) {
@@ -92,41 +96,40 @@ public class DefaultEatInOrderService implements EatInOrderService {
 
     @Override
     public Order accept(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final EatInOrder order = (EatInOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.WAITING) {
+        if (order.getStatus() != WAITING) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.ACCEPTED);
+        order.setStatus(ACCEPTED);
         return order;
     }
 
     @Override
     public Order serve(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final EatInOrder order = (EatInOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
-        if (order.getStatus() != OrderStatus.ACCEPTED) {
+        if (order.getStatus() != ACCEPTED) {
             throw new IllegalStateException();
         }
-        order.setStatus(OrderStatus.SERVED);
+        order.setStatus(SERVED);
         return order;
     }
 
     @Override
     public Order complete(UUID orderId) {
-        final Order order = orderRepository.findById(orderId)
+        final EatInOrder order = (EatInOrder) orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
         final OrderType type = order.getType();
-        final OrderStatus status = order.getStatus();
         if (type == OrderType.EAT_IN) {
-            if (status != OrderStatus.SERVED) {
+            if (order.getStatus() != SERVED) {
                 throw new IllegalStateException();
             }
         }
-        order.setStatus(OrderStatus.COMPLETED);
+        order.setStatus(COMPLETED);
         if (order instanceof EatInOrder eatInOrder) {
             final OrderTable orderTable = eatInOrder.getOrderTable();
-            if (!eatInOrderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
+            if (!eatInOrderRepository.existsByOrderTableAndStatusNot(orderTable, COMPLETED)) {
                 orderTable.setNumberOfGuests(0);
                 orderTable.setOccupied(false);
             }

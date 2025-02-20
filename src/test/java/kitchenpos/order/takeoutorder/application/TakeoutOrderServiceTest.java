@@ -4,7 +4,9 @@ import static kitchenpos.Fixtures.INVALID_ID;
 import static kitchenpos.Fixtures.menu;
 import static kitchenpos.Fixtures.menuProduct;
 import static kitchenpos.Fixtures.order;
-import static kitchenpos.Fixtures.orderTable;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.ACCEPTED;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.SERVED;
+import static kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus.WAITING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -20,9 +22,9 @@ import kitchenpos.menu.infra.InMemoryMenuRepository;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderLineItem;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.common.infra.InMemoryOrderRepository;
 import kitchenpos.order.takeoutorder.domain.TakeoutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,12 +51,12 @@ class TakeoutOrderServiceTest {
     void createTakeoutOrder() {
         final UUID menuId = menuRepository.save(menu(19_000L, true, menuProduct())).getId();
         final Order expected = createOrderRequest(createOrderLineItemRequest(menuId, 19_000L, 3L));
-        final Order actual = takeoutOrderService.create(expected);
+        final TakeoutOrder actual = (TakeoutOrder) takeoutOrderService.create(expected);
         assertThat(actual).isNotNull();
         assertAll(
             () -> assertThat(actual.getId()).isNotNull(),
             () -> assertThat(actual.getType()).isEqualTo(expected.getType()),
-            () -> assertThat(actual.getStatus()).isEqualTo(OrderStatus.WAITING),
+            () -> assertThat(actual.getStatus()).isEqualTo(WAITING),
             () -> assertThat(actual.getOrderDateTime()).isNotNull(),
             () -> assertThat(actual.getOrderLineItems()).hasSize(1)
         );
@@ -98,16 +100,16 @@ class TakeoutOrderServiceTest {
     @DisplayName("주문을 접수한다.")
     @Test
     void accept() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.WAITING, orderTable(true, 4))).getId();
-        final Order actual = takeoutOrderService.accept(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.ACCEPTED);
+        final UUID orderId = orderRepository.save(order(WAITING)).getId();
+        final TakeoutOrder actual = (TakeoutOrder) takeoutOrderService.accept(orderId);
+        assertThat(actual.getStatus()).isEqualTo(ACCEPTED);
     }
 
     @DisplayName("접수 대기 중인 주문만 접수할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = TakeoutOrderStatus.class, names = "WAITING", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void accept(final OrderStatus status) {
-        final UUID orderId = orderRepository.save(order(status, orderTable(true, 4))).getId();
+    void accept(final TakeoutOrderStatus status) {
+        final UUID orderId = orderRepository.save(order(status)).getId();
         assertThatThrownBy(() -> takeoutOrderService.accept(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
@@ -115,32 +117,24 @@ class TakeoutOrderServiceTest {
     @DisplayName("주문을 서빙한다.")
     @Test
     void serve() {
-        final UUID orderId = orderRepository.save(order(OrderStatus.ACCEPTED)).getId();
-        final Order actual = takeoutOrderService.serve(orderId);
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.SERVED);
+        final UUID orderId = orderRepository.save(order(ACCEPTED)).getId();
+        final TakeoutOrder actual = (TakeoutOrder) takeoutOrderService.serve(orderId);
+        assertThat(actual.getStatus()).isEqualTo(SERVED);
     }
 
     @DisplayName("접수된 주문만 서빙할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "ACCEPTED", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = TakeoutOrderStatus.class, names = "ACCEPTED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void serve(final OrderStatus status) {
+    void serve(final TakeoutOrderStatus status) {
         final UUID orderId = orderRepository.save(order(status)).getId();
         assertThatThrownBy(() -> takeoutOrderService.serve(orderId))
             .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("주문을 완료한다.")
-    @Test
-    void complete() {
-        final Order expected = orderRepository.save(order(OrderStatus.DELIVERED, "서울시 송파구 위례성대로 2"));
-        final Order actual = takeoutOrderService.complete(expected.getId());
-        assertThat(actual.getStatus()).isEqualTo(OrderStatus.COMPLETED);
-    }
-
     @DisplayName("포장 주문의 경우 서빙된 주문만 완료할 수 있다.")
-    @EnumSource(value = OrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
+    @EnumSource(value = TakeoutOrderStatus.class, names = "SERVED", mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest
-    void completeTakeoutOrder(final OrderStatus status) {
+    void completeTakeoutOrder(final TakeoutOrderStatus status) {
         final UUID orderId = orderRepository.save(order(status)).getId();
         assertThatThrownBy(() -> takeoutOrderService.complete(orderId))
             .isInstanceOf(IllegalStateException.class);

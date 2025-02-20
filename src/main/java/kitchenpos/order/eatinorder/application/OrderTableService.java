@@ -1,11 +1,11 @@
 package kitchenpos.order.eatinorder.application;
 
+import static kitchenpos.order.eatinorder.domain.EatInOrderStatus.COMPLETED;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
-import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.eatinorder.domain.OrderTableRepository;
@@ -18,8 +18,7 @@ public class OrderTableService {
     private final OrderTableRepository orderTableRepository;
     private final EatInOrderRepository eatInOrderRepository;
 
-    public OrderTableService(OrderTableRepository orderTableRepository, OrderRepository orderRepository,
-        EatInOrderRepository eatInOrderRepository) {
+    public OrderTableService(OrderTableRepository orderTableRepository, EatInOrderRepository eatInOrderRepository) {
         this.orderTableRepository = orderTableRepository;
         this.eatInOrderRepository = eatInOrderRepository;
     }
@@ -50,7 +49,7 @@ public class OrderTableService {
     public OrderTable clear(final UUID orderTableId) {
         final OrderTable orderTable = orderTableRepository.findById(orderTableId)
             .orElseThrow(NoSuchElementException::new);
-        if (eatInOrderRepository.existsByOrderTableAndStatusNot(orderTable, OrderStatus.COMPLETED)) {
+        if (eatInOrderRepository.existsByOrderTableAndStatusNot(orderTable, COMPLETED)) {
             throw new IllegalStateException();
         }
         orderTable.setNumberOfGuests(0);

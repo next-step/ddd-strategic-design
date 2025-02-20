@@ -9,11 +9,13 @@ import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuGroup;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.order.common.domain.OrderLineItem;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.deliveryorder.domain.DeliveryOrder;
+import kitchenpos.order.deliveryorder.domain.DeliveryOrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 import kitchenpos.order.takeoutorder.domain.TakeoutOrder;
+import kitchenpos.order.takeoutorder.domain.TakeoutOrderStatus;
 import kitchenpos.product.domain.Product;
 
 public class Fixtures {
@@ -66,7 +68,7 @@ public class Fixtures {
         return menuProduct;
     }
 
-    public static DeliveryOrder order(final OrderStatus status, final String deliveryAddress) {
+    public static DeliveryOrder order(final DeliveryOrderStatus status, final String deliveryAddress) {
         final DeliveryOrder order = new DeliveryOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);
@@ -76,7 +78,7 @@ public class Fixtures {
         return order;
     }
 
-    public static TakeoutOrder order(final OrderStatus status) {
+    public static TakeoutOrder order(final TakeoutOrderStatus status) {
         final TakeoutOrder order = new TakeoutOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);
@@ -85,7 +87,7 @@ public class Fixtures {
         return order;
     }
 
-    public static EatInOrder order(final OrderStatus status, final OrderTable orderTable) {
+    public static EatInOrder order(final EatInOrderStatus status, final OrderTable orderTable) {
         final EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setStatus(status);

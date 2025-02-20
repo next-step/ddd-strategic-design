@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 import kitchenpos.order.common.domain.Order;
 import kitchenpos.order.common.domain.OrderRepository;
-import kitchenpos.order.common.domain.OrderStatus;
 import kitchenpos.order.eatinorder.domain.EatInOrder;
 import kitchenpos.order.eatinorder.domain.EatInOrderRepository;
+import kitchenpos.order.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.order.eatinorder.domain.OrderTable;
 
 public class InMemoryOrderRepository implements OrderRepository, EatInOrderRepository {
@@ -34,12 +34,12 @@ public class InMemoryOrderRepository implements OrderRepository, EatInOrderRepos
     }
 
     @Override
-    public boolean existsByOrderTableAndStatusNot(final OrderTable orderTable, final OrderStatus status) {
+    public boolean existsByOrderTableAndStatusNot(final OrderTable orderTable, final EatInOrderStatus status) {
         return orders.values()
             .stream()
             .anyMatch(order -> {
                     if (order instanceof EatInOrder eatInOrder) {
-                        return eatInOrder.getOrderTable().equals(orderTable) && order.getStatus() != status;
+                        return eatInOrder.getOrderTable().equals(orderTable) && eatInOrder.getStatus() != status;
                     }
                     return false;
                 }

@@ -1,7 +1,10 @@
 package kitchenpos.order.eatinorder.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +16,10 @@ import kitchenpos.order.common.domain.OrderType;
 @Entity
 @DiscriminatorValue("EAT_IN")
 public class EatInOrder extends Order {
+
+    @Column(name = "status", nullable = false, columnDefinition = "varchar(255)")
+    @Enumerated(EnumType.STRING)
+    private EatInOrderStatus status;
 
     @ManyToOne
     @JoinColumn(
@@ -31,6 +38,14 @@ public class EatInOrder extends Order {
     @Override
     public OrderType getType() {
         return OrderType.EAT_IN;
+    }
+
+    public EatInOrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EatInOrderStatus status) {
+        this.status = status;
     }
 
     public OrderTable getOrderTable() {
