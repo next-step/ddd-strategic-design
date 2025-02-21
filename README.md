@@ -272,14 +272,16 @@ docker compose -p kitchenpos up -d
       - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
       - `menu`의 `menuProduct`들 총 갯수와 `menuProduct`들 각각을 구성하는 `product`들의 총 갯수는 같아야 합니다.
       - `menu`의 `price`는 `totalMenuProductPrice`이하여야 합니다. 
-  <br/>
+<br/>
+      
 ### `menu`의 `price`를 변경할 수 있습니다.
   - `menu` 의 `menuId`와 변경할 `menu`의 `name`,`price`,`menuGroup`,`menuProduct`들을 입력받습니다.
     - ### 검증
       - `price`를 수정하려는 `menu`는 이미 등록이 되어 있는 `menu`여야 합니다.
       - `menu`의 `price`는 0원 이상 이어야 합니다.
       - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
-      - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
+      - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.
+<br/>
       
 ### `menu`를 `visibleMenu`로 설정할 수 있습니다.
   - ### 검증
@@ -288,8 +290,8 @@ docker compose -p kitchenpos up -d
 <br/>
 ### `menu`를 `hiddenMenu`로 설정할 수 있습니다.
   - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
-<br/><br/>
-- `menu`의 목록을 조회할 수 있습니다.
+
+### `menu`의 목록을 조회할 수 있습니다.
 
 
 ## 5. menuProduct
