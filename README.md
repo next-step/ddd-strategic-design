@@ -145,6 +145,7 @@ docker compose -p kitchenpos up -d
 | 방문 손님 수   | Number Of Guest   | 해당 주문 테이블에 앉아 있는 손님 수.    |
 
 ### 배달 주문
+
 | 한글명       | 영문명      | 설명        |
 |-----------|----------|-----------|
 | 주문 종류(배달) | DELIVERY | 배달 주문 종류. |
@@ -158,12 +159,15 @@ docker compose -p kitchenpos up -d
 | 배달 대행사  | Delivery Agency   | 외부 음식 배달 서비스 제공 파트너.      |
 
 ### 공통
+
 | 한글명       | 영문명      | 설명        |
 |-----------|----------|-----------|
 | 비속어   | Profanity | 모욕적이거나 불쾌감을 주는 단어나 문구.                    |
 
 ## 모델링
+
 ### Product
+
 - `Product`는 `name`과 `price`를 가지고 있다.
 - `Product`는 `name`과 `price`를 입력하여 등록 가능하다.
   - 등록 정책
@@ -177,6 +181,7 @@ docker compose -p kitchenpos up -d
 - `Product` 목록을 조회할 수 있다.
 
 ### MenuGroup
+
 - `MenuGroup`은 `name`을 가지고 있다.
 - `MenuGroup`을 `name`을 입력하여 등록할 수 있다.
   - 등록 정책
@@ -184,6 +189,7 @@ docker compose -p kitchenpos up -d
 - `MenuGroup` 목록을 조회할 수 있다.
 
 ### Menu
+
 - `Menu`는 `name`, `price`, `menuGroup`, `displayed`, `menuProduct`를 가지고 있다.
 - `Menu`를 등록할 수 있다.
   - `name`, `price`, `menuGroup`, `displayed`를 입력하여 등록한다.
@@ -208,6 +214,7 @@ docker compose -p kitchenpos up -d
 - `Menu`의 목록을 조회할 수 있다.
 
 ### OrderTable
+
 - `OrderTable`은 `name`, `numberOfCustomer`, `occupied`를 가지고 있다.
 - `OrderTable`은 `name`을 입력하여 등록할 수 있다.
   - `numberOfCustomer`을 0으로 등록한다.
@@ -228,5 +235,89 @@ docker compose -p kitchenpos up -d
 - `OrderTable` 목록을 조회할 수 있다.
 
 ### Order
+
 - `Order`는 `orderType`, `orderStatus`, `orderDateTime`, `OrderLineItem`, `deliveryAddress`, `OrderTable`을 가진다.
 - `Order` 목록을 조회할 수 있다.
+
+#### OrderType에 따른 OrderStatus 변화
+
+![OrderStatusFlow.png](https://github.com/user-attachments/assets/756b0219-731f-481d-9968-3d8e41e9feab)
+
+#### 공통 주문 등록 정책
+
+- 1개 이상의 `OrderLineItem`이 있어야 한다
+- `Not Display Menu`는 주문 등록할 수 없다
+- `OrderLineItem`의 `price`는 `Menu`의 `price`와 동일해야 한다
+
+#### 1) deliveryOrder 주문 과정
+
+- ① `deliveryOrder`를 등록한다
+  - 정책
+    - `공통 주문 등록 정책`을 만족해야 한다
+    - `orderLineItem`의 수량은 0이상이어야 한다
+    - `deliveryAddress`는 공백만 입력할 수 없으며 반드시 입력되어야 한다
+  - `Order`가 정상적으로 등록되면 `waitingOrder`가 된다
+
+- ② `acceptedOrder`가 된다
+  - 정책
+    - `waitingOrder`인 경우만 가능하다
+  - `DeliveryAgent`에게 `orderTotalPrice`, `deliveryAddress`를 전달한다
+
+- ③ `servedOrder`가 된다
+  - 정책
+    - `acceptedOrder`인 경우만 가능하다
+
+- ④ `deliveringOrder`가 된다
+  - 정책
+    - `servedOrder`인 경우만 가능하다
+
+- ⑤ `deliveredOrder`가 된다
+  - 정책
+    - `deliveringOrder`인 경우만 가능하다
+
+- ⑥ `completedOrder`가 된다
+  - 정책
+    - `deliveredOrder`여야 한다
+
+#### 2) takeOutOrder의 주문 과정
+
+- ① `takeOutOrder`를 등록한다
+  - 정책
+    - `공통 주문 등록 정책`을 만족해야 한다
+    - `orderLineItem`의 수량은 0이상이어야 한다
+  - `Order`가 정상적으로 등록되면 `waitingOrder`가 된다
+
+- ② `acceptedOrder`가 된다
+  - 정책
+    - `waitingOrder`인 경우만 가능하다
+
+- ③ `servedOrder`가 된다
+  - 정책
+    - `acceptedOrder`인 경우만 가능하다
+
+- ④ `completedOrder`가 된다
+  - 정책
+    - `servedOrder`여야 한다
+
+#### 3) eatIntOrder의 주문 과정
+
+- ① `eatIntOrder`를 등록한다
+  - 정책
+    - `공통 주문 등록 정책`을 만족해야 한다
+    - `clearedTable`면 등록할 수 없다
+  - `Order`가 정상적으로 등록되면 `waitingOrder`가 된다
+
+- ② `acceptedOrder`가 된다
+  - 정책
+    - `waitingOrder`인 경우만 가능하다
+
+- ③ `servedOrder`가 된다
+  - 정책
+    - `acceptedOrder`인 경우만 가능하다
+
+- ④ `completedOrder`가 된다
+  - 정책
+    - `servedOrder`여야 한다
+  - `pendingOrderTable`이 아닌 경우, `clearedTable`로 만든다
+    - `numberOfCustomer`을 0으로 변경한다
+    - `occupied`를 false로 변경한다
