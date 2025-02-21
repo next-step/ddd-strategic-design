@@ -287,7 +287,6 @@ docker compose -p kitchenpos up -d
   - ### 검증
       - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
       - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
-<br/>
 ### `menu`를 `hiddenMenu`로 설정할 수 있습니다.
   - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
 
@@ -307,7 +306,6 @@ docker compose -p kitchenpos up -d
 - `menuGroup`은 랜덤한 `menuGroupId`를 사용하여 등록합니다.
   - ### 검증
     - `menuGroup`의 `name`은 비워 둘 수 없습니다.
-<br/>
 ### `menuGroup`의 목록을 조회할 수 있습니다.
 
 
