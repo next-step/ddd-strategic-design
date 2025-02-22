@@ -1,6 +1,6 @@
 package kitchenpos.eatinorder.application.service;
 
-import kitchenpos.deliveryorder.adaptor.out.api.KitchenridersClient;
+import kitchenpos.deliveryorder.adapter.out.api.KitchenridersClient;
 import kitchenpos.eatinorder.application.port.out.OrderRepository;
 import kitchenpos.eatinorder.domain.Order;
 import kitchenpos.eatinorder.domain.OrderType;

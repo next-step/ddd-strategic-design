@@ -1,7 +1,7 @@
 package kitchenpos.deliveryorder.application.service;
 
 import kitchenpos.deliveryorder.application.port.out.OrderRepository;
-import kitchenpos.deliveryorder.adaptor.out.api.KitchenridersClient;
+import kitchenpos.deliveryorder.adapter.out.api.KitchenridersClient;
 import kitchenpos.menu.application.port.out.MenuRepository;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.order.domain.Order;
