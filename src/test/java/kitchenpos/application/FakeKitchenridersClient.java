@@ -1,6 +1,6 @@
 package kitchenpos.application;
 
-import kitchenpos.infra.KitchenridersClient;
+import kitchenpos.deliveryorder.adapter.out.client.KitchenridersClient;
 
 import java.math.BigDecimal;
 import java.util.UUID;
