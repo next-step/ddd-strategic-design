@@ -250,7 +250,7 @@ docker compose -p kitchenpos up -d
 - 등록되어 있는 `product`의 `productId`와 변경할 `product`의 `name`,`price`,`productId`를 입력받습니다.<br/>
   - ### 검증
     - `product`의 `price`가 0원 이상이어야 합니다.
-    - `menu`의 `price`가 `menu`가 속한 `Product`의 `price`들의 총합보다 크면 `hiddenMenu`가 됩니다.
+    - `menu`의 `price`가 `totalMenuProductPrice`보다 크면 `hiddenMenu`가 됩니다.
     ### `product`의 목록을 조회할 수 있습니다.
 
 ## 4.menu
@@ -268,28 +268,29 @@ docker compose -p kitchenpos up -d
       - `menu`의 `price`는 0원 이상 이어야 합니다.
       - `menu`의 `menuProduct`가 1개 이상 존재해야 합니다.
       - `menu` 내부 `product`의 `quantity`는 0개 이상이어야 합니다.
-      - 등록하려는 `menu`의 `price`가 `menu`에 포함된 `product`의 총 `price`보다 높으면 안됩니다.
+      - 등록하려는 `menu`의 `price`가 `totalMenuProductPrice`보다 높으면 안됩니다.
       - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
       - `menu`의 `menuProduct`들 총 갯수와 `menuProduct`들 각각을 구성하는 `product`들의 총 갯수는 같아야 합니다.
       - `menu`의 `price`는 `totalMenuProductPrice`이하여야 합니다. 
-  <br/>
+<br/>
+      
 ### `menu`의 `price`를 변경할 수 있습니다.
   - `menu` 의 `menuId`와 변경할 `menu`의 `name`,`price`,`menuGroup`,`menuProduct`들을 입력받습니다.
     - ### 검증
       - `price`를 수정하려는 `menu`는 이미 등록이 되어 있는 `menu`여야 합니다.
       - `menu`의 `price`는 0원 이상 이어야 합니다.
-      - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
-      - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.<br/>
+      - `menu`의 `price`가 `totalMenuProductPrice`보다 높으면 안됩니다.
+      - `menu`의 `name`이 없거나 `profanity`가 들어가 있으면 안됩니다.
+<br/>
       
 ### `menu`를 `visibleMenu`로 설정할 수 있습니다.
   - ### 검증
       - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
-      - `menu`의 `price`가 `totalMentProductPrice`보다 높으면 안됩니다.
-<br/>
+      - `menu`의 `price`가 `totalMenuProductPrice`보다 높으면 안됩니다.
 ### `menu`를 `hiddenMenu`로 설정할 수 있습니다.
   - 요청하려는 `menu`는 이미 등록이 되어 있는 `menu` 여야 합니다.
-<br/><br/>
-- `menu`의 목록을 조회할 수 있습니다.
+
+### `menu`의 목록을 조회할 수 있습니다.
 
 
 ## 5. menuProduct
@@ -305,7 +306,6 @@ docker compose -p kitchenpos up -d
 - `menuGroup`은 랜덤한 `menuGroupId`를 사용하여 등록합니다.
   - ### 검증
     - `menuGroup`의 `name`은 비워 둘 수 없습니다.
-<br/>
 ### `menuGroup`의 목록을 조회할 수 있습니다.
 
 
@@ -387,7 +387,7 @@ stateDiagram-v2
   - `deliveryAddress`가 없거나 빈값이면 안됩니다.
   - `orderMenu`의 `quantity`가 0 미만이면 안됩니다.
 ### `acceptedOrder`가 됩니다
-- `deliveryAgent`를 호출하고, `orderMenu`속 `menuProduct`의 `price` 총합, `deliveryAddress`,
+- `deliveryAgent`를 호출하고, `orderMenu`속 `totalMenuProductPrice`, `deliveryAddress`,
   `orderId`를 전달합니다.
 - `order`의 `orderStatus`를 `acceptOrder`로 변경합니다.
   - ### 검증

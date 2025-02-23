@@ -1,13 +1,14 @@
 package kitchenpos.application;
 
-import kitchenpos.domain.MenuRepository;
-import kitchenpos.domain.Order;
-import kitchenpos.domain.OrderLineItem;
-import kitchenpos.domain.OrderRepository;
-import kitchenpos.domain.OrderStatus;
-import kitchenpos.domain.OrderTable;
-import kitchenpos.domain.OrderTableRepository;
-import kitchenpos.domain.OrderType;
+import kitchenpos.menu.application.port.out.MenuRepository;
+import kitchenpos.order.domain.Order;
+import kitchenpos.order.domain.OrderLineItem;
+import kitchenpos.deliveryorder.application.port.out.OrderRepository;
+import kitchenpos.order.domain.OrderStatus;
+import kitchenpos.eatinorder.application.service.EatInOrderService;
+import kitchenpos.eatinorder.domain.OrderTable;
+import kitchenpos.eatinorder.application.port.out.OrderTableRepository;
+import kitchenpos.order.domain.OrderType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class OrderServiceTest {
     private MenuRepository menuRepository;
     private OrderTableRepository orderTableRepository;
     private FakeKitchenridersClient kitchenridersClient;
-    private OrderService orderService;
+    private EatInOrderService orderService;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +50,7 @@ class OrderServiceTest {
         menuRepository = new InMemoryMenuRepository();
         orderTableRepository = new InMemoryOrderTableRepository();
         kitchenridersClient = new FakeKitchenridersClient();
-        orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
+        orderService = new EatInOrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
     }
 
     @DisplayName("1개 이상의 등록된 메뉴로 배달 주문을 등록할 수 있다.")
