@@ -96,61 +96,61 @@ docker compose -p kitchenpos up -d
 
 ## 용어 사전
 
-| 한글명 | 영문명 | 설명 |
-| --- | --- | --- |
-|상품|Product|키친포스에서 제공할 최소 단위를 뜻한다.|
-|상품 이름|Product Name|상품은 이름을 가질 수 있다.|
-|상품 가격|Product Price|상품은 가격을 가질 수 있다.|
-|상품 등록|Create Product|상품은 등록 될 수 있다.|
-|상품 가격 변경|Change Product Price|상품은 가격이 변경 될 수 있다.|
-|상품 목록 조회|Retrieve Product List|등록된 상품 목록을 조회 할 수 있다.|
-|비속어|Profanity|"상품| 메뉴 이름 등에 비속어를 사용할 수 없다."|
-|메뉴 그룹|MenuGroup|메뉴는 특정 메뉴 그룹에 속해야 한다.|
-|메뉴 그룹 이름|MenuGroup Name|메뉴 그룹은 이름을 가질 수 있다.|
-|메뉴 그룹 등록|Create Product|상품은 등록 될 수 있다.|
-|메뉴 그룹 목록|Retrieve MenuGroup List|등록된 메뉴 그룹 목록을 조회 할 수 있다.|
-|메뉴|Menu|키친포스에서 주문 할 수 있는 최소 단위이다.|
-|메뉴 가격|Menu Price|메뉴는 가격을 가질 수 있다.|
-|메뉴 이름|Menu Name|메뉴는 이름을 가질 수 있다.|
-|메뉴 등록|Create Menu|메뉴는 등록 될 수 있다.|
-|메뉴 목록 조회|Retrieve Menu List|등록된 메뉴 목록을 조회 할 수 있다.|
-|메뉴 노출|Display Menu|메뉴는 노출 처리 할 수 있다.|
-|메뉴 숨김|Hide Menu|메뉴는 숨김 처리 할 수 있다.|
-|노출된 메뉴|Displayed Menu|메뉴는 노출된 상태일 수 있다.|
-|숨겨진 메뉴|Hidden Menu|메뉴는 숨김 상태일 수 있다.|
-|메뉴에 속한 상품|Menu Products|메뉴는 1개 이상의 상품으로 구성 된다.|
-|메뉴에 속한 상품 금액의 합|Sum Menu Products Price|메뉴에 구성된 상품의 총 합을 알 수 있다.|
-|주문 테이블|OrderTable|매장에서 식사할 경우 이용할 테이블을 뜻한다.|
-|주문 테이블 이름|OrderTable Name|주문 테이블은 이름을 가질 수 있다.|
-|빈 테이블|Occupied Table|주문 테이블이 비었는지 여부를 알 수 있다.|
-|방문한 손님 수|Guest Number|주문 테이블을 방문한 손님 수를 알 수 있다.|
-|주문 테이블 등록|Create OrderTable|주문 테이블은 등록 될 수 있다.|
-|주문 테이블 목록 조회|Retrieve OrderTable List|등록된 주문 테이블 목록을 조회 할 수 있다.|
-|빈 테이블 설정|Set Empty Table|주문 테이블을 비어있는 상태로 설정 할 수 있다.|
-|빈 테이블 해지|Occupy Table|주문 테이블을 점유 상태로 설정 할 수 있다.|
-|방문한 손님 수 변경|Change Guest Number|주문 테이블의 방문한 손님 수를 변경 할 수 있다.|
-|주문|Order|키친포스에서 제공하는 메뉴를 만들어 달라고 요청 하는 단위 이다.|
-|주문 유형|Order Type|주문에는 여러가지 유형이 있을 수 있다.|
-|배달 주문|Delivery Order|상품을 주소지로 배달 하는 주문 이다.|
-|포장 주문|Takeout Order|상품을 매장에서 가져가는 주문 이다.|
-|매장 주문|Eat-in Order|상품을 매장에서 테이블에 앉아서 먹고 가는 주문이다.|
-|배달 주소|Delivery Address|배달 주문의 경우 배달 주소를 가진다.|
-|주문 항목|OrderItem|주문은 한번에 여러 주문 항목을 요청할 수 있다.|
-|주문 항목 메뉴|OrderItem Menu|주문 항목은 1개의 메뉴로 구성 된다.|
-|주문 항목 수량|OrderItem Quantity|주문 항목을 1개 이상 주문 할 수 있다.|
-|주문 항목 가격|OrderItem Price|주문 항목은 가격을 가질 수 있다.|
-|배달 대행사|Delivery Agency|배달을 대행해주는 대행사를 뜻한다.|
-|배달 대행사 호출|Request Delivery Agency|배달 주문 시 배달 대행사를 호출 할 수 있다.|
-|주문 접수|Accept Order|접수 대기 중 주문을 접수 할 수 있다.|
-|주문 서빙|Serve Order|접수 된 주문을 제공 할 수 있다.|
-|주문 배달|Start Delivery of Order|제공 된 주문을 배달 할 수 있다.|
-|주문 배달 완료|Complete Delivery of Order|배달 중 주문을 배달 완료 할 수 있다.|
-|주문 완료|Complete Order|처리 완료 된 주문을 완료 할 수 있다.|
-|주문 목록 조회|Retrieve Order List|등록된 주문 목록을 조회 할 수 있다.|
-|접수 대기 중인 주문|Wating Order|주문 생성 시 최초 상태|
-|접수 된 주문|Accepted Order|주문이 접수 된 상태 Waiting -> (접수) ->  Accepted|
-|서빙된 주문|Served Order|주문이 결과가 제공된 상태 Accepted -> (Serve) -> Served|
-|배달 중 주문|Delivering Order|배달 중인 상태 Served -> (Delivery) -> Delivering|
-|완료된 주문|Completed Order|주문 처리가 완료 된 상태|
+| 한글명             | 영문명                        | 설명                                           |
+|-----------------|----------------------------|----------------------------------------------|
+| 상품              | Product                    | 키친포스에서 제공할 최소 단위를 뜻한다.                       |
+| 상품 이름           | Product Name               | 상품은 이름을 가질 수 있다.                             |
+| 상품 가격           | Product Price              | 상품은 가격을 가질 수 있다.                             |
+| 상품 등록           | Create Product             | 상품은 등록 될 수 있다.                               |
+| 상품 가격 변경        | Change Product Price       | 상품은 가격이 변경 될 수 있다.                           |
+| 상품 목록 조회        | Retrieve Product List      | 등록된 상품 목록을 조회 할 수 있다.                        |
+| 비속어             | Profanity                  | 상품 메뉴 이름 등에 비속어를 사용할 수 없다.                   |
+| 메뉴 그룹           | MenuGroup                  | 메뉴는 특정 메뉴 그룹에 속해야 한다.                        |
+| 메뉴 그룹 이름        | MenuGroup Name             | 메뉴 그룹은 이름을 가질 수 있다.                          |
+| 메뉴 그룹 등록        | Create MenuGroup           | 메뉴 그룹은 등록 될 수 있다.                            |
+| 메뉴 그룹 목록 조회     | Retrieve MenuGroup List    | 등록된 메뉴 그룹 목록을 조회 할 수 있다.                     |
+| 메뉴              | Menu                       | 키친포스에서 주문 할 수 있는 최소 단위이다.                    |
+| 메뉴 가격           | Menu Price                 | 메뉴는 가격을 가질 수 있다.                             |
+| 메뉴 이름           | Menu Name                  | 메뉴는 이름을 가질 수 있다.                             |
+| 메뉴 등록           | Create Menu                | 메뉴는 등록 될 수 있다.                               |
+| 메뉴 목록 조회        | Retrieve Menu List         | 등록된 메뉴 목록을 조회 할 수 있다.                        |
+| 메뉴 노출           | Display Menu               | 메뉴는 노출 처리 할 수 있다.                            |
+| 메뉴 숨김           | Hide Menu                  | 메뉴는 숨김 처리 할 수 있다.                            |
+| 노출된 메뉴          | Displayed Menu             | 메뉴는 노출된 상태일 수 있다.                            |
+| 숨겨진 메뉴          | Hidden Menu                | 메뉴는 숨김 상태일 수 있다.                             |
+| 메뉴에 속한 상품       | Menu Products              | 메뉴는 1개 이상의 상품으로 구성 된다.                       |
+| 메뉴에 속한 상품 금액의 합 | Sum Menu Products Price    | 메뉴에 구성된 상품의 총 합을 알 수 있다.                     |
+| 주문 테이블          | OrderTable                 | 매장에서 식사할 경우 이용할 테이블을 뜻한다.                    |
+| 주문 테이블 이름       | OrderTable Name            | 주문 테이블은 이름을 가질 수 있다.                         |
+| 빈 테이블           | Empty Table                | 주문 테이블이 비었는지 여부를 알 수 있다.                     |
+| 방문한 손님 수        | Guest Number               | 주문 테이블을 방문한 손님 수를 알 수 있다.                    |
+| 주문 테이블 등록       | Create OrderTable          | 주문 테이블은 등록 될 수 있다.                           |
+| 주문 테이블 목록 조회    | Retrieve OrderTable List   | 등록된 주문 테이블 목록을 조회 할 수 있다.                    |
+| 빈 테이블 설정        | Set Empty Table            | 주문 테이블을 비어있는 상태로 설정 할 수 있다.                  |
+| 빈 테이블 해지        | Occupy Table               | 주문 테이블을 점유 상태로 설정 할 수 있다.                    |
+| 방문한 손님 수 변경     | Change Guest Number        | 주문 테이블의 방문한 손님 수를 변경 할 수 있다.                 |
+| 주문              | Order                      | 키친포스에서 제공하는 메뉴를 만들어 달라고 요청 하는 단위 이다.         |
+| 주문 유형           | Order Type                 | 주문에는 여러가지 유형이 있을 수 있다.                       |
+| 배달 주문           | Delivery Order             | 상품을 주소지로 배달 하는 주문 이다.                        |
+| 포장 주문           | Takeout Order              | 상품을 매장에서 가져가는 주문 이다.                         |
+| 매장 주문           | Eat-in Order               | 상품을 매장에서 테이블에 앉아서 먹고 가는 주문이다.                |
+| 배달 주소           | Delivery Address           | 배달 주문의 경우 배달 주소를 가진다.                        |
+| 주문 항목           | OrderItem                  | 주문은 한번에 여러 주문 항목을 요청할 수 있다.                  |
+| 주문 항목 메뉴        | OrderItem Menu             | 주문 항목은 1개의 메뉴로 구성 된다.                        |
+| 주문 항목 수량        | OrderItem Quantity         | 주문 항목을 1개 이상 주문 할 수 있다.                      |
+| 주문 항목 가격        | OrderItem Price            | 주문 항목은 가격을 가질 수 있다.                          |
+| 배달 대행사          | Delivery Agency            | 배달을 대행해주는 대행사를 뜻한다.                          |
+| 배달 대행사 호출       | Request Delivery Agency    | 배달 주문 시 배달 대행사를 호출 할 수 있다.                   |
+| 주문 접수           | Accept Order               | 접수 대기 중 주문을 접수 할 수 있다.                       |
+| 주문 서빙           | Serve Order                | 접수 된 주문을 제공 할 수 있다.                          |
+| 주문 배달           | Start Delivery of Order    | 제공 된 주문을 배달 할 수 있다.                          |
+| 주문 배달 완료        | Complete Delivery of Order | 배달 중 주문을 배달 완료 할 수 있다.                       |
+| 주문 완료           | Complete Order             | 처리 완료 된 주문을 완료 할 수 있다.                       |
+| 주문 목록 조회        | Retrieve Order List        | 등록된 주문 목록을 조회 할 수 있다.                        |
+| 접수 대기 중인 주문     | Wating Order               | 주문 생성 시 최초 상태                                |
+| 접수 된 주문         | Accepted Order             | 주문이 접수 된 상태 Waiting -> (접수) ->  Accepted     |
+| 서빙된 주문          | Served Order               | 주문이 결과가 제공된 상태 Accepted -> (Serve) -> Served |
+| 배달 중 주문         | Delivering Order           | 배달 중인 상태 Served -> (Delivery) -> Delivering  |
+| 완료된 주문          | Completed Order            | 주문 처리가 완료 된 상태                               |
 
 ## 모델링
