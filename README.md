@@ -362,3 +362,49 @@ docker compose -p kitchenpos up -d
     - `pendingOrderTable`이 아닌 경우, `clearedTable`로 만든다
         - `numberOfCustomer`을 0으로 변경한다
         - `occupied`를 false로 변경한다
+
+## 패키지 구조
+- 패키지 구조는 kitchenpos 아래 common, product, menu, order, eatinorder, takoutorder, deliveryorder로 나눠진다.
+- 각 2depth 패키지(product, menu 등)은 application, domain, infra, ui로 구성되어 있다.
+    - common : 각 패키지에서 공통적으로 사용되는 파일과 외부 모듈
+    - product : 상품
+    - menu : 메뉴
+    - order : 매장내식사/포장/배달 주문의 공통 파일을 관리
+    - eatinorder : 매장내식사주문
+    - takoutorder : 포장 주문
+    - deliveryorder : 배달 주문 추가
+
+ex) kitchenpos.common
+```
+kitchenpos.common
+├── external
+│   ├── DefaultPurgomalumClient
+│   └── PurgomalumClient
+```
+
+ex) kitchenpos.product
+```
+kitchenpos.product
+├── application
+│    └── ProductService
+├── domain
+│   ├── Product
+│   └── ProductRepository
+├── infra
+│   └── JpaProductRepository
+└── ui
+     └──ProductRestController
+```
+### application
+- 도메인 모델을 조작하고 트랜잭션을 제어하는 서비스 파일이 위치한다
+- 주로 ui와 domain model 간의 중간 역할을 하는 파일이 위치한다.
+
+### domain
+도메인 모델 객체와 도메인 모델이 사용하는 고수준 모듈 인터페이스가 위치한다
+
+### infra
+도메인 모델을 사용하는 저수준 모듈 구현체가 위치한다
+
+### ui
+외부 요청을 받아 application 계층으로 전달하고, 반환된 값을 적절한 데이터 형식으로 변환하여
+전달하는 역할을 하는 파일들이 위치한다
