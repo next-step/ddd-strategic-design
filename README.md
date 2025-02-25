@@ -233,7 +233,7 @@ docker compose -p kitchenpos up -d
 
 #### OrderType에 따른 OrderStatus 변화
 
-
+![orderStatus drawio](https://github.com/user-attachments/assets/fcb519d1-ff3c-4c7e-8c0c-2bd21588648e)
 
 #### 공통 주문 등록 정책
 
