@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import kitchenpos.domain.Product;
+import kitchenpos.product.domain.Product;
 
 import java.util.UUID;
 
