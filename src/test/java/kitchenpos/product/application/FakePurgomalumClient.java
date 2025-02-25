@@ -1,4 +1,4 @@
-package kitchenpos.application;
+package kitchenpos.product.application;
 
 import kitchenpos.product.infra.PurgomalumClient;
 
