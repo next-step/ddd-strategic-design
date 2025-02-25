@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.products.application.out.ProductRepository;
+import kitchenpos.products.domain.ProductRepository;
 import kitchenpos.products.domain.Product;
 
 public class InMemoryProductRepository implements ProductRepository {

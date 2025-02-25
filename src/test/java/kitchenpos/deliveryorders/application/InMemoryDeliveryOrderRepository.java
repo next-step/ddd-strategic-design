@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.deliveryorders.application.out.DeliveryOrderRepository;
+import kitchenpos.deliveryorders.domain.DeliveryOrderRepository;
 import kitchenpos.deliveryorders.domain.DeliveryOrder;
 
 public class InMemoryDeliveryOrderRepository implements DeliveryOrderRepository {

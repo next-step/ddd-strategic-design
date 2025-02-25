@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import kitchenpos.takeoutorders.application.out.TakeOutOrderRepository;
+import kitchenpos.takeoutorders.domain.TakeOutOrderRepository;
 import kitchenpos.takeoutorders.domain.TakeOutOrder;
 
 public class InMemoryTakeOutOrderRepository implements TakeOutOrderRepository {
