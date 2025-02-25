@@ -1,4 +1,4 @@
-package kitchenpos.domain;
+package kitchenpos.order.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
