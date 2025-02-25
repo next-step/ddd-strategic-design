@@ -1,6 +1,5 @@
-package kitchenpos.application;
+package kitchenpos.order.application;
 
-import kitchenpos.order.application.OrderTableService;
 import kitchenpos.order.domain.OrderRepository;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.domain.OrderTable;
