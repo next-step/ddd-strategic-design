@@ -428,7 +428,7 @@ classDiagram
         UUID id
         OrderType type
         OrderStatus status
-        List~OrderLineItem~ orderLineItems
+        List~OrderLineItem~ eatInOrderLineItems
         String deliveryAddress
         LocalDateTime orderDateTime
         UUID restaurantTableId
