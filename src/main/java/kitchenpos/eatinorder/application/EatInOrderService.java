@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
-import kitchenpos.menu.domain.Menu;
-import kitchenpos.menu.application.out.MenuRepository;
 import kitchenpos.eatinorder.domain.EatInOrder;
 import kitchenpos.eatinorder.domain.OrderLineItem;
 import kitchenpos.eatinorder.application.out.EatInOrderRepository;
 import kitchenpos.eatinorder.domain.EatInOrderStatus;
 import kitchenpos.eatinorder.domain.OrderTable;
 import kitchenpos.eatinorder.application.out.OrderTableRepository;
+import kitchenpos.eatinorder.external.MenuClient;
+import kitchenpos.eatinorder.external.MenuDTO;
 import kitchenpos.shared.domain.OrderType;
 import kitchenpos.deliveryorder.adapter.out.client.KitchenridersClient;
 import org.springframework.stereotype.Service;
@@ -23,18 +23,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EatInOrderService {
     private final EatInOrderRepository orderRepository;
-    private final MenuRepository menuRepository;
+    private final MenuClient menuClient;
     private final OrderTableRepository orderTableRepository;
     private final KitchenridersClient kitchenridersClient;
 
     public EatInOrderService(
         final EatInOrderRepository orderRepository,
-        final MenuRepository menuRepository,
+        final MenuClient menuClient,
         final OrderTableRepository orderTableRepository,
         final KitchenridersClient kitchenridersClient
     ) {
         this.orderRepository = orderRepository;
-        this.menuRepository = menuRepository;
+        this.menuClient = menuClient;
         this.orderTableRepository = orderTableRepository;
         this.kitchenridersClient = kitchenridersClient;
     }
@@ -43,51 +43,34 @@ public class EatInOrderService {
     public EatInOrder create(final EatInOrder request) {
         final OrderType type = request.getType();
         if (Objects.isNull(type)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("주문 유형이 null입니다.");
         }
         final List<OrderLineItem> orderLineItemRequests = request.getOrderLineItems();
         if (Objects.isNull(orderLineItemRequests) || orderLineItemRequests.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("주문 항목이 비어 있습니다.");
         }
-        final List<Menu> menus = menuRepository.findAllByIdIn(
-            orderLineItemRequests.stream()
-                .map(OrderLineItem::getMenuId)
-                .toList()
-        );
-        if (menus.size() != orderLineItemRequests.size()) {
-            throw new IllegalArgumentException();
-        }
-        final List<OrderLineItem> orderLineItems = new ArrayList<>();
+
         for (final OrderLineItem orderLineItemRequest : orderLineItemRequests) {
-            final long quantity = orderLineItemRequest.getQuantity();
-            if (type != OrderType.EAT_IN) {
-                if (quantity < 0) {
-                    throw new IllegalArgumentException();
-                }
+            MenuDTO menuDTO = menuClient.getMenuById(orderLineItemRequest.getMenuId());
+            if (menuDTO == null || !menuDTO.isDisplayed()) {
+                throw new IllegalStateException("존재하지 않거나 표시되지 않는 메뉴입니다.");
             }
-            final Menu menu = menuRepository.findById(orderLineItemRequest.getMenuId())
-                .orElseThrow(NoSuchElementException::new);
-            if (!menu.isDisplayed()) {
-                throw new IllegalStateException();
+            if (menuDTO.getPrice().compareTo(orderLineItemRequest.getPrice()) != 0) {
+                throw new IllegalArgumentException("메뉴 가격이 일치하지 않습니다.");
             }
-            if (menu.getPrice().compareTo(orderLineItemRequest.getPrice()) != 0) {
-                throw new IllegalArgumentException();
-            }
-            final OrderLineItem orderLineItem = new OrderLineItem();
-            orderLineItem.setMenu(menu);
-            orderLineItem.setQuantity(quantity);
-            orderLineItems.add(orderLineItem);
         }
+
         EatInOrder order = new EatInOrder();
         order.setId(UUID.randomUUID());
         order.setType(type);
         order.setStatus(EatInOrderStatus.WAITING);
         order.setOrderDateTime(LocalDateTime.now());
-        order.setOrderLineItems(orderLineItems);
+        order.setOrderLineItems(orderLineItemRequests);
+        
         if (type == OrderType.DELIVERY) {
             final String deliveryAddress = request.getDeliveryAddress();
             if (Objects.isNull(deliveryAddress) || deliveryAddress.isEmpty()) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("배달 주소가 유효하지 않습니다.");
             }
             order.setDeliveryAddress(deliveryAddress);
         }
@@ -95,7 +78,7 @@ public class EatInOrderService {
             final OrderTable orderTable = orderTableRepository.findById(request.getOrderTableId())
                 .orElseThrow(NoSuchElementException::new);
             if (!orderTable.isOccupied()) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("테이블이 사용 중이 아닙니다.");
             }
             order.setOrderTable(orderTable);
         }
