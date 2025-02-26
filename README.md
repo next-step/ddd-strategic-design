@@ -1,14 +1,3 @@
-# 키친포스
-
-## 퀵 스타트
-
-```sh
-cd docker
-docker compose -p kitchenpos up -d
-```
-
-## 요구 사항
-
 ### 상품
 
 - 상품을 등록할 수 있다.
@@ -96,27 +85,214 @@ docker compose -p kitchenpos up -d
 
 ## 용어 사전
 
+### 상품
+
 | 한글명 | 영문명 | 설명 |
 | --- | --- | --- |
-| [상품] |
 | 상품 | Product | 메뉴를 구성하는 기본 단위. 가격을 가지며 0원 이상이어야 함 |
 | 상품 가격 | Product Price | 상품의 가격. 0원 이상이어야 하며, 변경 시 연관된 메뉴의 노출 여부에 영향을 줌 |
-| [메뉴 그룹] |
+
+### 메뉴 그룹
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 메뉴 그룹 | Menu Group | 메뉴들을 분류하는 카테고리. 각 메뉴는 반드시 하나의 메뉴 그룹에 속함 |
-| [메뉴] |
+
+### 메뉴
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 메뉴 | Menu | 1개 이상의 상품으로 구성된 판매 단위. 가격은 구성 상품들의 가격 합보다 크거나 같아야 함 |
+| 메뉴 상품 | MenuProduct | 메뉴를 구성하는 개별 단위로, 하나의 등록된 상품(Product)과 해당 상품의 수량(및 필요 시 추가 정보)을 포함한다. |
 | 메뉴 노출 상태 | Menu Display Status | 메뉴의 노출/숨김 상태. 상품 가격 합보다 메뉴 가격이 높으면 숨김 처리됨 |
-| [주문 테이블] |
+
+### 주문 테이블
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 주문 테이블 | Order Table | 매장 내 주문이 발생하는 테이블. 빈 테이블 여부와 손님 수 정보를 가짐 |
 | 빈 테이블 | Empty Table | 현재 주문이 없는 상태의 주문 테이블 |
 | 손님 수 | Guest Count | 주문 테이블에 방문한 손님의 수. 0명 이상이어야 하며 빈 테이블은 변경 불가 |
-| [주문] |
+
+### 주문
+
+| 한글명 | 영문명 | 설명 |
+| --- | --- | --- |
 | 주문 | Order | 고객이 요청한 메뉴들의 집합. 배달/포장/매장 등의 주문 유형을 가짐 |
-| 주문 항목 | Order Item | 주문에 포함된 개별 메뉴와 그 수량 |
+| 주문 항목 | Order Item | 주문 시점의 메뉴 정보(가격, 이름 등)와 수량을 포함하는 주문 구성 항목 |
 | 주문 유형 | Order Type | 배달/포장/매장으로 구분되는 주문의 종류 |
 | 주문 상태 | Order Status | 접수 대기/접수/서빙/배달 중/배달 완료/완료 등 주문의 처리 단계 |
 | 배달 주문 | Delivery Order | 배달 주소가 필수이며, 배달 대행사를 통해 배달되는 주문 유형 |
 | 포장 주문 | Takeout Order | 매장에서 포장되어 고객이 직접 수령하는 주문 유형 |
 | 매장 주문 | Eat-in Order | 매장 내 주문 테이블에서 이루어지는 주문 유형 |
 
+### 주문 상태
+
+| 주문 상태 | Order Status | 설명 |
+|---------|--------------|------|
+| 접수 대기 | PENDING | 고객이 주문을 완료했으나, 매장에서 아직 접수하지 않은 상태 |
+| 접수 | ACCEPTED | 매장에서 주문을 확인하고 접수한 상태 |
+| 준비 중 | PREPARING | 주문한 음식을 조리/준비하고 있는 상태 |
+| 서빙 중 | SERVING | (매장 내 주문) 음식이 준비되어 테이블로 서빙되는 중 |
+| 배달 중 | DELIVERING | (배달 주문) 배달원이 음식을 배달하는 중 |
+| 배달 완료 | DELIVERED | (배달 주문) 배달이 완료된 상태 |
+| 완료 | COMPLETED | 주문이 최종적으로 완료된 상태 |
+| 취소 | CANCELLED | 주문이 취소된 상태 |
+
+주문 상태 흐름:
+1. 매장 내 주문:
+   PENDING → ACCEPTED → PREPARING → SERVING → COMPLETED
+
+2. 배달 주문:
+   PENDING → ACCEPTED → PREPARING → DELIVERING → DELIVERED → COMPLETED
+
+※ 모든 상태에서 CANCELLED로 변경될 수 있음
 ## 모델링
+
+### 도메인 모델
+
+```mermaid
+classDiagram
+    class Product {
+        UUID id
+        String name
+        BigDecimal price
+        
+        register()
+        updatePrice()
+        validatePrice()
+        validateName()
+    }
+
+    class MenuGroup {
+        UUID id
+        String name
+        
+        register()
+        validateName()
+    }
+
+    class Menu {
+        UUID id
+        String name
+        BigDecimal price
+        boolean displayed
+        UUID menuGroupId
+        List~MenuProduct~ products
+        
+        register()
+        updatePrice()
+        display()
+        hide()
+        validatePrice()
+        validateName()
+        validateProducts()
+    }
+
+    class MenuProduct {
+        Long seq
+        Long quantity
+        UUID productId
+        UUID menuId
+    }
+
+    class Order {
+        UUID id
+        OrderType type
+        OrderStatus status
+        List~OrderLineItem~ items
+        String deliveryAddress
+        LocalDateTime orderDateTime
+        UUID tableId
+        
+        create()
+        accept()
+        serve()
+        deliver()
+        complete()
+        validateType()
+        validateItems()
+        validateAddress()
+    }
+
+    class OrderLineItem {
+        Long seq
+        Long quantity
+        BigDecimal price
+        OrderLineItemMenu menu
+    }
+
+    class OrderLineItemMenu {
+        Long seq
+        String name
+        BigDecimal price
+        UUID menuId
+    }
+
+    class RestaurantTable {
+        UUID id
+        String name
+        int numberOfGuests
+        boolean occupied
+        
+        register()
+        occupy()
+        release()
+        updateNumberOfGuests()
+        validateName()
+        validateNumberOfGuests()
+    }
+
+    %% 관계 정의
+    Menu "*" --> "1" MenuGroup
+    Menu "1" <-- "*" MenuProduct
+    MenuProduct "*" --> "1" Product
+    Order "*" --> "1" RestaurantTable
+    Order "1" *-- "*" OrderLineItem
+    OrderLineItem "1" *-- "1" OrderLineItemMenu
+```
+
+### 주요 도메인 규칙
+
+1. 상품(Product)
+   - 가격은 0원 이상이어야 함
+   - 이름은 비속어를 포함할 수 없음
+
+2. 메뉴(Menu)
+   - 최소 1개 이상의 상품으로 구성
+   - 가격은 구성 상품들의 총 가격 이상이어야 함
+   - 상품 가격 총합보다 메뉴 가격이 높으면 숨김 처리
+
+3. 주문(Order)
+   - 배달/포장/매장 주문 유형 구분
+   - 배달 주문은 주소 필수
+   - 매장 주문은 테이블 지정 필수
+   - 주문 상태는 정해진 흐름대로만 변경 가능
+
+4. 테이블(RestaurantTable)
+   - 사용중인 테이블만 주문 가능
+   - 주문이 완료되지 않은 테이블은 사용 해제 불가
+   - 빈 테이블은 손님 수 변경 불가
+
+### 핵심 비즈니스 흐름
+
+1. 메뉴 관리
+```mermaid
+stateDiagram-v2
+    [*] --> 메뉴등록
+    메뉴등록 --> 메뉴노출: 가격 검증 통과
+    메뉴노출 --> 메뉴숨김: 가격 규칙 위반
+    메뉴숨김 --> 메뉴노출: 가격 수정
+```
+
+2. 주문 처리
+```mermaid
+stateDiagram-v2
+    [*] --> 대기중
+    대기중 --> 접수됨: 주문접수
+    접수됨 --> 전달됨: 음식준비완료
+    전달됨 --> 배달중: 배달주문
+    전달됨 --> 완료됨: 매장/포장주문
+    배달중 --> 배달됨
+    배달됨 --> 완료됨
+```
