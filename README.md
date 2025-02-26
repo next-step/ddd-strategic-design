@@ -1,14 +1,3 @@
-# 키친포스
-
-## 퀵 스타트
-
-```sh
-cd docker
-docker compose -p kitchenpos up -d
-```
-
-## 요구 사항
-
 ### 상품
 
 - 상품을 등록할 수 있다.
@@ -159,3 +148,151 @@ docker compose -p kitchenpos up -d
 
 ※ 모든 상태에서 CANCELLED로 변경될 수 있음
 ## 모델링
+
+### 도메인 모델
+
+```mermaid
+classDiagram
+    class Product {
+        UUID id
+        String name
+        BigDecimal price
+        
+        register()
+        updatePrice()
+        validatePrice()
+        validateName()
+    }
+
+    class MenuGroup {
+        UUID id
+        String name
+        
+        register()
+        validateName()
+    }
+
+    class Menu {
+        UUID id
+        String name
+        BigDecimal price
+        boolean displayed
+        UUID menuGroupId
+        List~MenuProduct~ products
+        
+        register()
+        updatePrice()
+        display()
+        hide()
+        validatePrice()
+        validateName()
+        validateProducts()
+    }
+
+    class MenuProduct {
+        Long seq
+        Long quantity
+        UUID productId
+        UUID menuId
+    }
+
+    class Order {
+        UUID id
+        OrderType type
+        OrderStatus status
+        List~OrderLineItem~ items
+        String deliveryAddress
+        LocalDateTime orderDateTime
+        UUID tableId
+        
+        create()
+        accept()
+        serve()
+        deliver()
+        complete()
+        validateType()
+        validateItems()
+        validateAddress()
+    }
+
+    class OrderLineItem {
+        Long seq
+        Long quantity
+        BigDecimal price
+        OrderLineItemMenu menu
+    }
+
+    class OrderLineItemMenu {
+        Long seq
+        String name
+        BigDecimal price
+        UUID menuId
+    }
+
+    class RestaurantTable {
+        UUID id
+        String name
+        int numberOfGuests
+        boolean occupied
+        
+        register()
+        occupy()
+        release()
+        updateNumberOfGuests()
+        validateName()
+        validateNumberOfGuests()
+    }
+
+    %% 관계 정의
+    Menu "*" --> "1" MenuGroup
+    Menu "1" <-- "*" MenuProduct
+    MenuProduct "*" --> "1" Product
+    Order "*" --> "1" RestaurantTable
+    Order "1" *-- "*" OrderLineItem
+    OrderLineItem "1" *-- "1" OrderLineItemMenu
+```
+
+### 주요 도메인 규칙
+
+1. 상품(Product)
+   - 가격은 0원 이상이어야 함
+   - 이름은 비속어를 포함할 수 없음
+
+2. 메뉴(Menu)
+   - 최소 1개 이상의 상품으로 구성
+   - 가격은 구성 상품들의 총 가격 이상이어야 함
+   - 상품 가격 총합보다 메뉴 가격이 높으면 숨김 처리
+
+3. 주문(Order)
+   - 배달/포장/매장 주문 유형 구분
+   - 배달 주문은 주소 필수
+   - 매장 주문은 테이블 지정 필수
+   - 주문 상태는 정해진 흐름대로만 변경 가능
+
+4. 테이블(RestaurantTable)
+   - 사용중인 테이블만 주문 가능
+   - 주문이 완료되지 않은 테이블은 사용 해제 불가
+   - 빈 테이블은 손님 수 변경 불가
+
+### 핵심 비즈니스 흐름
+
+1. 메뉴 관리
+```mermaid
+stateDiagram-v2
+    [*] --> 메뉴등록
+    메뉴등록 --> 메뉴노출: 가격 검증 통과
+    메뉴노출 --> 메뉴숨김: 가격 규칙 위반
+    메뉴숨김 --> 메뉴노출: 가격 수정
+```
+
+2. 주문 처리
+```mermaid
+stateDiagram-v2
+    [*] --> 대기중
+    대기중 --> 접수됨: 주문접수
+    접수됨 --> 전달됨: 음식준비완료
+    전달됨 --> 배달중: 배달주문
+    전달됨 --> 완료됨: 매장/포장주문
+    배달중 --> 배달됨
+    배달됨 --> 완료됨
+```
