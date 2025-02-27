@@ -199,7 +199,7 @@ docker compose -p kitchenpos up -d
 
 - 상태
   - 상품 가격을 가진다.
-    -상품 가격은 0원 이상 이어야 한다.
+    - 상품 가격은 0원 이상 이어야 한다.
   - 상품 이름을 가진다.
     - 상품 이름은 공백으로 비워둘 수 없다.
     - 상품 이름에는 비속어가 포함될 수 없으며, 비속어 검증은 외부 솔루션을 이용한다.
@@ -497,8 +497,8 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>+RestaurantOwner: 주문 요청
@@ -511,9 +511,9 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
-    participant DeliveryRider as 배달 기사
+    actor DeliveryRider as 배달 기사
     
     RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
     System-->>-RestaurantOwner: 주문 상태 '접수됨' 변경 성공 
@@ -525,7 +525,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
   
     RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
@@ -537,9 +537,9 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
-    participant DeliveryRider as 배달 기사
+    actor DeliveryRider as 배달 기사
     
     RestaurantOwner->>+DeliveryRider: 주문 메뉴 전달
     RestaurantOwner->>+System: 주문 상태 '배달 시작' 변경 요청 
@@ -551,10 +551,10 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
-    participant DeliveryRider as 배달 기사
+    actor DeliveryRider as 배달 기사
     
     DeliveryRider->>+Customer: 주문 메뉴 전달 
     Customer-->>-DeliveryRider: 주문 메뉴 전달 완료
@@ -568,7 +568,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     RestaurantOwner->>+System: 주문 상태 '주문 완료' 변경 요청
@@ -579,10 +579,10 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
-    participant DeliveryRider as 배달 기사
+    actor DeliveryRider as 배달 기사
     
     Customer->>+RestaurantOwner: 주문 요청
     RestaurantOwner-->>+System: 주문 및 주문 상태 '대기중' 생성 요청
@@ -647,8 +647,8 @@ stateDiagram-v2
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>+RestaurantOwner: 주문 요청
@@ -661,7 +661,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
@@ -672,7 +672,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
@@ -684,8 +684,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
 
     RestaurantOwner->>+Customer: 주문 메뉴 전달
@@ -698,8 +698,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>+RestaurantOwner: 주문 요청
@@ -759,8 +759,8 @@ stateDiagram-v2
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>Customer: 가게 방문
@@ -774,7 +774,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
   
     RestaurantOwner->>System: 가게 테이블 '고객 수' 변경 요청 
@@ -785,8 +785,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>+RestaurantOwner: 주문 요청
@@ -799,7 +799,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     RestaurantOwner->>+System: 주문 상태 '접수됨' 변경 요청
@@ -810,7 +810,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant RestaurantOwner as 사장님
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
    
     RestaurantOwner->>RestaurantOwner: 주문 메뉴 준비    
@@ -822,8 +822,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     RestaurantOwner->>+Customer: 주문 메뉴 전달
@@ -836,8 +836,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
 
     Customer->>Customer: 가게 퇴장
@@ -849,8 +849,8 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Customer as 고객
-    participant RestaurantOwner as 사장님
+    actor Customer as 고객
+    actor RestaurantOwner as 사장님
     participant System as 주문 시스템
     
     Customer->>Customer: 가게 방문
