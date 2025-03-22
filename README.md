@@ -7,6 +7,121 @@ cd docker
 docker compose -p kitchenpos up -d
 ```
 
+### 패키지 구조 
+````
+├── README.md
+├── build.gradle.kts
+├── docker
+│   └── docker-compose.yml
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── http
+│   ├── menu-groups.http
+│   ├── menus.http
+│   ├── order-tables.http
+│   ├── orders.http
+│   └── products.http
+├── rest-client.env.json
+├── settings.gradle.kts
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── kitchenpos
+    │   │       ├── Application.java
+    │   │       ├── common
+    │   │       │   ├── kitchenriders
+    │   │       │   │   ├── DefaultKitchenridersClient.java
+    │   │       │   │   └── KitchenridersClient.java
+    │   │       │   └── purgomalum
+    │   │       │       ├── DefaultPurgomalumClient.java
+    │   │       │       └── PurgomalumClient.java
+    │   │       ├── menus
+    │   │       │   ├── application
+    │   │       │   │   ├── MenuGroupService.java
+    │   │       │   │   └── MenuService.java
+    │   │       │   ├── domain
+    │   │       │   │   ├── Menu.java
+    │   │       │   │   ├── MenuGroup.java
+    │   │       │   │   └── MenuProduct.java
+    │   │       │   ├── infra
+    │   │       │   │   └── persistence
+    │   │       │   │       ├── JpaMenuGroupRepository.java
+    │   │       │   │       ├── JpaMenuRepository.java
+    │   │       │   │       ├── MenuGroupRepository.java
+    │   │       │   │       └── MenuRepository.java
+    │   │       │   └── ui
+    │   │       │       ├── MenuGroupRestController.java
+    │   │       │       └── MenuRestController.java
+    │   │       ├── orders
+    │   │       │   ├── application
+    │   │       │   │   ├── OrderService.java
+    │   │       │   │   └── OrderTableService.java
+    │   │       │   ├── domain
+    │   │       │   │   ├── Order.java
+    │   │       │   │   ├── OrderLineItem.java
+    │   │       │   │   ├── OrderStatus.java
+    │   │       │   │   ├── OrderTable.java
+    │   │       │   │   └── OrderType.java
+    │   │       │   ├── infra
+    │   │       │   │   └── persistence
+    │   │       │   │       ├── JpaOrderRepository.java
+    │   │       │   │       ├── JpaOrderTableRepository.java
+    │   │       │   │       ├── OrderRepository.java
+    │   │       │   │       └── OrderTableRepository.java
+    │   │       │   └── ui
+    │   │       │       ├── OrderRestController.java
+    │   │       │       └── OrderTableRestController.java
+    │   │       └── products
+    │   │           ├── application
+    │   │           │   └── ProductService.java
+    │   │           ├── domain
+    │   │           │   └── Product.java
+    │   │           ├── infra
+    │   │           │   └── persistence
+    │   │           │       ├── JpaProductRepository.java
+    │   │           │       └── ProductRepository.java
+    │   │           └── ui
+    │   │               └── ProductRestController.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── db
+    │       │   └── migration
+    │       │       ├── V1__Initialize_project_tables.sql
+    │       │       └── V2__Insert_default_data.sql
+    │       ├── static
+    │       │   └── empty.txt
+    │       └── templates
+    │           └── empty.txt
+    └── test
+        ├── java
+        │   └── kitchenpos
+        │       ├── ApplicationTest.java
+        │       ├── Fixtures.java
+        │       └── application
+        │           ├── FakeKitchenridersClient.java
+        │           ├── FakePurgomalumClient.java
+        │           ├── InMemoryMenuGroupRepository.java
+        │           ├── InMemoryMenuRepository.java
+        │           ├── InMemoryOrderRepository.java
+        │           ├── InMemoryOrderTableRepository.java
+        │           ├── InMemoryProductRepository.java
+        │           ├── MenuGroupServiceTest.java
+        │           ├── MenuServiceTest.java
+        │           ├── OrderServiceTest.java
+        │           ├── OrderTableServiceTest.java
+        │           └── ProductServiceTest.java
+        └── resources
+            └── application.properties
+
+```
+
+
+
+
 ## 요구 사항
 
 - `상품`을 등록할 수 있다.
@@ -335,3 +450,5 @@ docker compose -p kitchenpos up -d
   - `pendingOrderTable`이 아닌 경우, `clearedTable`로 만든다.
     - `numberOfCustomer`을 `0`으로 변경한다.
     - `occupied`를 `false`로 변경한다.
+
+
